@@ -1,0 +1,35 @@
+import Xamarin.Forms
+import Xamarin.Forms.Core
+ 
+Test:int = 3
+
+TestContent =
+  StackLayout{
+    Label{ FontSize:{abc} is the best; Text:Here is some more text. And even more. }
+    Label{ FontSize:if Platform is |Android:20px |iOS:30px; Text:label text} }
+    Label{ FontSize:PlatformIs{Android:20px; iOS:30px} Text:label text  }
+  }
+
+  MyDocument = Document {
+    Body:
+        if Platform is
+        |Android:
+          FontSize:12px;
+          Label:This is the label
+        |iOS:
+          FontSize:12px;
+
+        if State is
+        |Pressed: FontSize:12px; Label:This is the label
+        |iOS: FontSize:12px
+
+      This is the body text. And here is some more. And even more.
+
+    Header:
+      UIText{Description: The comment for the text; This is the header. It is what I want to provide for the document.}
+
+    Body{:
+        This is the body text
+    }
+ 
+ }

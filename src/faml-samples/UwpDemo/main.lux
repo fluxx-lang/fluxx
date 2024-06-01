@@ -1,0 +1,24 @@
+﻿import Windows.UI.Xaml.Controls
+import Windows.UI.Xaml.Shapes  
+import Windows.UI.Xaml.Media.Animation
+import Windows.UI.Xaml.Media
+import Lux.Lang
+import TypeTooling.Types
+
+mainPage = 
+  Page
+    StackPanel HorizontalAlignment:Center
+      FancyButton Width:300 FontSize:24 Label:Click mesdfsdfsds
+      Rectangle Height:100 Width:200 Fill:Blue
+      Rectangle Height:100 Width:100 Fill:Orange
+      Rectangle Height:100 Width:100 Fill:Orange
+      FancyButton Width:200 FontSize:24 Label:Click Me!
+
+FancyButton {Width:int  Label:string  FontSize:int} =
+  Button Width:{Width} Background:Pink Foreground:#CC0033 FontSize:{FontSize}  BorderBrush:Purple
+    TextBlock Text:{Label}
+
+example
+  ExampleResult Label:Font size {fontSize}
+    FancyButton Width:200  FontSize:{fontSize} Label:sdf
+  for fontSize in 12 18 24 48

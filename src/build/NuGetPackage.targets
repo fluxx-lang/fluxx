@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))\</RootDir>
+    <NuGetApp>$(RootDir)build\NuGet.exe</NuGetApp>
+    <LocalPublishRoot>$(RootDir)nuget-local</LocalPublishRoot>
+
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>  <!-- Set to true to build local NuGet packages, not just on CI -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <!-- Shared properties for NuGet packages -->
+  <PropertyGroup>
+    <Version>0.1.1</Version>
+    <Authors>Bret Johnson</Authors>
+    <Company />
+    <PackageLicenseUrl>https://raw.githubusercontent.com/faml-language/FAML/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>FAML;Markup;UI</PackageTags>
+    <RepositoryUrl>https://github.com/faml-language/FAML</RepositoryUrl>
+  </PropertyGroup>
+
+  <!-- The PublishLocally target is enabled when GeneratePackageOnBuild is switched on, above -->
+  <Target Name="PublishLocally" AfterTargets="Pack" Condition="'$(GeneratePackageOnBuild)'=='true'" >
+    <RemoveDir Directories="$(LocalPublishRoot)\$(PackageId)\$(PackageVersion)" />
+    <Exec Command="$(NuGetApp) add &quot;$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg&quot; -Source $(LocalPublishRoot)" />
+  </Target>
+
+  <!-- Adapted from https://github.com/NuGet/Home/issues/3891 -->
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>
+      $(TargetsForTfmSpecificBuildOutput);PackReferencedProjectOutputs
+    </TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  <Target Name="PackReferencedProjectOutputs" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'all'))" />
+    </ItemGroup>
+  </Target>
+
+</Project>

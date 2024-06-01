@@ -1,0 +1,15 @@
+﻿import System.Windows.Controls
+
+mainPage =
+    StackPanel {
+        TextBlock { Text:[This is the label]; AllowDrop:true; AreAnyTouchesCaptured:false HasAnimatedProperties:false }
+        TextBlock { Text:This is the label; AllowDrop:true; AreAnyTouchesCaptured:false HasAnimatedProperties:false }
+        TextBlock { Text:This is the label; AllowDrop:true; AreAnyTouchesCaptured:false HasAnimatedProperties:false }
+        TextBlock { Text:This is the label; AllowDrop:true; AreAnyTouchesCaptured:false HasAnimatedProperties:false }
+
+        MyText:
+          This is bold{sldkfjsldkjfsdf} sdklfj sdf{sdflkjsdf} sldkfj sldkfj lsdjflk sdlkfj
+          Anchor{
+            ref: https:www.foo.com; This is the description
+          }
+    }

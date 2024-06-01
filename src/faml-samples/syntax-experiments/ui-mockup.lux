@@ -1,0 +1,19 @@
+root{} : StackLayout = StackLayout {
+  spacing:20 padding:20 verticalOptions:center children:
+
+    Entry { placeholder:Username text="{Binding Username}"/>
+    <Entry Placeholder="Password"
+            Text="{Binding Password}"
+            IsPassword="true"/>
+    <Button Text="Login" TextColor="White"
+            BackgroundColor="#77D065"
+            Command="{Binding LoginCommand}"/>
+</StackLayout>
+
+screen{} = {
+	edit {
+	}
+
+
+
+}

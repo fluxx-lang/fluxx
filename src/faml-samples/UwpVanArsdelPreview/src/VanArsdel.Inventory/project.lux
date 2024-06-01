@@ -1,0 +1,9 @@
+﻿Project
+  Sdk:
+    DotNetAssembly Path:../../../../src/LuxUwpSdk/bin/Debug/netstandard2.0/LuxUwpSdk.dll  Name:LuxUwpSdk
+  Dependencies:
+    DotNetAssembly Path:../../../../external/TypeTooling/src/TypeTooling/bin/Debug/netstandard1.4/TypeTooling.dll  Name:TypeTooling
+    DotNetAssembly Path:../../../../external/TypeTooling/src/DotNetTypeTooling/bin/Debug/netstandard2.0/DotNetTypeTooling.dll  Name:DotNetTypeTooling
+    DotNetAssembly Path:/Program Files (x86)/Windows Kits/10/References/10.0.16299.0/Windows.Foundation.UniversalApiContract/5.0.0.0/Windows.Foundation.UniversalApiContract.winmd  Name:Windows
+    DotNetAssembly Path:../../../../external/TypeTooling/src/DotNetTypeTooling/bin/Debug/netstandard2.0/DotNetTypeTooling.dll  Name:DotNetTypeTooling
+    DotNetAssembly Path:./bin/x86/Debug/mscorlib.dll  Name:mscorlib   

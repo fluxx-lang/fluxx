@@ -1,0 +1,4 @@
+[submodule "external/faml"]
+	path = external/faml
+	url = git@github.com:faml-language/faml.git
+	branch = master

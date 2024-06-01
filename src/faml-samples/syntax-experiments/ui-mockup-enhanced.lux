@@ -1,0 +1,73 @@
+import lux.mockup.Image
+import lux.mockup.Text
+import lux.mockup.Mockup
+import lux.mockup.Container
+
+
+navigation{} {
+	item {
+		label: Main screen
+	}
+
+	item {
+		label: Second screen
+	}
+}
+
+
+
+infoCard{icon:String title:String info:String yOffset:Int} : Container = container {
+  image {
+    file: {icon}
+    x: 37
+    y: yOffset
+  }
+
+  text {
+    faceName: SegoeWP-SemiBold.ttf
+    text: {title}
+    size: 18
+  }
+
+  text {
+    faceName: SegoeWP-SemiLight.ttf
+    text: {info}
+    size: 14
+    x: 85
+    y: yOffset + 16
+  }
+}
+
+screen1{} : Mockup = mockup {
+  image {
+  	file: background.png
+  }
+
+  infoCard {
+    icon: stub.png
+    title: Minions 3D
+    info: Sun, 17th July, 2015, 9 30PM
+    yOffset: 422
+  }
+
+  infoCard {
+    icon: uber.png
+    title: Uber
+    info: Booked at 8 45PM
+    yOffset: 422 - 1*57
+  }
+
+  infoCard {
+    icon: map.png
+    title: Carmichael Cinema
+    info: View map of the venue
+    yOffset: 422 - 2*57
+  }
+
+  infoCard {
+    icon: barcode.png
+    title: Ticket
+    info: BID USBG000141967
+    yOffset: 422 - 3*57
+  }
+}

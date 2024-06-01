@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\build\Common.props" />
+  <Import Project="..\build\NuGetPackage.targets" />
+  <PropertyGroup>
+    <Description>FAML standard types</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Faml</RootNamespace>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\external\TypeTooling\TypeTooling\TypeTooling.csproj" />
+  </ItemGroup>
+
+</Project>

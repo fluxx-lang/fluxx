@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj" />
+    <ProjectReference Include="..\external\TypeTooling\TypeTooling.Xaml\TypeTooling.Xaml.csproj" />
+    <ProjectReference Include="..\Faml\Faml.csproj" />
+  </ItemGroup>
+
+</Project>

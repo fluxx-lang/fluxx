@@ -1,0 +1,110 @@
+﻿Project {
+	dependencies:
+		DotNet{path: ../../../packages/Xamarin.Forms.2.3.2.127/lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Core.dll name:Xamarin.Forms.Core}
+		DotNet{path: ../../../packages/LuxXamarinForms.0.1.0/lib/portable45-net45+win8+wp8+wpa81/LuxXamarinForms.dll  name:LuxXamarinForms}
+}
+
+import {StackLayout ContentPage Entry Label DatePicker Button ContentView Image} from Xamarin.Forms
+import {Color} from Lux
+import {Project DotNet} from Lux
+
+
+
+
+data SettingsData {
+	firstName: String
+	lastName: String
+	partTime: Boolean
+}
+
+mainPage{}: ContentPage =
+	mainPageGuts {
+		SettingsData{ firstName:Sam lastName:Jones partTime:true }
+	}
+
+
+
+
+
+mainPageGuts{settings: SettingsData}: ContentPage = 
+	ContentPage {
+		StackLayout {
+			Entry{ Placeholder:{settings.firstName}  IsPassword: true }      
+
+			Label{ FontSize:20 ::This label is several lines long.  As I type the device is updated. }
+
+			Entry{ Placeholder:The placeholder text goes here. } 
+
+			DatePicker{}
+
+			Button {
+				Text: Button label for basic settings...
+				BorderWidth: 3
+				FontSize: 14
+				BorderRadius: 12
+			}
+
+			Button {
+				Text: Advanced settings...
+				BorderWidth: 2
+				FontSize: 14
+				BorderRadius: 22
+			}
+
+			doneButton{ FontSize:14 }
+			doneButton{ FontSize:22 } 
+		}
+	}
+
+data Acquaintance {
+	HasAddress: Boolean
+	Street: UIText
+	City: UIText
+	StatePostal: UIText
+}
+
+contentItem{acquaintance: Acquaintance} =
+	ContentView {IsEnabled:{acquaintance.HasAddress}  IsVisible:{acquaintance.HasAddress} ::
+		StackLayout {Orientation:Horizontal  Spacing:10  ::
+			Image {Source:directions.png  Aspect:AspectFit  HeightRequest:20  WidthRequest:20  GestureRecognizers:TapGestureRecognizer{Command:{GetDirectionsCommand}} }
+			StackLayout {Spacing:0  ::
+				Label {Text:{acquaintance.Street}  FontSize:Micro  LineBreakMode:TailTruncation}
+				Label {Text:{acquaintance.City}  FontSize:Micro  LineBreakMode:TailTruncation}
+				Label {Text:{acquaintance.StatePostal}  FontSize:Micro  LineBreakMode:TailTruncation}
+			}
+		}
+	}
+
+doneButton{FontSize: Int} =
+	Button {
+		Text: This text be just bold{text:slightly bold weight:5} or bold{weight:5 ::slightly bold} or bold{slightly bold weight:5}  and a link be anchor{href:www.mysite.com label:This page}   anchor{This page  href:www.mysite.com}
+		BorderWidth: 8 
+		FontSize: {FontSize}
+	}
+
+styledButton{FontSize:Int} =
+	Button {
+		Text: This is the button labelsdf
+		BorderWidth: 8
+		FontSize: 3
+	}
+
+labeledEntry{FontSize: Int} =
+	if
+	|FontSize == 12: Entry{}
+	|FontSize == 14: Entry{}
+	|else:           Entry{}
+
+sum{v1:Int  v2:Int}: Int = v1 + v2 + 1000
+not{v1:Boolean}: Boolean = ! v1
+
+settingsPage{advanced: Boolean} =
+	ContentPage {
+		StackLayout {
+			Label{Settings go here}
+
+			if
+			|advanced: Label{Advanced settings!!!}
+			|else:     Label{Other settings!!!}
+		}
+	}

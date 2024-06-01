@@ -1,0 +1,9 @@
+﻿App
+  Sdk:
+    DotNetAssembly Path:../../src/LuxUwpSdk/bin/Debug/netstandard2.0/LuxUwpSdk.dll  Name:LuxUwpSdk
+  Dependencies:
+    DotNetAssembly Path:../../external/TypeTooling/src/TypeTooling/bin/Debug/netstandard2.0/TypeTooling.dll  Name:TypeTooling
+    DotNetAssembly Path:../../external/TypeTooling/src/DotNetTypeTooling/bin/Debug/netstandard2.0/DotNetTypeTooling.dll  Name:DotNetTypeTooling
+    DotNetAssembly Path:../../external/TypeTooling/src/XamlTypeTooling/bin/Debug/netstandard2.0/XamlTypeTooling.dll  Name:XamlTypeTooling
+    DotNetAssembly Path:/Program Files (x86)/Windows Kits/10/References/10.0.16299.0/Windows.Foundation.UniversalApiContract/5.0.0.0/Windows.Foundation.UniversalApiContract.winmd  Name:Windows
+  DevelopmentMachine: localhost

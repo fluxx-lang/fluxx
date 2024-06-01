@@ -1,0 +1,33 @@
+﻿import LuxSvg
+
+myRect{strokeWidth:PositiveLength} = 
+  Rect x:5  y:5  width:13  height:55  rx:8  ry:2  style: DrawStyle{ strokeWidth:{strokeWidth} }
+
+myCircle{strokeWidth:PositiveLength} = 
+  Circle cx:25  cy:55  r:13  style: DrawStyle{ strokeWidth:{strokeWidth} }  
+
+svg1{width:PositiveLength  height:PositiveLength} = 
+  Svg width:{width} height:{height} 
+    SvgFile  Path:/myhome/lux/lux/samples/SvgExamples/logos.svg  Width:{width}  Height:{height}
+    Rect x:0  y:0  width:{width}  height:{height}  rx:4  ry:4  style:DrawStyle{ strokeWidth:4  fill:transparent}
+    myCircle{strokeWidth:4}
+
+svg2{width:PositiveLength  height:PositiveLength} = 
+  Svg width:{width} height:{height}
+    SvgFile  Path:/myhome/lux/lux/samples/SvgExamples/dashes.svg  Width:{width}  Height:{height}
+    Rect x:0  y:0  width:{width}  height:{height}  rx:4  ry:4  style:DrawStyle{ strokeWidth:2  fill:transparent}
+    myCircle{strokeWidth:4}
+
+imageAsset{source:FilePath} =
+  iOSImageAsset
+    outputBasePath: ./MyProj.iOS/Images
+    sourceFile: {source}
+  androidImageAsset
+    outputBasePath: ./MyProj.Android/Images
+    sourceFile: {source}
+    sizes: all
+
+imageAssets =
+  imageAsset foo.svg
+  imageAsset bar.svg
+

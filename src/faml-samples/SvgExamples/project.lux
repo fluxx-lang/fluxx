@@ -1,0 +1,4 @@
+Project
+  Dependencies:
+    DotNetAssembly Path:../../src/LuxSvgSkiaRenderer/bin/Debug/netstandard1.4/LuxSvg.dll  Name:LuxSvg
+    DotNetAssembly Path:../../src/LuxSvgSkiaRenderer/bin/Debug/netstandard1.4/LuxSvgSkiaRenderer.dll  Name:LuxSvgSkiaRenderer

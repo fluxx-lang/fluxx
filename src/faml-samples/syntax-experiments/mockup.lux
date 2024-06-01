@@ -1,0 +1,726 @@
+/* This is a comment */
+// Here is another comment
+
+data Foo {
+	"name": "foo",
+	"value": 3,
+	"anotherValue": true,
+	"nested": {
+}
+
+data Person {
+	firstName: String
+	lastName: String
+	status: String
+	location: String
+	distance: Int
+	children: {Personsadf}
+}
+
+Button {
+	layout_width: "wrap_content"
+	layout_height: "wrap_content"
+	This is the text that appears inside the button.
+}
+
+email_address = EditText {
+	layout_width: fill_parent
+	layout_height: wrap_content
+	hint: localize{"This is my hint text"}
+	inputType: textEmailAddress" />
+}
+
+bothTrue(val1: Boolean val2: Boolean): Boolean = val1 && val2
+
+foo():Boolean = bothTrue(true, true)
+
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/button_text"
+    ... />
+
+
+personView(person: Person): View = view {
+	name = text {
+		style: nameStyle
+		value: {firstName} {lastName}
+	}
+
+
+
+
+
+	statusText = 
+
+
+
+
+	status = Text {
+
+	}
+
+}
+where {
+	nameStyle = {
+
+	}
+}
+
+<View style={this.props.style}>
+	{elements.map((element) =>
+	  <View style={[styles.element, this.props.elementStyle]} />
+	)}
+</View>
+
+
+View{style: this.props.style} [
+	elements.[
+		View{style: [styles.it  this.props.elementStyle]}[
+			This is the text inside the view
+		]
+	]
+]
+
+
+View{style: this.props.style}
+	elements each:
+		View{style: [styles.it  this.props.elementStyle]}
+			This is the text inside the view
+
+
+View
+	style: this.props.style
+	elements each:
+		View
+			style: [styles.it  this.props.elementStyle]}
+			This is the text inside the view
+
+
+
+view {
+	if (haveStyle)
+		style: styles.row
+
+	if ()
+		image(source:{uri:"http:/facebook.github.io/react/img/logo_og.png"}  style:styles.image)
+
+	Image(
+		source: (uri:"http:/facebook.github.io/react/img/logo_og.png")
+		style: styles.image
+	)
+
+	View(style: styles.text) {
+		Text{ style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis:strong){This is my bold text}
+		bold{emphasis:strong}[This is my bold text]
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+]
+
+
+View { style:styles.row } {
+	Image(source:{uri:"http:/facebook.github.io/react/img/logo_og.png"}  style:styles.image)
+
+	Image (
+		source: (uri:"http:/facebook.github.io/react/img/logo_og.png")
+		style: styles.image
+		title: [This is the title]
+	)
+
+	View(style: styles.text) {
+		Text{ style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+		bold(emphasis:strong){This is my bold text}
+		bold{emphasis:strong}[This is my bold text]
+
+		and the title of the book is bold{this is the title} 
+
+		and the title of the book is bold[this is the title]
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+
+
+
+
+View:
+	style: styles.row
+
+	logoImage = Image { source: {uri:"http:/facebook.github.io/react/img/logo_og.png"} style: styles.image }
+
+	Image:
+		source: (uri:"http:/facebook.github.io/react/img/logo_og.png")
+		style: styles.image
+8
+	View contentView (style: styles.text) {
+		Text{ style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis: strong){This is my bold text}
+		bold{emphasis: strong}[This is my bold text]
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+
+
+
+
+View:
+	style: styles.row
+
+	logoImage = Image { source: {uri:"http:/facebook.github.io/react/img/logo_og.png"} style: styles.image }
+
+	Image:
+		source: (uri:"http:/facebook.github.io/react/img/logo_og.png")
+		style: styles.image
+
+	View contentView (style: styles.text) {
+		Text{ style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis: strong){This is my bold text}
+		bold{emphasis: strong}[This is my bold text]
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+
+
+
+
+
+
+View:
+	style: styles.row
+
+	logo = Image:
+		source: {uri:"http:/facebook.github.io/react/img/logo_og.png"}
+		style: styles.image
+
+	if includeFooter:
+		footer = Image:
+			source: (uri:"http:/facebook.github.io/react/img/logo_og.png")
+			style: styles.image
+
+	View contentView (style: styles.text):
+		Text{ style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis: strong){This is my bold text}
+		bold{emphasis: strong}[This is my bold text]
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+
+
+
+<View style:styles.row>
+	<CoolLogo logo source:<uri:"http:/facebook.github.io/react/img/logo_og.png"> style:styles.image/>
+
+	if includeFooter
+		<Image source: (uri:"http:/facebook.github.io/react/img/logo_og.png") style: styles.image> is footer
+
+	<View contentView style:styles.text>
+		Text{ style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis: strong){This is my bold text}
+		bold{emphasis: strong}[This is my bold text]
+
+		<bold emphasis:strong>This is my bold text</bold>
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+</View>
+
+
+
+<View style:styles.row>:
+	<CoolLogo logo source:<uri:"http:/facebook.github.io/react/img/logo_og.png"> style:styles.image>
+
+	if includeFooter:
+		<Image footer source:(uri:"http:/facebook.github.io/react/img/logo_og.png") style:styles.image>
+
+	<View contentView style:styles.text>:
+		<Text style:styles.title>react native rocks</Text>
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis: strong){This is my bold text}
+		bold{emphasis: strong}[This is my bold text]
+
+		<bold emphasis:strong>: This is my bold text</bold>
+
+		bold[This is my bold text]
+
+		<Text style={styles.subtitle}>:
+	    	Build high quality mobile apps using React
+
+
+
+
+
+View style:styles.row:
+	CoolLogo logo source:<uri:"http:/facebook.github.io/react/img/logo_og.png"> style:styles.image
+
+	if includeFooter
+		Image source:(uri:"http:/facebook.github.io/react/img/logo_og.png") style: styles.image
+
+	View contentView style:styles.text:
+		Text style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis: strong){This is my bold text}
+		bold{emphasis: strong}[This is my bold text]
+
+		bold emphasis:strong{This is my bold text}
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+</View>
+
+
+
+
+<View style:styles.row>
+	logo = <Image source:<uri:"http:/facebook.github.io/react/img/logo_og.png"> style:styles.image/>
+
+	if includeFooter:
+		footer = <Image
+			source: (uri:"http:/facebook.github.io/react/img/logo_og.png")
+			style: styles.image
+			>
+
+	View contentView (style: styles.text):
+		Text{ style: styles.title | react native!!! }
+		Text{style: styles.subtitle | build high quality mobile apps using react}
+
+		Text(style: styles.subtitle}[build high quality mobile apps using react]
+
+
+		Text(style: styles.subtitle){build high quality mobile apps using react}
+
+
+		bold(emphasis: strong){This is my bold text}
+		bold{emphasis: strong}[This is my bold text]
+
+		bold[This is my bold text]
+
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+</View>
+
+
+
+
+<View style:styles.row>
+	if (includeLogo)
+		myLogo =
+		<Image source:<URL uri:'http:/facebook.github.io/react/img/logo_og.png'> style:{styles.image}/>
+
+	<View style:styles.text>
+	  <Text style:styles.title>
+	    React Native
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+
+
+
+<View style:styles.row>
+	if (includeLogo)
+		myLogo = <Image source:<URL uri:'http:/facebook.github.io/react/img/logo_og.png'> style:{styles.image}/>
+
+	<View style:styles.text>
+	  <Text style:styles.title>
+	    React Native
+	  </Text>
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+</View>
+
+
+
+<View style={styles.row}>
+	<Image
+	  source={{uri: 'http:/facebook.github.io/react/img/logo_og.png'}}
+	  style={styles.image}
+	/>
+	<View style={styles.text}>
+	  <Text style={styles.title}>
+	    React Native
+	  </Text>
+	  <Text style={styles.subtitle}>
+	    Build high quality mobile apps using React
+	  </Text>
+	</View>
+</View>
+
+var styles = StyleSheet.create({
+  row: { flexDirection: 'row', margin: 40 },
+  image: { width: 40, height: 40, marginRight: 10 },
+  text: { flex: 1, justifyContent: 'center'},
+  title: { fontSize: 11, fontWeight: 'bold' },
+  subtitle: { fontSize: 10 },
+});
+
+
+peopleView(people) =
+view {
+	list {
+		people {
+			group {
+				name = Text {
+					style: boldStyle { 
+						width: status.width + 2
+					}
+					value: {firstName} {lastName}
+				}
+
+
+
+				status = Text {
+
+				}
+
+
+
+
+
+
+
+
+				name = {firstName} {lastName}
+				status = This is my text
+				location = {location}
+				distance = {distance} mi
+			}
+			where {
+				name.style = nameStyle()
+				status 
+			}
+		}
+	}
+}
+
+
+Group {
+	title: My account
+
+	view {
+		EditBox('Sign-in address', signInAddress)
+
+		Button('Advanced...', view = advanced())
+	}
+
+	CheckBox('Automatically start Lync when I log on to Windows', autoStart)
+	CheckBox('Show Lync in the foreground when it starts', showInForeground)
+}
+
+
+
+
+personDetails(person: Person) = view {
+	labeledText {
+		label: Distance
+		value: distance
+	}
+	
+
+
+}
+
+
+
+list {
+}
+
+
+
+
+
+<Students>
+	<Student>
+		name: Fred Jones
+		age: 15
+		male: true || false
+	</Student>
+
+	<Student>
+		name: Joe Smith
+		age: 15
+	</Student>
+</Students>
+
+
+Students {
+	Student {
+		name: Fred Jones
+		age: 15
+		male: true || false
+	}
+
+	Student {
+		name: Joe Smith
+		age: 15
+	}
+}
+
+
+max(x, y) = if x > y then x else y
+where {
+	x = 3
+}
+
+
+
+max(x: Int, y: Int): Int =
+	if x > MAX_VALUE then x else y
+	where {
+		MAX_VALUE = 3
+	}
+
+
+
+
+howBig(val) =
+	if val > MAX_VALUE  then "too big"
+	if val == MAX_VALUE then "almost too big"
+	if val > 0          then "good size"
+                        else "nothing"
+
+
+    if val
+	> MAX_VALUE  then "too big"
+	== MAX_VALUE then "almost too big"
+	> 0          then "good size"
+                 else "nothing"
+
+concat(a, b) = a + b
+
+
+myStyle = style {
+	color: { red:220 green:193 blue:204 }
+	line-width: 23px
+	line-style: dashed
+}
+
+
+studentView(all: Boolean) =
+
+view {
+	students.where(age > 13).sort(name).{
+		{Item  label: Name  value: name}
+		{Item  label: Name  value: name}
+
+
+		Item{label: Name  value: name}
+		Item{label: Name  value: name}
+
+		{item
+			label: Name
+			value: name
+		}
+
+		item {
+			label: Name
+			value: name
+		}
+
+
+		if (myTest)
+			item {
+				label: Name
+				value: name
+			}
+
+
+		nameItem = item {
+			label: Name
+			value: name
+		}
+
+		severalItems {
+			rule: myRule
+		}
+
+		<Item>
+			label: Age
+			value: age
+		</Item>
+	}
+}
+
+where {
+	getStudents(all) =
+		if all then students
+		       else students.where(age > 13)
+
+		
+	getStudents(all) =
+		if all then
+			students
+		else
+			students.where(age > 13)
+}
+
+
+This is some {Bold emphasized} text.
+
+
+This is some Bold{emphasized} text.
+
+
+This is some {b emphasized} text.
+
+
+This is some b{emphasized} text.
+
+
+This is some {bold emphasized} text.
+
+
+This is some bold{emphasized} text.
+
+
+
+function studentView(students: Students) = View {
+	{
+		Item {
+			label: Name
+			value: name
+		}
+
+		Item {
+			label: Age
+			value: age
+		}
+	} foreach students.where(age > 13).sort(name)
+}
+
+
+function studentView(students: Students) = view {
+	students.where(age > 13).sort(name).{
+		item {
+			label: Name
+			value: name
+		}
+
+		item {
+			label: Age
+			value: age
+		}
+
+		item {
+			label: Age
+			value: age
+		}
+	}
+}
+
+
+
+View(myStudents)
+
+View(
+	students: myStudents
+)
+
+View{students: myStudents}
+
+
+View {
+
+
+
+}
+
+
+View {
+	Item {
+		label: My label
+		value: 3
+	}
+}
+
+	

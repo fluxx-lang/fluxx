@@ -1,0 +1,25 @@
+LUX is all about making it easy to create mobile apps.
+It's for professional developers, to make their lives easier.
+But it also empowers non-coders, or semi-technical users like UI designers, to create full blown apps.
+
+LUX is new declarative language.  I call it a functional reactive markup language.
+It's like JSON or XML or JSX, but more powerful.  In some ways it's like a better, more concise, more powerful XAML.
+
+Let's see it in action.  Here's LUX on the left, in Visual Studio, with the LUX language extension.
+Note the JSON like declarative syntax.
+
+In LUX I can create controls and set their properties, much like XAML today.
+Note that as I type, the app is immediately updated, live, in the Android emulator on the right.
+I can edit text, like say change the title.
+Say I want to make the title bigger.  I can do that and see it take effect right away.
+
+LUX is like XAML, but more powerful.
+In LUX you can define functions.
+
+
+
+
+
+
+
+

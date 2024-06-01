@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\build\Common.props" />
+  <Import Project="..\build\NuGetPackage.targets" />
+  <PropertyGroup>
+    <Description>FAML support for Xamarin.Forms apps</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Faml.XamarinForms</AssemblyName>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj" />
+    <ProjectReference Include="..\external\TypeTooling\TypeTooling.Xaml\TypeTooling.Xaml.csproj" />
+    <ProjectReference Include="..\Faml\Faml.csproj" />
+  </ItemGroup>
+
+</Project>

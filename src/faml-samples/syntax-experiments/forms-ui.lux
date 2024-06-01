@@ -1,0 +1,6 @@
+
+root{} = { spacing:20 padding:20 verticalOptions:center } [
+	Entry { placeholder:This is the text that goes here. text:obj.username }
+	Entry { placeholder:Password text:obj.password isPassword:true }
+	Button { text:Lsogin textColor:white backgroundColor:#77D065 command:LoginCommand }
+]
