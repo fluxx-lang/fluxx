@@ -17,8 +17,6 @@ Fluxx aims to be the best of both worlds, combining the clean declarative syntax
 
 2. There's a growing realization that the Functional Reactive Programming (FRP) model is especially well suited for building UIs. Fluxx supports FRP natively. In particular, all Fluxx functions are automatically reactive with no extra syntax magic required (no callbacks, no @observable annotations, no weird binding syntax,). Reactivity works best, and simplest, when its a core part of the language.
     
-{% include_relative contents.md %}
-
 Evolved XAML
 -----------
 
