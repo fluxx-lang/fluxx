@@ -20,9 +20,9 @@ let <RedSquare Size:Integer /> =
         Color=Red />
 
 let <RedSquares/> =
-    <RedSquare Size=10/>
-    <RedSquare Size=20/>
-    <RedSquare Size=30/>
+    <RedSquare Size=10 />
+    <RedSquare Size=20 />
+    <RedSquare Size=30 />
 ```
 
 Functions are defined with the syntax `let <function-name> = <function-value>`. If the function can take

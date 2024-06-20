@@ -1,6 +1,7 @@
 ---
 title: Language Basics
 layout: default
+parent: Language
 ---
 
 Fluxx Language Basics
