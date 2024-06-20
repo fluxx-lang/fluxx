@@ -1,3 +1,10 @@
+---
+title: Triggers and Visual States
+layout: default
+parent: Language
+---
+
+
 Triggers and Visual States
 ---------------
 

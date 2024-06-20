@@ -1,3 +1,10 @@
+---
+title: Values and Functions
+layout: default
+parent: Language
+---
+
+
 Values
 ------
 

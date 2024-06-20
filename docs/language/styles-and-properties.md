@@ -1,3 +1,9 @@
+---
+title: Styles and Properties
+layout: page
+parent: Language
+---
+
 Styles and properties
 -------------
 

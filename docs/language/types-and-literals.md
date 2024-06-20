@@ -1,3 +1,9 @@
+---
+title: Types and Literals
+layout: default
+parent: Language
+---
+
 Types and Literals
 -----
 

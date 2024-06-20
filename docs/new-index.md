@@ -1,3 +1,8 @@
+---
+title: Home (New)
+layout: home
+---
+
 Fluxx is a functional markup language. You can think of it as functional XML - XML enhanced with simple but powerful elements of functional reactive programming.  
 
 Fluxx Language

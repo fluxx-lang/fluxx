@@ -1,3 +1,9 @@
+---
+title: Origina and Goals
+layout: page
+---
+
+
 Fluxx Origin and Goals
 =======
 

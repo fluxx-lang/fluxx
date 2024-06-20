@@ -1,3 +1,8 @@
+---
+title: Language Basics
+layout: default
+---
+
 Fluxx Language Basics
 --------------
 

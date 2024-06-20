@@ -1,3 +1,10 @@
+---
+title: XAML Comparisons
+layout: default
+parent: Language
+---
+
+
 XAML
 ----
 
