@@ -25,8 +25,8 @@ Fluxx:
 Property values can contain arbitrary markup - unlike XML, markup isn't restricted to just the element content:
 ```
 <element
-    property1=<child childprop=42/>
-    property2=<child childprop=43/>
+    property1=<child childprop=42 />
+    property2=<child childprop=43 />
     />
 ```
 
