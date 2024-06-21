@@ -2,6 +2,7 @@
 title: Types and Literals
 layout: default
 parent: Language
+nav_order: 2
 ---
 
 Types and Literals

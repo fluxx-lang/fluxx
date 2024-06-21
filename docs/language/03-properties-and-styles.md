@@ -2,6 +2,7 @@
 title: Properties and Styles
 layout: page
 parent: Language
+nav_order: 3
 ---
 
 Properties

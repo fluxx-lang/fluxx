@@ -2,6 +2,7 @@
 title: Language Basics
 layout: default
 parent: Language
+nav_order: 1
 ---
 
 Fluxx Language Basics
