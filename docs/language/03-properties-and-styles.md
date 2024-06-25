@@ -13,7 +13,7 @@ exist and be manipulated indepdently of objects of the type. Properties provide 
 generic language feature and useful in other contexts too.
 
 Here's XAML based style, as an example:
-```
+```xml
 <Style TargetType="TextBlock"
         x:Key="TitleTextStyle">
     <Setter Property="FontSize" Value="26"/>
@@ -31,14 +31,15 @@ Here's XAML based style, as an example:
 ```
 
 Fluxx equivalent:
-```
-let TitleTextStyle:TextBlock.properties =
-    FontSize=26
-    Foreground=
-        <LinearGradientBrush StartPoint=0.5,0; EndPoint=0.5,1;
-            <GradientStop Offset=0.0; Color=#90DDDD />
-            <GradientStop Offset=1.0; Color=#5BFFFF />
-        /LinearGradientBrush>
+```fluxx
+let TitleTextStyle =
+    <TextBlock.properties
+        FontSize=26
+        Foreground=
+            <LinearGradientBrush StartPoint=0.5,0; EndPoint=0.5,1;
+                <GradientStop Offset=0.0; Color=#90DDDD />
+                <GradientStop Offset=1.0; Color=#5BFFFF />
+            /LinearGradientBrush>
 ```
 
 `TextBlock.properties` is a set of 0 or more property values, that

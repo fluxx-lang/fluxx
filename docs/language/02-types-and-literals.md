@@ -37,7 +37,7 @@ for localizable UI with the UI text embedded directly in the UI markup.
 `uitext` has an optional `id` property for a resource string ID and `description` property
 for a comment:
 
-```
+```fluxx
 <input type=button
     value=<uitext Go back/>
 /input>

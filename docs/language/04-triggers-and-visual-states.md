@@ -12,7 +12,7 @@ Triggers and Visual States
 XAML triggers become Fluxx conditions.
 
 XAML (WPF):
-```
+```xml
 <TextBlock.Style>
     <Style TargetType="TextBlock">
         <Setter Property="Text" Value="No" />
@@ -28,10 +28,10 @@ XAML (WPF):
 ```
 
 Fluxx:
-```
-<TextBlock HorizontalAlignment=Center; Margin=0,20,0,0; FontSize=48
+```fluxx
+<TextBlock
     if cbSample.IsChecked =>
-        Text=Yes!
+        Text=Yes
         Foreground=Green
     else =>
         Text=No
@@ -44,7 +44,7 @@ Fluxx:
 Visual States
 
 XAML (MAUI):
-```
+```xml
 <Entry FontSize="18">
     <VisualStateManager.VisualStateGroups>
         <VisualStateGroup Name="CommonStates">
@@ -77,7 +77,7 @@ XAML (MAUI):
 ```
 
 Fluxx:
-```
+```fluxx
 <Entry FontSize=18
     if VisualStateGroup.CurrentState is
         Normal =>
@@ -95,7 +95,7 @@ Fluxx:
 VisualStates with state triggers
 
 XAML (MAUI):
-```
+```xml
 <Grid>
     <VisualStateManager.VisualStateGroups>
         <VisualStateGroup>
@@ -125,7 +125,7 @@ XAML (MAUI):
 ```
 
 Fluxx:
-```
+```fluxx
 <Grid
     if IsToggled =>
         BackgroundColor=Black
@@ -152,7 +152,7 @@ Fluxx is a functional language and like any functional language, functions are i
 abstraction. Let's look at some examples.
 
 Here's a simple function, with another function that calls it:  
-```
+```fluxx
 <RedSquare Size:Integer/> =>
     <BoxView
         Width=Size
@@ -160,9 +160,9 @@ Here's a simple function, with another function that calls it:
         Color=Red />
 
 let <RedSquares/> =
-    <RedSquare Size=10/>
-    <RedSquare Size=20/>
-    <RedSquare Size=30/>
+    <RedSquare Size=10 />
+    <RedSquare Size=20 />
+    <RedSquare Size=30 />
 ```
 
 Functions are defined with the syntax `<function-name> = <function-value>`. If the function can take
@@ -182,7 +182,7 @@ are exactly the same thing--all functions!
 Normally the function return type is inferred, by the type of the expression after the `=` sign.
 But if desired you can specify the type exlicitly, providing it after a colon:
 
-```
+```fluxx
 let RedSquare<Size:Integer/>: BoxView = 
     <BoxView
         Width=@Size
@@ -232,7 +232,7 @@ it's not a variable--it can't be reassigned. Fluxx, as a pure functional languag
 
 In XAML, constants are often handled by a ResourceDictionary.   Here's a comparison of XAML:
 
-```
+```xml
 <ContentPage.Resources>
     <ResourceDictionary>
       <x:Double x:Key="MyBorderWidth">
@@ -240,8 +240,6 @@ In XAML, constants are often handled by a ResourceDictionary.   Here's a compari
       </x:Double>
     </ResourceDictionary>
 </ContentPage.Resources>
-
-...
 
 <Button
     Text="Do this!"
@@ -251,10 +249,8 @@ In XAML, constants are often handled by a ResourceDictionary.   Here's a compari
 
 With the equivalent, more concise, Fluxx:
 
-```
+```fluxx
 MyBorderWidth = 3.0
-
-...
 
 Button
     Text: Do this!
@@ -263,14 +259,14 @@ Button
 In Fluxx the `if` operator serves the purpose of `if` (conditionals), `switch` (case statements), and `match` (pattern matching) in other languages.
 Being a functional language, `if` always evalues to a value and can be used anywhere in a Fluxx expression.
 Here are some examples:
-```
+```fluxx
 if platform is
 |iOS: Label Text:I'm a label on iOS!
 |Android: Label Text:I'm a label on Android
 ```
 The `|` symbol here is consistent with F# and makes the different cases stand out more visually.
 Here's a traditional conditional:
-```
+```fluxx
 controlWidth =
 if
 |screenWidth > 500 && screenOrientation == landscape: 30
