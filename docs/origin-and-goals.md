@@ -1,5 +1,5 @@
 ---
-title: Origina and Goals
+title: Origin and Goals
 layout: page
 ---
 

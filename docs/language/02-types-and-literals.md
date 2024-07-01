@@ -32,24 +32,29 @@ Most of these data types should be familiar, especially to C# developers.
 ### Localizable text
 
 Fluxx is unique in that it has a special data type, `uitext`, for localizable text. It allows
-for localizable UI with the UI text embedded directly in the UI markup.
+for localizable UI with the UI text (optionally) embedded directly in the UI markup.
 
 `uitext` has an optional `id` property for a resource string ID and `description` property
 for a comment:
 
 ```fluxx
 <input type=button
-    value=<uitext Go back/>
+    value=<uitext Go back />
 /input>
 
 <input type=button
-    value=<uitext id=BackLabel; description=Label for nav bar back button; Go back/>
+    value=<uitext id=BackLabel; description=Label for nav bar back button; Go back />
 /input>
 ```
 
-Fluxx build tooling can automatically generate localizable resource files from the `uitext` literals.
+Fluxx build tooling can automatically generate localizable resource files from the `uitext` literals. Alternatively, just specififying the `id` property allows loading a UI string defined elsewhere:
 
-Treating localizable text as a separate data type from `string` has other advantages too. It means the tooling knows what's
-localizable and what isn't and the type checker can help ensure that the developer doesn't make mistakes, failing to localize something that should be translated. It also allows the editor to show UI text in a different
-visual style.
+```fluxx
+<input type=button
+    value=<uitext id=BackLabel />
+/input>
+```
+
+Treating localizable text as a separate data type from `string` means the tooling knows what's localizable and what isn't and the type checker can help ensure that the developer doesn't make mistakes, failing to localize something that should be translated. It also allows the editor to show UI text in a different visual style.
+
 
