@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>FAML core</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj" />
+    <ProjectReference Include="..\..\external\roslynp\src\CodeAnalysisP\Microsoft.CodeAnalysisP.csproj" />
+    <ProjectReference Include="..\TypeTooling\TypeTooling\TypeTooling.csproj" />
+    <ProjectReference Include="..\Fluxx.Types\Faml.Types.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Taggers\" />
+  </ItemGroup>
+
+</Project>
