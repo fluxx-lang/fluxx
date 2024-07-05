@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
-namespace TypeTooling.DotNet.RawTypes.Reflection {
+namespace TypeTooling.DotNet.RawTypes.Reflection
+{
     public class ReflectionDotNetRawParameter : DotNetRawParameter {
         private readonly ParameterInfo _parameterInfo;
 

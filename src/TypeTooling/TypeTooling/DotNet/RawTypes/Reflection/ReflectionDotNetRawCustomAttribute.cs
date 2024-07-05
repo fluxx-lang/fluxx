@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace TypeTooling.DotNet.RawTypes.Reflection {
     public class ReflectionDotNetRawCustomAttribute : DotNetRawCustomAttribute {

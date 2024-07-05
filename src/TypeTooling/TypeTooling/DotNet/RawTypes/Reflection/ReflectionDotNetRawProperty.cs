@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using TypeTooling.ClassifiedText;
 
-namespace TypeTooling.DotNet.RawTypes.Reflection {
+namespace TypeTooling.DotNet.RawTypes.Reflection
+{
     public class ReflectionDotNetRawProperty : DotNetRawProperty {
         private readonly PropertyInfo _propertyInfo;
 

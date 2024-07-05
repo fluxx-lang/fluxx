@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using TypeTooling.CodeGeneration;
+﻿using TypeTooling.CodeGeneration;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Helper;
 using TypeTooling.RawTypes;
 using TypeTooling.Types;
 
-namespace TypeTooling.DotNet.Types {
+namespace TypeTooling.DotNet.Types
+{
     public class DotNetEnumType : EnumTypeLazyLoaded {
         private readonly DotNetRawType _rawType;
 

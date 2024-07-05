@@ -1,10 +1,9 @@
-﻿using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using TypeTooling.ClassifiedText;
+﻿using TypeTooling.ClassifiedText;
 
-namespace TypeTooling.Types {
-    public abstract class ObjectProperty {
+namespace TypeTooling.Types
+{
+    public abstract class ObjectProperty
+    {
         public ObjectType ObjectType { get;  }
 
         protected ObjectProperty(ObjectType objectType) {
