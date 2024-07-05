@@ -1,5 +1,7 @@
-﻿namespace TypeTooling.DotNet.RawTypes {
-    public abstract class DotNetRawField {
+﻿namespace TypeTooling.DotNet.RawTypes
+{
+    public abstract class DotNetRawField
+    {
         public abstract string Name { get; }
 
         public abstract DotNetRawType FieldType { get;  }

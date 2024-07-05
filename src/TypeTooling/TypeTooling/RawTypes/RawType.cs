@@ -1,5 +1,6 @@
 ﻿namespace TypeTooling.RawTypes
 {
-    public abstract class RawType {
+    public abstract class RawType
+    {
     }
 }

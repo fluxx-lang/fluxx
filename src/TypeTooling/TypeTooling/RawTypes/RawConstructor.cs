@@ -1,5 +1,6 @@
 ﻿namespace TypeTooling.RawTypes
 {
-    public abstract class RawConstructor {
+    public abstract class RawConstructor
+    {
     }
 }

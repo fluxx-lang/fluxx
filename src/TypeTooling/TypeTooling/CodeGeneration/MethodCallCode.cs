@@ -3,13 +3,15 @@ using TypeTooling.RawTypes;
 
 namespace TypeTooling.CodeGeneration
 {
-    public class MethodCallCode : ExpressionCode {
+    public class MethodCallCode : ExpressionCode
+    {
         private readonly ExpressionCode? _object;
         private readonly RawMethod _rawMethod;
         private readonly ExpressionCode[] _arguments;
 
 
-        public MethodCallCode(ExpressionCode? objectCode, RawMethod rawMethod, params ExpressionCode[] arguments) {
+        public MethodCallCode(ExpressionCode? objectCode, RawMethod rawMethod, params ExpressionCode[] arguments)
+        {
             _object = objectCode;
             _rawMethod = rawMethod;
             _arguments = arguments;

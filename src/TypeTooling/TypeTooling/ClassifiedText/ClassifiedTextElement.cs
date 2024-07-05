@@ -3,14 +3,17 @@ using System.Collections.Immutable;
 
 namespace TypeTooling.ClassifiedText
 {
-    public class ClassifiedTextElement {
+    public class ClassifiedTextElement
+    {
         public const string TextClassificationTypeName = "text";
 
-        public ClassifiedTextElement(params ClassifiedTextRun[] runs) {
+        public ClassifiedTextElement(params ClassifiedTextRun[] runs)
+        {
             Runs = runs.ToImmutableArray();
         }
 
-        public ClassifiedTextElement(IEnumerable<ClassifiedTextRun> runs) {
+        public ClassifiedTextElement(IEnumerable<ClassifiedTextRun> runs)
+        {
             Runs = runs.ToImmutableArray();
         }
 

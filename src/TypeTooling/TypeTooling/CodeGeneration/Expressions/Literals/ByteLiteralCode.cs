@@ -1,9 +1,11 @@
 ﻿namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
-    public class ByteLiteralCode : LiteralCode {
+    public class ByteLiteralCode : LiteralCode
+    {
         private readonly byte _value;
 
-        public ByteLiteralCode(byte value) {
+        public ByteLiteralCode(byte value)
+        {
             _value = value;
         }
 

@@ -2,8 +2,10 @@
 using TypeTooling.RawTypes;
 using TypeTooling.Types;
 
-namespace TypeTooling {
-    public abstract class TypeToolingEnvironment {
+namespace TypeTooling
+{
+    public abstract class TypeToolingEnvironment
+    {
         public abstract TypeToolingType? GetType(RawType rawType);
 
         public abstract TypeToolingType GetRequiredType(RawType rawType);

@@ -1,18 +1,23 @@
 ﻿using System.Reflection;
 
-namespace TypeTooling.DotNet.RawTypes.Reflection {
-    public class ReflectionDotNetRawMethod : DotNetRawMethod {
+namespace TypeTooling.DotNet.RawTypes.Reflection
+{
+    public class ReflectionDotNetRawMethod : DotNetRawMethod
+    {
         private readonly MethodInfo _methodInfo;
 
-        public ReflectionDotNetRawMethod(MethodInfo methodInfo) {
+        public ReflectionDotNetRawMethod(MethodInfo methodInfo)
+        {
             _methodInfo = methodInfo;
         }
 
-        public override DotNetRawParameter[] GetParameters() {
+        public override DotNetRawParameter[] GetParameters()
+        {
             return ToParameterDescriptors(_methodInfo.GetParameters());
         }
 
-        public static DotNetRawParameter[] ToParameterDescriptors(ParameterInfo[] parameterInfos) {
+        public static DotNetRawParameter[] ToParameterDescriptors(ParameterInfo[] parameterInfos)
+        {
             var parameterDescriptors = new DotNetRawParameter[parameterInfos.Length];
             for (int i = 0; i < parameterInfos.Length; i++)
                 parameterDescriptors[i] = new ReflectionDotNetRawParameter(parameterInfos[i]);

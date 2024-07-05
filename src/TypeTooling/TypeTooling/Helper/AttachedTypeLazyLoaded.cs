@@ -4,10 +4,12 @@ using TypeTooling.Types;
 
 namespace TypeTooling.Helper
 {
-    public abstract class AttachedTypeLazyLoaded : AttachedType {
+    public abstract class AttachedTypeLazyLoaded : AttachedType
+    {
         private readonly Lazy<AttachedTypeData> _data;
 
-        protected AttachedTypeLazyLoaded() {
+        protected AttachedTypeLazyLoaded()
+        {
             _data = new Lazy<AttachedTypeData>(DoGetData);
         }
 
@@ -18,21 +20,24 @@ namespace TypeTooling.Helper
         public sealed override IReadOnlyCollection<AttachedProperty> AttachedProperties => _data.Value.AttachedProperties;
 
         /// <inheritdoc />
-        public override IReadOnlyCollection<AttachedType> GetBaseTypes() {
+        public override IReadOnlyCollection<AttachedType> GetBaseTypes()
+        {
             return _data.Value.BaseTypes;
         }
 
         protected abstract AttachedTypeData DoGetData();
     }
 
-    public sealed class AttachedTypeData {
+    public sealed class AttachedTypeData
+    {
         public string FullName { get; }
 
         public IReadOnlyCollection<AttachedProperty> AttachedProperties { get; }
 
         public IReadOnlyCollection<AttachedType> BaseTypes { get; }
 
-        public AttachedTypeData(string fullName, IReadOnlyCollection<AttachedProperty> attachedProperties, IReadOnlyCollection<AttachedType> baseTypes) {
+        public AttachedTypeData(string fullName, IReadOnlyCollection<AttachedProperty> attachedProperties, IReadOnlyCollection<AttachedType> baseTypes)
+        {
             FullName = fullName;
             AttachedProperties = attachedProperties;
             BaseTypes = baseTypes;

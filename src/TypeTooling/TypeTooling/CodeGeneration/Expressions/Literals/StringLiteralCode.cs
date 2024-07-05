@@ -1,9 +1,11 @@
 ﻿namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
-    public class StringLiteralCode : LiteralCode {
+    public class StringLiteralCode : LiteralCode
+    {
         private readonly string _value;
 
-        public StringLiteralCode(string value) {
+        public StringLiteralCode(string value)
+        {
             _value = value;
         }
 

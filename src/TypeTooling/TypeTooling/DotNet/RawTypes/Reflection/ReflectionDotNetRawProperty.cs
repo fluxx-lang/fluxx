@@ -4,10 +4,12 @@ using TypeTooling.ClassifiedText;
 
 namespace TypeTooling.DotNet.RawTypes.Reflection
 {
-    public class ReflectionDotNetRawProperty : DotNetRawProperty {
+    public class ReflectionDotNetRawProperty : DotNetRawProperty
+    {
         private readonly PropertyInfo _propertyInfo;
 
-        public ReflectionDotNetRawProperty(PropertyInfo propertyInfo) {
+        public ReflectionDotNetRawProperty(PropertyInfo propertyInfo)
+        {
             _propertyInfo = propertyInfo;
         }
 
@@ -19,7 +21,8 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 
         public override bool CanWrite => _propertyInfo.CanWrite;
 
-        public override IEnumerable<DotNetRawCustomAttribute> GetCustomAttributes() {
+        public override IEnumerable<DotNetRawCustomAttribute> GetCustomAttributes()
+        {
             foreach (CustomAttributeData customAttributeData in _propertyInfo.CustomAttributes)
                 yield return new ReflectionDotNetRawCustomAttribute(customAttributeData);
         }
@@ -27,7 +30,8 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         public PropertyInfo PropertyInfo => _propertyInfo;
 
         public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CultureInfo preferredCulture,
-            CancellationToken cancellationToken) {
+            CancellationToken cancellationToken)
+            {
             return Task.FromResult((ClassifiedTextMarkup?) null);
         }
     }

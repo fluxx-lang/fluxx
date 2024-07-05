@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using TypeTooling.ClassifiedText;
 using TypeTooling.RawTypes;
 
-namespace TypeTooling.DotNet.RawTypes {
-    public abstract class DotNetRawProperty : RawProperty {
+namespace TypeTooling.DotNet.RawTypes
+{
+    public abstract class DotNetRawProperty : RawProperty
+    {
         public abstract string Name { get; }
 
         public abstract DotNetRawType PropertyType { get;  }

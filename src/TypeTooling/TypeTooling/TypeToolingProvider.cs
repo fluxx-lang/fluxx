@@ -1,11 +1,14 @@
 ﻿using TypeTooling.RawTypes;
 using TypeTooling.Types;
 
-namespace TypeTooling {
-    public abstract class TypeToolingProvider {
+namespace TypeTooling
+{
+    public abstract class TypeToolingProvider
+    {
         public TypeToolingEnvironment TypeToolingEnvironment { get;  }
 
-        protected TypeToolingProvider(TypeToolingEnvironment typeToolingEnvironment) {
+        protected TypeToolingProvider(TypeToolingEnvironment typeToolingEnvironment)
+        {
             TypeToolingEnvironment = typeToolingEnvironment;
         }
 

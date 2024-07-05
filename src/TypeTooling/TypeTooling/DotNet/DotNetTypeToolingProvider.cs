@@ -4,12 +4,16 @@ using TypeTooling.RawTypes;
 using TypeTooling.Types;
 using TypeTooling.Types.PredefinedTypes;
 
-namespace TypeTooling.DotNet {
-    public class DotNetTypeToolingProvider : TypeToolingProvider {
-        public DotNetTypeToolingProvider(TypeToolingEnvironment typeToolingEnvironment) : base(typeToolingEnvironment) {
+namespace TypeTooling.DotNet
+{
+    public class DotNetTypeToolingProvider : TypeToolingProvider
+    {
+        public DotNetTypeToolingProvider(TypeToolingEnvironment typeToolingEnvironment) : base(typeToolingEnvironment)
+        {
         }
 
-        public override TypeToolingType? ProvideType(RawType rawType, RawType? companionRawType) {
+        public override TypeToolingType? ProvideType(RawType rawType, RawType? companionRawType)
+        {
             if (!(rawType is DotNetRawType dotNetRawType))
                 return null;
 
@@ -32,7 +36,8 @@ namespace TypeTooling.DotNet {
             return new DotNetObjectType(TypeToolingEnvironment, dotNetRawType, companionDotNetTypeDescriptor);
         }
 
-        public override AttachedType? ProvideAttachedType(RawType rawType, RawType? companionRawType) {
+        public override AttachedType? ProvideAttachedType(RawType rawType, RawType? companionRawType)
+        {
             // TODO: Implement this
 
             return null;

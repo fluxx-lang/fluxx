@@ -1,5 +1,7 @@
-﻿namespace TypeTooling.CompanionType {
-    public interface IContentPropertyProvider {
+﻿namespace TypeTooling.CompanionType
+{
+    public interface IContentPropertyProvider
+    {
         string GetContentProperty();
     }
 }

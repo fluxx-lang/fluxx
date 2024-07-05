@@ -1,5 +1,6 @@
 ﻿namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
-    public class LiteralCode : ExpressionCode {
+    public class LiteralCode : ExpressionCode
+    {
     }
 }

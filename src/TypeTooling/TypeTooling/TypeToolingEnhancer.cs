@@ -1,10 +1,13 @@
 ﻿using TypeTooling.Types;
 
-namespace TypeTooling {
-    public abstract class TypeToolingEnhancer {
+namespace TypeTooling
+{
+    public abstract class TypeToolingEnhancer
+    {
         public TypeToolingEnvironment TypeToolingEnvironment { get;  }
 
-        protected TypeToolingEnhancer(TypeToolingEnvironment typeToolingEnvironment) {
+        protected TypeToolingEnhancer(TypeToolingEnvironment typeToolingEnvironment)
+        {
             TypeToolingEnvironment = typeToolingEnvironment;
         }
 

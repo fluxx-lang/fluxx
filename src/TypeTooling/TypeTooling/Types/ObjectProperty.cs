@@ -6,7 +6,8 @@ namespace TypeTooling.Types
     {
         public ObjectType ObjectType { get;  }
 
-        protected ObjectProperty(ObjectType objectType) {
+        protected ObjectProperty(ObjectType objectType)
+        {
             ObjectType = objectType;
         }
 

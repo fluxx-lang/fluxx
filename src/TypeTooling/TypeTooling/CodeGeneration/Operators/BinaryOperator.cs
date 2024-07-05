@@ -5,8 +5,10 @@ using System.Collections.Generic;
  * @since 6/28/2014 11:10 PM
  */
 
-namespace TypeTooling.CodeGeneration.Operators {
-    public class BinaryOperator : Operator {
+namespace TypeTooling.CodeGeneration.Operators
+{
+    public class BinaryOperator : Operator
+    {
         // Boolean operators
 
         public static BinaryOperator And = new BinaryOperator("&&");

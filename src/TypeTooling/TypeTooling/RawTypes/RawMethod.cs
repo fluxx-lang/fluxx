@@ -1,5 +1,6 @@
 ﻿namespace TypeTooling.RawTypes
 {
-    public abstract class RawMethod {
+    public abstract class RawMethod
+    {
     }
 }

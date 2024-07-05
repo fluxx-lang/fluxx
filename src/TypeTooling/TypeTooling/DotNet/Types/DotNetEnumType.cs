@@ -6,18 +6,22 @@ using TypeTooling.Types;
 
 namespace TypeTooling.DotNet.Types
 {
-    public class DotNetEnumType : EnumTypeLazyLoaded {
+    public class DotNetEnumType : EnumTypeLazyLoaded
+    {
         private readonly DotNetRawType _rawType;
 
-        public DotNetEnumType(DotNetRawType rawType) {
+        public DotNetEnumType(DotNetRawType rawType)
+        {
             _rawType = rawType;
         }
 
         public override RawType UnderlyingType => _rawType;
 
-        protected override EnumTypeData DoGetData() {
+        protected override EnumTypeData DoGetData()
+        {
             var enumValues = new List<EnumValue>();
-            foreach (string enumName in _rawType.GetEnumNames()) {
+            foreach (string enumName in _rawType.GetEnumNames())
+            {
                 ExpressionAndHelpersCode expressionAndHelpersCode = new ExpressionAndHelpersCode(Code.EnumValueLiteral(_rawType, enumName));
                 enumValues.Add(new EnumValue(enumName, expressionAndHelpersCode));
             }

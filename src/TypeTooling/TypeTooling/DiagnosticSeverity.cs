@@ -5,7 +5,8 @@
     ///
     /// This was copied from Roslyn's Microsoft.CodeAnalysis.DiagnosticSeverity
     /// </summary>
-    public enum DiagnosticSeverity {
+    public enum DiagnosticSeverity
+    {
         /// <summary>
         /// Information that does not indicate a problem (i.e. not prescriptive).
         /// </summary>

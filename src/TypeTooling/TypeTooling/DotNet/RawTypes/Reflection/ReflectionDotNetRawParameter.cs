@@ -2,10 +2,12 @@
 
 namespace TypeTooling.DotNet.RawTypes.Reflection
 {
-    public class ReflectionDotNetRawParameter : DotNetRawParameter {
+    public class ReflectionDotNetRawParameter : DotNetRawParameter
+    {
         private readonly ParameterInfo _parameterInfo;
 
-        public ReflectionDotNetRawParameter(ParameterInfo parameterInfo) {
+        public ReflectionDotNetRawParameter(ParameterInfo parameterInfo)
+        {
             _parameterInfo = parameterInfo;
         }
 

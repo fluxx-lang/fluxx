@@ -1,7 +1,9 @@
 ﻿namespace TypeTooling.Images
 {
-    public abstract class Image {
-        protected Image(string? automationName) {
+    public abstract class Image
+    {
+        protected Image(string? automationName)
+        {
             AutomationName = automationName;
         }
 

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using TypeTooling.Types;
 
-namespace TypeTooling.Helper {
-    public abstract class ObjectTypeLazyLoaded : ObjectType {
+namespace TypeTooling.Helper
+{
+    public abstract class ObjectTypeLazyLoaded : ObjectType
+    {
         private readonly Lazy<ObjectTypeData> _data;
 
-        protected ObjectTypeLazyLoaded() {
+        protected ObjectTypeLazyLoaded()
+        {
             _data = new Lazy<ObjectTypeData>(DoGetData);
         }
 
@@ -20,18 +23,21 @@ namespace TypeTooling.Helper {
         public sealed override ObjectProperty? ContentProperty => _data.Value.ContentProperty;
 
         /// <inheritdoc />
-        public override CustomLiteralParser? GetCustomLiteralParser() {
+        public override CustomLiteralParser? GetCustomLiteralParser()
+        {
             return _data.Value.CustomLiteralParser;
         }
 
-        public override IReadOnlyCollection<ObjectType> GetBaseTypes() {
+        public override IReadOnlyCollection<ObjectType> GetBaseTypes()
+        {
             return _data.Value.BaseTypes;
         }
 
         protected abstract ObjectTypeData DoGetData();
     }
 
-    public sealed class ObjectTypeData {
+    public sealed class ObjectTypeData
+    {
         public string FullName { get; }
 
         public IReadOnlyCollection<ObjectProperty> Properties { get; }
@@ -45,7 +51,8 @@ namespace TypeTooling.Helper {
         /// <inheritdoc />
         public ObjectTypeData(string fullName, IReadOnlyCollection<ObjectProperty> properties,
             ObjectProperty? contentProperty, CustomLiteralParser? customLiteralParser,
-            IReadOnlyCollection<ObjectType> baseTypes) {
+            IReadOnlyCollection<ObjectType> baseTypes)
+            {
             FullName = fullName;
             Properties = properties;
             ContentProperty = contentProperty;

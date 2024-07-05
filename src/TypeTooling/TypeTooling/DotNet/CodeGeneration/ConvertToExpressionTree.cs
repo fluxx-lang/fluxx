@@ -15,12 +15,14 @@ using TypeTooling.RawTypes;
 
 namespace TypeTooling.DotNet.CodeGeneration
 {
-    public class ConvertToExpressionTree : IConvertToExpressionTree {
+    public class ConvertToExpressionTree : IConvertToExpressionTree
+    {
         private readonly TypeToolingEnvironment _typeToolingEnvironment;
         private readonly Dictionary<string, ParameterExpression> _parameterExpressionsDictionary;
         public LambdaExpression Result { get; }
 
-        public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, LambdaCode lambdaCode) {
+        public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, LambdaCode lambdaCode)
+        {
             _typeToolingEnvironment = typeToolingEnvironment;
 
             ParameterExpression[] parameterExpressions = lambdaCode.Parameters
@@ -35,7 +37,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             Result = Expression.Lambda(bodyExpression, true, parameterExpressions);
         }
 
-        public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, ExpressionCode expressionCode) {
+        public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, ExpressionCode expressionCode)
+        {
             _typeToolingEnvironment = typeToolingEnvironment;
             _parameterExpressionsDictionary = new Dictionary<string, ParameterExpression>();
 
@@ -45,12 +48,15 @@ namespace TypeTooling.DotNet.CodeGeneration
             Result = Expression.Lambda(bodyExpression, true, Array.Empty<ParameterExpression>());
         }
 
-        public Expression? ConvertExpressionOrNull(ExpressionCode? expressionCode) {
+        public Expression? ConvertExpressionOrNull(ExpressionCode? expressionCode)
+        {
             return expressionCode == null ? null : ConvertExpression(expressionCode);
         }
 
-        public Expression ConvertExpression(ExpressionCode expressionCode) {
-            switch (expressionCode) {
+        public Expression ConvertExpression(ExpressionCode expressionCode)
+        {
+            switch (expressionCode)
+            {
                 case StringLiteralCode stringLiteralCode:
                     return Expression.Constant(stringLiteralCode.Value);
                 case BooleanLiteralCode booleanLiteralCode:
@@ -59,7 +65,8 @@ namespace TypeTooling.DotNet.CodeGeneration
                     return Expression.Constant(byteLiteralCode.Value);
                 case IntLiteralCode intLiteralCode:
                     return Expression.Constant(intLiteralCode.Value);
-                case EnumValueLiteralCode enumValueLiteralCode: {
+                case EnumValueLiteralCode enumValueLiteralCode:
+                {
                         RawType enumType = enumValueLiteralCode.EnumType;
                         if (!(enumType is DotNetRawType dotNetRawType))
                             throw new Exception($"Enum type is {enumType.GetType().FullName}, not a DotNetRawType as expected");
@@ -90,7 +97,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             }
         }
 
-        private Expression ConvertNewObject(NewObjectCode newObjectCode) {
+        private Expression ConvertNewObject(NewObjectCode newObjectCode)
+        {
             ConstructorInfo constructorInfo = GetConstructorInfo(newObjectCode.Constructor);
             ExpressionCode[] codeArguments = newObjectCode.ConstructorArguments;
 
@@ -103,10 +111,12 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             bool needToSetPropertiesPostCreation = false;
             List<MemberAssignment> memberAssignments = new List<MemberAssignment>();
-            foreach (var propertyValue in propertyValues) {
+            foreach (var propertyValue in propertyValues)
+            {
                 DotNetRawProperty rawProperty = (DotNetRawProperty)propertyValue.Property;
 
-                if (!rawProperty.CanWrite) {
+                if (!rawProperty.CanWrite)
+                {
                     DotNetRawType iListRawType = (DotNetRawType)_typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
 
                     if (rawProperty.PropertyType.IsAssignableTo(iListRawType))
@@ -140,13 +150,16 @@ namespace TypeTooling.DotNet.CodeGeneration
                 (DotNetRawType)_typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
             Type sequenceUtilsType = ((ReflectionDotNetRawType) sequenceUtilsRawType).Type;
 
-            foreach (var propertyValue in propertyValues) {
+            foreach (var propertyValue in propertyValues)
+            {
                 DotNetRawProperty rawProperty = (DotNetRawProperty)propertyValue.Property;
 
-                if (!rawProperty.CanWrite) {
+                if (!rawProperty.CanWrite)
+                {
                     DotNetRawType iListRawType = (DotNetRawType)_typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
 
-                    if (rawProperty.PropertyType.IsAssignableTo(iListRawType)) {
+                    if (rawProperty.PropertyType.IsAssignableTo(iListRawType))
+                    {
                         Expression propertyExpression = Expression.Property(objVariableExpression, rawProperty.Name);
 
                         if (!(propertyValue.Value is NewSequenceCode newSequenceCode))
@@ -169,10 +182,12 @@ namespace TypeTooling.DotNet.CodeGeneration
             return Expression.Block(objectType, blockVariables, blockExpressions);
         }
 
-        private NewArrayExpression ConvertNewArrayInit(NewArrayInitCode newArrayInitCode) {
+        private NewArrayExpression ConvertNewArrayInit(NewArrayInitCode newArrayInitCode)
+        {
 
             var itemExpressions = ImmutableArray.CreateBuilder<Expression>();
-            foreach (ExpressionCode item in newArrayInitCode.Items) {
+            foreach (ExpressionCode item in newArrayInitCode.Items)
+            {
                 Expression itemExpression = ConvertExpression(item);
                 itemExpressions.Add(itemExpression);
             }
@@ -181,7 +196,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             return Expression.NewArrayInit(elementType.Type, itemExpressions.ToArray());
         }
 
-        private Expression ConvertNewSequence(NewSequenceCode newSequenceCode) {
+        private Expression ConvertNewSequence(NewSequenceCode newSequenceCode)
+        {
             DotNetRawType sequenceUtils = (DotNetRawType) _typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
 
             RawType elementType = newSequenceCode.ElementType;
@@ -193,7 +209,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             return ConvertExpression(itemsMethodCallCode);
         }
 
-        private MethodCallExpression ConvertMethodCall(MethodCallCode methodCallCode) {
+        private MethodCallExpression ConvertMethodCall(MethodCallCode methodCallCode)
+        {
             MethodInfo methodInfo = GetMethodInfo(methodCallCode.RawMethod);
             ExpressionCode[] argumentsCode = methodCallCode.Arguments;
 
@@ -208,7 +225,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             else return Expression.Call(ConvertExpression(objectCode), methodInfo, argumentsExpressions);
         }
 
-        private Expression ConvertGenericMethodCall(GenericMethodCallCode genericMethodCallCode) {
+        private Expression ConvertGenericMethodCall(GenericMethodCallCode genericMethodCallCode)
+        {
             Type[] typeArguments = genericMethodCallCode.GenericTypeArguments.Select(type => ((ReflectionDotNetRawType) type).Type).ToArray();
 
             MethodInfo methodInfo = GetMethodInfo(genericMethodCallCode.RawMethod);
@@ -227,13 +245,15 @@ namespace TypeTooling.DotNet.CodeGeneration
             else return Expression.Call(ConvertExpression(objectCode), genericMethodInfo, argumentsExpressions);
         }
 
-        private InvocationExpression ConvertFunctionDelegateInvoke(FunctionDelegateInvokeCode functionDelegateInvokeCode) {
+        private InvocationExpression ConvertFunctionDelegateInvoke(FunctionDelegateInvokeCode functionDelegateInvokeCode)
+        {
             Expression<Func<string, int, bool>> stringLengthMin = (value, min) => value.Length >= min;
 
             ExpressionCode functionDelegateCode = functionDelegateInvokeCode.FunctionDelegate;
 
             Expression functionDelegateExpression;
-            if (functionDelegateCode is FunctionDelegateHolderCode functionDelegateHolderCode) {
+            if (functionDelegateCode is FunctionDelegateHolderCode functionDelegateHolderCode)
+            {
                 Delegate? functionDelegate = functionDelegateHolderCode.FunctionDelegateHolder.FunctionDelegate;
                 if (functionDelegate == null)
                     throw new InvalidOperationException("Recursive calls (direct or indirect) aren't yet supported");
@@ -257,7 +277,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             return Expression.Invoke(functionDelegateExpression, argumentsExpressions);
         }
 
-        private BinaryExpression ConvertBinaryExpression(BinaryExpressionCode binaryExpressionCode) {
+        private BinaryExpression ConvertBinaryExpression(BinaryExpressionCode binaryExpressionCode)
+        {
             BinaryOperator binaryOperator = binaryExpressionCode.Operator;
 
             ExpressionType expressionType;
@@ -292,7 +313,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             return Expression.MakeBinary(expressionType, leftOperandExpression, rightOperandExpression);
         }
 
-        private UnaryExpression ConvertUnaryExpression(UnaryExpressionCode unaryExpressionCode) {
+        private UnaryExpression ConvertUnaryExpression(UnaryExpressionCode unaryExpressionCode)
+        {
             UnaryOperator unaryOperator = unaryExpressionCode.Operator;
 
             ExpressionType expressionType;
@@ -305,14 +327,16 @@ namespace TypeTooling.DotNet.CodeGeneration
             return Expression.MakeUnary(expressionType, operandExpression, null);
         }
 
-        private MemberExpression ConvertGetProperty(GetPropertyCode getPropertyCode) {
+        private MemberExpression ConvertGetProperty(GetPropertyCode getPropertyCode)
+        {
             if (!(getPropertyCode.Property is ReflectionDotNetRawProperty reflectionDotNetRawProperty))
                 throw new Exception($"Enum type is {getPropertyCode.Property.GetType().FullName}, not a ReflectionDotNetRawProperty as expected");
 
             return Expression.MakeMemberAccess(ConvertExpressionOrNull(getPropertyCode.ObjectExpression), reflectionDotNetRawProperty.PropertyInfo);
         }
 
-        private static ConstructorInfo GetConstructorInfo(RawConstructor rawConstructor) {
+        private static ConstructorInfo GetConstructorInfo(RawConstructor rawConstructor)
+        {
             if (!(rawConstructor is ReflectionDotNetRawConstructor reflectionDotNetRawConstructor))
                 throw new Exception(
                     $"rawConstructor must be of type ReflectionDotNetRawConstructor in order to create an expression, but it's actually of type '{rawConstructor.GetType().FullName}'");
@@ -320,7 +344,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             return reflectionDotNetRawConstructor.ConstructorInfo;
         }
 
-        private static MethodInfo GetMethodInfo(RawMethod rawMethod) {
+        private static MethodInfo GetMethodInfo(RawMethod rawMethod)
+        {
             if (!(rawMethod is ReflectionDotNetRawMethod reflectionDotNetRawMethod))
                 throw new Exception(
                     $"rawMethod must be of type ReflectionDotNetRawMethod in order to create an expression, but it's actually of type '{rawMethod.GetType().FullName}'");
@@ -328,7 +353,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             return reflectionDotNetRawMethod.MethodInfo;
         }
 
-        private static MemberInfo GetMemberInfo(RawProperty rawProperty) {
+        private static MemberInfo GetMemberInfo(RawProperty rawProperty)
+        {
             if (!(rawProperty is ReflectionDotNetRawProperty reflectionDotNetRawProperty))
                 throw new Exception(
                     $"rawProperty must be of type ReflectionDotNetRawProperty in order to create an expression, but it's actually of type '{rawProperty.GetType().FullName}'");
@@ -336,7 +362,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             return reflectionDotNetRawProperty.PropertyInfo;
         }
 
-        private static Type GetType(RawType rawType) {
+        private static Type GetType(RawType rawType)
+        {
             if (!(rawType is ReflectionDotNetRawType reflectionDotNetRawType))
                 throw new Exception(
                     $"rawType must be of type ReflectionDotNetRawType in order to create an expression, but it's actually of type '{rawType.GetType().FullName}'");

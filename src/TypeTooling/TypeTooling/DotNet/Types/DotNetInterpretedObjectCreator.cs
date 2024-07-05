@@ -3,18 +3,22 @@ using TypeTooling.DotNet.RawTypes;
 using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.Types;
 
-namespace TypeTooling.DotNet.Types {
-    public class DotNetInterpretedObjectCreator : InterpretedObjectCreator {
+namespace TypeTooling.DotNet.Types
+{
+    public class DotNetInterpretedObjectCreator : InterpretedObjectCreator
+    {
         private readonly DotNetRawConstructor _constructorMethod;
         private readonly PropertyInitializer[] _propertyInitializers;
 
 
-        public DotNetInterpretedObjectCreator(DotNetRawConstructor constructorMethod, PropertyInitializer[] propertyInitializers) {
+        public DotNetInterpretedObjectCreator(DotNetRawConstructor constructorMethod, PropertyInitializer[] propertyInitializers)
+        {
             _constructorMethod = constructorMethod;
             _propertyInitializers = propertyInitializers;
         }
 
-        public override object Create(object[] values, int startOffset) {
+        public override object Create(object[] values, int startOffset)
+        {
             ConstructorInfo constructorInfo = ((ReflectionDotNetRawConstructor) _constructorMethod).ConstructorInfo;
 
             object obj = constructorInfo.Invoke(null);

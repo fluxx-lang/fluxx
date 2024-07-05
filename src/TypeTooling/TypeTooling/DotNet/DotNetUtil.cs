@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TypeTooling.DotNet {
-    public class DotNetUtil {
+namespace TypeTooling.DotNet
+{
+    public class DotNetUtil
+    {
         /// <summary>
         /// Return the current type and all ancestor types for it, searching the base class and interfaces in a depth first search.
         /// Note that interface types can be returned multiple times here, if there are multiple parts of the hiearchy that
@@ -11,7 +13,8 @@ namespace TypeTooling.DotNet {
         /// </summary>
         /// <param name="type">type in question</param>
         /// <returns>current type and all its ancestor classes and interfaces</returns>
-        public static IEnumerable<Type> GetTypeAndAncestors(Type type) {
+        public static IEnumerable<Type> GetTypeAndAncestors(Type type)
+        {
             // Return current type
             yield return type;
 
@@ -27,8 +30,10 @@ namespace TypeTooling.DotNet {
                     yield return ancestorType;
         }
 
-        public static MethodInfo? GetMethod(Type type, string methodName, Type[] methodArgs) {
-            foreach (Type ancestorType in GetTypeAndAncestors(type)) {
+        public static MethodInfo? GetMethod(Type type, string methodName, Type[] methodArgs)
+        {
+            foreach (Type ancestorType in GetTypeAndAncestors(type))
+            {
                 MethodInfo methodInfo = ancestorType.GetMethod(methodName, methodArgs);
                 if (methodInfo != null)
                     return methodInfo;

@@ -2,17 +2,21 @@
 using TypeTooling.CodeGeneration;
 using TypeTooling.CodeGeneration.Expressions;
 
-namespace TypeTooling.Types {
-    public class CustomLiteral {
+namespace TypeTooling.Types
+{
+    public class CustomLiteral
+    {
         private readonly ImmutableArray<Diagnostic>? _diagnostics;
         private readonly ExpressionAndHelpersCode? _expressionAndHelpersCode;
 
-        public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionAndHelpersCode? expressionAndHelpersCode) {
+        public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionAndHelpersCode? expressionAndHelpersCode)
+        {
             _diagnostics = diagnostics;
             _expressionAndHelpersCode = expressionAndHelpersCode;
         }
 
-        public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionCode expressionCode) {
+        public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionCode expressionCode)
+        {
             _diagnostics = diagnostics;
             _expressionAndHelpersCode = Code.ExpressionAndHelpers(expressionCode);
         }
@@ -21,7 +25,8 @@ namespace TypeTooling.Types {
 
         public CustomLiteral(ExpressionCode expressionCode) : this(null, expressionCode) { }
 
-        public static CustomLiteral SingleError(string message) {
+        public static CustomLiteral SingleError(string message)
+        {
             return new CustomLiteral(Diagnostic.SingleError(message), (ExpressionAndHelpersCode?) null);
         }
 

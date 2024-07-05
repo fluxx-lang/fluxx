@@ -2,10 +2,12 @@
 
 namespace TypeTooling.DotNet.CodeGeneration
 {
-    public class FunctionDelegateHolderCode : ExpressionCode {
+    public class FunctionDelegateHolderCode : ExpressionCode
+    {
         public FunctionDelegateHolder FunctionDelegateHolder { get; }
 
-        public FunctionDelegateHolderCode(FunctionDelegateHolder functionDelegateHolder) {
+        public FunctionDelegateHolderCode(FunctionDelegateHolder functionDelegateHolder)
+        {
             FunctionDelegateHolder = functionDelegateHolder;
         }
     }

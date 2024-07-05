@@ -2,13 +2,16 @@
 using TypeTooling.CodeGeneration.Expressions;
 using TypeTooling.RawTypes;
 
-namespace TypeTooling.Types {
-    public class EnhancedObjectType : ObjectType {
+namespace TypeTooling.Types
+{
+    public class EnhancedObjectType : ObjectType
+    {
         private readonly ObjectType _originalType;
         private readonly TypeOverride _typeOverride;
 
 
-        public EnhancedObjectType(ObjectType originalType) {
+        public EnhancedObjectType(ObjectType originalType)
+        {
             _originalType = originalType;
             _typeOverride = new TypeOverride(originalType);
         }
@@ -19,11 +22,13 @@ namespace TypeTooling.Types {
 
         public override RawType UnderlyingType => _originalType.UnderlyingType;
 
-        public override CustomLiteralParser? GetCustomLiteralParser() {
+        public override CustomLiteralParser? GetCustomLiteralParser()
+        {
             return _typeOverride.GetCustomLiteralParser();
         }
 
-        public override Visualizer? GetVisualizer() {
+        public override Visualizer? GetVisualizer()
+        {
             return _typeOverride.GetVisualizer();
         }
 
@@ -41,15 +46,18 @@ namespace TypeTooling.Types {
             _originalType.GetGetPropertyCode(instance, property);
 
         public override InterpretedObjectCreator? GetInterpretedObjectCreator(ObjectProperty[] properties,
-            AttachedProperty[] attachedProperties) {
+            AttachedProperty[] attachedProperties)
+            {
             return _originalType.GetInterpretedObjectCreator(properties, attachedProperties);
         }
 
-        public override ObjectPropertyReader GetPropertyReader(ObjectProperty property) {
+        public override ObjectPropertyReader GetPropertyReader(ObjectProperty property)
+        {
             return _originalType.GetPropertyReader(property);
         }
 
-        public override IReadOnlyCollection<ObjectType> GetBaseTypes() {
+        public override IReadOnlyCollection<ObjectType> GetBaseTypes()
+        {
             return _originalType.GetBaseTypes();
         }
     }

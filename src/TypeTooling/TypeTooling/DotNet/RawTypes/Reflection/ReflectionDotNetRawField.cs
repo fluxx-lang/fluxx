@@ -1,10 +1,13 @@
 ﻿using System.Reflection;
 
-namespace TypeTooling.DotNet.RawTypes.Reflection {
-    public class ReflectionDotNetRawField : DotNetRawField {
+namespace TypeTooling.DotNet.RawTypes.Reflection
+{
+    public class ReflectionDotNetRawField : DotNetRawField
+    {
         private readonly FieldInfo _fieldInfo;
 
-        public ReflectionDotNetRawField(FieldInfo fieldInfo) {
+        public ReflectionDotNetRawField(FieldInfo fieldInfo)
+        {
             _fieldInfo = fieldInfo;
         }
 

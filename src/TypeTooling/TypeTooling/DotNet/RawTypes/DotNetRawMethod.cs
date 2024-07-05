@@ -1,7 +1,9 @@
 ﻿using TypeTooling.RawTypes;
 
-namespace TypeTooling.DotNet.RawTypes {
-    public abstract class DotNetRawMethod : RawMethod {
+namespace TypeTooling.DotNet.RawTypes
+{
+    public abstract class DotNetRawMethod : RawMethod
+    {
         public abstract DotNetRawParameter[] GetParameters();
 
         public abstract DotNetRawType ReturnType { get;  }

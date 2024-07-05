@@ -4,10 +4,12 @@ using TypeTooling.Types;
 
 namespace TypeTooling.Helper
 {
-    public abstract class EnumTypeLazyLoaded : EnumType {
+    public abstract class EnumTypeLazyLoaded : EnumType
+    {
         private readonly Lazy<EnumTypeData> _data;
 
-        protected EnumTypeLazyLoaded() {
+        protected EnumTypeLazyLoaded()
+        {
             _data = new Lazy<EnumTypeData>(DoGetData);
         }
 
@@ -21,13 +23,15 @@ namespace TypeTooling.Helper
         protected abstract EnumTypeData DoGetData();
     }
 
-    public sealed class EnumTypeData {
+    public sealed class EnumTypeData
+    {
         public string FullName { get; }
 
         public IReadOnlyCollection<EnumValue> Values { get; }
 
         /// <inheritdoc />
-        public EnumTypeData(string fullName, IReadOnlyCollection<EnumValue> values) {
+        public EnumTypeData(string fullName, IReadOnlyCollection<EnumValue> values)
+        {
             FullName = fullName;
             Values = values;
         }

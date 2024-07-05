@@ -1,5 +1,7 @@
-﻿namespace TypeTooling.Types {
-    public abstract class SequenceType : TypeToolingType {
+﻿namespace TypeTooling.Types
+{
+    public abstract class SequenceType : TypeToolingType
+    {
         public abstract TypeToolingType ElementType { get; }
     }
 }

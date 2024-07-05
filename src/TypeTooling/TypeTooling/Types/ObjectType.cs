@@ -2,7 +2,8 @@
 using TypeTooling.CodeGeneration.Expressions;
 using TypeTooling.Images;
 
-namespace TypeTooling.Types {
+namespace TypeTooling.Types
+{
     public abstract class ObjectType : TypeToolingType
     {
         /// <remarks>

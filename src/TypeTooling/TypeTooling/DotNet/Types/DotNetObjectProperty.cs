@@ -5,13 +5,16 @@ using TypeTooling.ClassifiedText;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;
 
-namespace TypeTooling.DotNet.Types {
-    public class DotNetObjectProperty : ObjectProperty {
+namespace TypeTooling.DotNet.Types
+{
+    public class DotNetObjectProperty : ObjectProperty
+    {
         // Automatic properties
         public DotNetRawProperty RawProperty { get; }
         public override TypeToolingType Type { get; }
 
-        public DotNetObjectProperty(ObjectType objectType, DotNetRawProperty rawProperty, TypeToolingType type) : base(objectType) {
+        public DotNetObjectProperty(ObjectType objectType, DotNetRawProperty rawProperty, TypeToolingType type) : base(objectType)
+        {
             RawProperty = rawProperty;
             Type = type;
         }
@@ -24,7 +27,8 @@ namespace TypeTooling.DotNet.Types {
 
         public DotNetObjectType DotNetObjectType => (DotNetObjectType) ObjectType;
 
-        public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken) {
+        public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken)
+        {
             return RawProperty.GetDescriptionAsync(DotNetObjectType.TypeToolingEnvironment.UICulture, cancellationToken);
         }
     }

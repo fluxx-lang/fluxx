@@ -5,13 +5,16 @@ using System.Threading.Tasks;
 using TypeTooling.ClassifiedText;
 using TypeTooling.RawTypes;
 
-namespace TypeTooling.DotNet.RawTypes {
-    public abstract class DotNetRawType : RawType {
+namespace TypeTooling.DotNet.RawTypes
+{
+    public abstract class DotNetRawType : RawType
+    {
         public abstract string FullName { get; }
 
         public abstract string Name { get; }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return FullName;
         }
 
@@ -25,8 +28,10 @@ namespace TypeTooling.DotNet.RawTypes {
 
         public abstract IEnumerable<DotNetRawCustomAttribute> GetCustomAttributes();
 
-        public bool HasAttributeOfType(string attributeTypeFullName) {
-            foreach (DotNetRawCustomAttribute attribute in GetCustomAttributes()) {
+        public bool HasAttributeOfType(string attributeTypeFullName)
+        {
+            foreach (DotNetRawCustomAttribute attribute in GetCustomAttributes())
+            {
                 if (attribute.AttributeType.FullName == attributeTypeFullName)
                     return true;
             }
@@ -42,7 +47,8 @@ namespace TypeTooling.DotNet.RawTypes {
 
         public abstract DotNetRawMethod? GetMethod(string methodName, DotNetRawType[] parameterRawTypes);
 
-        public DotNetRawMethod GetRequiredMethod(string methodName, DotNetRawType[] parameterRawTypes) {
+        public DotNetRawMethod GetRequiredMethod(string methodName, DotNetRawType[] parameterRawTypes)
+        {
             DotNetRawMethod? method = GetMethod(methodName, parameterRawTypes);
             if (method == null)
                 throw new UserViewableException($"No '{methodName}' method found for type '{FullName}' taking specified parameters");
@@ -51,7 +57,8 @@ namespace TypeTooling.DotNet.RawTypes {
 
         public abstract DotNetRawMethod? GetMethod(string methodName);
 
-        public DotNetRawMethod GetRequiredMethod(string methodName) {
+        public DotNetRawMethod GetRequiredMethod(string methodName)
+        {
             DotNetRawMethod? method = GetMethod(methodName);
             if (method == null)
                 throw new UserViewableException($"No '{methodName}' method found for type '{FullName}'");
@@ -60,7 +67,8 @@ namespace TypeTooling.DotNet.RawTypes {
 
         public abstract DotNetRawMethod? GetMethodInTypeOrAncestor(string methodName, DotNetRawType[] methodArgs);
 
-        public DotNetRawMethod GetRequiredInstanceMethod(string methodName, DotNetRawType[] parameterRawTypes) {
+        public DotNetRawMethod GetRequiredInstanceMethod(string methodName, DotNetRawType[] parameterRawTypes)
+        {
             DotNetRawMethod? method = GetMethod(methodName, parameterRawTypes);
             if (method == null)
                 throw new UserViewableException($"No '{methodName}' method found for type '{FullName}'");
@@ -69,7 +77,8 @@ namespace TypeTooling.DotNet.RawTypes {
             return method;
         }
 
-        public DotNetRawMethod GetRequiredStaticMethod(string methodName, DotNetRawType[] parameterRawTypes) {
+        public DotNetRawMethod GetRequiredStaticMethod(string methodName, DotNetRawType[] parameterRawTypes)
+        {
             DotNetRawMethod? method = GetMethod(methodName, parameterRawTypes);
             if (method == null)
                 throw new UserViewableException($"No '{methodName}' method found for type '{FullName}'");
@@ -90,7 +99,8 @@ namespace TypeTooling.DotNet.RawTypes {
 
         public abstract bool IsAssignableFrom(DotNetRawType otherType);
 
-        public bool IsAssignableTo(DotNetRawType otherType) {
+        public bool IsAssignableTo(DotNetRawType otherType)
+        {
             return otherType.IsAssignableFrom(this);
         }
 

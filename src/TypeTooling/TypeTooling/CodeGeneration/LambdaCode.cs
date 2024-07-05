@@ -3,7 +3,8 @@ using TypeTooling.CodeGeneration.Expressions;
 
 namespace TypeTooling.CodeGeneration
 {
-    public class LambdaCode {
+    public class LambdaCode
+    {
         /// <summary>
         /// The Name may be used for debug information.
         /// </summary>
@@ -11,7 +12,8 @@ namespace TypeTooling.CodeGeneration
         public ImmutableArray<ParameterExpressionCode> Parameters { get; }
         public ExpressionCode Body { get; }
 
-        public LambdaCode(string name, ImmutableArray<ParameterExpressionCode> parameters, ExpressionCode body) {
+        public LambdaCode(string name, ImmutableArray<ParameterExpressionCode> parameters, ExpressionCode body)
+        {
             Name = name;
             Parameters = parameters;
             Body = body;

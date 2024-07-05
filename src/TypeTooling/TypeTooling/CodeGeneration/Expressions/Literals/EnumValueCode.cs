@@ -1,10 +1,12 @@
 ﻿namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
-    public class EnumValueCode : ExpressionCode {
+    public class EnumValueCode : ExpressionCode
+    {
         private readonly object _enumTypeDescriptor;
         private readonly string _enumValue;
 
-        public EnumValueCode(object enumTypeDescriptor, string enumValue) {
+        public EnumValueCode(object enumTypeDescriptor, string enumValue)
+        {
             _enumTypeDescriptor = enumTypeDescriptor;
             _enumValue = enumValue;
         }

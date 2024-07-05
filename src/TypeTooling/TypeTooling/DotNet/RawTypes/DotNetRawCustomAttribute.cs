@@ -1,5 +1,7 @@
-﻿namespace TypeTooling.DotNet.RawTypes {
-    public abstract class DotNetRawCustomAttribute {
+﻿namespace TypeTooling.DotNet.RawTypes
+{
+    public abstract class DotNetRawCustomAttribute
+    {
         public abstract DotNetRawType AttributeType { get;  }
 
         public abstract object? GetNamedArgumentValue(string argumentName);

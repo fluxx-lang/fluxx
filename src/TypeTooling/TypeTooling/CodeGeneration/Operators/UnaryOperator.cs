@@ -1,5 +1,7 @@
-namespace TypeTooling.CodeGeneration.Operators {
-    public class UnaryOperator : Operator {
+namespace TypeTooling.CodeGeneration.Operators
+{
+    public class UnaryOperator : Operator
+    {
         public static UnaryOperator UnaryMinus = new UnaryOperator("-");
         public static UnaryOperator Not = new UnaryOperator("!");
 

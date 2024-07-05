@@ -1,9 +1,12 @@
-namespace TypeTooling {
-    public class PropertyValue<TProperty, TValue> {
+namespace TypeTooling
+{
+    public class PropertyValue<TProperty, TValue>
+    {
         public TProperty Property { get; }
         public TValue Value { get; }
 
-        public PropertyValue(TProperty property, TValue value) {
+        public PropertyValue(TProperty property, TValue value)
+        {
             Property = property;
             Value = value;
         }
