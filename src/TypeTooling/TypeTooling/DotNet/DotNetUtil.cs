@@ -23,14 +23,18 @@ namespace TypeTooling.DotNet
             if (baseType != null)
             {
                 foreach (Type ancestorType in GetTypeAndAncestors(baseType))
+                {
                     yield return ancestorType;
+                }
             }
 
             // Return interfaces and their ancestors
             foreach (Type intface in type.GetInterfaces())
             {
                 foreach (Type ancestorType in GetTypeAndAncestors(intface))
+                {
                     yield return ancestorType;
+                }
             }
         }
 
@@ -40,7 +44,9 @@ namespace TypeTooling.DotNet
             {
                 MethodInfo methodInfo = ancestorType.GetMethod(methodName, methodArgs);
                 if (methodInfo != null)
+                {
                     return methodInfo;
+                }
             }
 
             return null;

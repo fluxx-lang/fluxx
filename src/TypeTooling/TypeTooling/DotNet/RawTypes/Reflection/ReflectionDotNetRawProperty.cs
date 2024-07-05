@@ -24,7 +24,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         public override IEnumerable<DotNetRawCustomAttribute> GetCustomAttributes()
         {
             foreach (CustomAttributeData customAttributeData in this._propertyInfo.CustomAttributes)
+            {
                 yield return new ReflectionDotNetRawCustomAttribute(customAttributeData);
+            }
         }
 
         public PropertyInfo PropertyInfo => this._propertyInfo;

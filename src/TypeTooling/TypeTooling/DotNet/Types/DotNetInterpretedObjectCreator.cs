@@ -25,7 +25,9 @@ namespace TypeTooling.DotNet.Types
 
             int propertyCount = this._propertyInitializers.Length;
             for (int i = 0; i < propertyCount; i++)
+            {
                 this._propertyInitializers[i].Initialize(obj, values[startOffset + i]);
+            }
 
             return obj;
         }

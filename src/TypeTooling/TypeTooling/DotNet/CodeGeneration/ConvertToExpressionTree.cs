@@ -69,7 +69,10 @@ namespace TypeTooling.DotNet.CodeGeneration
                 {
                         RawType enumType = enumValueLiteralCode.EnumType;
                         if (!(enumType is DotNetRawType dotNetRawType))
+                        {
                             throw new Exception($"Enum type is {enumType.GetType().FullName}, not a DotNetRawType as expected");
+                        }
+
                         return Expression.Constant(dotNetRawType.GetEnumUnderlyingValue(enumValueLiteralCode.ValueName));
                     }
                 case NewObjectCode newObjectCode:
@@ -107,7 +110,9 @@ namespace TypeTooling.DotNet.CodeGeneration
             PropertyValue<RawProperty, ExpressionCode>[] propertyValues = newObjectCode.PropertyValues;
 
             if (propertyValues.Length == 0)
+            {
                 return newExpression;
+            }
 
             bool needToSetPropertiesPostCreation = false;
             List<MemberAssignment> memberAssignments = new List<MemberAssignment>();
@@ -120,8 +125,13 @@ namespace TypeTooling.DotNet.CodeGeneration
                     DotNetRawType iListRawType = (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
 
                     if (rawProperty.PropertyType.IsAssignableTo(iListRawType))
+                    {
                         needToSetPropertiesPostCreation = true;
-                    else throw new UserViewableException($"Property {rawProperty.Name} isn't writable");
+                    }
+                    else
+                    {
+                        throw new UserViewableException($"Property {rawProperty.Name} isn't writable");
+                    }
                 }
                 else
                 {
@@ -133,14 +143,18 @@ namespace TypeTooling.DotNet.CodeGeneration
             MemberInitExpression memberInitExpression = Expression.MemberInit(newExpression, memberAssignments);
 
             if (! needToSetPropertiesPostCreation)
+            {
                 return memberInitExpression;
+            }
 
             List<ParameterExpression> blockVariables = new List<ParameterExpression>();
             List<Expression> blockExpressions = new List<Expression>();
 
             Type objectType = constructorInfo.DeclaringType;
             if (objectType == null)
+            {
                 throw new InvalidOperationException($"{constructorInfo} is unexpectedly a static method");
+            }
 
             ParameterExpression objVariableExpression = Expression.Variable(objectType, "obj");
             blockVariables.Add(objVariableExpression);
@@ -165,7 +179,9 @@ namespace TypeTooling.DotNet.CodeGeneration
                         Expression propertyExpression = Expression.Property(objVariableExpression, rawProperty.Name);
 
                         if (!(propertyValue.Value is NewSequenceCode newSequenceCode))
+                        {
                             throw new InvalidOperationException($"Property {rawProperty.Name} isn't set via NewSequenceCode");
+                        }
 
                         Expression sequenceExpression = this.ConvertExpression(newSequenceCode);
 
@@ -218,13 +234,20 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             List<Expression> argumentsExpressions = new List<Expression>();
             foreach (ExpressionCode argumentCode in argumentsCode)
+            {
                 argumentsExpressions.Add(this.ConvertExpression(argumentCode));
+            }
 
             // Handle both static and instance method calls
             ExpressionCode? objectCode = methodCallCode.ObjectCode;
             if (objectCode == null)
+            {
                 return Expression.Call(methodInfo, argumentsExpressions);
-            else return Expression.Call(this.ConvertExpression(objectCode), methodInfo, argumentsExpressions);
+            }
+            else
+            {
+                return Expression.Call(this.ConvertExpression(objectCode), methodInfo, argumentsExpressions);
+            }
         }
 
         private Expression ConvertGenericMethodCall(GenericMethodCallCode genericMethodCallCode)
@@ -238,13 +261,20 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             List<Expression> argumentsExpressions = new List<Expression>();
             foreach (ExpressionCode argumentCode in argumentsCode)
+            {
                 argumentsExpressions.Add(this.ConvertExpression(argumentCode));
+            }
 
             // Handle both static and instance method calls
             ExpressionCode? objectCode = genericMethodCallCode.ObjectCode;
             if (objectCode == null)
+            {
                 return Expression.Call(genericMethodInfo, argumentsExpressions);
-            else return Expression.Call(this.ConvertExpression(objectCode), genericMethodInfo, argumentsExpressions);
+            }
+            else
+            {
+                return Expression.Call(this.ConvertExpression(objectCode), genericMethodInfo, argumentsExpressions);
+            }
         }
 
         private InvocationExpression ConvertFunctionDelegateInvoke(FunctionDelegateInvokeCode functionDelegateInvokeCode)
@@ -258,7 +288,9 @@ namespace TypeTooling.DotNet.CodeGeneration
             {
                 Delegate? functionDelegate = functionDelegateHolderCode.FunctionDelegateHolder.FunctionDelegate;
                 if (functionDelegate == null)
+                {
                     throw new InvalidOperationException("Recursive calls (direct or indirect) aren't yet supported");
+                }
 
                 functionDelegateExpression = Expression.Constant(functionDelegate);
 
@@ -274,7 +306,9 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             List<Expression> argumentsExpressions = new List<Expression>();
             foreach (ExpressionCode argumentCode in functionDelegateInvokeCode.Arguments)
+            {
                 argumentsExpressions.Add(this.ConvertExpression(argumentCode));
+            }
 
             return Expression.Invoke(functionDelegateExpression, argumentsExpressions);
         }
@@ -285,29 +319,53 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             ExpressionType expressionType;
             if (binaryOperator == BinaryOperator.And)
+            {
                 expressionType = ExpressionType.AndAlso;
+            }
             else if (binaryOperator == BinaryOperator.Or)
+            {
                 expressionType = ExpressionType.OrElse;
+            }
             else if (binaryOperator == BinaryOperator.LessThan)
+            {
                 expressionType = ExpressionType.LessThan;
+            }
             else if (binaryOperator == BinaryOperator.LessThanOrEqual)
+            {
                 expressionType = ExpressionType.LessThanOrEqual;
+            }
             else if (binaryOperator == BinaryOperator.GreaterThan)
+            {
                 expressionType = ExpressionType.GreaterThan;
+            }
             else if (binaryOperator == BinaryOperator.GreaterThanOrEqual)
+            {
                 expressionType = ExpressionType.GreaterThanOrEqual;
+            }
             else if (binaryOperator == BinaryOperator.Add)
+            {
                 expressionType = ExpressionType.Add;
+            }
             else if (binaryOperator == BinaryOperator.Subtract)
+            {
                 expressionType = ExpressionType.Subtract;
+            }
             else if (binaryOperator == BinaryOperator.Multiply)
+            {
                 expressionType = ExpressionType.Multiply;
+            }
             else if (binaryOperator == BinaryOperator.Equals)
+            {
                 expressionType = ExpressionType.Equal;
+            }
             else if (binaryOperator == BinaryOperator.NotEquals)
+            {
                 expressionType = ExpressionType.NotEqual;
+            }
             else
+            {
                 throw new Exception("Unknown infix operator: " + binaryOperator.DefaultStringRepresentation);
+            }
 
             Expression leftOperandExpression = this.ConvertExpression(binaryExpressionCode.LeftOperand);
             Expression rightOperandExpression = this.ConvertExpression(binaryExpressionCode.RightOperand);
@@ -321,9 +379,13 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             ExpressionType expressionType;
             if (unaryOperator == UnaryOperator.Not)
+            {
                 expressionType = ExpressionType.Not;
+            }
             else
+            {
                 throw new Exception("Unknown infix operator: " + unaryOperator.DefaultStringRepresentation);
+            }
 
             Expression operandExpression = this.ConvertExpression(unaryExpressionCode.Operand);
             return Expression.MakeUnary(expressionType, operandExpression, null);
@@ -332,7 +394,9 @@ namespace TypeTooling.DotNet.CodeGeneration
         private MemberExpression ConvertGetProperty(GetPropertyCode getPropertyCode)
         {
             if (!(getPropertyCode.Property is ReflectionDotNetRawProperty reflectionDotNetRawProperty))
+            {
                 throw new Exception($"Enum type is {getPropertyCode.Property.GetType().FullName}, not a ReflectionDotNetRawProperty as expected");
+            }
 
             return Expression.MakeMemberAccess(this.ConvertExpressionOrNull(getPropertyCode.ObjectExpression), reflectionDotNetRawProperty.PropertyInfo);
         }

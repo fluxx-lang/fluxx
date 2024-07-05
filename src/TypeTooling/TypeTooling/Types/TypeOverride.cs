@@ -25,14 +25,20 @@
         public CustomLiteralParser? GetCustomLiteralParser()
         {
             if (this._customLiteralParserOverride != null)
+            {
                 return this._customLiteralParserOverride.Value;
+            }
+
             return this._originalType.GetCustomLiteralParser();
         }
 
         public Visualizer? GetVisualizer()
         {
             if (this._visualizerOverride != null)
+            {
                 return this._visualizerOverride.Value;
+            }
+
             return this._originalType.GetVisualizer();
         }
 

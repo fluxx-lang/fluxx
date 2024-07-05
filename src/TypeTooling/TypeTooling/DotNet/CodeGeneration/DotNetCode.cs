@@ -44,7 +44,10 @@ namespace TypeTooling.DotNet.CodeGeneration
         {
             DotNetRawProperty? rawProperty = type.GetProperty(property);
             if (rawProperty == null)
+            {
                 throw new Exception($"Property {property} doesn't exist for object type {type.FullName}");
+            }
+
             return rawProperty;
         }
 
@@ -76,7 +79,10 @@ namespace TypeTooling.DotNet.CodeGeneration
             foreach (string parameterType in paramaterTypes)
             {
                 if (! first)
+                {
                     builder.Append(", ");
+                }
+
                 builder.Append(parameterType);
 
                 first = false;
@@ -90,7 +96,9 @@ namespace TypeTooling.DotNet.CodeGeneration
         {
             DotNetRawMethod method = type.GetRequiredMethod(methodName, parameterRawTypes);
             if (method.IsStatic)
+            {
                 throw new UserViewableException($"'{type.FullName}.{methodName}' method is static when expected not to be");
+            }
 
             return new MethodCallCode(instance, method, arguments);
         }
@@ -98,7 +106,9 @@ namespace TypeTooling.DotNet.CodeGeneration
         public static MethodCallCode Call(DotNetRawMethod method, ExpressionCode instance, params ExpressionCode[] arguments)
         {
             if (method.IsStatic)
+            {
                 throw new UserViewableException($"'{method.Name}' method is static when expected not to be");
+            }
 
             return new MethodCallCode(instance, method, arguments);
         }
@@ -107,7 +117,9 @@ namespace TypeTooling.DotNet.CodeGeneration
         {
             DotNetRawMethod method = type.GetRequiredMethod(methodName, parameterRawTypes);
             if (! method.IsStatic)
+            {
                 throw new UserViewableException($"'{type.FullName}.{methodName}' method isn't static so it can't be called as a static method");
+            }
 
             return new MethodCallCode(null, method, arguments);
         }
@@ -115,14 +127,19 @@ namespace TypeTooling.DotNet.CodeGeneration
         public static MethodCallCode CallStatic(DotNetRawMethod method, params ExpressionCode[] arguments)
         {
             if (!method.IsStatic)
+            {
                 throw new UserViewableException($"'{method.Name}' method isn't static so it can't be called as a static method");
+            }
+
             return new MethodCallCode(null, method, arguments);
         }
 
         public static GenericMethodCallCode CallGeneric(DotNetRawType[] genericTypeArguments, DotNetRawMethod method, ExpressionCode instance, params ExpressionCode[] arguments)
         {
             if (method.IsStatic)
+            {
                 throw new UserViewableException($"'{method.Name}' method is static when expected not to be");
+            }
 
             return new GenericMethodCallCode(genericTypeArguments, instance, method, arguments);
         }
@@ -130,7 +147,10 @@ namespace TypeTooling.DotNet.CodeGeneration
         public static GenericMethodCallCode CallStaticGeneric(DotNetRawType[] genericTypeArguments, DotNetRawMethod method, params ExpressionCode[] arguments)
         {
             if (!method.IsStatic)
+            {
                 throw new UserViewableException($"'{method.Name}' method isn't static so it can't be called as a static method");
+            }
+
             return new GenericMethodCallCode(genericTypeArguments, null, method, arguments);
         }
 
@@ -148,7 +168,9 @@ namespace TypeTooling.DotNet.CodeGeneration
         {
             // Verify that the value exists
             if (! (enumType.GetEnumNames().Any(name => name == enumValue)))
+            {
                 throw new UserViewableException($"No '{enumValue}' enum found for type '{enumType.FullName}'");
+            }
 
             return new EnumValueCode(enumType, enumValue);
         }

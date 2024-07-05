@@ -16,14 +16,25 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         public static ReflectionDotNetRawType ForPredefinedType(PredefinedType predefinedType)
         {
             if (predefinedType is BooleanType)
+            {
                 return new ReflectionDotNetRawType(typeof(bool));
+            }
             else if (predefinedType is DoubleType)
+            {
                 return new ReflectionDotNetRawType(typeof(double));
+            }
             else if (predefinedType is IntegerType)
+            {
                 return new ReflectionDotNetRawType(typeof(int));
+            }
             else if (predefinedType is StringType)
+            {
                 return new ReflectionDotNetRawType(typeof(string));
-            else throw new InvalidOperationException($"Unknown predefined type: {predefinedType.GetType().FullName}");
+            }
+            else
+            {
+                throw new InvalidOperationException($"Unknown predefined type: {predefinedType.GetType().FullName}");
+            }
         }
 
         public ReflectionDotNetRawType(Type type)
@@ -44,19 +55,25 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         public override IEnumerable<DotNetRawType> GetInterfaces()
         {
             foreach (Type interfaceType in this.Type.GetInterfaces())
+            {
                 yield return new ReflectionDotNetRawType(interfaceType);
+            }
         }
 
         public override IEnumerable<DotNetRawCustomAttribute> GetCustomAttributes()
         {
             foreach (CustomAttributeData customAttributeData in this.Type.CustomAttributes)
+            {
                 yield return new ReflectionDotNetRawCustomAttribute(customAttributeData);
+            }
         }
 
         public override IEnumerable<DotNetRawConstructor> GetConstructors()
         {
             foreach (ConstructorInfo constructorInfo in this.Type.GetConstructors())
+            {
                 yield return new ReflectionDotNetRawConstructor(constructorInfo);
+            }
         }
 
         public override DotNetRawConstructor? GetConstructor(string[] parameterTypes)
@@ -64,7 +81,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             foreach (ConstructorInfo constructorInfo in this.Type.GetConstructors())
             {
                 if (this.ParametersMatch(constructorInfo, parameterTypes))
+                {
                     return new ReflectionDotNetRawConstructor(constructorInfo);
+                }
             }
 
             return null;
@@ -74,12 +93,16 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         {
             ParameterInfo[] parameterInfos = methodBase.GetParameters();
             if (parameterInfos.Length != parameterTypes.Length)
+            {
                 return false;
+            }
 
             for (int i = 0; i < parameterInfos.Length; i++)
             {
                 if (parameterInfos[i].ParameterType.FullName != parameterTypes[i])
+                {
                     return false;
+                }
             }
 
             return true;
@@ -113,7 +136,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         public override IEnumerable<DotNetRawMethod> GetPublicMethods()
         {
             foreach (MethodInfo methodInfo in this.Type.GetMethods())
+            {
                 yield return new ReflectionDotNetRawMethod(methodInfo);
+            }
         }
 
         public override DotNetRawMethod? GetMethod(string methodName, DotNetRawType[] parameterRawTypes)
@@ -121,7 +146,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             Type[] parameterTypes = ToTypes(parameterRawTypes);
             MethodInfo methodInfo = this.Type.GetMethod(methodName, parameterTypes);
             if (methodInfo != null)
+            {
                 return new ReflectionDotNetRawMethod(methodInfo);
+            }
 
             // If the method wasn't found, also search the interfaces for it. When an interface method is implemented with
             // the interface name included (e.g. "int MyInterface.Method() { return 3; }") then it needs to be retrieved this
@@ -130,7 +157,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             {
                 MethodInfo intfaceMethodInfo = intface.GetMethod(methodName, parameterTypes);
                 if (intfaceMethodInfo != null)
+                {
                     return new ReflectionDotNetRawMethod(intfaceMethodInfo);
+                }
             }
 
             return null;
@@ -148,7 +177,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             {
                 MethodInfo methodInfo = this.Type.GetMethod(methodName);
                 if (methodInfo != null)
+                {
                     return new ReflectionDotNetRawMethod(methodInfo);
+                }
 
                 // If the method wasn't found, also search the interfaces for it. When an interface method is implemented with
                 // the interface name included (e.g. "int MyInterface.Method() { return 3; }") then it needs to be retrieved this
@@ -157,7 +188,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
                 {
                     MethodInfo intfaceMethodInfo = intface.GetMethod(methodName);
                     if (intfaceMethodInfo != null)
+                    {
                         return new ReflectionDotNetRawMethod(intfaceMethodInfo);
+                    }
                 }
 
                 return null;
@@ -176,7 +209,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             {
                 MethodInfo methodInfo = ancestorType.GetMethod(methodName, parameterTypes);
                 if (methodInfo != null)
+                {
                     return new ReflectionDotNetRawMethod(methodInfo);
+                }
             }
 
             return null;
@@ -185,27 +220,36 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         public override IEnumerable<DotNetRawProperty> GetPublicProperties()
         {
             foreach (PropertyInfo propertyInfo in this.Type.GetProperties())
+            {
                 yield return new ReflectionDotNetRawProperty(propertyInfo);
+            }
         }
 
         public override DotNetRawProperty? GetProperty(string propertyName)
         {
             PropertyInfo propertyInfo = this.Type.GetProperty(propertyName);
             if (propertyInfo == null)
+            {
                 return null;
+            }
+
             return new ReflectionDotNetRawProperty(propertyInfo);
         }
 
         public override IEnumerable<DotNetRawField> GetPublicFields()
         {
             foreach (FieldInfo fieldInfo in this.Type.GetFields())
+            {
                 yield return new ReflectionDotNetRawField(fieldInfo);
+            }
         }
 
         public override IEnumerable<string> GetEnumNames()
         {
             foreach (string enumName in this.Type.GetEnumNames())
+            {
                 yield return enumName;
+            }
         }
 
         public override object GetEnumUnderlyingValue(string enumName)
@@ -248,14 +292,18 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             if (baseType != null)
             {
                 foreach (Type ancestorType in GetTypeAndAncestors(baseType))
+                {
                     yield return ancestorType;
+                }
             }
 
             // Return interfaces and their ancestors
             foreach (Type intface in type.GetInterfaces())
             {
                 foreach (Type ancestorType in GetTypeAndAncestors(intface))
-                yield return ancestorType;
+                {
+                    yield return ancestorType;
+                }
             }
         }
 
@@ -273,7 +321,10 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             while (currentType != null)
             {
                 if (currentType == potentialSuperclass)
+                {
                     return true;
+                }
+
                 currentType = currentType.BaseType;
             }
 
@@ -287,7 +338,9 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             foreach (Type interfaceType in this.Type.GetInterfaces())
             {
                 if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == iEnumerableType)
+                {
                     return new ReflectionDotNetRawType(interfaceType.GetGenericArguments()[0]);
+                }
             }
 
             return null;

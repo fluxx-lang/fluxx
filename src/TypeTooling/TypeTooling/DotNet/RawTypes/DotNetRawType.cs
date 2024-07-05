@@ -33,7 +33,9 @@ namespace TypeTooling.DotNet.RawTypes
             foreach (DotNetRawCustomAttribute attribute in this.GetCustomAttributes())
             {
                 if (attribute.AttributeType.FullName == attributeTypeFullName)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -51,7 +53,10 @@ namespace TypeTooling.DotNet.RawTypes
         {
             DotNetRawMethod? method = this.GetMethod(methodName, parameterRawTypes);
             if (method == null)
+            {
                 throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}' taking specified parameters");
+            }
+
             return method;
         }
 
@@ -61,7 +66,10 @@ namespace TypeTooling.DotNet.RawTypes
         {
             DotNetRawMethod? method = this.GetMethod(methodName);
             if (method == null)
+            {
                 throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}'");
+            }
+
             return method;
         }
 
@@ -71,9 +79,15 @@ namespace TypeTooling.DotNet.RawTypes
         {
             DotNetRawMethod? method = this.GetMethod(methodName, parameterRawTypes);
             if (method == null)
+            {
                 throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}'");
+            }
+
             if (method.IsStatic)
+            {
                 throw new UserViewableException($"'{this.FullName}.{methodName}' method is static when expected not to be");
+            }
+
             return method;
         }
 
@@ -81,9 +95,15 @@ namespace TypeTooling.DotNet.RawTypes
         {
             DotNetRawMethod? method = this.GetMethod(methodName, parameterRawTypes);
             if (method == null)
+            {
                 throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}'");
+            }
+
             if (!method.IsStatic)
+            {
                 throw new UserViewableException($"'{this.FullName}.{methodName}' method is not static when expected it to be");
+            }
+
             return method;
         }
 

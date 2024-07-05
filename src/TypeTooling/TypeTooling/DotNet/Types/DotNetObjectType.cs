@@ -40,7 +40,9 @@ namespace TypeTooling.DotNet.Types
         {
             object? companionTypeObject = null;
             if (this._companionType != null)
+            {
                 companionTypeObject = this._typeToolingEnvironment.Instantiate(this._companionType);
+            }
 
             var objectProperties = new List<ObjectProperty>();
             foreach (DotNetRawProperty platformProperty in this._rawType.GetPublicProperties())
@@ -49,7 +51,9 @@ namespace TypeTooling.DotNet.Types
 
                 // For now, skip properties with types we don't recognize
                 if (type == null)
+                {
                     continue;
+                }
 
                 objectProperties.Add(new DotNetObjectProperty(this, platformProperty, type));
             }
@@ -76,14 +80,18 @@ namespace TypeTooling.DotNet.Types
         {
             TypeToolingType? typeToolingType = this._typeToolingEnvironment.GetType(rawProperty.PropertyType);
             if (typeToolingType == null)
+            {
                 return null;
+            }
 
             CustomLiteralParser? customLiteralParser = this.GetPropertyCustomLiteralParser(rawProperty, companionTypeObject);
             if (customLiteralParser != null)
             {
                 if (!(typeToolingType is ObjectType objectType))
+                {
                     // TODO: Support non-object custom literal types (like IsVisible boolean for Xamarin Forms)
                     return typeToolingType;
+                }
 #if false
                     throw new Exception(
                         $"Type ObjectTypes are currently supported for property specific custom literal creators, not type {typeToolingType.GetType().FullName} for {typeToolingType.FullName}");
@@ -117,8 +125,10 @@ namespace TypeTooling.DotNet.Types
             ObjectProperty? contentProperty = this.GetContentPropertyFromCompanion(objectProperties, companionTypeObject, out bool explicitlyUnset);
 
             if (contentProperty != null || explicitlyUnset)
+            {
                 return contentProperty;
-            
+            }
+
             // If the current type doesn't specify a ContentProperty, check its base type
             return this.GetBaseDotNetObjectType()?.ContentProperty;
         }
@@ -127,7 +137,9 @@ namespace TypeTooling.DotNet.Types
         {
             DotNetRawType? baseRawType = this.RawType.BaseType;
             if (baseRawType == null)
+            {
                 return null;
+            }
 
             return (DotNetObjectType?)this.TypeToolingEnvironment.GetType(baseRawType);
         }
@@ -166,7 +178,9 @@ namespace TypeTooling.DotNet.Types
         protected virtual CustomLiteralParser? GetObjectCustomLiteralParser(List<ObjectProperty> objectProperties, object? companionTypeObject)
         {
             if (companionTypeObject == null || !(companionTypeObject is ICustomLiteralParser customLiteralParser))
+            {
                 return null;
+            }
 
             return new DotNetObjectCustomLiteralParser(customLiteralParser);
         }
@@ -184,10 +198,14 @@ namespace TypeTooling.DotNet.Types
 
             DotNetRawType? baseRawType = this._rawType.BaseType;
             if (baseRawType != null)
+            {
                 baseTypes.Add((ObjectType)this._typeToolingEnvironment.GetRequiredType(baseRawType));
+            }
 
             foreach (DotNetRawType interfaceTypeDescriptor in this._rawType.GetInterfaces())
+            {
                 baseTypes.Add((ObjectType)this._typeToolingEnvironment.GetRequiredType(interfaceTypeDescriptor));
+            }
 
             return baseTypes;
         }
@@ -200,11 +218,15 @@ namespace TypeTooling.DotNet.Types
             foreach (DotNetRawConstructor currConstructor in this._rawType.GetConstructors())
             {
                 if (currConstructor.GetParameters().Length == 0)
+                {
                     constructor = currConstructor;
+                }
             }
 
             if (constructor == null)
+            {
                 throw new Exception($"No public empty argument constructor found for class: {this.FullName}");
+            }
 
             // TODO: Beef this up some
             // Get the InitComplete method, if there is one; this call will return null if it doesn't exist
@@ -212,7 +234,9 @@ namespace TypeTooling.DotNet.Types
 
             // TODO: Handle attached properties
             if (attachedPropertyValues.Length > 0)
+            {
                 throw new Exception("Attached properties aren't handled yet");
+            }
 
 #if false
             for (int i = 0; i < qualifiedPropertiesLength; i++) {
@@ -264,11 +288,15 @@ namespace TypeTooling.DotNet.Types
             foreach (DotNetRawConstructor currConstructor in this._rawType.GetConstructors())
             {
                 if (currConstructor.GetParameters().Length == 0)
+                {
                     constructor = currConstructor;
+                }
             }
 
             if (constructor == null)
+            {
                 throw new Exception($"No public empty argument constructor found for class: {this.FullName}");
+            }
 
             // TODO: Beef this up some
             // Get the InitComplete method, if there is one; this call will return null if it doesn't exist
@@ -281,14 +309,18 @@ namespace TypeTooling.DotNet.Types
             for (int i = 0; i < propertiesLength; i++)
             {
                 if (!(properties[i] is DotNetObjectProperty dotNetObjectProperty))
+                {
                     throw new Exception("Only properties of type DotNetObjectProperty can be set on DotNetObjectType objects");
+                }
 
                 propertyInitializers.Add(this.CreatePropertyInitializer(dotNetObjectProperty));
             }
 
             // TODO: Handle attached properties
             if (attachedPropertiesLength > 0)
+            {
                 throw new Exception("Attached properties aren't handled yet");
+            }
 
 #if false
             for (int i = 0; i < qualifiedPropertiesLength; i++) {
@@ -330,7 +362,9 @@ namespace TypeTooling.DotNet.Types
         public override ObjectPropertyReader GetPropertyReader(ObjectProperty property)
         {
             if (!(property is DotNetObjectProperty dotNetObjectProperty))
+            {
                 throw new Exception("Only properties of type DotNetObjectProperty can be accessed on DotNetObjectType objects");
+            }
 
             return new DotNetObjectPropertyReader(dotNetObjectProperty.RawProperty);
         }
@@ -353,13 +387,17 @@ namespace TypeTooling.DotNet.Types
 
             DotNetRawProperty rawProperty = property.RawProperty;
             if (rawProperty == null)
+            {
                 throw new Exception($"Property '{property.Name}' doesn't exist for type '{this.FullName}'");
+            }
 
             DotNetRawType propertyRawType = rawProperty.PropertyType;
             TypeToolingType propertyType = this._typeToolingEnvironment.GetRequiredType(propertyRawType);
 
             if (propertyType is DotNetSequenceType dotNetCollectionType)
+            {
                 return new CollectionPropertyInitializer(rawProperty, dotNetCollectionType.ElementRawType);
+            }
 
             if (! rawProperty.CanWrite)
             {

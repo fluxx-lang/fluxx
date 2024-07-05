@@ -20,7 +20,10 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         {
             var parameterDescriptors = new DotNetRawParameter[parameterInfos.Length];
             for (int i = 0; i < parameterInfos.Length; i++)
+            {
                 parameterDescriptors[i] = new ReflectionDotNetRawParameter(parameterInfos[i]);
+            }
+
             return parameterDescriptors;
         }
 
