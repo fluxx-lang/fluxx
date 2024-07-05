@@ -7,11 +7,11 @@ namespace TypeTooling
 
         public PropertyValue(TProperty property, TValue value)
         {
-            Property = property;
-            Value = value;
+            this.Property = property;
+            this.Value = value;
         }
 
         public PropertyValue<TOtherProperty, TValue> WithProperty<TOtherProperty>(TOtherProperty otherProperty) =>
-            new PropertyValue<TOtherProperty, TValue>(otherProperty, Value);
+            new PropertyValue<TOtherProperty, TValue>(otherProperty, this.Value);
     }
 }

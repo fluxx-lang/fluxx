@@ -8,8 +8,8 @@
 
         public CharRange(int start, int end)
         {
-            Start = start;
-            End = end;
+            this.Start = start;
+            this.End = end;
         }
     }
 }

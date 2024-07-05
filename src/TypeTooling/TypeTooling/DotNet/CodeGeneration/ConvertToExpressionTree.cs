@@ -23,34 +23,34 @@ namespace TypeTooling.DotNet.CodeGeneration
 
         public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, LambdaCode lambdaCode)
         {
-            _typeToolingEnvironment = typeToolingEnvironment;
+            this._typeToolingEnvironment = typeToolingEnvironment;
 
             ParameterExpression[] parameterExpressions = lambdaCode.Parameters
                 .Select(parameterExpressionCode =>
                     Expression.Parameter(GetType(parameterExpressionCode.Type), parameterExpressionCode.Name))
                 .ToArray();
-            _parameterExpressionsDictionary = parameterExpressions.ToDictionary(parameterExpression => parameterExpression.Name);
+            this._parameterExpressionsDictionary = parameterExpressions.ToDictionary(parameterExpression => parameterExpression.Name);
 
-            Expression bodyExpression = ConvertExpression(lambdaCode.Body);
+            Expression bodyExpression = this.ConvertExpression(lambdaCode.Body);
 
             // TODO: Should we always pass tailCall:true here?
-            Result = Expression.Lambda(bodyExpression, true, parameterExpressions);
+            this.Result = Expression.Lambda(bodyExpression, true, parameterExpressions);
         }
 
         public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, ExpressionCode expressionCode)
         {
-            _typeToolingEnvironment = typeToolingEnvironment;
-            _parameterExpressionsDictionary = new Dictionary<string, ParameterExpression>();
+            this._typeToolingEnvironment = typeToolingEnvironment;
+            this._parameterExpressionsDictionary = new Dictionary<string, ParameterExpression>();
 
-            Expression bodyExpression = ConvertExpression(expressionCode);
+            Expression bodyExpression = this.ConvertExpression(expressionCode);
 
             // TODO: Should we always pass tailCall:true here?
-            Result = Expression.Lambda(bodyExpression, true, Array.Empty<ParameterExpression>());
+            this.Result = Expression.Lambda(bodyExpression, true, Array.Empty<ParameterExpression>());
         }
 
         public Expression? ConvertExpressionOrNull(ExpressionCode? expressionCode)
         {
-            return expressionCode == null ? null : ConvertExpression(expressionCode);
+            return expressionCode == null ? null : this.ConvertExpression(expressionCode);
         }
 
         public Expression ConvertExpression(ExpressionCode expressionCode)
@@ -73,25 +73,25 @@ namespace TypeTooling.DotNet.CodeGeneration
                         return Expression.Constant(dotNetRawType.GetEnumUnderlyingValue(enumValueLiteralCode.ValueName));
                     }
                 case NewObjectCode newObjectCode:
-                    return ConvertNewObject(newObjectCode);
+                    return this.ConvertNewObject(newObjectCode);
                 case NewArrayInitCode newArrayInit:
-                    return ConvertNewArrayInit(newArrayInit);
+                    return this.ConvertNewArrayInit(newArrayInit);
                 case NewSequenceCode newSequenceCode:
-                    return ConvertNewSequence(newSequenceCode);
+                    return this.ConvertNewSequence(newSequenceCode);
                 case MethodCallCode methodCallCode:
-                    return ConvertMethodCall(methodCallCode);
+                    return this.ConvertMethodCall(methodCallCode);
                 case GenericMethodCallCode genericMethodCallCode:
-                    return ConvertGenericMethodCall(genericMethodCallCode);
+                    return this.ConvertGenericMethodCall(genericMethodCallCode);
                 case GetPropertyCode getPropertyCode:
-                    return ConvertGetProperty(getPropertyCode);
+                    return this.ConvertGetProperty(getPropertyCode);
                 case BinaryExpressionCode binaryExpressionCode:
-                    return ConvertBinaryExpression(binaryExpressionCode);
+                    return this.ConvertBinaryExpression(binaryExpressionCode);
                 case UnaryExpressionCode unaryExpressionCode:
-                    return ConvertUnaryExpression(unaryExpressionCode);
+                    return this.ConvertUnaryExpression(unaryExpressionCode);
                 case ParameterExpressionCode parameterExpressionCode:
-                    return _parameterExpressionsDictionary[parameterExpressionCode.Name];
+                    return this._parameterExpressionsDictionary[parameterExpressionCode.Name];
                 case FunctionDelegateInvokeCode functionDelegateInvokeCode:
-                    return ConvertFunctionDelegateInvoke(functionDelegateInvokeCode);
+                    return this.ConvertFunctionDelegateInvoke(functionDelegateInvokeCode);
                 default:
                     throw new Exception($"Unsupported ExpressionCode type: {expressionCode.GetType()}");
             }
@@ -102,7 +102,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             ConstructorInfo constructorInfo = GetConstructorInfo(newObjectCode.Constructor);
             ExpressionCode[] codeArguments = newObjectCode.ConstructorArguments;
 
-            NewExpression newExpression = Expression.New(constructorInfo, codeArguments.Select(ConvertExpression));
+            NewExpression newExpression = Expression.New(constructorInfo, codeArguments.Select(this.ConvertExpression));
 
             PropertyValue<RawProperty, ExpressionCode>[] propertyValues = newObjectCode.PropertyValues;
 
@@ -117,7 +117,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
                 if (!rawProperty.CanWrite)
                 {
-                    DotNetRawType iListRawType = (DotNetRawType)_typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
+                    DotNetRawType iListRawType = (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
 
                     if (rawProperty.PropertyType.IsAssignableTo(iListRawType))
                         needToSetPropertiesPostCreation = true;
@@ -125,7 +125,7 @@ namespace TypeTooling.DotNet.CodeGeneration
                 }
                 else
                     memberAssignments.Add(Expression.Bind(GetMemberInfo(rawProperty),
-                        ConvertExpression(propertyValue.Value)));
+                        this.ConvertExpression(propertyValue.Value)));
             }
 
             MemberInitExpression memberInitExpression = Expression.MemberInit(newExpression, memberAssignments);
@@ -147,7 +147,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             blockExpressions.Add(assignExpression);
 
             DotNetRawType sequenceUtilsRawType =
-                (DotNetRawType)_typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
+                (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
             Type sequenceUtilsType = ((ReflectionDotNetRawType) sequenceUtilsRawType).Type;
 
             foreach (var propertyValue in propertyValues)
@@ -156,7 +156,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
                 if (!rawProperty.CanWrite)
                 {
-                    DotNetRawType iListRawType = (DotNetRawType)_typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
+                    DotNetRawType iListRawType = (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
 
                     if (rawProperty.PropertyType.IsAssignableTo(iListRawType))
                     {
@@ -165,7 +165,7 @@ namespace TypeTooling.DotNet.CodeGeneration
                         if (!(propertyValue.Value is NewSequenceCode newSequenceCode))
                             throw new InvalidOperationException($"Property {rawProperty.Name} isn't set via NewSequenceCode");
 
-                        Expression sequenceExpression = ConvertExpression(newSequenceCode);
+                        Expression sequenceExpression = this.ConvertExpression(newSequenceCode);
 
                         RawType sequenceElementType = newSequenceCode.ElementType;
                         Type sequenceElementDotNetType = ((ReflectionDotNetRawType) sequenceElementType).Type;
@@ -188,7 +188,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             var itemExpressions = ImmutableArray.CreateBuilder<Expression>();
             foreach (ExpressionCode item in newArrayInitCode.Items)
             {
-                Expression itemExpression = ConvertExpression(item);
+                Expression itemExpression = this.ConvertExpression(item);
                 itemExpressions.Add(itemExpression);
             }
 
@@ -198,7 +198,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
         private Expression ConvertNewSequence(NewSequenceCode newSequenceCode)
         {
-            DotNetRawType sequenceUtils = (DotNetRawType) _typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
+            DotNetRawType sequenceUtils = (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
 
             RawType elementType = newSequenceCode.ElementType;
             var itemsArrayCode = new NewArrayInitCode(elementType, newSequenceCode.Items);
@@ -206,7 +206,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             DotNetRawMethod itemsMethod = sequenceUtils.GetRequiredMethod("Items");
             GenericMethodCallCode itemsMethodCallCode = DotNetCode.CallStaticGeneric(new[] { (DotNetRawType) elementType }, itemsMethod, itemsArrayCode);
 
-            return ConvertExpression(itemsMethodCallCode);
+            return this.ConvertExpression(itemsMethodCallCode);
         }
 
         private MethodCallExpression ConvertMethodCall(MethodCallCode methodCallCode)
@@ -216,13 +216,13 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             List<Expression> argumentsExpressions = new List<Expression>();
             foreach (ExpressionCode argumentCode in argumentsCode)
-                argumentsExpressions.Add(ConvertExpression(argumentCode));
+                argumentsExpressions.Add(this.ConvertExpression(argumentCode));
 
             // Handle both static and instance method calls
             ExpressionCode? objectCode = methodCallCode.ObjectCode;
             if (objectCode == null)
                 return Expression.Call(methodInfo, argumentsExpressions);
-            else return Expression.Call(ConvertExpression(objectCode), methodInfo, argumentsExpressions);
+            else return Expression.Call(this.ConvertExpression(objectCode), methodInfo, argumentsExpressions);
         }
 
         private Expression ConvertGenericMethodCall(GenericMethodCallCode genericMethodCallCode)
@@ -236,13 +236,13 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             List<Expression> argumentsExpressions = new List<Expression>();
             foreach (ExpressionCode argumentCode in argumentsCode)
-                argumentsExpressions.Add(ConvertExpression(argumentCode));
+                argumentsExpressions.Add(this.ConvertExpression(argumentCode));
 
             // Handle both static and instance method calls
             ExpressionCode? objectCode = genericMethodCallCode.ObjectCode;
             if (objectCode == null)
                 return Expression.Call(genericMethodInfo, argumentsExpressions);
-            else return Expression.Call(ConvertExpression(objectCode), genericMethodInfo, argumentsExpressions);
+            else return Expression.Call(this.ConvertExpression(objectCode), genericMethodInfo, argumentsExpressions);
         }
 
         private InvocationExpression ConvertFunctionDelegateInvoke(FunctionDelegateInvokeCode functionDelegateInvokeCode)
@@ -268,11 +268,11 @@ namespace TypeTooling.DotNet.CodeGeneration
                 functionDelegateExpression = Expression.MakeMemberAccess(functionDelegateHolderExpression, functionDelegateMemberInfo);
 #endif
             }
-            else functionDelegateExpression = ConvertExpression(functionDelegateCode);
+            else functionDelegateExpression = this.ConvertExpression(functionDelegateCode);
 
             List<Expression> argumentsExpressions = new List<Expression>();
             foreach (ExpressionCode argumentCode in functionDelegateInvokeCode.Arguments)
-                argumentsExpressions.Add(ConvertExpression(argumentCode));
+                argumentsExpressions.Add(this.ConvertExpression(argumentCode));
 
             return Expression.Invoke(functionDelegateExpression, argumentsExpressions);
         }
@@ -307,8 +307,8 @@ namespace TypeTooling.DotNet.CodeGeneration
             else
                 throw new Exception("Unknown infix operator: " + binaryOperator.DefaultStringRepresentation);
 
-            Expression leftOperandExpression = ConvertExpression(binaryExpressionCode.LeftOperand);
-            Expression rightOperandExpression = ConvertExpression(binaryExpressionCode.RightOperand);
+            Expression leftOperandExpression = this.ConvertExpression(binaryExpressionCode.LeftOperand);
+            Expression rightOperandExpression = this.ConvertExpression(binaryExpressionCode.RightOperand);
 
             return Expression.MakeBinary(expressionType, leftOperandExpression, rightOperandExpression);
         }
@@ -323,7 +323,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             else
                 throw new Exception("Unknown infix operator: " + unaryOperator.DefaultStringRepresentation);
 
-            Expression operandExpression = ConvertExpression(unaryExpressionCode.Operand);
+            Expression operandExpression = this.ConvertExpression(unaryExpressionCode.Operand);
             return Expression.MakeUnary(expressionType, operandExpression, null);
         }
 
@@ -332,7 +332,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             if (!(getPropertyCode.Property is ReflectionDotNetRawProperty reflectionDotNetRawProperty))
                 throw new Exception($"Enum type is {getPropertyCode.Property.GetType().FullName}, not a ReflectionDotNetRawProperty as expected");
 
-            return Expression.MakeMemberAccess(ConvertExpressionOrNull(getPropertyCode.ObjectExpression), reflectionDotNetRawProperty.PropertyInfo);
+            return Expression.MakeMemberAccess(this.ConvertExpressionOrNull(getPropertyCode.ObjectExpression), reflectionDotNetRawProperty.PropertyInfo);
         }
 
         private static ConstructorInfo GetConstructorInfo(RawConstructor rawConstructor)

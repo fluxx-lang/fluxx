@@ -11,12 +11,12 @@ namespace TypeTooling.CodeGeneration
 
         public FunctionDelegateInvokeCode(ExpressionCode functionDelegate, ImmutableArray<ExpressionCode> arguments)
         {
-            _functionDelegate = functionDelegate;
-            _arguments = arguments;
+            this._functionDelegate = functionDelegate;
+            this._arguments = arguments;
         }
 
-        public ExpressionCode FunctionDelegate => _functionDelegate;
+        public ExpressionCode FunctionDelegate => this._functionDelegate;
 
-        public ImmutableArray<ExpressionCode> Arguments => _arguments;
+        public ImmutableArray<ExpressionCode> Arguments => this._arguments;
     }
 }

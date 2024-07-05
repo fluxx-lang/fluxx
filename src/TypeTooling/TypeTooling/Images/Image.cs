@@ -4,7 +4,7 @@
     {
         protected Image(string? automationName)
         {
-            AutomationName = automationName;
+            this.AutomationName = automationName;
         }
 
         private string? AutomationName { get; }

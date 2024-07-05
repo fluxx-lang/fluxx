@@ -23,29 +23,29 @@ namespace TypeTooling.DotNet.Types
 
         public DotNetObjectType(TypeToolingEnvironment typeToolingEnvironment, DotNetRawType rawType, DotNetRawType? companionType)
         {
-            _typeToolingEnvironment = typeToolingEnvironment;
-            _rawType = rawType;
-            _companionType = companionType;
+            this._typeToolingEnvironment = typeToolingEnvironment;
+            this._rawType = rawType;
+            this._companionType = companionType;
         }
 
-        public override RawType UnderlyingType => _rawType;
+        public override RawType UnderlyingType => this._rawType;
 
-        public TypeToolingEnvironment TypeToolingEnvironment => _typeToolingEnvironment;
+        public TypeToolingEnvironment TypeToolingEnvironment => this._typeToolingEnvironment;
 
-        public DotNetRawType RawType => _rawType;
+        public DotNetRawType RawType => this._rawType;
 
-        public DotNetRawType? CompanionType => _companionType;
+        public DotNetRawType? CompanionType => this._companionType;
 
         protected override ObjectTypeData DoGetData()
         {
             object? companionTypeObject = null;
-            if (_companionType != null)
-                companionTypeObject = _typeToolingEnvironment.Instantiate(_companionType);
+            if (this._companionType != null)
+                companionTypeObject = this._typeToolingEnvironment.Instantiate(this._companionType);
 
             var objectProperties = new List<ObjectProperty>();
-            foreach (DotNetRawProperty platformProperty in _rawType.GetPublicProperties())
+            foreach (DotNetRawProperty platformProperty in this._rawType.GetPublicProperties())
             {
-                TypeToolingType? type = GetPropertyType(platformProperty, companionTypeObject);
+                TypeToolingType? type = this.GetPropertyType(platformProperty, companionTypeObject);
 
                 // For now, skip properties with types we don't recognize
                 if (type == null)
@@ -54,11 +54,11 @@ namespace TypeTooling.DotNet.Types
                 objectProperties.Add(new DotNetObjectProperty(this, platformProperty, type));
             }
 
-            CustomLiteralParser? customLiteralParser = GetObjectCustomLiteralParser(objectProperties, companionTypeObject);
-            ObjectProperty? contentProperty = GetContentProperty(objectProperties, companionTypeObject);
-            IReadOnlyCollection<ObjectType> baseTypes = GetBaseTypes(companionTypeObject);
+            CustomLiteralParser? customLiteralParser = this.GetObjectCustomLiteralParser(objectProperties, companionTypeObject);
+            ObjectProperty? contentProperty = this.GetContentProperty(objectProperties, companionTypeObject);
+            IReadOnlyCollection<ObjectType> baseTypes = this.GetBaseTypes(companionTypeObject);
 
-            return new ObjectTypeData(fullName: _rawType.FullName, properties: objectProperties, contentProperty: contentProperty,
+            return new ObjectTypeData(fullName: this._rawType.FullName, properties: objectProperties, contentProperty: contentProperty,
                 customLiteralParser: customLiteralParser, baseTypes: baseTypes);
         }
 
@@ -74,11 +74,11 @@ namespace TypeTooling.DotNet.Types
         /// <returns>TypeToolingType to use for the property</returns>
         public virtual TypeToolingType? GetPropertyType(DotNetRawProperty rawProperty, object? companionTypeObject)
         {
-            TypeToolingType? typeToolingType = _typeToolingEnvironment.GetType(rawProperty.PropertyType);
+            TypeToolingType? typeToolingType = this._typeToolingEnvironment.GetType(rawProperty.PropertyType);
             if (typeToolingType == null)
                 return null;
 
-            CustomLiteralParser? customLiteralParser = GetPropertyCustomLiteralParser(rawProperty, companionTypeObject);
+            CustomLiteralParser? customLiteralParser = this.GetPropertyCustomLiteralParser(rawProperty, companionTypeObject);
             if (customLiteralParser != null)
             {
                 if (!(typeToolingType is ObjectType objectType))
@@ -114,22 +114,22 @@ namespace TypeTooling.DotNet.Types
 
         protected virtual ObjectProperty? GetContentProperty(List<ObjectProperty> objectProperties, object? companionTypeObject)
         {
-            ObjectProperty? contentProperty = GetContentPropertyFromCompanion(objectProperties, companionTypeObject, out bool explicitlyUnset);
+            ObjectProperty? contentProperty = this.GetContentPropertyFromCompanion(objectProperties, companionTypeObject, out bool explicitlyUnset);
 
             if (contentProperty != null || explicitlyUnset)
                 return contentProperty;
             
             // If the current type doesn't specify a ContentProperty, check its base type
-            return GetBaseDotNetObjectType()?.ContentProperty;
+            return this.GetBaseDotNetObjectType()?.ContentProperty;
         }
 
         public DotNetObjectType? GetBaseDotNetObjectType()
         {
-            DotNetRawType? baseRawType = RawType.BaseType;
+            DotNetRawType? baseRawType = this.RawType.BaseType;
             if (baseRawType == null)
                 return null;
 
-            return (DotNetObjectType?) TypeToolingEnvironment.GetType(baseRawType);
+            return (DotNetObjectType?)this.TypeToolingEnvironment.GetType(baseRawType);
         }
 
         protected ObjectProperty? GetContentPropertyFromCompanion(List<ObjectProperty> objectProperties, object? companionTypeObject, out bool explicitlyUnset)
@@ -182,12 +182,12 @@ namespace TypeTooling.DotNet.Types
         {
             var baseTypes = new List<ObjectType>();
 
-            DotNetRawType? baseRawType = _rawType.BaseType;
+            DotNetRawType? baseRawType = this._rawType.BaseType;
             if (baseRawType != null)
-                baseTypes.Add((ObjectType) _typeToolingEnvironment.GetRequiredType(baseRawType));
+                baseTypes.Add((ObjectType)this._typeToolingEnvironment.GetRequiredType(baseRawType));
 
-            foreach (DotNetRawType interfaceTypeDescriptor in _rawType.GetInterfaces())
-                baseTypes.Add((ObjectType) _typeToolingEnvironment.GetRequiredType(interfaceTypeDescriptor));
+            foreach (DotNetRawType interfaceTypeDescriptor in this._rawType.GetInterfaces())
+                baseTypes.Add((ObjectType)this._typeToolingEnvironment.GetRequiredType(interfaceTypeDescriptor));
 
             return baseTypes;
         }
@@ -197,18 +197,18 @@ namespace TypeTooling.DotNet.Types
             {
             DotNetRawConstructor? constructor = null;
 
-            foreach (DotNetRawConstructor currConstructor in _rawType.GetConstructors())
+            foreach (DotNetRawConstructor currConstructor in this._rawType.GetConstructors())
             {
                 if (currConstructor.GetParameters().Length == 0)
                     constructor = currConstructor;
             }
 
             if (constructor == null)
-                throw new Exception($"No public empty argument constructor found for class: {FullName}");
+                throw new Exception($"No public empty argument constructor found for class: {this.FullName}");
 
             // TODO: Beef this up some
             // Get the InitComplete method, if there is one; this call will return null if it doesn't exist
-            DotNetRawMethod? initCompleteMethod = _rawType.GetMethod("InitComplete", new DotNetRawType[] { });
+            DotNetRawMethod? initCompleteMethod = this._rawType.GetMethod("InitComplete", new DotNetRawType[] { });
 
             // TODO: Handle attached properties
             if (attachedPropertyValues.Length > 0)
@@ -225,7 +225,7 @@ namespace TypeTooling.DotNet.Types
             }
 #endif
 
-            return DotNetCode.New(_rawType, propertyValues);
+            return DotNetCode.New(this._rawType, propertyValues);
 
             /*
             _expressions = expressions;
@@ -253,7 +253,7 @@ namespace TypeTooling.DotNet.Types
 
         public override GetPropertyCode GetGetPropertyCode(ExpressionCode instance, string property)
         {
-            return DotNetCode.Property(_rawType, instance, property);
+            return DotNetCode.Property(this._rawType, instance, property);
         }
 
         public override InterpretedObjectCreator? GetInterpretedObjectCreator(ObjectProperty[] properties,
@@ -261,18 +261,18 @@ namespace TypeTooling.DotNet.Types
             {
             DotNetRawConstructor? constructor = null;
 
-            foreach (DotNetRawConstructor currConstructor in _rawType.GetConstructors())
+            foreach (DotNetRawConstructor currConstructor in this._rawType.GetConstructors())
             {
                 if (currConstructor.GetParameters().Length == 0)
                     constructor = currConstructor;
             }
 
             if (constructor == null)
-                throw new Exception($"No public empty argument constructor found for class: {FullName}");
+                throw new Exception($"No public empty argument constructor found for class: {this.FullName}");
 
             // TODO: Beef this up some
             // Get the InitComplete method, if there is one; this call will return null if it doesn't exist
-            DotNetRawMethod? initCompleteMethod = _rawType.GetMethod("InitComplete", new DotNetRawType[0] {});
+            DotNetRawMethod? initCompleteMethod = this._rawType.GetMethod("InitComplete", new DotNetRawType[0] {});
 
             int propertiesLength = properties.Length;
             int attachedPropertiesLength = attachedProperties.Length;
@@ -283,7 +283,7 @@ namespace TypeTooling.DotNet.Types
                 if (!(properties[i] is DotNetObjectProperty dotNetObjectProperty))
                     throw new Exception("Only properties of type DotNetObjectProperty can be set on DotNetObjectType objects");
 
-                propertyInitializers.Add(CreatePropertyInitializer(dotNetObjectProperty));
+                propertyInitializers.Add(this.CreatePropertyInitializer(dotNetObjectProperty));
             }
 
             // TODO: Handle attached properties
@@ -337,7 +337,7 @@ namespace TypeTooling.DotNet.Types
 
         public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken)
         {
-            return RawType.GetDescriptionAsync(_typeToolingEnvironment.UICulture, cancellationToken);
+            return this.RawType.GetDescriptionAsync(this._typeToolingEnvironment.UICulture, cancellationToken);
         }
 
         protected PropertyInitializer CreatePropertyInitializer(DotNetObjectProperty property)
@@ -353,17 +353,17 @@ namespace TypeTooling.DotNet.Types
 
             DotNetRawProperty rawProperty = property.RawProperty;
             if (rawProperty == null)
-                throw new Exception($"Property '{property.Name}' doesn't exist for type '{FullName}'");
+                throw new Exception($"Property '{property.Name}' doesn't exist for type '{this.FullName}'");
 
             DotNetRawType propertyRawType = rawProperty.PropertyType;
-            TypeToolingType propertyType = _typeToolingEnvironment.GetRequiredType(propertyRawType);
+            TypeToolingType propertyType = this._typeToolingEnvironment.GetRequiredType(propertyRawType);
 
             if (propertyType is DotNetSequenceType dotNetCollectionType)
                 return new CollectionPropertyInitializer(rawProperty, dotNetCollectionType.ElementRawType);
 
             if (! rawProperty.CanWrite)
                 throw new Exception(
-                    $"Property '{property.Name}' on type '{FullName}' isn't settable");
+                    $"Property '{property.Name}' on type '{this.FullName}' isn't settable");
             return new SimplePropertyInitializer(rawProperty);
 
 #if false

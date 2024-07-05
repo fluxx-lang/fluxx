@@ -9,13 +9,13 @@ namespace TypeTooling.Helper
 
         protected SequenceTypeLazyLoaded()
         {
-            _data = new Lazy<CollectionTypeData>(DoGetData);
+            this._data = new Lazy<CollectionTypeData>(this.DoGetData);
         }
 
         /// <inheritdoc />
-        public sealed override string FullName => _data.Value.FullName;
+        public sealed override string FullName => this._data.Value.FullName;
 
-        public override TypeToolingType ElementType => _data.Value.ElementType;
+        public override TypeToolingType ElementType => this._data.Value.ElementType;
 
         protected abstract CollectionTypeData DoGetData();
     }
@@ -29,8 +29,8 @@ namespace TypeTooling.Helper
         /// <inheritdoc />
         public CollectionTypeData(string fullName, TypeToolingType elementType)
         {
-            FullName = fullName;
-            ElementType = elementType;
+            this.FullName = fullName;
+            this.ElementType = elementType;
         }
     }
 }

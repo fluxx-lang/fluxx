@@ -9,8 +9,8 @@ namespace TypeTooling.CodeGeneration.Expressions
 
         public ParameterExpressionCode(string name, RawType type)
         {
-            Name = name;
-            Type = type;
+            this.Name = name;
+            this.Type = type;
         }
     }
 }

@@ -6,8 +6,8 @@
 
         public string? Comment
         {
-            get => _comment;
-            set => _comment = value;
+            get => this._comment;
+            set => this._comment = value;
         }
     }
 }

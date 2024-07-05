@@ -9,31 +9,31 @@
 
         public TypeOverride(TypeToolingType originalType)
         {
-            _originalType = originalType;
+            this._originalType = originalType;
         }
 
         public void OverrideCustomLiteralParser(CustomLiteralParser customLiteralParser)
         {
-            _customLiteralParserOverride = new Override<CustomLiteralParser>(customLiteralParser);
+            this._customLiteralParserOverride = new Override<CustomLiteralParser>(customLiteralParser);
         }
 
         public void OverrideVisualizer(Visualizer visualizer)
         {
-            _visualizerOverride = new Override<Visualizer>(visualizer);
+            this._visualizerOverride = new Override<Visualizer>(visualizer);
         }
 
         public CustomLiteralParser? GetCustomLiteralParser()
         {
-            if (_customLiteralParserOverride != null)
-                return _customLiteralParserOverride.Value;
-            return _originalType.GetCustomLiteralParser();
+            if (this._customLiteralParserOverride != null)
+                return this._customLiteralParserOverride.Value;
+            return this._originalType.GetCustomLiteralParser();
         }
 
         public Visualizer? GetVisualizer()
         {
-            if (_visualizerOverride != null)
-                return _visualizerOverride.Value;
-            return _originalType.GetVisualizer();
+            if (this._visualizerOverride != null)
+                return this._visualizerOverride.Value;
+            return this._originalType.GetVisualizer();
         }
 
         public class Override<T>
@@ -42,10 +42,10 @@
 
             public Override(T value)
             {
-                _value = value;
+                this._value = value;
             }
 
-            public T Value => _value;
+            public T Value => this._value;
         }
     }
 }

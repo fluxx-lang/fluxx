@@ -8,13 +8,13 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 
         public ReflectionDotNetRawParameter(ParameterInfo parameterInfo)
         {
-            _parameterInfo = parameterInfo;
+            this._parameterInfo = parameterInfo;
         }
 
-        public override string Name => _parameterInfo.Name;
+        public override string Name => this._parameterInfo.Name;
 
-        public override DotNetRawType ParameterType => new ReflectionDotNetRawType(_parameterInfo.ParameterType);
+        public override DotNetRawType ParameterType => new ReflectionDotNetRawType(this._parameterInfo.ParameterType);
 
-        public ParameterInfo ParameterInfo => _parameterInfo;
+        public ParameterInfo ParameterInfo => this._parameterInfo;
     }
 }

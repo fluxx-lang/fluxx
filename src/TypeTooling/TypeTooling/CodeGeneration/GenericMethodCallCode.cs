@@ -13,18 +13,18 @@ namespace TypeTooling.CodeGeneration
 
         public GenericMethodCallCode(RawType[] genericTypeArguments, ExpressionCode? objectCode, RawMethod rawMethod, params ExpressionCode[] arguments)
         {
-            _genericTypeArguments = genericTypeArguments;
-            _object = objectCode;
-            _rawMethod = rawMethod;
-            _arguments = arguments;
+            this._genericTypeArguments = genericTypeArguments;
+            this._object = objectCode;
+            this._rawMethod = rawMethod;
+            this._arguments = arguments;
         }
 
-        public RawType[] GenericTypeArguments => _genericTypeArguments;
+        public RawType[] GenericTypeArguments => this._genericTypeArguments;
 
-        public ExpressionCode? ObjectCode => _object;
+        public ExpressionCode? ObjectCode => this._object;
 
-        public RawMethod RawMethod => _rawMethod;
+        public RawMethod RawMethod => this._rawMethod;
 
-        public ExpressionCode[] Arguments => _arguments;
+        public ExpressionCode[] Arguments => this._arguments;
     }
 }

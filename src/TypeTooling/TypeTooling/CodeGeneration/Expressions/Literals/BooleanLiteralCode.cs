@@ -6,9 +6,9 @@
 
         public BooleanLiteralCode(bool value)
         {
-            _value = value;
+            this._value = value;
         }
 
-        public bool Value => _value;
+        public bool Value => this._value;
     }
 }

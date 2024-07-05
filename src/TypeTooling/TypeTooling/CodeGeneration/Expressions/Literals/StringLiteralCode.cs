@@ -6,9 +6,9 @@
 
         public StringLiteralCode(string value)
         {
-            _value = value;
+            this._value = value;
         }
 
-        public string Value => _value;
+        public string Value => this._value;
     }
 }

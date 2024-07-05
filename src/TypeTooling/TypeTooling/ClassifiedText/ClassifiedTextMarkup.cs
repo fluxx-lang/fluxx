@@ -4,7 +4,7 @@
     {
         public ClassifiedTextMarkup(ContainerElement containerElement)
         {
-            ContainerElement = containerElement;
+            this.ContainerElement = containerElement;
         }
 
         public ClassifiedTextMarkup(ClassifiedTextElement classifiedTextElement) :

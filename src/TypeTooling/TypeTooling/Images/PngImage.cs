@@ -4,7 +4,7 @@
     {
         public PngImage(byte[] pngData, string? automationName) : base(automationName)
         {
-            PngData = pngData;
+            this.PngData = pngData;
         }
 
         public byte[] PngData { get; }

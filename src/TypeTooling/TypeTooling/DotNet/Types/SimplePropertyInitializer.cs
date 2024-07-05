@@ -9,12 +9,12 @@ namespace TypeTooling.DotNet.Types
 
         public SimplePropertyInitializer(DotNetRawProperty rawProperty)
         {
-            _rawProperty = rawProperty;
+            this._rawProperty = rawProperty;
         }
 
         public override void Initialize(object obj, object propertyValue)
         {
-            ((ReflectionDotNetRawProperty) _rawProperty).PropertyInfo.SetValue(obj, propertyValue);
+            ((ReflectionDotNetRawProperty)this._rawProperty).PropertyInfo.SetValue(obj, propertyValue);
         }
     }
 }

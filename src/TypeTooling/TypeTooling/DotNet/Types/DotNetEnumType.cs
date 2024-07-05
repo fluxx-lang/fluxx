@@ -12,21 +12,21 @@ namespace TypeTooling.DotNet.Types
 
         public DotNetEnumType(DotNetRawType rawType)
         {
-            _rawType = rawType;
+            this._rawType = rawType;
         }
 
-        public override RawType UnderlyingType => _rawType;
+        public override RawType UnderlyingType => this._rawType;
 
         protected override EnumTypeData DoGetData()
         {
             var enumValues = new List<EnumValue>();
-            foreach (string enumName in _rawType.GetEnumNames())
+            foreach (string enumName in this._rawType.GetEnumNames())
             {
-                ExpressionAndHelpersCode expressionAndHelpersCode = new ExpressionAndHelpersCode(Code.EnumValueLiteral(_rawType, enumName));
+                ExpressionAndHelpersCode expressionAndHelpersCode = new ExpressionAndHelpersCode(Code.EnumValueLiteral(this._rawType, enumName));
                 enumValues.Add(new EnumValue(enumName, expressionAndHelpersCode));
             }
 
-            return new EnumTypeData(_rawType.FullName, enumValues);
+            return new EnumTypeData(this._rawType.FullName, enumValues);
         }
     }
 }

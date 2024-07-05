@@ -6,9 +6,9 @@
 
         public DoubleLiteralCode(double value)
         {
-            _value = value;
+            this._value = value;
         }
 
-        public double Value => _value;
+        public double Value => this._value;
     }
 }

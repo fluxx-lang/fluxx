@@ -12,11 +12,11 @@ namespace TypeTooling.CodeGeneration.Operators
 
         public Operator(string defaultStringRepresentation)
         {
-            _defaultStringRepresentation = defaultStringRepresentation;
+            this._defaultStringRepresentation = defaultStringRepresentation;
         }
 
-        public string DefaultStringRepresentation => _defaultStringRepresentation;
+        public string DefaultStringRepresentation => this._defaultStringRepresentation;
 
-        public override string ToString() => DefaultStringRepresentation;
+        public override string ToString() => this.DefaultStringRepresentation;
     }
 }

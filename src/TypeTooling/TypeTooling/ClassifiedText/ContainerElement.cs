@@ -7,14 +7,14 @@ namespace TypeTooling.ClassifiedText
     {
         public ContainerElement(ContainerElementStyle style, IEnumerable<object> elements)
         {
-            Style = style;
-            Elements = elements.ToImmutableArray();
+            this.Style = style;
+            this.Elements = elements.ToImmutableArray();
         }
 
         public ContainerElement(ContainerElementStyle style, params object[] elements)
         {
-            Style = style;
-            Elements = elements.ToImmutableArray();
+            this.Style = style;
+            this.Elements = elements.ToImmutableArray();
         }
 
         public ContainerElementStyle Style { get; }

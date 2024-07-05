@@ -8,9 +8,9 @@ namespace TypeTooling.CodeGeneration
 
         public ExpressionAndHelpersCode(ExpressionCode expressionCode)
         {
-            _expressionCode = expressionCode;
+            this._expressionCode = expressionCode;
         }
 
-        public ExpressionCode Expression => _expressionCode;
+        public ExpressionCode Expression => this._expressionCode;
     }
 }

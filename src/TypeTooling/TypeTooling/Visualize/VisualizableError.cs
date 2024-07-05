@@ -10,7 +10,7 @@ namespace TypeTooling.Visualize
 
         public VisualizableError(string message)
         {
-            Message = message;
+            this.Message = message;
         }
     }
 }

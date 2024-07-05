@@ -9,7 +9,7 @@ namespace TypeTooling
 
         public TypeToolingProviderAttribute(Type providerType)
         {
-            ProviderType = providerType;
+            this.ProviderType = providerType;
         }
     }
 }

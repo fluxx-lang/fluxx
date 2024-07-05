@@ -9,12 +9,12 @@ namespace TypeTooling.Types
 
         public EnumValue(string name, ExpressionAndHelpersCode expressionAndHelpersCode)
         {
-            _name = name;
-            _expressionAndHelpersCode = expressionAndHelpersCode;
+            this._name = name;
+            this._expressionAndHelpersCode = expressionAndHelpersCode;
         }
 
-        public string Name => _name;
+        public string Name => this._name;
 
-        public ExpressionAndHelpersCode ExpressionAndHelpersCode => _expressionAndHelpersCode;
+        public ExpressionAndHelpersCode ExpressionAndHelpersCode => this._expressionAndHelpersCode;
     }
 }

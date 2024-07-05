@@ -12,53 +12,53 @@ namespace TypeTooling.Types
 
         public EnhancedObjectType(ObjectType originalType)
         {
-            _originalType = originalType;
-            _typeOverride = new TypeOverride(originalType);
+            this._originalType = originalType;
+            this._typeOverride = new TypeOverride(originalType);
         }
 
-        public TypeOverride TypeOverride => _typeOverride;
+        public TypeOverride TypeOverride => this._typeOverride;
 
-        public override string FullName => _originalType.FullName;
+        public override string FullName => this._originalType.FullName;
 
-        public override RawType UnderlyingType => _originalType.UnderlyingType;
+        public override RawType UnderlyingType => this._originalType.UnderlyingType;
 
         public override CustomLiteralParser? GetCustomLiteralParser()
         {
-            return _typeOverride.GetCustomLiteralParser();
+            return this._typeOverride.GetCustomLiteralParser();
         }
 
         public override Visualizer? GetVisualizer()
         {
-            return _typeOverride.GetVisualizer();
+            return this._typeOverride.GetVisualizer();
         }
 
-        public override IReadOnlyCollection<ObjectProperty> Properties => _originalType.Properties;
+        public override IReadOnlyCollection<ObjectProperty> Properties => this._originalType.Properties;
 
         /// <summary>
         /// Return the content property for this object or null if the object can't have content other than its named properties.
         /// </summary>
-        public override ObjectProperty? ContentProperty => _originalType.ContentProperty;
+        public override ObjectProperty? ContentProperty => this._originalType.ContentProperty;
 
         public override ExpressionCode GetCreateObjectCode(PropertyValue<string, ExpressionCode>[] propertyValues, PropertyValue<AttachedProperty, ExpressionCode>[] attachedPropertyValues) =>
-            _originalType.GetCreateObjectCode(propertyValues, attachedPropertyValues);
+            this._originalType.GetCreateObjectCode(propertyValues, attachedPropertyValues);
 
         public override GetPropertyCode GetGetPropertyCode(ExpressionCode instance, string property) =>
-            _originalType.GetGetPropertyCode(instance, property);
+            this._originalType.GetGetPropertyCode(instance, property);
 
         public override InterpretedObjectCreator? GetInterpretedObjectCreator(ObjectProperty[] properties,
             AttachedProperty[] attachedProperties)
             {
-            return _originalType.GetInterpretedObjectCreator(properties, attachedProperties);
+            return this._originalType.GetInterpretedObjectCreator(properties, attachedProperties);
         }
 
         public override ObjectPropertyReader GetPropertyReader(ObjectProperty property)
         {
-            return _originalType.GetPropertyReader(property);
+            return this._originalType.GetPropertyReader(property);
         }
 
         public override IReadOnlyCollection<ObjectType> GetBaseTypes()
         {
-            return _originalType.GetBaseTypes();
+            return this._originalType.GetBaseTypes();
         }
     }
 }

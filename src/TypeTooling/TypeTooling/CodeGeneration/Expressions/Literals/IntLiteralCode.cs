@@ -6,9 +6,9 @@
 
         public IntLiteralCode(int value)
         {
-            _value = value;
+            this._value = value;
         }
 
-        public int Value => _value;
+        public int Value => this._value;
     }
 }

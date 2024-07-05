@@ -17,8 +17,8 @@ namespace TypeTooling
 
         public Diagnostic(string message, DiagnosticSeverity severity)
         {
-            Message = message;
-            Severity = severity;
+            this.Message = message;
+            this.Severity = severity;
         }
     }
 }

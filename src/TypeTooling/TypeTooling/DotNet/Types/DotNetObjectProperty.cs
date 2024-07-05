@@ -15,21 +15,21 @@ namespace TypeTooling.DotNet.Types
 
         public DotNetObjectProperty(ObjectType objectType, DotNetRawProperty rawProperty, TypeToolingType type) : base(objectType)
         {
-            RawProperty = rawProperty;
-            Type = type;
+            this.RawProperty = rawProperty;
+            this.Type = type;
         }
 
-        public override string Name => RawProperty.Name;
+        public override string Name => this.RawProperty.Name;
 
-        public override bool CanRead => RawProperty.CanRead;
+        public override bool CanRead => this.RawProperty.CanRead;
 
-        public override bool CanWrite => RawProperty.CanWrite;
+        public override bool CanWrite => this.RawProperty.CanWrite;
 
-        public DotNetObjectType DotNetObjectType => (DotNetObjectType) ObjectType;
+        public DotNetObjectType DotNetObjectType => (DotNetObjectType)this.ObjectType;
 
         public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken)
         {
-            return RawProperty.GetDescriptionAsync(DotNetObjectType.TypeToolingEnvironment.UICulture, cancellationToken);
+            return this.RawProperty.GetDescriptionAsync(this.DotNetObjectType.TypeToolingEnvironment.UICulture, cancellationToken);
         }
     }
 }

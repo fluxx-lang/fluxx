@@ -6,17 +6,16 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
     {
         private readonly ConstructorInfo _constructorInfo;
 
-
         public ReflectionDotNetRawConstructor(ConstructorInfo constructorInfo)
         {
-            _constructorInfo = constructorInfo;
+            this._constructorInfo = constructorInfo;
         }
 
         public override DotNetRawParameter[] GetParameters()
         {
-            return ReflectionDotNetRawMethod.ToParameterDescriptors(_constructorInfo.GetParameters());
+            return ReflectionDotNetRawMethod.ToParameterDescriptors(this._constructorInfo.GetParameters());
         }
 
-        public ConstructorInfo ConstructorInfo => _constructorInfo;
+        public ConstructorInfo ConstructorInfo => this._constructorInfo;
     }
 }

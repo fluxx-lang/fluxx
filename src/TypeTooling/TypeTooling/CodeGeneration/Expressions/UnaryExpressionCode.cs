@@ -9,12 +9,12 @@ namespace TypeTooling.CodeGeneration.Expressions
 
         public UnaryExpressionCode(UnaryOperator unaryOperator, ExpressionCode operand)
         {
-            _operator = unaryOperator;
-            _operand = operand;
+            this._operator = unaryOperator;
+            this._operand = operand;
         }
 
-        public UnaryOperator Operator => _operator;
+        public UnaryOperator Operator => this._operator;
 
-        public ExpressionCode Operand => _operand;
+        public ExpressionCode Operand => this._operand;
     }
 }

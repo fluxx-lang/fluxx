@@ -9,12 +9,12 @@ namespace TypeTooling.CodeGeneration.Expressions.Literals
 
         public EnumValueLiteralCode(RawType enumType, string valueName)
         {
-            _enumType = enumType;
-            _valueName = valueName;
+            this._enumType = enumType;
+            this._valueName = valueName;
         }
 
-        public string ValueName => _valueName;
-        
-        public RawType EnumType => _enumType;
+        public string ValueName => this._valueName;
+
+        public RawType EnumType => this._enumType;
     }
 }

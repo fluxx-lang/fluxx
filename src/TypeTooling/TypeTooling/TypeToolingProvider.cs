@@ -9,7 +9,7 @@ namespace TypeTooling
 
         protected TypeToolingProvider(TypeToolingEnvironment typeToolingEnvironment)
         {
-            TypeToolingEnvironment = typeToolingEnvironment;
+            this.TypeToolingEnvironment = typeToolingEnvironment;
         }
 
         public abstract TypeToolingType? ProvideType(RawType rawType, RawType? companionRawType);

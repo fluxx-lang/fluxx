@@ -9,8 +9,8 @@ namespace TypeTooling.CodeGeneration.Expressions
 
         public GetPropertyCode(ExpressionCode? objectExpression, RawProperty property)
         {
-            ObjectExpression = objectExpression;
-            Property = property;
+            this.ObjectExpression = objectExpression;
+            this.Property = property;
         }
     }
 }

@@ -13,19 +13,19 @@ namespace TypeTooling.DotNet.Types
 
         public DotNetInterpretedObjectCreator(DotNetRawConstructor constructorMethod, PropertyInitializer[] propertyInitializers)
         {
-            _constructorMethod = constructorMethod;
-            _propertyInitializers = propertyInitializers;
+            this._constructorMethod = constructorMethod;
+            this._propertyInitializers = propertyInitializers;
         }
 
         public override object Create(object[] values, int startOffset)
         {
-            ConstructorInfo constructorInfo = ((ReflectionDotNetRawConstructor) _constructorMethod).ConstructorInfo;
+            ConstructorInfo constructorInfo = ((ReflectionDotNetRawConstructor)this._constructorMethod).ConstructorInfo;
 
             object obj = constructorInfo.Invoke(null);
 
-            int propertyCount = _propertyInitializers.Length;
+            int propertyCount = this._propertyInitializers.Length;
             for (int i = 0; i < propertyCount; i++)
-                _propertyInitializers[i].Initialize(obj, values[startOffset + i]);
+                this._propertyInitializers[i].Initialize(obj, values[startOffset + i]);
 
             return obj;
         }

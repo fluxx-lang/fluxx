@@ -10,12 +10,12 @@ namespace TypeTooling.DotNet.Types
 
         public DotNetObjectPropertyReader(DotNetRawProperty rawProperty)
         {
-            _rawProperty = rawProperty;
+            this._rawProperty = rawProperty;
         }
 
         public override object Get(object obj)
         {
-            return ((ReflectionDotNetRawProperty) _rawProperty).PropertyInfo.GetValue(obj);
+            return ((ReflectionDotNetRawProperty)this._rawProperty).PropertyInfo.GetValue(obj);
         }
     }
 }

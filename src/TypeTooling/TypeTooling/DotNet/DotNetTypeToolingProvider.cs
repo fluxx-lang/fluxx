@@ -31,9 +31,9 @@ namespace TypeTooling.DotNet
 
             DotNetRawType? enumerableElementType = dotNetRawType.GetEnumerableElementType();
             if (enumerableElementType != null)
-                return new DotNetSequenceType(TypeToolingEnvironment, dotNetRawType, enumerableElementType);
+                return new DotNetSequenceType(this.TypeToolingEnvironment, dotNetRawType, enumerableElementType);
 
-            return new DotNetObjectType(TypeToolingEnvironment, dotNetRawType, companionDotNetTypeDescriptor);
+            return new DotNetObjectType(this.TypeToolingEnvironment, dotNetRawType, companionDotNetTypeDescriptor);
         }
 
         public override AttachedType? ProvideAttachedType(RawType rawType, RawType? companionRawType)

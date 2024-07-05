@@ -8,7 +8,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
         public FunctionDelegateHolderCode(FunctionDelegateHolder functionDelegateHolder)
         {
-            FunctionDelegateHolder = functionDelegateHolder;
+            this.FunctionDelegateHolder = functionDelegateHolder;
         }
     }
 }

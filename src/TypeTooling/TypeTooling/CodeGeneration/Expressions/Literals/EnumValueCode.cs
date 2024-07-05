@@ -7,12 +7,12 @@
 
         public EnumValueCode(object enumTypeDescriptor, string enumValue)
         {
-            _enumTypeDescriptor = enumTypeDescriptor;
-            _enumValue = enumValue;
+            this._enumTypeDescriptor = enumTypeDescriptor;
+            this._enumValue = enumValue;
         }
 
-        public object EnumTypeDescriptor => _enumTypeDescriptor;
+        public object EnumTypeDescriptor => this._enumTypeDescriptor;
 
-        public string EnumValue => _enumValue;
+        public string EnumValue => this._enumValue;
     }
 }

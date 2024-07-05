@@ -8,7 +8,7 @@ namespace TypeTooling.Types
 
         protected ObjectProperty(ObjectType objectType)
         {
-            ObjectType = objectType;
+            this.ObjectType = objectType;
         }
 
         public abstract string Name { get; }

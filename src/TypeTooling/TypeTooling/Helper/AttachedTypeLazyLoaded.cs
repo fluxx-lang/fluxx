@@ -10,19 +10,19 @@ namespace TypeTooling.Helper
 
         protected AttachedTypeLazyLoaded()
         {
-            _data = new Lazy<AttachedTypeData>(DoGetData);
+            this._data = new Lazy<AttachedTypeData>(this.DoGetData);
         }
 
         /// <inheritdoc />
-        public sealed override string FullName => _data.Value.FullName;
+        public sealed override string FullName => this._data.Value.FullName;
 
         /// <inheritdoc />
-        public sealed override IReadOnlyCollection<AttachedProperty> AttachedProperties => _data.Value.AttachedProperties;
+        public sealed override IReadOnlyCollection<AttachedProperty> AttachedProperties => this._data.Value.AttachedProperties;
 
         /// <inheritdoc />
         public override IReadOnlyCollection<AttachedType> GetBaseTypes()
         {
-            return _data.Value.BaseTypes;
+            return this._data.Value.BaseTypes;
         }
 
         protected abstract AttachedTypeData DoGetData();
@@ -38,9 +38,9 @@ namespace TypeTooling.Helper
 
         public AttachedTypeData(string fullName, IReadOnlyCollection<AttachedProperty> attachedProperties, IReadOnlyCollection<AttachedType> baseTypes)
         {
-            FullName = fullName;
-            AttachedProperties = attachedProperties;
-            BaseTypes = baseTypes;
+            this.FullName = fullName;
+            this.AttachedProperties = attachedProperties;
+            this.BaseTypes = baseTypes;
         }
     }
 }

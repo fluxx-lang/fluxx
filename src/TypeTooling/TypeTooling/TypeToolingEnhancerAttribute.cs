@@ -9,7 +9,7 @@ namespace TypeTooling
 
         public TypeToolingEnhancerAttribute(System.Type enhancerType)
         {
-            EnhancerType = enhancerType;
+            this.EnhancerType = enhancerType;
         }
     }
 }

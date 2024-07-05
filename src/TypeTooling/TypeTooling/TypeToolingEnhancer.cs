@@ -8,7 +8,7 @@ namespace TypeTooling
 
         protected TypeToolingEnhancer(TypeToolingEnvironment typeToolingEnvironment)
         {
-            TypeToolingEnvironment = typeToolingEnvironment;
+            this.TypeToolingEnvironment = typeToolingEnvironment;
         }
 
         public abstract TypeToolingType EnhanceType(TypeToolingType type);

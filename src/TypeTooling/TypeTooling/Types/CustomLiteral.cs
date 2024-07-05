@@ -11,14 +11,14 @@ namespace TypeTooling.Types
 
         public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionAndHelpersCode? expressionAndHelpersCode)
         {
-            _diagnostics = diagnostics;
-            _expressionAndHelpersCode = expressionAndHelpersCode;
+            this._diagnostics = diagnostics;
+            this._expressionAndHelpersCode = expressionAndHelpersCode;
         }
 
         public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionCode expressionCode)
         {
-            _diagnostics = diagnostics;
-            _expressionAndHelpersCode = Code.ExpressionAndHelpers(expressionCode);
+            this._diagnostics = diagnostics;
+            this._expressionAndHelpersCode = Code.ExpressionAndHelpers(expressionCode);
         }
 
         public CustomLiteral(ExpressionAndHelpersCode expressionAndHelpersCode) : this(null, expressionAndHelpersCode) { }
@@ -30,8 +30,8 @@ namespace TypeTooling.Types
             return new CustomLiteral(Diagnostic.SingleError(message), (ExpressionAndHelpersCode?) null);
         }
 
-        public ImmutableArray<Diagnostic>? Diagnostics => _diagnostics;
+        public ImmutableArray<Diagnostic>? Diagnostics => this._diagnostics;
 
-        public ExpressionAndHelpersCode? ExpressionAndHelpersCode => _expressionAndHelpersCode;
+        public ExpressionAndHelpersCode? ExpressionAndHelpersCode => this._expressionAndHelpersCode;
     }
 }

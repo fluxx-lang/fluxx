@@ -6,9 +6,9 @@
 
         public ByteLiteralCode(byte value)
         {
-            _value = value;
+            this._value = value;
         }
 
-        public byte Value => _value;
+        public byte Value => this._value;
     }
 }

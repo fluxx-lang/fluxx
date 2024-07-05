@@ -6,7 +6,7 @@
 
         protected AttachedProperty(AttachedType attachedType)
         {
-            AttachedType = attachedType;
+            this.AttachedType = attachedType;
         }
 
         public abstract string Name { get; }

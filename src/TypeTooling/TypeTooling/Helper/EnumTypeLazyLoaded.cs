@@ -10,14 +10,14 @@ namespace TypeTooling.Helper
 
         protected EnumTypeLazyLoaded()
         {
-            _data = new Lazy<EnumTypeData>(DoGetData);
+            this._data = new Lazy<EnumTypeData>(this.DoGetData);
         }
 
         /// <inheritdoc />
-        public sealed override string FullName => _data.Value.FullName;
+        public sealed override string FullName => this._data.Value.FullName;
 
         /// <inheritdoc />
-        public sealed override IReadOnlyCollection<EnumValue> Values => _data.Value.Values;
+        public sealed override IReadOnlyCollection<EnumValue> Values => this._data.Value.Values;
 
         /// <inheritdoc />
         protected abstract EnumTypeData DoGetData();
@@ -32,8 +32,8 @@ namespace TypeTooling.Helper
         /// <inheritdoc />
         public EnumTypeData(string fullName, IReadOnlyCollection<EnumValue> values)
         {
-            FullName = fullName;
-            Values = values;
+            this.FullName = fullName;
+            this.Values = values;
         }
     }
 }

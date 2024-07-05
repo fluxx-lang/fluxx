@@ -10,27 +10,27 @@ namespace TypeTooling.Helper
 
         protected ObjectTypeLazyLoaded()
         {
-            _data = new Lazy<ObjectTypeData>(DoGetData);
+            this._data = new Lazy<ObjectTypeData>(this.DoGetData);
         }
 
         /// <inheritdoc />
-        public sealed override string FullName => _data.Value.FullName;
+        public sealed override string FullName => this._data.Value.FullName;
 
         /// <inheritdoc />
-        public sealed override IReadOnlyCollection<ObjectProperty> Properties => _data.Value.Properties;
+        public sealed override IReadOnlyCollection<ObjectProperty> Properties => this._data.Value.Properties;
 
         /// <inheritdoc />
-        public sealed override ObjectProperty? ContentProperty => _data.Value.ContentProperty;
+        public sealed override ObjectProperty? ContentProperty => this._data.Value.ContentProperty;
 
         /// <inheritdoc />
         public override CustomLiteralParser? GetCustomLiteralParser()
         {
-            return _data.Value.CustomLiteralParser;
+            return this._data.Value.CustomLiteralParser;
         }
 
         public override IReadOnlyCollection<ObjectType> GetBaseTypes()
         {
-            return _data.Value.BaseTypes;
+            return this._data.Value.BaseTypes;
         }
 
         protected abstract ObjectTypeData DoGetData();
@@ -53,11 +53,11 @@ namespace TypeTooling.Helper
             ObjectProperty? contentProperty, CustomLiteralParser? customLiteralParser,
             IReadOnlyCollection<ObjectType> baseTypes)
             {
-            FullName = fullName;
-            Properties = properties;
-            ContentProperty = contentProperty;
-            CustomLiteralParser = customLiteralParser;
-            BaseTypes = baseTypes;
+            this.FullName = fullName;
+            this.Properties = properties;
+            this.ContentProperty = contentProperty;
+            this.CustomLiteralParser = customLiteralParser;
+            this.BaseTypes = baseTypes;
         }
     }
 }

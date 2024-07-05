@@ -14,9 +14,9 @@ namespace TypeTooling.CodeGeneration
 
         public LambdaCode(string name, ImmutableArray<ParameterExpressionCode> parameters, ExpressionCode body)
         {
-            Name = name;
-            Parameters = parameters;
-            Body = body;
+            this.Name = name;
+            this.Parameters = parameters;
+            this.Body = body;
         }
     }
 }

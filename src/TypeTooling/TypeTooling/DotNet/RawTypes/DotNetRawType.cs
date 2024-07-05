@@ -15,7 +15,7 @@ namespace TypeTooling.DotNet.RawTypes
 
         public override string ToString()
         {
-            return FullName;
+            return this.FullName;
         }
 
         public abstract bool IsEnum { get; }
@@ -30,7 +30,7 @@ namespace TypeTooling.DotNet.RawTypes
 
         public bool HasAttributeOfType(string attributeTypeFullName)
         {
-            foreach (DotNetRawCustomAttribute attribute in GetCustomAttributes())
+            foreach (DotNetRawCustomAttribute attribute in this.GetCustomAttributes())
             {
                 if (attribute.AttributeType.FullName == attributeTypeFullName)
                     return true;
@@ -49,9 +49,9 @@ namespace TypeTooling.DotNet.RawTypes
 
         public DotNetRawMethod GetRequiredMethod(string methodName, DotNetRawType[] parameterRawTypes)
         {
-            DotNetRawMethod? method = GetMethod(methodName, parameterRawTypes);
+            DotNetRawMethod? method = this.GetMethod(methodName, parameterRawTypes);
             if (method == null)
-                throw new UserViewableException($"No '{methodName}' method found for type '{FullName}' taking specified parameters");
+                throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}' taking specified parameters");
             return method;
         }
 
@@ -59,9 +59,9 @@ namespace TypeTooling.DotNet.RawTypes
 
         public DotNetRawMethod GetRequiredMethod(string methodName)
         {
-            DotNetRawMethod? method = GetMethod(methodName);
+            DotNetRawMethod? method = this.GetMethod(methodName);
             if (method == null)
-                throw new UserViewableException($"No '{methodName}' method found for type '{FullName}'");
+                throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}'");
             return method;
         }
 
@@ -69,21 +69,21 @@ namespace TypeTooling.DotNet.RawTypes
 
         public DotNetRawMethod GetRequiredInstanceMethod(string methodName, DotNetRawType[] parameterRawTypes)
         {
-            DotNetRawMethod? method = GetMethod(methodName, parameterRawTypes);
+            DotNetRawMethod? method = this.GetMethod(methodName, parameterRawTypes);
             if (method == null)
-                throw new UserViewableException($"No '{methodName}' method found for type '{FullName}'");
+                throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}'");
             if (method.IsStatic)
-                throw new UserViewableException($"'{FullName}.{methodName}' method is static when expected not to be");
+                throw new UserViewableException($"'{this.FullName}.{methodName}' method is static when expected not to be");
             return method;
         }
 
         public DotNetRawMethod GetRequiredStaticMethod(string methodName, DotNetRawType[] parameterRawTypes)
         {
-            DotNetRawMethod? method = GetMethod(methodName, parameterRawTypes);
+            DotNetRawMethod? method = this.GetMethod(methodName, parameterRawTypes);
             if (method == null)
-                throw new UserViewableException($"No '{methodName}' method found for type '{FullName}'");
+                throw new UserViewableException($"No '{methodName}' method found for type '{this.FullName}'");
             if (!method.IsStatic)
-                throw new UserViewableException($"'{FullName}.{methodName}' method is not static when expected it to be");
+                throw new UserViewableException($"'{this.FullName}.{methodName}' method is not static when expected it to be");
             return method;
         }
 

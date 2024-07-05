@@ -8,15 +8,15 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 
         public ReflectionDotNetRawField(FieldInfo fieldInfo)
         {
-            _fieldInfo = fieldInfo;
+            this._fieldInfo = fieldInfo;
         }
 
-        public override string Name => _fieldInfo.Name;
+        public override string Name => this._fieldInfo.Name;
 
-        public override DotNetRawType FieldType => new ReflectionDotNetRawType(_fieldInfo.FieldType);
+        public override DotNetRawType FieldType => new ReflectionDotNetRawType(this._fieldInfo.FieldType);
 
-        public override bool IsStatic => _fieldInfo.IsStatic;
+        public override bool IsStatic => this._fieldInfo.IsStatic;
 
-        public override bool IsPublic => _fieldInfo.IsPublic;
+        public override bool IsPublic => this._fieldInfo.IsPublic;
     }
 }

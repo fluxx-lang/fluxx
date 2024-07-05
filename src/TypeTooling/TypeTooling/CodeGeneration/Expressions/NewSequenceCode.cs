@@ -10,8 +10,8 @@ namespace TypeTooling.CodeGeneration.Expressions
 
         public NewSequenceCode(RawType elementType, ImmutableArray<ExpressionCode> items)
         {
-            ElementType = elementType;
-            Items = items;
+            this.ElementType = elementType;
+            this.Items = items;
         }
     }
 }

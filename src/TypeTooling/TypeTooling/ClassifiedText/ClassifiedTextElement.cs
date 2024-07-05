@@ -9,12 +9,12 @@ namespace TypeTooling.ClassifiedText
 
         public ClassifiedTextElement(params ClassifiedTextRun[] runs)
         {
-            Runs = runs.ToImmutableArray();
+            this.Runs = runs.ToImmutableArray();
         }
 
         public ClassifiedTextElement(IEnumerable<ClassifiedTextRun> runs)
         {
-            Runs = runs.ToImmutableArray();
+            this.Runs = runs.ToImmutableArray();
         }
 
         public ImmutableArray<ClassifiedTextRun> Runs { get; }

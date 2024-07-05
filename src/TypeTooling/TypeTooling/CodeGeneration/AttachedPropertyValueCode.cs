@@ -10,8 +10,8 @@ namespace TypeTooling.CodeGeneration
 
         public AttachedPropertyValueCode(AttachedProperty attachedProperty, ExpressionCode value)
         {
-            AttachedProperty = attachedProperty;
-            Value = value;
+            this.AttachedProperty = attachedProperty;
+            this.Value = value;
         }
     }
 }

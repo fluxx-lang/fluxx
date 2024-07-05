@@ -9,12 +9,12 @@ namespace TypeTooling.DotNet.Types
 
         public DotNetObjectCustomLiteralParser(ICustomLiteralParser companionType)
         {
-            _companionType = companionType;
+            this._companionType = companionType;
         }
 
         public override CustomLiteral Parse(string literal)
         {
-            return _companionType.Parse(literal);
+            return this._companionType.Parse(literal);
         }
     }
 }

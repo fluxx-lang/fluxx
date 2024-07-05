@@ -11,10 +11,10 @@ namespace TypeTooling.CodeGeneration.Expressions
 
         public NewObjectCode(RawType objectType, RawConstructor constructor, ExpressionCode[] constructorArguments, PropertyValue<RawProperty, ExpressionCode>[] propertyValues)
         {
-            ObjectType = objectType;
-            Constructor = constructor;
-            ConstructorArguments = constructorArguments;
-            PropertyValues = propertyValues;
+            this.ObjectType = objectType;
+            this.Constructor = constructor;
+            this.ConstructorArguments = constructorArguments;
+            this.PropertyValues = propertyValues;
         }
     }
 }

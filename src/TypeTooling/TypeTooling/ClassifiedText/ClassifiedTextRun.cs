@@ -4,8 +4,8 @@
     {
         public ClassifiedTextRun(string classificationTypeName, string text)
         {
-            ClassificationTypeName = classificationTypeName;
-            Text = text;
+            this.ClassificationTypeName = classificationTypeName;
+            this.Text = text;
         }
 
         public string ClassificationTypeName { get; }

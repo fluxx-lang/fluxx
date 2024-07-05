@@ -13,19 +13,19 @@ namespace TypeTooling.DotNet.Types
 
         public DotNetSequenceType(TypeToolingEnvironment typeToolingEnvironment, DotNetRawType rawType, DotNetRawType elementRawType)
         {
-            _typeToolingEnvironment = typeToolingEnvironment;
-            _rawType = rawType;
-            _elementRawType = elementRawType;
+            this._typeToolingEnvironment = typeToolingEnvironment;
+            this._rawType = rawType;
+            this._elementRawType = elementRawType;
         }
 
-        public override RawType UnderlyingType => _rawType;
+        public override RawType UnderlyingType => this._rawType;
 
-        public DotNetRawType ElementRawType => _elementRawType;
+        public DotNetRawType ElementRawType => this._elementRawType;
 
         protected override CollectionTypeData DoGetData()
         {
-            TypeToolingType elementType = _typeToolingEnvironment.GetRequiredType(_elementRawType);
-            return new CollectionTypeData(_rawType.FullName, elementType);
+            TypeToolingType elementType = this._typeToolingEnvironment.GetRequiredType(this._elementRawType);
+            return new CollectionTypeData(this._rawType.FullName, elementType);
         }
     }
 }

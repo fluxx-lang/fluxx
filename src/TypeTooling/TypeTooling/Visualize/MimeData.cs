@@ -21,8 +21,8 @@ namespace TypeTooling.Visualize
 
         public MimeData(string mimeType, byte[] data)
         {
-            MimeType = mimeType;
-            Data = data;
+            this.MimeType = mimeType;
+            this.Data = data;
         }
     }
 }
