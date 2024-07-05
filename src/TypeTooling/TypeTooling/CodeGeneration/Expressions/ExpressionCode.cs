@@ -2,12 +2,12 @@
 {
     public class ExpressionCode
     {
-        private string? _comment = null;
+        private string? comment = null;
 
         public string? Comment
         {
-            get => this._comment;
-            set => this._comment = value;
+            get => this.comment;
+            set => this.comment = value;
         }
     }
 }

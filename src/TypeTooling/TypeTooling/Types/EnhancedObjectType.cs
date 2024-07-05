@@ -6,59 +6,59 @@ namespace TypeTooling.Types
 {
     public class EnhancedObjectType : ObjectType
     {
-        private readonly ObjectType _originalType;
-        private readonly TypeOverride _typeOverride;
+        private readonly ObjectType originalType;
+        private readonly TypeOverride typeOverride;
 
 
         public EnhancedObjectType(ObjectType originalType)
         {
-            this._originalType = originalType;
-            this._typeOverride = new TypeOverride(originalType);
+            this.originalType = originalType;
+            this.typeOverride = new TypeOverride(originalType);
         }
 
-        public TypeOverride TypeOverride => this._typeOverride;
+        public TypeOverride TypeOverride => this.typeOverride;
 
-        public override string FullName => this._originalType.FullName;
+        public override string FullName => this.originalType.FullName;
 
-        public override RawType UnderlyingType => this._originalType.UnderlyingType;
+        public override RawType UnderlyingType => this.originalType.UnderlyingType;
 
         public override CustomLiteralParser? GetCustomLiteralParser()
         {
-            return this._typeOverride.GetCustomLiteralParser();
+            return this.typeOverride.GetCustomLiteralParser();
         }
 
         public override Visualizer? GetVisualizer()
         {
-            return this._typeOverride.GetVisualizer();
+            return this.typeOverride.GetVisualizer();
         }
 
-        public override IReadOnlyCollection<ObjectProperty> Properties => this._originalType.Properties;
+        public override IReadOnlyCollection<ObjectProperty> Properties => this.originalType.Properties;
 
         /// <summary>
         /// Return the content property for this object or null if the object can't have content other than its named properties.
         /// </summary>
-        public override ObjectProperty? ContentProperty => this._originalType.ContentProperty;
+        public override ObjectProperty? ContentProperty => this.originalType.ContentProperty;
 
         public override ExpressionCode GetCreateObjectCode(PropertyValue<string, ExpressionCode>[] propertyValues, PropertyValue<AttachedProperty, ExpressionCode>[] attachedPropertyValues) =>
-            this._originalType.GetCreateObjectCode(propertyValues, attachedPropertyValues);
+            this.originalType.GetCreateObjectCode(propertyValues, attachedPropertyValues);
 
         public override GetPropertyCode GetGetPropertyCode(ExpressionCode instance, string property) =>
-            this._originalType.GetGetPropertyCode(instance, property);
+            this.originalType.GetGetPropertyCode(instance, property);
 
         public override InterpretedObjectCreator? GetInterpretedObjectCreator(ObjectProperty[] properties,
             AttachedProperty[] attachedProperties)
             {
-            return this._originalType.GetInterpretedObjectCreator(properties, attachedProperties);
+            return this.originalType.GetInterpretedObjectCreator(properties, attachedProperties);
         }
 
         public override ObjectPropertyReader GetPropertyReader(ObjectProperty property)
         {
-            return this._originalType.GetPropertyReader(property);
+            return this.originalType.GetPropertyReader(property);
         }
 
         public override IReadOnlyCollection<ObjectType> GetBaseTypes()
         {
-            return this._originalType.GetBaseTypes();
+            return this.originalType.GetBaseTypes();
         }
     }
 }

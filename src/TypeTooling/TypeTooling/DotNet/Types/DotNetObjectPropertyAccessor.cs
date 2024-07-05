@@ -6,16 +6,16 @@ namespace TypeTooling.DotNet.Types
 {
     public class DotNetObjectPropertyReader : ObjectPropertyReader
     {
-        private readonly DotNetRawProperty _rawProperty;
+        private readonly DotNetRawProperty rawProperty;
 
         public DotNetObjectPropertyReader(DotNetRawProperty rawProperty)
         {
-            this._rawProperty = rawProperty;
+            this.rawProperty = rawProperty;
         }
 
         public override object Get(object obj)
         {
-            return ((ReflectionDotNetRawProperty)this._rawProperty).PropertyInfo.GetValue(obj);
+            return ((ReflectionDotNetRawProperty)this.rawProperty).PropertyInfo.GetValue(obj);
         }
     }
 }

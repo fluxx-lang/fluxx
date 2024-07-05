@@ -6,31 +6,31 @@ namespace TypeTooling.Helper
 {
     public abstract class ObjectTypeLazyLoaded : ObjectType
     {
-        private readonly Lazy<ObjectTypeData> _data;
+        private readonly Lazy<ObjectTypeData> data;
 
         protected ObjectTypeLazyLoaded()
         {
-            this._data = new Lazy<ObjectTypeData>(this.DoGetData);
+            this.data = new Lazy<ObjectTypeData>(this.DoGetData);
         }
 
         /// <inheritdoc />
-        public sealed override string FullName => this._data.Value.FullName;
+        public sealed override string FullName => this.data.Value.FullName;
 
         /// <inheritdoc />
-        public sealed override IReadOnlyCollection<ObjectProperty> Properties => this._data.Value.Properties;
+        public sealed override IReadOnlyCollection<ObjectProperty> Properties => this.data.Value.Properties;
 
         /// <inheritdoc />
-        public sealed override ObjectProperty? ContentProperty => this._data.Value.ContentProperty;
+        public sealed override ObjectProperty? ContentProperty => this.data.Value.ContentProperty;
 
         /// <inheritdoc />
         public override CustomLiteralParser? GetCustomLiteralParser()
         {
-            return this._data.Value.CustomLiteralParser;
+            return this.data.Value.CustomLiteralParser;
         }
 
         public override IReadOnlyCollection<ObjectType> GetBaseTypes()
         {
-            return this._data.Value.BaseTypes;
+            return this.data.Value.BaseTypes;
         }
 
         protected abstract ObjectTypeData DoGetData();

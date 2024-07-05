@@ -8,14 +8,14 @@ namespace TypeTooling.CodeGeneration.Operators
 {
     public class Operator
     {
-        private readonly string _defaultStringRepresentation;
+        private readonly string defaultStringRepresentation;
 
         public Operator(string defaultStringRepresentation)
         {
-            this._defaultStringRepresentation = defaultStringRepresentation;
+            this.defaultStringRepresentation = defaultStringRepresentation;
         }
 
-        public string DefaultStringRepresentation => this._defaultStringRepresentation;
+        public string DefaultStringRepresentation => this.defaultStringRepresentation;
 
         public override string ToString() => this.DefaultStringRepresentation;
     }

@@ -4,17 +4,17 @@ namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
     public class EnumValueLiteralCode : LiteralCode
     {
-        private readonly RawType _enumType;
-        private readonly string _valueName;
+        private readonly RawType enumType;
+        private readonly string valueName;
 
         public EnumValueLiteralCode(RawType enumType, string valueName)
         {
-            this._enumType = enumType;
-            this._valueName = valueName;
+            this.enumType = enumType;
+            this.valueName = valueName;
         }
 
-        public string ValueName => this._valueName;
+        public string ValueName => this.valueName;
 
-        public RawType EnumType => this._enumType;
+        public RawType EnumType => this.enumType;
     }
 }

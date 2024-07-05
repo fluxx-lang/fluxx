@@ -4,16 +4,16 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 {
     public class ReflectionDotNetRawMethod : DotNetRawMethod
     {
-        private readonly MethodInfo _methodInfo;
+        private readonly MethodInfo methodInfo;
 
         public ReflectionDotNetRawMethod(MethodInfo methodInfo)
         {
-            this._methodInfo = methodInfo;
+            this.methodInfo = methodInfo;
         }
 
         public override DotNetRawParameter[] GetParameters()
         {
-            return ToParameterDescriptors(this._methodInfo.GetParameters());
+            return ToParameterDescriptors(this.methodInfo.GetParameters());
         }
 
         public static DotNetRawParameter[] ToParameterDescriptors(ParameterInfo[] parameterInfos)
@@ -27,12 +27,12 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             return parameterDescriptors;
         }
 
-        public override DotNetRawType ReturnType => new ReflectionDotNetRawType(this._methodInfo.ReturnType);
+        public override DotNetRawType ReturnType => new ReflectionDotNetRawType(this.methodInfo.ReturnType);
 
-        public override string Name => this._methodInfo.Name;
+        public override string Name => this.methodInfo.Name;
 
-        public override bool IsStatic => this._methodInfo.IsStatic;
+        public override bool IsStatic => this.methodInfo.IsStatic;
 
-        public MethodInfo MethodInfo => this._methodInfo;
+        public MethodInfo MethodInfo => this.methodInfo;
     }
 }

@@ -2,13 +2,13 @@
 {
     public class IntLiteralCode : LiteralCode
     {
-        private readonly int _value;
+        private readonly int value;
 
         public IntLiteralCode(int value)
         {
-            this._value = value;
+            this.value = value;
         }
 
-        public int Value => this._value;
+        public int Value => this.value;
     }
 }

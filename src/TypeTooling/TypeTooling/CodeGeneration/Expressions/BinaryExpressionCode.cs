@@ -4,21 +4,21 @@ namespace TypeTooling.CodeGeneration.Expressions
 {
     public class BinaryExpressionCode : ExpressionCode
     {
-        private readonly BinaryOperator _operator;
-        private readonly ExpressionCode _leftOperand;
-        private readonly ExpressionCode _rightOperand;
+        private readonly BinaryOperator @operator;
+        private readonly ExpressionCode leftOperand;
+        private readonly ExpressionCode rightOperand;
 
         public BinaryExpressionCode(BinaryOperator @operator, ExpressionCode leftOperand, ExpressionCode rightOperand)
         {
-            this._operator = @operator;
-            this._leftOperand = leftOperand;
-            this._rightOperand = rightOperand;
+            this.@operator = @operator;
+            this.leftOperand = leftOperand;
+            this.rightOperand = rightOperand;
         }
 
-        public BinaryOperator Operator => this._operator;
+        public BinaryOperator Operator => this.@operator;
 
-        public ExpressionCode LeftOperand => this._leftOperand;
+        public ExpressionCode LeftOperand => this.leftOperand;
 
-        public ExpressionCode RightOperand => this._rightOperand;
+        public ExpressionCode RightOperand => this.rightOperand;
     }
 }

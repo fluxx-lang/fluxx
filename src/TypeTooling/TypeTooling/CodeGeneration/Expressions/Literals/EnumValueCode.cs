@@ -2,17 +2,17 @@
 {
     public class EnumValueCode : ExpressionCode
     {
-        private readonly object _enumTypeDescriptor;
-        private readonly string _enumValue;
+        private readonly object enumTypeDescriptor;
+        private readonly string enumValue;
 
         public EnumValueCode(object enumTypeDescriptor, string enumValue)
         {
-            this._enumTypeDescriptor = enumTypeDescriptor;
-            this._enumValue = enumValue;
+            this.enumTypeDescriptor = enumTypeDescriptor;
+            this.enumValue = enumValue;
         }
 
-        public object EnumTypeDescriptor => this._enumTypeDescriptor;
+        public object EnumTypeDescriptor => this.enumTypeDescriptor;
 
-        public string EnumValue => this._enumValue;
+        public string EnumValue => this.enumValue;
     }
 }

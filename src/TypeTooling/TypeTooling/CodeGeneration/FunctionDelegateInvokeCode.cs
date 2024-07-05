@@ -5,18 +5,18 @@ namespace TypeTooling.CodeGeneration
 {
     public class FunctionDelegateInvokeCode : ExpressionCode
     {
-        private readonly ExpressionCode _functionDelegate;
-        private readonly ImmutableArray<ExpressionCode> _arguments;
+        private readonly ExpressionCode functionDelegate;
+        private readonly ImmutableArray<ExpressionCode> arguments;
 
 
         public FunctionDelegateInvokeCode(ExpressionCode functionDelegate, ImmutableArray<ExpressionCode> arguments)
         {
-            this._functionDelegate = functionDelegate;
-            this._arguments = arguments;
+            this.functionDelegate = functionDelegate;
+            this.arguments = arguments;
         }
 
-        public ExpressionCode FunctionDelegate => this._functionDelegate;
+        public ExpressionCode FunctionDelegate => this.functionDelegate;
 
-        public ImmutableArray<ExpressionCode> Arguments => this._arguments;
+        public ImmutableArray<ExpressionCode> Arguments => this.arguments;
     }
 }

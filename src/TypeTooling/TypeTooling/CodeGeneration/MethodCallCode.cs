@@ -5,22 +5,22 @@ namespace TypeTooling.CodeGeneration
 {
     public class MethodCallCode : ExpressionCode
     {
-        private readonly ExpressionCode? _object;
-        private readonly RawMethod _rawMethod;
-        private readonly ExpressionCode[] _arguments;
+        private readonly ExpressionCode? @object;
+        private readonly RawMethod rawMethod;
+        private readonly ExpressionCode[] arguments;
 
 
         public MethodCallCode(ExpressionCode? objectCode, RawMethod rawMethod, params ExpressionCode[] arguments)
         {
-            this._object = objectCode;
-            this._rawMethod = rawMethod;
-            this._arguments = arguments;
+            this.@object = objectCode;
+            this.rawMethod = rawMethod;
+            this.arguments = arguments;
         }
 
-        public ExpressionCode? ObjectCode => this._object;
+        public ExpressionCode? ObjectCode => this.@object;
 
-        public RawMethod RawMethod => this._rawMethod;
+        public RawMethod RawMethod => this.rawMethod;
 
-        public ExpressionCode[] Arguments => this._arguments;
+        public ExpressionCode[] Arguments => this.arguments;
     }
 }

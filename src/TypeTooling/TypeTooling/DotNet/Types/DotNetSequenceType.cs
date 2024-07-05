@@ -7,25 +7,25 @@ namespace TypeTooling.DotNet.Types
 {
     public class DotNetSequenceType : SequenceTypeLazyLoaded
     {
-        private readonly TypeToolingEnvironment _typeToolingEnvironment;
-        private readonly DotNetRawType _rawType;
-        private readonly DotNetRawType _elementRawType;
+        private readonly TypeToolingEnvironment typeToolingEnvironment;
+        private readonly DotNetRawType rawType;
+        private readonly DotNetRawType elementRawType;
 
         public DotNetSequenceType(TypeToolingEnvironment typeToolingEnvironment, DotNetRawType rawType, DotNetRawType elementRawType)
         {
-            this._typeToolingEnvironment = typeToolingEnvironment;
-            this._rawType = rawType;
-            this._elementRawType = elementRawType;
+            this.typeToolingEnvironment = typeToolingEnvironment;
+            this.rawType = rawType;
+            this.elementRawType = elementRawType;
         }
 
-        public override RawType UnderlyingType => this._rawType;
+        public override RawType UnderlyingType => this.rawType;
 
-        public DotNetRawType ElementRawType => this._elementRawType;
+        public DotNetRawType ElementRawType => this.elementRawType;
 
         protected override CollectionTypeData DoGetData()
         {
-            TypeToolingType elementType = this._typeToolingEnvironment.GetRequiredType(this._elementRawType);
-            return new CollectionTypeData(this._rawType.FullName, elementType);
+            TypeToolingType elementType = this.typeToolingEnvironment.GetRequiredType(this.elementRawType);
+            return new CollectionTypeData(this.rawType.FullName, elementType);
         }
     }
 }

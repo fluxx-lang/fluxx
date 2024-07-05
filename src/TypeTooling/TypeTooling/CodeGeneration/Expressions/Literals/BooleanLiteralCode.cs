@@ -2,13 +2,13 @@
 {
     public class BooleanLiteralCode : LiteralCode
     {
-        private readonly bool _value;
+        private readonly bool value;
 
         public BooleanLiteralCode(bool value)
         {
-            this._value = value;
+            this.value = value;
         }
 
-        public bool Value => this._value;
+        public bool Value => this.value;
     }
 }

@@ -4,17 +4,17 @@ namespace TypeTooling.CodeGeneration.Expressions
 {
     public class UnaryExpressionCode : ExpressionCode
     {
-        private readonly UnaryOperator _operator;
-        private readonly ExpressionCode _operand;
+        private readonly UnaryOperator @operator;
+        private readonly ExpressionCode operand;
 
         public UnaryExpressionCode(UnaryOperator unaryOperator, ExpressionCode operand)
         {
-            this._operator = unaryOperator;
-            this._operand = operand;
+            this.@operator = unaryOperator;
+            this.operand = operand;
         }
 
-        public UnaryOperator Operator => this._operator;
+        public UnaryOperator Operator => this.@operator;
 
-        public ExpressionCode Operand => this._operand;
+        public ExpressionCode Operand => this.operand;
     }
 }

@@ -5,17 +5,17 @@ namespace TypeTooling.Helper
 {
     public abstract class SequenceTypeLazyLoaded : SequenceType
     {
-        private readonly Lazy<CollectionTypeData> _data;
+        private readonly Lazy<CollectionTypeData> data;
 
         protected SequenceTypeLazyLoaded()
         {
-            this._data = new Lazy<CollectionTypeData>(this.DoGetData);
+            this.data = new Lazy<CollectionTypeData>(this.DoGetData);
         }
 
         /// <inheritdoc />
-        public sealed override string FullName => this._data.Value.FullName;
+        public sealed override string FullName => this.data.Value.FullName;
 
-        public override TypeToolingType ElementType => this._data.Value.ElementType;
+        public override TypeToolingType ElementType => this.data.Value.ElementType;
 
         protected abstract CollectionTypeData DoGetData();
     }

@@ -6,18 +6,18 @@ namespace TypeTooling.Helper
 {
     public abstract class EnumTypeLazyLoaded : EnumType
     {
-        private readonly Lazy<EnumTypeData> _data;
+        private readonly Lazy<EnumTypeData> data;
 
         protected EnumTypeLazyLoaded()
         {
-            this._data = new Lazy<EnumTypeData>(this.DoGetData);
+            this.data = new Lazy<EnumTypeData>(this.DoGetData);
         }
 
         /// <inheritdoc />
-        public sealed override string FullName => this._data.Value.FullName;
+        public sealed override string FullName => this.data.Value.FullName;
 
         /// <inheritdoc />
-        public sealed override IReadOnlyCollection<EnumValue> Values => this._data.Value.Values;
+        public sealed override IReadOnlyCollection<EnumValue> Values => this.data.Value.Values;
 
         /// <inheritdoc />
         protected abstract EnumTypeData DoGetData();

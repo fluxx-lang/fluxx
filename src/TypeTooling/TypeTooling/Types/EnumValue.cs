@@ -4,17 +4,17 @@ namespace TypeTooling.Types
 {
     public class EnumValue
     {
-        private readonly string _name;
-        private readonly ExpressionAndHelpersCode _expressionAndHelpersCode;
+        private readonly string name;
+        private readonly ExpressionAndHelpersCode expressionAndHelpersCode;
 
         public EnumValue(string name, ExpressionAndHelpersCode expressionAndHelpersCode)
         {
-            this._name = name;
-            this._expressionAndHelpersCode = expressionAndHelpersCode;
+            this.name = name;
+            this.expressionAndHelpersCode = expressionAndHelpersCode;
         }
 
-        public string Name => this._name;
+        public string Name => this.name;
 
-        public ExpressionAndHelpersCode ExpressionAndHelpersCode => this._expressionAndHelpersCode;
+        public ExpressionAndHelpersCode ExpressionAndHelpersCode => this.expressionAndHelpersCode;
     }
 }

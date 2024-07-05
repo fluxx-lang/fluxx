@@ -4,17 +4,17 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 {
     public class ReflectionDotNetRawParameter : DotNetRawParameter
     {
-        private readonly ParameterInfo _parameterInfo;
+        private readonly ParameterInfo parameterInfo;
 
         public ReflectionDotNetRawParameter(ParameterInfo parameterInfo)
         {
-            this._parameterInfo = parameterInfo;
+            this.parameterInfo = parameterInfo;
         }
 
-        public override string Name => this._parameterInfo.Name;
+        public override string Name => this.parameterInfo.Name;
 
-        public override DotNetRawType ParameterType => new ReflectionDotNetRawType(this._parameterInfo.ParameterType);
+        public override DotNetRawType ParameterType => new ReflectionDotNetRawType(this.parameterInfo.ParameterType);
 
-        public ParameterInfo ParameterInfo => this._parameterInfo;
+        public ParameterInfo ParameterInfo => this.parameterInfo;
     }
 }

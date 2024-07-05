@@ -8,25 +8,25 @@ namespace TypeTooling.DotNet.Types
 {
     public class DotNetEnumType : EnumTypeLazyLoaded
     {
-        private readonly DotNetRawType _rawType;
+        private readonly DotNetRawType rawType;
 
         public DotNetEnumType(DotNetRawType rawType)
         {
-            this._rawType = rawType;
+            this.rawType = rawType;
         }
 
-        public override RawType UnderlyingType => this._rawType;
+        public override RawType UnderlyingType => this.rawType;
 
         protected override EnumTypeData DoGetData()
         {
             var enumValues = new List<EnumValue>();
-            foreach (string enumName in this._rawType.GetEnumNames())
+            foreach (string enumName in this.rawType.GetEnumNames())
             {
-                ExpressionAndHelpersCode expressionAndHelpersCode = new ExpressionAndHelpersCode(Code.EnumValueLiteral(this._rawType, enumName));
+                ExpressionAndHelpersCode expressionAndHelpersCode = new ExpressionAndHelpersCode(Code.EnumValueLiteral(this.rawType, enumName));
                 enumValues.Add(new EnumValue(enumName, expressionAndHelpersCode));
             }
 
-            return new EnumTypeData(this._rawType.FullName, enumValues);
+            return new EnumTypeData(this.rawType.FullName, enumValues);
         }
     }
 }

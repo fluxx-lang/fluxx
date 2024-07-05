@@ -4,18 +4,18 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 {
     public class ReflectionDotNetRawCustomAttribute : DotNetRawCustomAttribute
     {
-        private readonly CustomAttributeData _customAttributeData;
+        private readonly CustomAttributeData customAttributeData;
 
         public ReflectionDotNetRawCustomAttribute(CustomAttributeData customAttributeData)
         {
-            this._customAttributeData = customAttributeData;
+            this.customAttributeData = customAttributeData;
         }
 
-        public override DotNetRawType AttributeType => new ReflectionDotNetRawType(this._customAttributeData.AttributeType);
+        public override DotNetRawType AttributeType => new ReflectionDotNetRawType(this.customAttributeData.AttributeType);
 
         public override object? GetNamedArgumentValue(string argumentName)
         {
-            foreach (CustomAttributeNamedArgument namedArgument in this._customAttributeData.NamedArguments)
+            foreach (CustomAttributeNamedArgument namedArgument in this.customAttributeData.NamedArguments)
             {
                 if (namedArgument.MemberName == argumentName)
                 {
@@ -28,15 +28,15 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 
         public override int GetPositionalArgumentCount()
         {
-            return this._customAttributeData.ConstructorArguments.Count;
+            return this.customAttributeData.ConstructorArguments.Count;
         }
 
         public override object GetPositionalArgumentValue(int index)
         {
-            object value = this._customAttributeData.ConstructorArguments[index].Value;
+            object value = this.customAttributeData.ConstructorArguments[index].Value;
             return value;
         }
 
-        public CustomAttributeData CustomAttributeData => this._customAttributeData;
+        public CustomAttributeData CustomAttributeData => this.customAttributeData;
     }
 }

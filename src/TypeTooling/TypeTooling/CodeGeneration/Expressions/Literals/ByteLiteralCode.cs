@@ -2,13 +2,13 @@
 {
     public class ByteLiteralCode : LiteralCode
     {
-        private readonly byte _value;
+        private readonly byte value;
 
         public ByteLiteralCode(byte value)
         {
-            this._value = value;
+            this.value = value;
         }
 
-        public byte Value => this._value;
+        public byte Value => this.value;
     }
 }

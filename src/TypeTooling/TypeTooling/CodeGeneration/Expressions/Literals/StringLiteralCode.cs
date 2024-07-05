@@ -2,13 +2,13 @@
 {
     public class StringLiteralCode : LiteralCode
     {
-        private readonly string _value;
+        private readonly string value;
 
         public StringLiteralCode(string value)
         {
-            this._value = value;
+            this.value = value;
         }
 
-        public string Value => this._value;
+        public string Value => this.value;
     }
 }

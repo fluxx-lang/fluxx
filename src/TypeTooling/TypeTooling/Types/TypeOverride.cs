@@ -2,56 +2,56 @@
 {
     public class TypeOverride
     {
-        private readonly TypeToolingType _originalType;
-        private Override<CustomLiteralParser>? _customLiteralParserOverride;
-        private Override<Visualizer>? _visualizerOverride;
+        private readonly TypeToolingType originalType;
+        private Override<CustomLiteralParser>? customLiteralParserOverride;
+        private Override<Visualizer>? visualizerOverride;
 
 
         public TypeOverride(TypeToolingType originalType)
         {
-            this._originalType = originalType;
+            this.originalType = originalType;
         }
 
         public void OverrideCustomLiteralParser(CustomLiteralParser customLiteralParser)
         {
-            this._customLiteralParserOverride = new Override<CustomLiteralParser>(customLiteralParser);
+            this.customLiteralParserOverride = new Override<CustomLiteralParser>(customLiteralParser);
         }
 
         public void OverrideVisualizer(Visualizer visualizer)
         {
-            this._visualizerOverride = new Override<Visualizer>(visualizer);
+            this.visualizerOverride = new Override<Visualizer>(visualizer);
         }
 
         public CustomLiteralParser? GetCustomLiteralParser()
         {
-            if (this._customLiteralParserOverride != null)
+            if (this.customLiteralParserOverride != null)
             {
-                return this._customLiteralParserOverride.Value;
+                return this.customLiteralParserOverride.Value;
             }
 
-            return this._originalType.GetCustomLiteralParser();
+            return this.originalType.GetCustomLiteralParser();
         }
 
         public Visualizer? GetVisualizer()
         {
-            if (this._visualizerOverride != null)
+            if (this.visualizerOverride != null)
             {
-                return this._visualizerOverride.Value;
+                return this.visualizerOverride.Value;
             }
 
-            return this._originalType.GetVisualizer();
+            return this.originalType.GetVisualizer();
         }
 
         public class Override<T>
         {
-            private readonly T _value;
+            private readonly T value;
 
             public Override(T value)
             {
-                this._value = value;
+                this.value = value;
             }
 
-            public T Value => this._value;
+            public T Value => this.value;
         }
     }
 }

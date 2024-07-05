@@ -17,19 +17,19 @@ namespace TypeTooling.DotNet.CodeGeneration
 {
     public class ConvertToExpressionTree : IConvertToExpressionTree
     {
-        private readonly TypeToolingEnvironment _typeToolingEnvironment;
-        private readonly Dictionary<string, ParameterExpression> _parameterExpressionsDictionary;
+        private readonly TypeToolingEnvironment typeToolingEnvironment;
+        private readonly Dictionary<string, ParameterExpression> parameterExpressionsDictionary;
         public LambdaExpression Result { get; }
 
         public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, LambdaCode lambdaCode)
         {
-            this._typeToolingEnvironment = typeToolingEnvironment;
+            this.typeToolingEnvironment = typeToolingEnvironment;
 
             ParameterExpression[] parameterExpressions = lambdaCode.Parameters
                 .Select(parameterExpressionCode =>
                     Expression.Parameter(GetType(parameterExpressionCode.Type), parameterExpressionCode.Name))
                 .ToArray();
-            this._parameterExpressionsDictionary = parameterExpressions.ToDictionary(parameterExpression => parameterExpression.Name);
+            this.parameterExpressionsDictionary = parameterExpressions.ToDictionary(parameterExpression => parameterExpression.Name);
 
             Expression bodyExpression = this.ConvertExpression(lambdaCode.Body);
 
@@ -39,8 +39,8 @@ namespace TypeTooling.DotNet.CodeGeneration
 
         public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, ExpressionCode expressionCode)
         {
-            this._typeToolingEnvironment = typeToolingEnvironment;
-            this._parameterExpressionsDictionary = new Dictionary<string, ParameterExpression>();
+            this.typeToolingEnvironment = typeToolingEnvironment;
+            this.parameterExpressionsDictionary = new Dictionary<string, ParameterExpression>();
 
             Expression bodyExpression = this.ConvertExpression(expressionCode);
 
@@ -92,7 +92,7 @@ namespace TypeTooling.DotNet.CodeGeneration
                 case UnaryExpressionCode unaryExpressionCode:
                     return this.ConvertUnaryExpression(unaryExpressionCode);
                 case ParameterExpressionCode parameterExpressionCode:
-                    return this._parameterExpressionsDictionary[parameterExpressionCode.Name];
+                    return this.parameterExpressionsDictionary[parameterExpressionCode.Name];
                 case FunctionDelegateInvokeCode functionDelegateInvokeCode:
                     return this.ConvertFunctionDelegateInvoke(functionDelegateInvokeCode);
                 default:
@@ -122,7 +122,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
                 if (!rawProperty.CanWrite)
                 {
-                    DotNetRawType iListRawType = (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
+                    DotNetRawType iListRawType = (DotNetRawType)this.typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
 
                     if (rawProperty.PropertyType.IsAssignableTo(iListRawType))
                     {
@@ -163,7 +163,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             blockExpressions.Add(assignExpression);
 
             DotNetRawType sequenceUtilsRawType =
-                (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
+                (DotNetRawType)this.typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
             Type sequenceUtilsType = ((ReflectionDotNetRawType) sequenceUtilsRawType).Type;
 
             foreach (var propertyValue in propertyValues)
@@ -172,7 +172,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
                 if (!rawProperty.CanWrite)
                 {
-                    DotNetRawType iListRawType = (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
+                    DotNetRawType iListRawType = (DotNetRawType)this.typeToolingEnvironment.GetRequiredRawType("System.Collections.IList");
 
                     if (rawProperty.PropertyType.IsAssignableTo(iListRawType))
                     {
@@ -216,7 +216,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
         private Expression ConvertNewSequence(NewSequenceCode newSequenceCode)
         {
-            DotNetRawType sequenceUtils = (DotNetRawType)this._typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
+            DotNetRawType sequenceUtils = (DotNetRawType)this.typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
 
             RawType elementType = newSequenceCode.ElementType;
             var itemsArrayCode = new NewArrayInitCode(elementType, newSequenceCode.Items);
