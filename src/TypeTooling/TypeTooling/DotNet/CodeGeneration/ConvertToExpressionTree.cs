@@ -124,8 +124,10 @@ namespace TypeTooling.DotNet.CodeGeneration
                     else throw new UserViewableException($"Property {rawProperty.Name} isn't writable");
                 }
                 else
+                {
                     memberAssignments.Add(Expression.Bind(GetMemberInfo(rawProperty),
                         this.ConvertExpression(propertyValue.Value)));
+                }
             }
 
             MemberInitExpression memberInitExpression = Expression.MemberInit(newExpression, memberAssignments);
@@ -338,8 +340,10 @@ namespace TypeTooling.DotNet.CodeGeneration
         private static ConstructorInfo GetConstructorInfo(RawConstructor rawConstructor)
         {
             if (!(rawConstructor is ReflectionDotNetRawConstructor reflectionDotNetRawConstructor))
+            {
                 throw new Exception(
                     $"rawConstructor must be of type ReflectionDotNetRawConstructor in order to create an expression, but it's actually of type '{rawConstructor.GetType().FullName}'");
+            }
 
             return reflectionDotNetRawConstructor.ConstructorInfo;
         }
@@ -347,8 +351,10 @@ namespace TypeTooling.DotNet.CodeGeneration
         private static MethodInfo GetMethodInfo(RawMethod rawMethod)
         {
             if (!(rawMethod is ReflectionDotNetRawMethod reflectionDotNetRawMethod))
+            {
                 throw new Exception(
                     $"rawMethod must be of type ReflectionDotNetRawMethod in order to create an expression, but it's actually of type '{rawMethod.GetType().FullName}'");
+            }
 
             return reflectionDotNetRawMethod.MethodInfo;
         }
@@ -358,6 +364,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             if (!(rawProperty is ReflectionDotNetRawProperty reflectionDotNetRawProperty))
                 throw new Exception(
                     $"rawProperty must be of type ReflectionDotNetRawProperty in order to create an expression, but it's actually of type '{rawProperty.GetType().FullName}'");
+            }
 
             return reflectionDotNetRawProperty.PropertyInfo;
         }
@@ -365,8 +372,10 @@ namespace TypeTooling.DotNet.CodeGeneration
         private static Type GetType(RawType rawType)
         {
             if (!(rawType is ReflectionDotNetRawType reflectionDotNetRawType))
+            {
                 throw new Exception(
                     $"rawType must be of type ReflectionDotNetRawType in order to create an expression, but it's actually of type '{rawType.GetType().FullName}'");
+            }
 
             return reflectionDotNetRawType.Type;
         }

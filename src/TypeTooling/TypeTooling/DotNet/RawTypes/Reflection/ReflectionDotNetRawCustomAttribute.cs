@@ -18,6 +18,7 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             foreach (CustomAttributeNamedArgument namedArgument in this._customAttributeData.NamedArguments)
                 if (namedArgument.MemberName == argumentName)
                     return namedArgument.TypedValue.Value;
+            }
 
             return null;
         }

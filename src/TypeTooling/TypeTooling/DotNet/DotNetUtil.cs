@@ -21,13 +21,17 @@ namespace TypeTooling.DotNet
             // Return superclass and its ancestors
             Type baseType = type.BaseType;
             if (baseType != null)
+            {
                 foreach (Type ancestorType in GetTypeAndAncestors(baseType))
                     yield return ancestorType;
+            }
 
             // Return interfaces and their ancestors
             foreach (Type intface in type.GetInterfaces())
+            {
                 foreach (Type ancestorType in GetTypeAndAncestors(intface))
                     yield return ancestorType;
+            }
         }
 
         public static MethodInfo? GetMethod(Type type, string methodName, Type[] methodArgs)

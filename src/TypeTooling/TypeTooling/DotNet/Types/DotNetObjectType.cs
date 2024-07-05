@@ -362,8 +362,11 @@ namespace TypeTooling.DotNet.Types
                 return new CollectionPropertyInitializer(rawProperty, dotNetCollectionType.ElementRawType);
 
             if (! rawProperty.CanWrite)
+            {
                 throw new Exception(
                     $"Property '{property.Name}' on type '{this.FullName}' isn't settable");
+            }
+
             return new SimplePropertyInitializer(rawProperty);
 
 #if false

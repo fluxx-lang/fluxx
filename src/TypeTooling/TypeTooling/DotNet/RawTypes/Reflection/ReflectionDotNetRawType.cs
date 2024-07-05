@@ -94,8 +94,10 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
                 DotNetRawType parameterRawType = parameterRawTypes[i];
 
                 if (!(parameterRawType is ReflectionDotNetRawType reflectionParameterType))
+                {
                     throw new Exception(
                         $"Parameter type is '{parameterRawType.FullName}', not a ReflectionDotNetType as expected");
+                }
 
                 parameterTypes[i] = reflectionParameterType.Type;
             }
@@ -244,13 +246,17 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
             // Return superclass and its ancestors
             Type baseType = type.BaseType;
             if (baseType != null)
+            {
                 foreach (Type ancestorType in GetTypeAndAncestors(baseType))
                     yield return ancestorType;
+            }
 
             // Return interfaces and their ancestors
             foreach (Type intface in type.GetInterfaces())
-            foreach (Type ancestorType in GetTypeAndAncestors(intface))
+            {
+                foreach (Type ancestorType in GetTypeAndAncestors(intface))
                 yield return ancestorType;
+            }
         }
 
         /// <summary>
