@@ -1,8 +1,0 @@
-import Xamarin.Forms
-import Xamarin.Forms.Core
- 
-Test:int =   3     
-            
-TestLabel =
-  Label Text:abc
-         

@@ -1,9 +1,0 @@
-﻿Project 
-  Sdk:          
-    DotNetAssembly Path:../../../../src/LuxXamarinForms/bin/Debug/netstandard2.0/LuxXamarinForms.dll  Name:LuxXamarinForms
-  Dependencies:
-    DotNetAssembly Path:/Users/bretjohn/.nuget/packages/xamarin.forms/2.5.0.122203/lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Core.dll  Name:Xamarin.Forms.Core
-    DotNetAssembly Path:../../../../src/LuxXamarinForms/bin/Debug/netstandard2.0/LuxXamarinForms.dll  Name:LuxXamarinForms
-    DotNetAssembly Path:../../../../external/TypeTooling/src/TypeTooling/obj/Debug/netstandard1.4/TypeTooling.dll  Name:TypeTooling
-    DotNetAssembly Path:../../../../external/TypeTooling/src/XamlTypeTooling/obj/Debug/netstandard2.0/XamlTypeTooling.dll  Name:XamlTypeTooling
-    DotNetAssembly Path:../../../../external/TypeTooling/src/DotNetTypeTooling/obj/Debug/netstandard2.0/DotNetTypeTooling.dll  Name:DotNetTypeTooling
