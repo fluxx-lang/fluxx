@@ -362,6 +362,7 @@ namespace TypeTooling.DotNet.CodeGeneration
         private static MemberInfo GetMemberInfo(RawProperty rawProperty)
         {
             if (!(rawProperty is ReflectionDotNetRawProperty reflectionDotNetRawProperty))
+            {
                 throw new Exception(
                     $"rawProperty must be of type ReflectionDotNetRawProperty in order to create an expression, but it's actually of type '{rawProperty.GetType().FullName}'");
             }

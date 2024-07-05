@@ -16,8 +16,11 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         public override object? GetNamedArgumentValue(string argumentName)
         {
             foreach (CustomAttributeNamedArgument namedArgument in this._customAttributeData.NamedArguments)
+            {
                 if (namedArgument.MemberName == argumentName)
+                {
                     return namedArgument.TypedValue.Value;
+                }
             }
 
             return null;
