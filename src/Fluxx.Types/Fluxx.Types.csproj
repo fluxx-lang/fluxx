@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>FAML standard types</Description>
+    <Description>Fluxx standard types</Description>
   </PropertyGroup>
 
   <PropertyGroup>

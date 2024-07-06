@@ -5,22 +5,21 @@ using TypeTooling.Types;
 
 namespace Faml.Lang
 {
-    public sealed class Color {
-        public byte Red { get; }
-        public byte Green { get; }
-        public byte Blue { get; }
-        public byte Alpha { get; }
+    public sealed class Color(byte red, byte green, byte blue, byte alpha)
+    {
+        public byte Red { get; } = red;
 
-        public Color(byte red, byte green, byte blue, byte alpha) {
-            this.Red = red;
-            this.Green = green;
-            this.Blue = blue;
-            this.Alpha = alpha;
-        }
+        public byte Green { get; } = green;
+
+        public byte Blue { get; } = blue;
+
+        public byte Alpha { get; } = alpha;
     }
 
-    public class ColorTypeTooling : ICustomLiteralParser {
-        CustomLiteral ICustomLiteralParser.Parse(string value) {
+    public class ColorTypeTooling : ICustomLiteralParser
+    {
+        CustomLiteral ICustomLiteralParser.Parse(string value)
+        {
             throw new NotImplementedException("ColorTypeTooling Parse needs to be fully converted to return Code object");
 #if false
 

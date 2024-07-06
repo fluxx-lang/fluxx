@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Faml.ProjectTypes {
-    public class Project {
+﻿namespace Faml.ProjectTypes
+{
+    public class Project
+    {
         public DotNetAssembly Sdk { get; set; }
 
         public List<DotNetAssembly> Dependencies { get; set; } = new List<DotNetAssembly>();

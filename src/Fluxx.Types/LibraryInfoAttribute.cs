@@ -3,6 +3,7 @@
 namespace Faml
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class LibraryInfoAttribute : Attribute {
+    public sealed class LibraryInfoAttribute : Attribute
+    {
     }
 }

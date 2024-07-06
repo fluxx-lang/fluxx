@@ -1,8 +1,7 @@
-﻿using System;
-
-namespace Faml
+﻿namespace Faml
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class ExportDotNetTypeProviderAttribute : Attribute {
+    public sealed class ExportDotNetTypeProviderAttribute : Attribute
+    {
     }
 }

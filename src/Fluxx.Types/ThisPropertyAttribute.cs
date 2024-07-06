@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Faml
+﻿namespace Faml
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class ThisPropertyAttribute : Attribute
+    public sealed class ThisPropertyAttribute(string name) : Attribute
     {
         /// <summary>Gets the name of the this property</summary>
         /// <value>A string representing the name of the this property.</value> 
@@ -14,10 +12,6 @@ namespace Faml
         /// Normally the "main" input to a function should be flagged as the object property, especialy if chaing is useful for
         /// the function.
         /// </remarks>
-        public string Name { get; private set; }
-
-        public ThisPropertyAttribute(string name) {
-            this.Name = name;
-        }
+        public string Name { get; private set; } = name;
     }
 }

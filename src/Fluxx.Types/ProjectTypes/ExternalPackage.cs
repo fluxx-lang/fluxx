@@ -1,5 +1,6 @@
 ﻿namespace Faml.ProjectTypes
 {
-    public class ExternalPackage {
+    public class ExternalPackage
+    {
     }
 }
