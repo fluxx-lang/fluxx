@@ -50,7 +50,7 @@ namespace Faml.Tests.Messaging {
             public bool Success { get; }
 
             public TestResponse(bool success) {
-                Success = success;
+                this.Success = success;
             }
         }
     }

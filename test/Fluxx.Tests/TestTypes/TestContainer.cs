@@ -14,7 +14,7 @@ namespace Faml.Tests.TestTypes
         public override string ToString()
         {
             return "TestContainer{" +
-                   "Children=" + Children +
+                   "Children=" + this.Children +
                    '}';
         }
     }

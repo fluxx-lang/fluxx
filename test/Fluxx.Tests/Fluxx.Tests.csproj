@@ -15,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj" />
-    <ProjectReference Include="..\Faml\Faml.csproj" />
+    <ProjectReference Include="..\..\src\Fluxx\Fluxx.csproj" />
   </ItemGroup>
 
 </Project>

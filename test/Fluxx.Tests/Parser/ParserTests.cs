@@ -12,8 +12,8 @@ namespace Faml.Tests.Parser {
     public sealed class ParserTests : TestBase {
         [Test]
         public void TestParseExpression() {
-            AssertExpressionParsingMatches("true || false && (false)");
-            AssertExpressionParsingMatches("(abc > def) || (ghi != true)");
+            this.AssertExpressionParsingMatches("true || false && (false)");
+            this.AssertExpressionParsingMatches("(abc > def) || (ghi != true)");
             //assertExpressionParsingMatches("{ abc:true }");
             //assertExpressionParsingMatches("xxx{abc:def\nxxx:ghi\n}");
             //assertExpressionParsingMatches("foo(1, 2, 3)");
@@ -21,20 +21,20 @@ namespace Faml.Tests.Parser {
 
         [Test]
         public void TestParseFunctionWithSimpleBody() {
-            AssertModuleParsingMatches("foo:int = 2");
+            this.AssertModuleParsingMatches("foo:int = 2");
         }
 
         [Test]
         public void TestParseFunctionWithExprBody() {
-            AssertModuleParsingMatches("foo{param: int} = { 2 * param }");
+            this.AssertModuleParsingMatches("foo{param: int} = { 2 * param }");
         }
 
         [Test]
         public void TestParseFunctionInvocation() {
-            AssertModuleParsingMatches("foo = TestObject{abcdef}");
-            AssertModuleParsingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}");
-            AssertModuleParsingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc; abcdef}");
-            AssertModuleParsingMatches("foo = TestObject{}");
+            this.AssertModuleParsingMatches("foo = TestObject{abcdef}");
+            this.AssertModuleParsingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}");
+            this.AssertModuleParsingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc; abcdef}");
+            this.AssertModuleParsingMatches("foo = TestObject{}");
         }
 
         [Test]
@@ -92,15 +92,15 @@ namespace Faml.Tests.Parser {
         }
 
         [Test] public void TestCustomLiteralFunction() {
-            AssertModuleParsingMatches("foo:CustomLiteralObject = !!!");
+            this.AssertModuleParsingMatches("foo:CustomLiteralObject = !!!");
             AssertModuleParsingMatches("foo{}:CustomLiteralObject = !!!", "foo:CustomLiteralObject = !!!");
-            AssertModuleParsingMatches("foo = CustomLiteralObject{!!!}");
+            this.AssertModuleParsingMatches("foo = CustomLiteralObject{!!!}");
         }
 
         [Test]
         public void TestContentProperty() {
-            AssertModuleParsingMatches("foo = string{This is my string}");
-            AssertModuleParsingMatches("foo = int{3}");
+            this.AssertModuleParsingMatches("foo = string{This is my string}");
+            this.AssertModuleParsingMatches("foo = int{3}");
         }
 
         [Test] public void TestErrorRecovery() {
@@ -117,7 +117,7 @@ namespace Faml.Tests.Parser {
             string sourceWithImport = "import Faml.Tests.TestTypes\n" + source;
 
             FamlModule mainModule = CreateSingleModuleProgram(sourceWithImport);
-            AssertParsingMatches(source, expectedReconstructedSource, mainModule.ModuleSyntax);
+            this.AssertParsingMatches(source, expectedReconstructedSource, mainModule.ModuleSyntax);
         }
 
         private void AssertExpressionParsingMatches(string source, string? expectedReconstructedSource = null) {
@@ -125,7 +125,7 @@ namespace Faml.Tests.Parser {
             FamlModule module = new FamlModule(project, new QualifiableName("main"), null);
             ExpressionSyntax expression = SourceParser.ParseExpression(module, source);
 
-            AssertParsingMatches(source, expectedReconstructedSource, expression);
+            this.AssertParsingMatches(source, expectedReconstructedSource, expression);
         }
 
         private void AssertParsingMatches(string source, string? expectedReconstructedSource, SyntaxNode syntaxNode) {

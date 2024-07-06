@@ -27,26 +27,26 @@ namespace Faml.Tests.Tagger {
 
         [Test]
         public void Tag_FunctionWithSimpleBody() {
-            AssertTaggingMatches("foo:int = 2",
+            this.AssertTaggingMatches("foo:int = 2",
                 FunctionReference, Colon, TypeReference, Assign, NumberLiteral);
         }
 
         [Test]
         public void Tag_FunctionWithExprBody() {
-            AssertTaggingMatches("foo{param: int} = { 2 * param }",
+            this.AssertTaggingMatches("foo{param: int} = { 2 * param }",
                 FunctionReference, LeftBrace, PropertyReference, Colon, Int, RightBrace, Assign, // foo{param: int} =
                 LeftBrace, NumberLiteral, Times, SymbolReference, RightBrace); // { 2 * param }
         }
 
         [Test]
         public void Tag_FunctionInvocationContentArg() {
-            AssertTaggingMatches("foo = TestObject{abcdef}",
+            this.AssertTaggingMatches("foo = TestObject{abcdef}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, StringLiteral, RightBrace);
         }
 
         [Test]
         public void Tag_FunctionInvocationMultipleArgs() {
-            AssertTaggingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}",
+            this.AssertTaggingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, // foo = TestObject{
                 PropertyReference, Colon, NumberLiteral, Semicolon, // IntProp:3;
                 PropertyReference, Colon, True, Semicolon, // BoolProp:true;
@@ -56,14 +56,14 @@ namespace Faml.Tests.Tagger {
 
         [Test]
         public void Tag_KeywordsInPropertyValue() {
-            AssertTaggingMatches("foo = TestObject{TextProp:abc if is}",
+            this.AssertTaggingMatches("foo = TestObject{TextProp:abc if is}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, // foo = TestObject{
                 PropertyReference, Colon, StringLiteral, RightBrace); // TextProp:abc if is}
         }
 
         [Test]
         public void Tag_RecordDefinition() {
-            AssertTaggingMatches("type Foo = {foo:int}",
+            this.AssertTaggingMatches("type Foo = {foo:int}",
                 Type, TypeReference, Assign, LeftBrace, PropertyReference, Colon, Int, RightBrace);
         }
 

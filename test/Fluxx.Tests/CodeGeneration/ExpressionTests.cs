@@ -13,59 +13,59 @@ namespace Faml.Tests.CodeGeneration
     {
         [Test] public void TestParenthesized()
         {
-            AssertExpressionValueIs("(true || false) && (false)", false);
-            AssertExpressionValueIs("(3 > 4 || (2 > 4))", false);
+            this.AssertExpressionValueIs("(true || false) && (false)", false);
+            this.AssertExpressionValueIs("(3 > 4 || (2 > 4))", false);
         }
 
         [Test] public void TestAndOr()
         {
-            AssertExpressionValueIs("true && true", true);
-            AssertExpressionValueIs("true && false", false);
-            AssertExpressionValueIs("false && true", false);
-            AssertExpressionValueIs("false && false", false);
+            this.AssertExpressionValueIs("true && true", true);
+            this.AssertExpressionValueIs("true && false", false);
+            this.AssertExpressionValueIs("false && true", false);
+            this.AssertExpressionValueIs("false && false", false);
 
-            AssertExpressionValueIs("true || true", true);
-            AssertExpressionValueIs("true || false", true);
-            AssertExpressionValueIs("false || true", true);
-            AssertExpressionValueIs("false || false", false);
+            this.AssertExpressionValueIs("true || true", true);
+            this.AssertExpressionValueIs("true || false", true);
+            this.AssertExpressionValueIs("false || true", true);
+            this.AssertExpressionValueIs("false || false", false);
         }
 
         [Test] public void TestEqualsNotEquals()
         {
-            AssertExpressionValueIs("1 == 3", false);
-            AssertExpressionValueIs("1 == 1", true);
+            this.AssertExpressionValueIs("1 == 3", false);
+            this.AssertExpressionValueIs("1 == 1", true);
 
-            AssertExpressionValueIs("true == true", true);
-            AssertExpressionValueIs("true == false", false);
-            AssertExpressionValueIs("false == true", false);
-            AssertExpressionValueIs("false == false", true);
+            this.AssertExpressionValueIs("true == true", true);
+            this.AssertExpressionValueIs("true == false", false);
+            this.AssertExpressionValueIs("false == true", false);
+            this.AssertExpressionValueIs("false == false", true);
 
-            AssertExpressionValueIs("1 != 3", true);
-            AssertExpressionValueIs("1 != 1", false);
+            this.AssertExpressionValueIs("1 != 3", true);
+            this.AssertExpressionValueIs("1 != 1", false);
 
-            AssertExpressionValueIs("true != true", false);
-            AssertExpressionValueIs("true != false", true);
-            AssertExpressionValueIs("false != true", true);
-            AssertExpressionValueIs("false != false", false);
+            this.AssertExpressionValueIs("true != true", false);
+            this.AssertExpressionValueIs("true != false", true);
+            this.AssertExpressionValueIs("false != true", true);
+            this.AssertExpressionValueIs("false != false", false);
         }
 
         [Test] public void TestGreaterThanLessThan()
         {
-            AssertExpressionValueIs("1 > 3", false);
-            AssertExpressionValueIs("1 > 1", false);
-            AssertExpressionValueIs("1 > 0", true);
+            this.AssertExpressionValueIs("1 > 3", false);
+            this.AssertExpressionValueIs("1 > 1", false);
+            this.AssertExpressionValueIs("1 > 0", true);
 
-            AssertExpressionValueIs("1 >= 3", false);
-            AssertExpressionValueIs("1 >= 1", true);
-            AssertExpressionValueIs("1 >= 0", true);
+            this.AssertExpressionValueIs("1 >= 3", false);
+            this.AssertExpressionValueIs("1 >= 1", true);
+            this.AssertExpressionValueIs("1 >= 0", true);
 
-            AssertExpressionValueIs("1 < 3", true);
-            AssertExpressionValueIs("1 < 1", false);
-            AssertExpressionValueIs("1 < 0", false);
+            this.AssertExpressionValueIs("1 < 3", true);
+            this.AssertExpressionValueIs("1 < 1", false);
+            this.AssertExpressionValueIs("1 < 0", false);
 
-            AssertExpressionValueIs("1 <= 1", true);
-            AssertExpressionValueIs("1 <= 0", false);
-            AssertExpressionValueIs("1 <= 3", true);
+            this.AssertExpressionValueIs("1 <= 1", true);
+            this.AssertExpressionValueIs("1 <= 0", false);
+            this.AssertExpressionValueIs("1 <= 3", true);
         }
 
         [Test] public void TestFunction()
@@ -152,7 +152,7 @@ namespace Faml.Tests.CodeGeneration
 
         [Test] public void TestNewExternalObject()
         {
-            AssertExpressionValueIs(
+            this.AssertExpressionValueIs(
                 "Faml.Tests.TestTypes.TestObject{ IntProp: 23 }.IntProp\n",
                 23);
         }

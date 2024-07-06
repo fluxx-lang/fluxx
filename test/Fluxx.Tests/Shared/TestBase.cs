@@ -20,7 +20,7 @@ namespace Faml.Tests.Shared
 {
     public class TestBase {
         public void AssertMainFunctionValueIs(string moduleSource, object expectedValue) {
-            object actualValue = EvaluateFunction(moduleSource, "main");
+            object actualValue = this.EvaluateFunction(moduleSource, "main");
             Assert.AreEqual(actualValue, (object)expectedValue);
         }
 
