@@ -10,7 +10,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{7ABB4747-0078-4049-9176-757703FA2154}</ProjectGuid>
+    <ProjectGuid>{BFA989E4-6136-40FE-AD2C-8E9AD3526375}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Faml.VisualStudio</RootNamespace>
@@ -142,21 +142,13 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.0.2264" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj">
+    <ProjectReference Include="..\..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj">
       <Project>{91c2eaa4-25f2-418c-896d-bb51ddb1ac22}</Project>
       <Name>ReactiveData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\external\roslynp\src\CodeAnalysisP\Microsoft.CodeAnalysisP.csproj">
+    <ProjectReference Include="..\..\external\roslynp\src\CodeAnalysisP\Microsoft.CodeAnalysisP.csproj">
       <Project>{e4cdd003-1268-42b2-a5a6-ac868d7bd497}</Project>
       <Name>Microsoft.CodeAnalysisP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\external\TypeTooling\TypeTooling.Roslyn\TypeTooling.Roslyn.csproj">
-      <Project>{ca73719d-0e39-4044-a8fb-12f709a46d14}</Project>
-      <Name>TypeTooling.Roslyn</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\external\TypeTooling\TypeTooling\TypeTooling.csproj">
-      <Project>{a8794072-4e2d-41b7-a34e-6e00abb717dc}</Project>
-      <Name>TypeTooling</Name>
     </ProjectReference>
     <ProjectReference Include="..\Faml.DevEnv\Faml.DevEnv.csproj">
       <Project>{5dba2012-8ead-4db7-9832-f3f961566697}</Project>

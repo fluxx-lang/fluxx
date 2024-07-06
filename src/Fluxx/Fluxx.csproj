@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>FAML core</Description>
+    <Description>Fluxx core</Description>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -14,8 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj" />
     <ProjectReference Include="..\..\external\roslynp\src\CodeAnalysisP\Microsoft.CodeAnalysisP.csproj" />
-    <ProjectReference Include="..\TypeTooling\TypeTooling\TypeTooling.csproj" />
-    <ProjectReference Include="..\Fluxx.Types\Faml.Types.csproj" />
+    <ProjectReference Include="..\Fluxx.Types\Fluxx.Types.csproj" />
   </ItemGroup>
 
   <ItemGroup>
