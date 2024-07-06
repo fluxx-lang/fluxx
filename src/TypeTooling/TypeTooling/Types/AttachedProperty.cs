@@ -1,13 +1,8 @@
 ﻿namespace TypeTooling.Types
 {
-    public abstract class AttachedProperty
+    public abstract class AttachedProperty(AttachedType attachedType)
     {
-        public AttachedType AttachedType{ get; }
-
-        protected AttachedProperty(AttachedType attachedType)
-        {
-            this.AttachedType = attachedType;
-        }
+        public AttachedType AttachedType { get; } = attachedType;
 
         public abstract string Name { get; }
 

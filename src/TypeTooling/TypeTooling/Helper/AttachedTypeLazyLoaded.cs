@@ -28,19 +28,12 @@ namespace TypeTooling.Helper
         protected abstract AttachedTypeData DoGetData();
     }
 
-    public sealed class AttachedTypeData
+    public sealed class AttachedTypeData(string fullName, IReadOnlyCollection<AttachedProperty> attachedProperties, IReadOnlyCollection<AttachedType> baseTypes)
     {
-        public string FullName { get; }
+        public string FullName { get; } = fullName;
 
-        public IReadOnlyCollection<AttachedProperty> AttachedProperties { get; }
+        public IReadOnlyCollection<AttachedProperty> AttachedProperties { get; } = attachedProperties;
 
-        public IReadOnlyCollection<AttachedType> BaseTypes { get; }
-
-        public AttachedTypeData(string fullName, IReadOnlyCollection<AttachedProperty> attachedProperties, IReadOnlyCollection<AttachedType> baseTypes)
-        {
-            this.FullName = fullName;
-            this.AttachedProperties = attachedProperties;
-            this.BaseTypes = baseTypes;
-        }
+        public IReadOnlyCollection<AttachedType> BaseTypes { get; } = baseTypes;
     }
 }

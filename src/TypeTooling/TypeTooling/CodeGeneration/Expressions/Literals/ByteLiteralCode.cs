@@ -1,14 +1,7 @@
 ﻿namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
-    public class ByteLiteralCode : LiteralCode
+    public class ByteLiteralCode(byte value) : LiteralCode
     {
-        private readonly byte value;
-
-        public ByteLiteralCode(byte value)
-        {
-            this.value = value;
-        }
-
-        public byte Value => this.value;
+        public byte Value => value;
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace TypeTooling.CodeGeneration.Operators
 {
-    public class BinaryOperator : Operator
+    public class BinaryOperator(string defaultStringRepresentation) : Operator(defaultStringRepresentation)
     {
         // Boolean operators
 
@@ -30,9 +30,5 @@ namespace TypeTooling.CodeGeneration.Operators
 
         public static BinaryOperator Add = new BinaryOperator("+");
         public static BinaryOperator Subtract = new BinaryOperator("-");
-
-        public BinaryOperator(string defaultStringRepresentation) : base(defaultStringRepresentation)
-        {
-        }
     }
 }

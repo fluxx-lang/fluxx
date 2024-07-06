@@ -2,18 +2,11 @@ using TypeTooling.CodeGeneration.Operators;
 
 namespace TypeTooling.CodeGeneration.Expressions
 {
-    public class BinaryExpressionCode : ExpressionCode
+    public class BinaryExpressionCode(BinaryOperator @operator, ExpressionCode leftOperand, ExpressionCode rightOperand) : ExpressionCode
     {
-        private readonly BinaryOperator @operator;
-        private readonly ExpressionCode leftOperand;
-        private readonly ExpressionCode rightOperand;
-
-        public BinaryExpressionCode(BinaryOperator @operator, ExpressionCode leftOperand, ExpressionCode rightOperand)
-        {
-            this.@operator = @operator;
-            this.leftOperand = leftOperand;
-            this.rightOperand = rightOperand;
-        }
+        private readonly BinaryOperator @operator = @operator;
+        private readonly ExpressionCode leftOperand = leftOperand;
+        private readonly ExpressionCode rightOperand = rightOperand;
 
         public BinaryOperator Operator => this.@operator;
 

@@ -6,32 +6,31 @@ namespace TypeTooling.Types
 {
     public class CustomLiteral
     {
-        private readonly ImmutableArray<Diagnostic>? diagnostics;
-        private readonly ExpressionAndHelpersCode? expressionAndHelpersCode;
-
         public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionAndHelpersCode? expressionAndHelpersCode)
         {
-            this.diagnostics = diagnostics;
-            this.expressionAndHelpersCode = expressionAndHelpersCode;
+            this.Diagnostics = diagnostics;
+            this.ExpressionAndHelpersCode = expressionAndHelpersCode;
         }
 
         public CustomLiteral(ImmutableArray<Diagnostic>? diagnostics, ExpressionCode expressionCode)
         {
-            this.diagnostics = diagnostics;
-            this.expressionAndHelpersCode = Code.ExpressionAndHelpers(expressionCode);
+            this.Diagnostics = diagnostics;
+            this.ExpressionAndHelpersCode = Code.ExpressionAndHelpers(expressionCode);
         }
 
-        public CustomLiteral(ExpressionAndHelpersCode expressionAndHelpersCode) : this(null, expressionAndHelpersCode) { }
+        public CustomLiteral(ExpressionAndHelpersCode expressionAndHelpersCode)
+            : this(null, expressionAndHelpersCode) { }
 
-        public CustomLiteral(ExpressionCode expressionCode) : this(null, expressionCode) { }
+        public CustomLiteral(ExpressionCode expressionCode)
+            : this(null, expressionCode) { }
+
+        public ImmutableArray<Diagnostic>? Diagnostics { get; }
+
+        public ExpressionAndHelpersCode? ExpressionAndHelpersCode { get; }
 
         public static CustomLiteral SingleError(string message)
         {
             return new CustomLiteral(Diagnostic.SingleError(message), (ExpressionAndHelpersCode?) null);
         }
-
-        public ImmutableArray<Diagnostic>? Diagnostics => this.diagnostics;
-
-        public ExpressionAndHelpersCode? ExpressionAndHelpersCode => this.expressionAndHelpersCode;
     }
 }

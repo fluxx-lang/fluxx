@@ -1,15 +1,9 @@
 namespace TypeTooling
 {
-    public class PropertyValue<TProperty, TValue>
+    public class PropertyValue<TProperty, TValue>(TProperty property, TValue value)
     {
-        public TProperty Property { get; }
-        public TValue Value { get; }
-
-        public PropertyValue(TProperty property, TValue value)
-        {
-            this.Property = property;
-            this.Value = value;
-        }
+        public TProperty Property { get; } = property;
+        public TValue Value { get; } = value;
 
         public PropertyValue<TOtherProperty, TValue> WithProperty<TOtherProperty>(TOtherProperty otherProperty) =>
             new PropertyValue<TOtherProperty, TValue>(otherProperty, this.Value);

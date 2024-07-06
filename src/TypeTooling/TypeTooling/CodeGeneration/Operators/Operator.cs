@@ -6,16 +6,9 @@
  */
 namespace TypeTooling.CodeGeneration.Operators
 {
-    public class Operator
+    public class Operator(string defaultStringRepresentation)
     {
-        private readonly string defaultStringRepresentation;
-
-        public Operator(string defaultStringRepresentation)
-        {
-            this.defaultStringRepresentation = defaultStringRepresentation;
-        }
-
-        public string DefaultStringRepresentation => this.defaultStringRepresentation;
+        public string DefaultStringRepresentation => defaultStringRepresentation;
 
         public override string ToString() => this.DefaultStringRepresentation;
     }

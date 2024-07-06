@@ -5,28 +5,18 @@ using TypeTooling.Types;
 
 namespace TypeTooling.DotNet.Types
 {
-    public class DotNetInterpretedObjectCreator : InterpretedObjectCreator
+    public class DotNetInterpretedObjectCreator(DotNetRawConstructor constructorMethod, PropertyInitializer[] propertyInitializers) : InterpretedObjectCreator
     {
-        private readonly DotNetRawConstructor constructorMethod;
-        private readonly PropertyInitializer[] propertyInitializers;
-
-
-        public DotNetInterpretedObjectCreator(DotNetRawConstructor constructorMethod, PropertyInitializer[] propertyInitializers)
-        {
-            this.constructorMethod = constructorMethod;
-            this.propertyInitializers = propertyInitializers;
-        }
-
         public override object Create(object[] values, int startOffset)
         {
-            ConstructorInfo constructorInfo = ((ReflectionDotNetRawConstructor)this.constructorMethod).ConstructorInfo;
+            ConstructorInfo constructorInfo = ((ReflectionDotNetRawConstructor)constructorMethod).ConstructorInfo;
 
             object obj = constructorInfo.Invoke(null);
 
-            int propertyCount = this.propertyInitializers.Length;
+            int propertyCount = propertyInitializers.Length;
             for (int i = 0; i < propertyCount; i++)
             {
-                this.propertyInitializers[i].Initialize(obj, values[startOffset + i]);
+                propertyInitializers[i].Initialize(obj, values[startOffset + i]);
             }
 
             return obj;

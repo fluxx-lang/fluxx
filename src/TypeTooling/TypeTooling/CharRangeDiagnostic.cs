@@ -1,13 +1,8 @@
 ﻿namespace TypeTooling
 {
-    public class CharRangeDiagnostic : Diagnostic
+    public class CharRangeDiagnostic(string message, DiagnosticSeverity severity, CharRange charRange) : Diagnostic(message, severity)
     {
         // Auto properties
-        public CharRange CharRange { get; }
-
-        public CharRangeDiagnostic(string message, DiagnosticSeverity severity, CharRange charRange) : base(message, severity)
-        {
-            this.CharRange = charRange;
-        }
+        public CharRange CharRange { get; } = charRange;
     }
 }

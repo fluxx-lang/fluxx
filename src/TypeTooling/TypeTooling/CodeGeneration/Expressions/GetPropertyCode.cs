@@ -2,15 +2,10 @@
 
 namespace TypeTooling.CodeGeneration.Expressions
 {
-    public class GetPropertyCode : ExpressionCode
+    public class GetPropertyCode(ExpressionCode? objectExpression, RawProperty property) : ExpressionCode
     {
-        public ExpressionCode? ObjectExpression { get; }
-        public RawProperty Property { get; }
+        public ExpressionCode? ObjectExpression { get; } = objectExpression;
 
-        public GetPropertyCode(ExpressionCode? objectExpression, RawProperty property)
-        {
-            this.ObjectExpression = objectExpression;
-            this.Property = property;
-        }
+        public RawProperty Property { get; } = property;
     }
 }

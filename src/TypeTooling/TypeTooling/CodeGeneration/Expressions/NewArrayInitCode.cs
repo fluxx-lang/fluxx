@@ -3,15 +3,10 @@ using TypeTooling.RawTypes;
 
 namespace TypeTooling.CodeGeneration.Expressions
 {
-    public class NewArrayInitCode : ExpressionCode
+    public class NewArrayInitCode(RawType elementType, ImmutableArray<ExpressionCode> items) : ExpressionCode
     {
-        public RawType ElementType { get; }
-        public ImmutableArray<ExpressionCode> Items { get; }
+        public RawType ElementType { get; } = elementType;
 
-        public NewArrayInitCode(RawType elementType, ImmutableArray<ExpressionCode> items)
-        {
-            this.ElementType = elementType;
-            this.Items = items;
-        }
+        public ImmutableArray<ExpressionCode> Items { get; } = items;
     }
 }

@@ -3,15 +3,9 @@ using TypeTooling.Types;
 
 namespace TypeTooling.CodeGeneration
 {
-    public class AttachedPropertyValueCode
+    public class AttachedPropertyValueCode(AttachedProperty attachedProperty, ExpressionCode value)
     {
-        public AttachedProperty AttachedProperty { get; }
-        public ExpressionCode Value { get; }
-
-        public AttachedPropertyValueCode(AttachedProperty attachedProperty, ExpressionCode value)
-        {
-            this.AttachedProperty = attachedProperty;
-            this.Value = value;
-        }
+        public AttachedProperty AttachedProperty { get; } = attachedProperty;
+        public ExpressionCode Value { get; } = value;
     }
 }

@@ -2,19 +2,14 @@
 
 namespace TypeTooling.CodeGeneration.Expressions
 {
-    public class NewObjectCode : ExpressionCode
+    public class NewObjectCode(RawType objectType, RawConstructor constructor, ExpressionCode[] constructorArguments, PropertyValue<RawProperty, ExpressionCode>[] propertyValues) : ExpressionCode
     {
-        public RawType ObjectType { get; }
-        public RawConstructor Constructor { get; }
-        public ExpressionCode[] ConstructorArguments { get; }
-        public PropertyValue<RawProperty, ExpressionCode>[] PropertyValues { get; }
+        public RawType ObjectType { get; } = objectType;
 
-        public NewObjectCode(RawType objectType, RawConstructor constructor, ExpressionCode[] constructorArguments, PropertyValue<RawProperty, ExpressionCode>[] propertyValues)
-        {
-            this.ObjectType = objectType;
-            this.Constructor = constructor;
-            this.ConstructorArguments = constructorArguments;
-            this.PropertyValues = propertyValues;
-        }
+        public RawConstructor Constructor { get; } = constructor;
+
+        public ExpressionCode[] ConstructorArguments { get; } = constructorArguments;
+
+        public PropertyValue<RawProperty, ExpressionCode>[] PropertyValues { get; } = propertyValues;
     }
 }

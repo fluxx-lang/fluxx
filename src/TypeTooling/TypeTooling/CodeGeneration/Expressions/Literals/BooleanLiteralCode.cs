@@ -1,14 +1,7 @@
 ﻿namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
-    public class BooleanLiteralCode : LiteralCode
+    public class BooleanLiteralCode(bool value) : LiteralCode
     {
-        private readonly bool value;
-
-        public BooleanLiteralCode(bool value)
-        {
-            this.value = value;
-        }
-
-        public bool Value => this.value;
+        public bool Value => value;
     }
 }

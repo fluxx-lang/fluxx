@@ -2,10 +2,7 @@
 
 namespace TypeTooling
 {
-    public class UserViewableException : Exception
+    public class UserViewableException(string message) : Exception(message)
     {
-        public UserViewableException(string message) : base(message)
-        {
-        }
     }
 }

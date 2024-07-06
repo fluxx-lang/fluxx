@@ -1,14 +1,7 @@
 ﻿namespace TypeTooling.CodeGeneration.Expressions.Literals
 {
-    public class DoubleLiteralCode : LiteralCode
+    public class DoubleLiteralCode(double value) : LiteralCode
     {
-        private readonly double value;
-
-        public DoubleLiteralCode(double value)
-        {
-            this.value = value;
-        }
-
-        public double Value => this.value;
+        public double Value => value;
     }
 }

@@ -1,15 +1,8 @@
-﻿using System;
-
-namespace TypeTooling
+﻿namespace TypeTooling
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    public sealed class TypeToolingProviderAttribute : Attribute
+    public sealed class TypeToolingProviderAttribute(Type providerType) : Attribute
     {
-        public Type ProviderType { get; }
-
-        public TypeToolingProviderAttribute(Type providerType)
-        {
-            this.ProviderType = providerType;
-        }
+        public Type ProviderType { get; } = providerType;
     }
 }

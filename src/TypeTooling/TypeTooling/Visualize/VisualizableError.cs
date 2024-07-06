@@ -3,14 +3,9 @@
 namespace TypeTooling.Visualize
 {
     [Serializable]
-    public class VisualizableError
+    public class VisualizableError(string message)
     {
         // Auto properties
-        public string Message { get; }
-
-        public VisualizableError(string message)
-        {
-            this.Message = message;
-        }
+        public string Message { get; } = message;
     }
 }

@@ -1,15 +1,10 @@
 ﻿namespace TypeTooling
 {
-    public class CharRange
+    public class CharRange(int start, int end)
     {
         // Auto properties
-        public int Start { get; }
-        public int End { get; }
+        public int Start { get; } = start;
 
-        public CharRange(int start, int end)
-        {
-            this.Start = start;
-            this.End = end;
-        }
+        public int End { get; } = end;
     }
 }

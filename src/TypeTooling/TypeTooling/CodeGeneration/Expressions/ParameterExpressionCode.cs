@@ -2,15 +2,10 @@
 
 namespace TypeTooling.CodeGeneration.Expressions
 {
-    public class ParameterExpressionCode : ExpressionCode
+    public class ParameterExpressionCode(string name, RawType type) : ExpressionCode
     {
-        public string Name { get; }
-        public RawType Type { get; }
+        public string Name { get; } = name;
 
-        public ParameterExpressionCode(string name, RawType type)
-        {
-            this.Name = name;
-            this.Type = type;
-        }
+        public RawType Type { get; } = type;
     }
 }

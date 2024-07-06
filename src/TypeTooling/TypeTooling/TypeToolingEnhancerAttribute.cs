@@ -1,15 +1,8 @@
-﻿using System;
-
-namespace TypeTooling
+﻿namespace TypeTooling
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    public sealed class TypeToolingEnhancerAttribute : Attribute
+    public sealed class TypeToolingEnhancerAttribute(System.Type enhancerType) : Attribute
     {
-        public System.Type EnhancerType { get; }
-
-        public TypeToolingEnhancerAttribute(System.Type enhancerType)
-        {
-            this.EnhancerType = enhancerType;
-        }
+        public System.Type EnhancerType { get; } = enhancerType;
     }
 }
