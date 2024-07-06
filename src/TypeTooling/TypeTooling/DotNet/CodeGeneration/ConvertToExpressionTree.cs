@@ -19,6 +19,7 @@ namespace TypeTooling.DotNet.CodeGeneration
     {
         private readonly TypeToolingEnvironment typeToolingEnvironment;
         private readonly Dictionary<string, ParameterExpression> parameterExpressionsDictionary;
+
         public LambdaExpression Result { get; }
 
         public ConvertToExpressionTree(TypeToolingEnvironment typeToolingEnvironment, LambdaCode lambdaCode)
@@ -142,7 +143,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             MemberInitExpression memberInitExpression = Expression.MemberInit(newExpression, memberAssignments);
 
-            if (! needToSetPropertiesPostCreation)
+            if (!needToSetPropertiesPostCreation)
             {
                 return memberInitExpression;
             }
@@ -164,9 +165,9 @@ namespace TypeTooling.DotNet.CodeGeneration
 
             DotNetRawType sequenceUtilsRawType =
                 (DotNetRawType)this.typeToolingEnvironment.GetRequiredRawType("ReactiveData.Sequence.SequenceUtils");
-            Type sequenceUtilsType = ((ReflectionDotNetRawType) sequenceUtilsRawType).Type;
+            Type sequenceUtilsType = ((ReflectionDotNetRawType)sequenceUtilsRawType).Type;
 
-            foreach (var propertyValue in propertyValues)
+            foreach (PropertyValue<RawProperty, ExpressionCode> propertyValue in propertyValues)
             {
                 DotNetRawProperty rawProperty = (DotNetRawProperty)propertyValue.Property;
 
@@ -186,7 +187,7 @@ namespace TypeTooling.DotNet.CodeGeneration
                         Expression sequenceExpression = this.ConvertExpression(newSequenceCode);
 
                         RawType sequenceElementType = newSequenceCode.ElementType;
-                        Type sequenceElementDotNetType = ((ReflectionDotNetRawType) sequenceElementType).Type;
+                        Type sequenceElementDotNetType = ((ReflectionDotNetRawType)sequenceElementType).Type;
 
                         MethodCallExpression listOnSequenceExpression = Expression.Call(sequenceUtilsType, "NonGenericIListOnSequence",
                             new [] { sequenceElementDotNetType }, propertyExpression, sequenceExpression);
@@ -210,7 +211,7 @@ namespace TypeTooling.DotNet.CodeGeneration
                 itemExpressions.Add(itemExpression);
             }
 
-            ReflectionDotNetRawType elementType = (ReflectionDotNetRawType) newArrayInitCode.ElementType;
+            ReflectionDotNetRawType elementType = (ReflectionDotNetRawType)newArrayInitCode.ElementType;
             return Expression.NewArrayInit(elementType.Type, itemExpressions.ToArray());
         }
 
@@ -222,7 +223,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             var itemsArrayCode = new NewArrayInitCode(elementType, newSequenceCode.Items);
 
             DotNetRawMethod itemsMethod = sequenceUtils.GetRequiredMethod("Items");
-            GenericMethodCallCode itemsMethodCallCode = DotNetCode.CallStaticGeneric(new[] { (DotNetRawType) elementType }, itemsMethod, itemsArrayCode);
+            GenericMethodCallCode itemsMethodCallCode = DotNetCode.CallStaticGeneric(new[] { (DotNetRawType)elementType }, itemsMethod, itemsArrayCode);
 
             return this.ConvertExpression(itemsMethodCallCode);
         }
@@ -252,7 +253,7 @@ namespace TypeTooling.DotNet.CodeGeneration
 
         private Expression ConvertGenericMethodCall(GenericMethodCallCode genericMethodCallCode)
         {
-            Type[] typeArguments = genericMethodCallCode.GenericTypeArguments.Select(type => ((ReflectionDotNetRawType) type).Type).ToArray();
+            Type[] typeArguments = genericMethodCallCode.GenericTypeArguments.Select(type => ((ReflectionDotNetRawType)type).Type).ToArray();
 
             MethodInfo methodInfo = GetMethodInfo(genericMethodCallCode.RawMethod);
             MethodInfo genericMethodInfo = methodInfo.MakeGenericMethod(typeArguments);

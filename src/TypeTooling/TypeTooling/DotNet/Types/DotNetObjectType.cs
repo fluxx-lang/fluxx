@@ -112,7 +112,7 @@ namespace TypeTooling.DotNet.Types
             {
                 if (constructor.GetParameters().Length == 0)
                 {
-                    ConstructorInfo constructorInfo = ((ReflectionDotNetRawConstructor) constructor).ConstructorInfo;
+                    ConstructorInfo constructorInfo = ((ReflectionDotNetRawConstructor)constructor).ConstructorInfo;
                     return constructorInfo.Invoke(null);
                 }
             }
@@ -399,7 +399,7 @@ namespace TypeTooling.DotNet.Types
                 return new CollectionPropertyInitializer(rawProperty, dotNetCollectionType.ElementRawType);
             }
 
-            if (! rawProperty.CanWrite)
+            if (!rawProperty.CanWrite)
             {
                 throw new Exception(
                     $"Property '{property.Name}' on type '{this.FullName}' isn't settable");

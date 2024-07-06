@@ -8,7 +8,8 @@ namespace TypeTooling.DotNet
 {
     public class DotNetTypeToolingProvider : TypeToolingProvider
     {
-        public DotNetTypeToolingProvider(TypeToolingEnvironment typeToolingEnvironment) : base(typeToolingEnvironment)
+        public DotNetTypeToolingProvider(TypeToolingEnvironment typeToolingEnvironment)
+            : base(typeToolingEnvironment)
         {
         }
 
@@ -19,7 +20,7 @@ namespace TypeTooling.DotNet
                 return null;
             }
 
-            var companionDotNetTypeDescriptor = (DotNetRawType?) companionRawType;
+            var companionDotNetTypeDescriptor = (DotNetRawType?)companionRawType;
             string typeName = dotNetRawType.FullName;
 
             if (typeName == "System.Boolean")

@@ -30,7 +30,7 @@ namespace TypeTooling.DotNet.Types
         {
             object collection = ((ReflectionDotNetRawProperty)this.rawProperty).PropertyInfo.GetValue(obj);
 
-            var enumerable = (IEnumerable) propertyValue;
+            var enumerable = (IEnumerable)propertyValue;
 
             var args = new object[1];
             foreach (object value in enumerable)
@@ -46,7 +46,7 @@ namespace TypeTooling.DotNet.Types
                 else
                 {
                     args[0] = value;
-                    ((ReflectionDotNetRawMethod) this.addMethod).MethodInfo.Invoke(collection, args);
+                    ((ReflectionDotNetRawMethod)this.addMethod).MethodInfo.Invoke(collection, args);
                 }
             }
         }

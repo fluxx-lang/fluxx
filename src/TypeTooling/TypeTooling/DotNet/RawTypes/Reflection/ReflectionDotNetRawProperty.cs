@@ -31,10 +31,10 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 
         public PropertyInfo PropertyInfo => this.propertyInfo;
 
-        public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CultureInfo preferredCulture,
-            CancellationToken cancellationToken)
-            {
-            return Task.FromResult((ClassifiedTextMarkup?) null);
+        public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(
+            CultureInfo preferredCulture, CancellationToken cancellationToken)
+        {
+            return Task.FromResult((ClassifiedTextMarkup?)null);
         }
     }
 }

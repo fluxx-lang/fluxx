@@ -6,7 +6,6 @@
         private Override<CustomLiteralParser>? customLiteralParserOverride;
         private Override<Visualizer>? visualizerOverride;
 
-
         public TypeOverride(TypeToolingType originalType)
         {
             this.originalType = originalType;

@@ -30,7 +30,7 @@ namespace TypeTooling.Types
 
         public static CustomLiteral SingleError(string message)
         {
-            return new CustomLiteral(Diagnostic.SingleError(message), (ExpressionAndHelpersCode?) null);
+            return new CustomLiteral(Diagnostic.SingleError(message), (ExpressionAndHelpersCode?)null);
         }
     }
 }

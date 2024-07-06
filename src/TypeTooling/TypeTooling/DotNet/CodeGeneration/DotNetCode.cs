@@ -78,7 +78,7 @@ namespace TypeTooling.DotNet.CodeGeneration
             bool first = true;
             foreach (string parameterType in paramaterTypes)
             {
-                if (! first)
+                if (!first)
                 {
                     builder.Append(", ");
                 }
@@ -116,7 +116,7 @@ namespace TypeTooling.DotNet.CodeGeneration
         public static MethodCallCode CallStatic(DotNetRawType type, string methodName, DotNetRawType[] parameterRawTypes, params ExpressionCode[] arguments)
         {
             DotNetRawMethod method = type.GetRequiredMethod(methodName, parameterRawTypes);
-            if (! method.IsStatic)
+            if (!method.IsStatic)
             {
                 throw new UserViewableException($"'{type.FullName}.{methodName}' method isn't static so it can't be called as a static method");
             }
@@ -167,7 +167,7 @@ namespace TypeTooling.DotNet.CodeGeneration
         public static EnumValueCode EnumValue(DotNetRawType enumType, string enumValue)
         {
             // Verify that the value exists
-            if (! (enumType.GetEnumNames().Any(name => name == enumValue)))
+            if (!(enumType.GetEnumNames().Any(name => name == enumValue)))
             {
                 throw new UserViewableException($"No '{enumValue}' enum found for type '{enumType.FullName}'");
             }

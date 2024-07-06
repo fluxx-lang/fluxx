@@ -272,7 +272,7 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
 
         public override bool IsAssignableFrom(DotNetRawType otherType)
         {
-            return this.Type.IsAssignableFrom(((ReflectionDotNetRawType) otherType).Type);
+            return this.Type.IsAssignableFrom(((ReflectionDotNetRawType)otherType).Type);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace TypeTooling.DotNet.RawTypes.Reflection
         /// <returns>true if the specified type is a superclass of this class</returns>
         public override bool HasAncestorType(DotNetRawType otherType)
         {
-            Type potentialSuperclass = ((ReflectionDotNetRawType) otherType).Type;
+            Type potentialSuperclass = ((ReflectionDotNetRawType)otherType).Type;
 
             Type currentType = this.Type;
             while (currentType != null)
