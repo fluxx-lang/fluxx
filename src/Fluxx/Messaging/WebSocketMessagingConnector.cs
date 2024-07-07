@@ -137,7 +137,7 @@ namespace Faml.Messaging
             catch (Exception e)
             {
                 // If the send fails then also cancel the receive
-                if (! (e is OperationCanceledException))
+                if (!(e is OperationCanceledException))
                 {
                     this._receiveCts.Cancel();
                 }

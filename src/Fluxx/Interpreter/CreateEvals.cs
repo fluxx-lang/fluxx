@@ -830,7 +830,7 @@ namespace Faml.Interpreter
             }
 
             // TODO: Handle this error at parsing time
-            if (! (typeBinding is ObjectTypeBinding))
+            if (!(typeBinding is ObjectTypeBinding))
             {
                 throw new Exception("'if' expressions are just supported for object types currently");
             }

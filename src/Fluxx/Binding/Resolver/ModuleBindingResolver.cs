@@ -141,7 +141,7 @@ namespace Faml.Binding.Resolver
                     TypeBindingResult typeBindingResult = this._project.ResolveTypeBinding(potentialQualifiedTypeName);
 
                     // If we found something or got an error, return that
-                    if (! (typeBindingResult is TypeBindingResult.NotFound))
+                    if (!(typeBindingResult is TypeBindingResult.NotFound))
                     {
                         return typeBindingResult;
                     }

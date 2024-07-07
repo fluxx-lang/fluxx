@@ -11,6 +11,9 @@ namespace Faml.Syntax
 {
     public abstract class DefinitionSyntax : SyntaxNode
     {
-        protected DefinitionSyntax(TextSpan span) : base(span) {}
+        protected DefinitionSyntax(TextSpan span)
+            : base(span)
+        {
+        }
     }
 }

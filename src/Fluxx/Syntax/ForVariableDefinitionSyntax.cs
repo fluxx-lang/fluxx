@@ -53,7 +53,7 @@ namespace Faml.Syntax
             }
         }
 
-        public TypeBinding GetVariableTypeBinding () => this._variableTypeBinding;
+        public TypeBinding GetVariableTypeBinding() => this._variableTypeBinding;
 
         public override bool IsTerminalNode()
         {

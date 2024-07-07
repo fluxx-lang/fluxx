@@ -23,7 +23,7 @@ namespace Faml.Interpreter
             int listItemsLength = this._items.Length;
             for (int i = 0; i < listItemsLength; i++)
             {
-                list.Add( this._items[i].Eval() );
+                list.Add(this._items[i].Eval() );
             }
 
             return list;

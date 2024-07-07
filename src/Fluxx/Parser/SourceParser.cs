@@ -665,11 +665,11 @@ namespace Faml.Parser
                 BuiltInTypeBinding? predefinedTypeBinding = BuiltInTypeBinding.GetBindingForTypeName(typeNameString);
                 if (predefinedTypeBinding != null)
                 {
-                    typeReferenceSyntax = new PredefinedTypeReferenceSyntax (sourceSpan, predefinedTypeBinding);
+                    typeReferenceSyntax = new PredefinedTypeReferenceSyntax(sourceSpan, predefinedTypeBinding);
                 }
                 else
                 {
-                    typeReferenceSyntax = new ObjectTypeReferenceSyntax (sourceSpan, typeNameSyntax);
+                    typeReferenceSyntax = new ObjectTypeReferenceSyntax(sourceSpan, typeNameSyntax);
                 }
 
                 if (this._token.Type == TokenType.Ellipsis)

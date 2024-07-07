@@ -27,7 +27,7 @@ namespace Faml.Interpreter
         {
             object sequence = this._inExpressionEval.Eval();
 
-            if (! (sequence is IEnumerable enumerable))
+            if (!(sequence is IEnumerable enumerable))
             {
                 throw new UserViewableException($"For-in expression sequence is unexpectedly type {sequence.GetType()}, not an IEnumerable");
             }

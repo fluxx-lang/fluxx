@@ -7,7 +7,6 @@ namespace Faml.SourceProviders
     {
         private readonly Dictionary<string, object> _resources = new Dictionary<string, object>();
 
-
         public void AddTextResource(string path, string contents)
         {
             this._resources.Add(path, contents);

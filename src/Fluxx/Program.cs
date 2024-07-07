@@ -11,7 +11,6 @@ namespace Faml
         private DataEventHandler? _dataEventHandler;
         private readonly string _developmentMachine;
 
-
         public Program(FamlProject rootProject)
         {
             this._rootProject = rootProject;

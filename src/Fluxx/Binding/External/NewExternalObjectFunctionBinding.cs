@@ -127,7 +127,7 @@ namespace Faml.Binding.External
 
             // Ensure the attaching type is an external type
             // TODO: Check that attaching type is compatible
-            if (! (attachedTypeBinding is ExternalAttachedTypeBinding externalAttachedTypeBinding))
+            if (!(attachedTypeBinding is ExternalAttachedTypeBinding externalAttachedTypeBinding))
             {
                 nodeForErrors.AddError($"Type {attachedTypeName} isn't an external type; only external (e.g. C#) types can be used as attached properties for external objects");
                 return InvalidTypeBinding.Instance;

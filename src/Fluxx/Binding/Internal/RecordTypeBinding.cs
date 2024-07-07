@@ -27,7 +27,7 @@ namespace Faml.Binding.Internal
 
         public override bool Equals(object obj)
         {
-            if (! (obj is RecordTypeBinding))
+            if (!(obj is RecordTypeBinding))
             {
                 return false;
             }
