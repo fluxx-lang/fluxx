@@ -7,7 +7,10 @@ namespace Faml.Binding
 {
     public abstract class ObjectTypeBinding : TypeBinding
     {
-        protected ObjectTypeBinding(QualifiableName typeName) : base(typeName, TypeFlags.None) {}
+        protected ObjectTypeBinding(QualifiableName typeName)
+            : base(typeName, TypeFlags.None)
+        {
+        }
 
         public abstract bool SupportsCreateLiteral();
 

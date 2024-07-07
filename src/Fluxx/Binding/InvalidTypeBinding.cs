@@ -2,10 +2,8 @@
 
 namespace Faml.Binding
 {
-    public class InvalidTypeBinding : TypeBinding
+    public class InvalidTypeBinding(QualifiableName typeName) : TypeBinding(typeName, TypeFlags.None)
     {
         public static InvalidTypeBinding Instance = new InvalidTypeBinding(new QualifiableName("InvalidType"));
-
-        public InvalidTypeBinding(QualifiableName typeName) : base(typeName, TypeFlags.None) {}
     }
 }

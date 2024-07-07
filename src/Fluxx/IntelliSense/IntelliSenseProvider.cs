@@ -69,8 +69,7 @@ namespace Faml.IntelliSense
                         return new ArgumentNameIntelliSense(module, position, functionBinding);
                     }
 
-                    return new ArgumentNameIntelliSense(module, position, functionBinding,
-                        propertySpecifier.PropertyNameSyntax);
+                    return new ArgumentNameIntelliSense(module, position, functionBinding, propertySpecifier.PropertyNameSyntax);
                 }
             }
 
@@ -93,8 +92,7 @@ namespace Faml.IntelliSense
                 if (previousTerminalNode is QualifiableNameSyntax name &&
                     name.Parent is PropertySpecifierSyntax propertySpecifier &&
                     propertySpecifier.Parent is ArgumentNameValuePairSyntax argumentNameValuePair)
-                    {
-
+                {
                     TypeBinding parameterTypeBinding = argumentNameValuePair.ParameterTypeBinding;
                     if (parameterTypeBinding is InvalidTypeBinding)
                     {
@@ -110,7 +108,7 @@ namespace Faml.IntelliSense
 
         public static Task<ClassifiedTextMarkup?> GetDescriptionAsync(object completionItemData, CultureInfo preferredCulture,
             CancellationToken cancellationToken)
-            {
+        {
             GetDescriptionAsyncDelegate getDescriptionDelegate = (GetDescriptionAsyncDelegate)completionItemData;
             return getDescriptionDelegate.Invoke(preferredCulture, cancellationToken);
         }

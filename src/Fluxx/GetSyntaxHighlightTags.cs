@@ -11,7 +11,7 @@ namespace Faml
     internal class GetSyntaxHighlightTags
     {
         private readonly ModuleSyntax _module;
-        
+
         public GetSyntaxHighlightTags(ModuleSyntax module)
         {
             this._module = module;

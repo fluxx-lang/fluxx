@@ -36,9 +36,9 @@ namespace Faml.Binding.External
             return propertyBinding?.GetTypeBinding();
         }
 
-        public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
-            BindingResolver bindingResolver)
-            {
+        public override TypeBinding ResolveArgumentTypeBinding(
+            QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair, BindingResolver bindingResolver)
+        {
             if (argumentName.IsQualified())
                 return this.ResolveAttachedPropertyArgumentTypeBinding(argumentName, argumentNameValuePair, bindingResolver);
             else

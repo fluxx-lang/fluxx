@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
 using Faml.Api;
 using Faml.Binding.Resolver;
 using Faml.Syntax;
@@ -43,13 +39,12 @@ namespace Faml.Binding.External
             return null;
         }
 
-        public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
-            BindingResolver bindingResolver)
-            {
+        public override TypeBinding ResolveArgumentTypeBinding(
+            QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair, BindingResolver bindingResolver)
+        {
             if (argumentName.IsQualified())
             {
-                argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
-                    "C# methods don't support attached properties for parameters");
+                argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier, "C# methods don't support attached properties for parameters");
                 return InvalidTypeBinding.Instance;
             }
 
@@ -62,8 +57,8 @@ namespace Faml.Binding.External
                 }
             }
 
-            argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
-                $"No '{argumentName}' parameter exists for method '{this._rawMethod.Name}'");
+            argumentNameValuePair.GetModule().AddError(
+                argumentNameValuePair.PropertySpecifier, $"No '{argumentName}' parameter exists for method '{this._rawMethod.Name}'");
             return InvalidTypeBinding.Instance;
         }
 
@@ -73,9 +68,8 @@ namespace Faml.Binding.External
             return InvalidTypeBinding.Instance;
         }
 
-        public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName,
-            CancellationToken cancellationToken)
-            {
+        public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName, CancellationToken cancellationToken)
+        {
             return Task.FromResult((ClassifiedTextMarkup?)null);
         }
 

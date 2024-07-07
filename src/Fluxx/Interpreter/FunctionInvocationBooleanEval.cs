@@ -11,8 +11,8 @@ namespace Faml.Interpreter
         {
             this.Arguments = arguments;
 
-            createEvals.DelayResolveFunctionEval(functionDefinition,
-                (functionEval) => this.Expression = (BooleanEval)functionEval);
+            createEvals.DelayResolveFunctionEval(
+                functionDefinition, (functionEval) => this.Expression = (BooleanEval)functionEval);
         }
 
         public override bool Eval()

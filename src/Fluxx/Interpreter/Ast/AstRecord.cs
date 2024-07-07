@@ -7,7 +7,9 @@ namespace Faml.Interpreter.Ast
     {
         private readonly Dictionary<string, object> _propertyValues = new Dictionary<string, object>();
 
-        public AstRecord() {}
+        public AstRecord()
+        {
+        }
 
         public void SetProperty(string name, object value)
         {

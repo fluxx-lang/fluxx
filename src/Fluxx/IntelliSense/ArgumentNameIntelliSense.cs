@@ -13,7 +13,6 @@ namespace Faml.IntelliSense
         private readonly FunctionBinding _functionBinding;
         private readonly QualifiableNameSyntax? _argumentName;
 
-
         public ArgumentNameIntelliSense(FamlModule module, int position, FunctionBinding functionBinding)
             : base(module, position, null)
             {
