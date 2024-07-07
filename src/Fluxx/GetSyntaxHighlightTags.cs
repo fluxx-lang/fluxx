@@ -132,7 +132,9 @@ namespace Faml
 
                 int nextTerminalNodeStartPosition;
                 if (currNodeEndPosition >= this._module.Span.End)
+                {
                     nextTerminalNodeStartPosition = -1;
+                }
                 else
                 {
                     SyntaxNode? nextTerminalNode = this._module.GetNextTerminalNodeFromPosition(currNodeEndPosition);
@@ -141,7 +143,10 @@ namespace Faml
                         // This shouldn't happen, but gracefully fail if it does
                         nextTerminalNodeStartPosition = -1;
                     }
-                    else nextTerminalNodeStartPosition = nextTerminalNode.Span.Start;
+                    else
+                    {
+                        nextTerminalNodeStartPosition = nextTerminalNode.Span.Start;
+                    }
                 }
 
                 // Now process the lexical tokens (which aren't included in the AST) after the current terminal node up to the next terminal node

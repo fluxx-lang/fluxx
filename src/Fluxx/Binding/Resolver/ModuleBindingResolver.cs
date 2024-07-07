@@ -96,7 +96,9 @@ namespace Faml.Binding.Resolver
             TypeBindingResult typeBindingResult = this.FindTypeBindingForType(typeName);
 
             if (typeBindingResult is TypeBindingResult.Success success)
+            {
                 return success.TypeBinding;
+            }
             else
             {
                 objectTypeReferenceSyntax.AddError(

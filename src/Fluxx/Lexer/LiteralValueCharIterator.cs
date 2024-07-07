@@ -68,14 +68,19 @@ namespace Faml.Lexer
                 else if (currChar == '}')
                 {
                     if (nestedBraces == 0)
+                    {
                         return position;
+                    }
                     else
                     {
                         --nestedBraces;
                         ++position;
                     }
                 }
-                else ++position;
+                else
+                {
+                    ++position;
+                }
             }
 
             return -1;

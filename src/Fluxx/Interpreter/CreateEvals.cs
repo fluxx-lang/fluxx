@@ -98,7 +98,9 @@ namespace Faml.Interpreter
             // See if the function has already been resolved. If so, call the callback immediately. Otherwise, add it to our list
             // to resolve later.
             if (functionEval != null)
+            {
                 functionEvalResolved(functionEval);
+            }
             else
             {
                 List<FunctionEvalResolved> functionEvalResolveds = this._functionsNeedingResolving.GetOrAdd(functionDefinition, (_) => new List<FunctionEvalResolved>());
@@ -235,8 +237,13 @@ namespace Faml.Interpreter
                                         propertyAccess.ToString());
             }
             else if (propertyBinding is ExternalPropertyBinding externalPropertyBinding)
+            {
                 return new ExternalPropertyAccessEval(expressionEval, externalPropertyBinding.ObjectType, externalPropertyBinding.ObjectProperty);
-            else throw new Exception($"Unexpected property access object type: {propertyBinding.ObjectTypeBinding}");
+            }
+            else
+            {
+                throw new Exception($"Unexpected property access object type: {propertyBinding.ObjectTypeBinding}");
+            }
         }
 
         private SequenceLiteralEval CreateListBuilderEval(SequenceLiteralExpressionSyntax sequenceLiteralExpression)
@@ -591,25 +598,45 @@ namespace Faml.Interpreter
         public Eval CreateExpressionEval(ExpressionSyntax expression)
         {
             if (expression is InfixExpressionSyntax infixExpressionSyntax)
+            {
                 return this.CreateInfixExpressionEval(infixExpressionSyntax);
+            }
             else if (expression is PrefixExpressionSyntax prefixExpressionSyntax)
+            {
                 return this.CreatePrefixExpressionEval(prefixExpressionSyntax);
+            }
             else if (expression is IfExpressionSyntax ifExpressionSyntax)
+            {
                 return this.CreateIfExpressionEval(ifExpressionSyntax);
+            }
             else if (expression is ForExpressionSyntax forExpressionSyntax)
+            {
                 return this.CreateForExpressionEval(forExpressionSyntax);
+            }
             else if (expression is ParenthesizedExpressionSyntax parenthesizedExpressionSyntax)
+            {
                 return this.CreateExpressionEval(parenthesizedExpressionSyntax.Expression);
+            }
             else if (expression is BracedExpressionSyntax bracedExpression)
+            {
                 return this.CreateExpressionEval(bracedExpression.Expression);
+            }
             else if (expression is SequenceLiteralExpressionSyntax listExpressionSyntax)
+            {
                 return this.CreateListBuilderEval(listExpressionSyntax);
+            }
             else if (expression is BooleanLiteralSyntax booleanLiteral)
+            {
                 return (booleanLiteral.Value? (Eval) new TrueEval() : new FalseEval());
+            }
             else if (expression is IntLiteralSyntax intLiteral)
+            {
                 return new IntLiteralEval(intLiteral.Value);
+            }
             else if (expression is StringLiteralSyntax stringLiteral)
+            {
                 return new StringLiteralEval(stringLiteral.Value);
+            }
             else if (expression is SymbolReferenceSyntax variableReferenceSyntax)
             {
                 if (variableReferenceSyntax.GetVariableBinding() is FunctionSymbolBinding zeroArgumentFunctionBinding)
@@ -622,23 +649,33 @@ namespace Faml.Interpreter
                 }
             }
             else if (expression is PropertyAccessSyntax propertyAccess)
+            {
                 return this.CreatePropertyAccessEval(propertyAccess);
-/*
-            else if (expression is ParamFunctionInvocation)
-                return createParamFunctionInvocationEval((ParamFunctionInvocation) expression);
+            }
+            /*
+           else if (expression is ParamFunctionInvocation)
+               return createParamFunctionInvocationEval((ParamFunctionInvocation) expression);
 */
             else if (expression is FunctionInvocationSyntax functionInvocationSyntax)
+            {
                 return this.CreateFunctionInvocationEval(functionInvocationSyntax);
+            }
             else if (expression is InterpolatedStringExpressionSyntax interpolatedStringExpressionSyntax)
+            {
                 return this.CreateInterpolatedStringEval(interpolatedStringExpressionSyntax);
+            }
             else if (expression is EnumValueLiteralSyntax enumValueLiteralSyntax)
+            {
                 return this.CreateEnumValueLiteralEval(enumValueLiteralSyntax);
+            }
             else if (expression is ExternalTypeCustomLiteralSytax externalTypeCustomLiteralSytax)
             {
                 return this.CreateExternalCustomLiteralEval(externalTypeCustomLiteralSytax);
             }
             else
+            {
                 throw new Exception("Unexpected expression type to eval: " + expression);
+            }
         }
 
         private Eval CreateEnumValueLiteralEval(EnumValueLiteralSyntax enumValueLiteralSyntax)
@@ -650,7 +687,10 @@ namespace Faml.Interpreter
                 EnumValue enumValue = externalEnumValueBinding.EnumValue;
                 return this.CreateObjectConstantDelegateEval(enumValue.ExpressionAndHelpersCode);
             }
-            else throw new UserViewableException($"Unexpected EnumValueBindingType: {enumValueBinding.GetType().FullName}");
+            else
+            {
+                throw new UserViewableException($"Unexpected EnumValueBindingType: {enumValueBinding.GetType().FullName}");
+            }
         }
 
         private Eval CreateExternalCustomLiteralEval(ExternalTypeCustomLiteralSytax externalTypeCustomLiteralSytax)
@@ -688,23 +728,41 @@ namespace Faml.Interpreter
             }
             */
             if (infixOperator == Operator.And)
+            {
                 return new AndEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+            }
             else if (infixOperator == Operator.Or)
+            {
                 return new OrEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+            }
             else if (infixOperator == Operator.Less)
+            {
                 return new LessEval((IntEval) leftEval, (IntEval) rightEval);
+            }
             else if (infixOperator == Operator.LessEquals)
+            {
                 return new LessEqualsEval((IntEval) leftEval, (IntEval) rightEval);
+            }
             else if (infixOperator == Operator.Greater)
+            {
                 return new GreaterEval((IntEval) leftEval, (IntEval) rightEval);
+            }
             else if (infixOperator == Operator.GreaterEquals)
+            {
                 return new GreaterEqualsEval((IntEval) leftEval, (IntEval) rightEval);
+            }
             else if (infixOperator == Operator.Plus)
+            {
                 return new PlusEval((IntEval) leftEval, (IntEval) rightEval);
+            }
             else if (infixOperator == Operator.Minus)
+            {
                 return new MinusEval((IntEval) leftEval, (IntEval) rightEval);
+            }
             else if (infixOperator == Operator.Times)
+            {
                 return new TimesEval((IntEval) leftEval, (IntEval) rightEval);
+            }
             else if (infixOperator == Operator.Equals)
             {
                 if (leftTypeBinding == BuiltInTypeBinding.Int && rightTypeBiding == BuiltInTypeBinding.Int)
@@ -736,7 +794,9 @@ namespace Faml.Interpreter
                                         rightTypeBiding);
             }
             else
+            {
                 throw new Exception("Unexpected infix operator to eval: " + infixOperator.GetSourceRepresentation());
+            }
         }
 
         private Eval CreatePrefixExpressionEval(PrefixExpressionSyntax expression)

@@ -35,19 +35,30 @@ namespace Faml.Parser
             var token = new Token(new ParseableSource(module.SourceText, sourceSpan), true);
 
             if (token.ArgumentValueLookaheadIsExpression())
+            {
                 return ParseTextBlockExpression(module, sourceSpan);
+            }
             else if (typeBinding == BuiltInTypeBinding.String)
+            {
                 return ParseStringLiteral(module, sourceSpan);
+            }
             else if (typeBinding is InvalidTypeBinding)
             {
                 string text = ParseUnknownTextBlock(module, sourceSpan);
                 return new InvalidExpressionSyntax(sourceSpan, text, typeBinding);
             }
             else if (typeBinding is EnumTypeBinding enumTypeBinding)
+            {
                 return enumTypeBinding.ParseEnumValue(module, sourceSpan);
+            }
             else if (typeBinding is ObjectTypeBinding objectTypeBinding && objectTypeBinding.SupportsCreateLiteral())
+            {
                 return objectTypeBinding.ParseLiteralValueSource(module, sourceSpan);
-            else return ParseTextBlockExpression(module, sourceSpan);
+            }
+            else
+            {
+                return ParseTextBlockExpression(module, sourceSpan);
+            }
         }
 
         public static ExpressionSyntax ParseTextBlockExpression(FamlModule module, TextSpan sourceSpan)
@@ -86,18 +97,27 @@ namespace Faml.Parser
         public static ExpressionSyntax? ParseLiteralConstructorTextBlockExpression(FamlModule module, TextSpan span, TypeBinding typeBinding)
         {
             if (typeBinding == BuiltInTypeBinding.String)
+            {
                 return ParseStringLiteral(module, span);
+            }
             else if (typeBinding is InvalidTypeBinding)
             {
                 string text = ParseUnknownTextBlock(module, span);
                 return new InvalidExpressionSyntax(span, text, typeBinding);
             }
             else if (typeBinding is EnumTypeBinding enumTypeBinding)
+            {
                 return enumTypeBinding.ParseEnumValue(module, span);
+            }
             else if (typeBinding is ObjectTypeBinding objectTypeBinding &&
                      objectTypeBinding.SupportsCreateLiteral())
+            {
                 return objectTypeBinding.ParseLiteralValueSource(module, span);
-            else return null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -159,7 +179,9 @@ namespace Faml.Parser
                 {
                     int rightBracePosition = literalValueCharIterator.GetMatchingRightBrace();
                     if (rightBracePosition == -1)
+                    {
                         buffer.Append(curr);
+                    }
                     else
                     {
                         var fragmentSpan = TextSpan.FromBounds(fragmentStartPosition, literalValueCharIterator.Position - 1);
@@ -180,12 +202,19 @@ namespace Faml.Parser
                     break;
                 }
                 else if (curr == '\0')
+                {
                     break;
-                else buffer.Append(curr);
+                }
+                else
+                {
+                    buffer.Append(curr);
+                }
             }
 
             if (expressions.Count == 0)
+            {
                 return new StringLiteralSyntax(span, buffer.ToString());
+            }
             else
             {
                 var fragmentSpan = TextSpan.FromBounds(fragmentStartPosition, span.End);
@@ -358,7 +387,10 @@ namespace Faml.Parser
                 parameters = this.ParsePropertyNameTypePairs(synchronizingTokens.Add(TokenType.RightBrace));
                 this.CheckOrSyncAndAdvance(TokenType.RightBrace, synchronizingTokens.Add(TokenType.Assign));
             }
-            else parameters = new List<PropertyNameTypePairSyntax>();
+            else
+            {
+                parameters = new List<PropertyNameTypePairSyntax>();
+            }
 
             TypeReferenceSyntax? returnType = null;
             if (this._token.Type == TokenType.Colon)
@@ -644,7 +676,10 @@ namespace Faml.Parser
                     this.Advance();
                     return new SequenceTypeReferenceSyntax(this.TextSpanFrom(startPosition), typeReferenceSyntax);
                 }
-                else return typeReferenceSyntax;
+                else
+                {
+                    return typeReferenceSyntax;
+                }
             }
             else
             {
@@ -878,7 +913,10 @@ namespace Faml.Parser
 
                         items.Add(new TextualLiteralExpressionItemSyntax(functionInvocation));
                     }
-                    else break;
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 if (bracketed)
@@ -958,7 +996,9 @@ namespace Faml.Parser
                 if (infixOperator == Operator.Dot)
                 {
                     if (this._token.LookaheadIsLeftBrace())
+                    {
                         leftOperand = this.ParseFunctionInvocation(leftOperand);
+                    }
                     else
                     {
                         NameSyntax nameSyntax = this.ParseName();
@@ -966,7 +1006,9 @@ namespace Faml.Parser
                     }
                 }
                 else if (infixOperator == Operator.For)
+                {
                     return this.ParseForExpression(leftOperand, synchronizingTokens);
+                }
                 else
                 {
                     ExpressionSyntax rightOperand =

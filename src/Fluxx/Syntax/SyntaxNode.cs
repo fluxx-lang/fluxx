@@ -175,7 +175,9 @@ namespace Faml.Syntax
             }
 
             if (this.IsTerminalNode())
+            {
                 return this;
+            }
             else
             {
                 SyntaxNode? terminalNodeAtPosition = null;
@@ -200,7 +202,9 @@ namespace Faml.Syntax
             }
 
             if (this.IsTerminalNode())
+            {
                 return this;
+            }
             else
             {
                 SyntaxNode? terminalNodeAtPosition = null;
@@ -253,7 +257,9 @@ namespace Faml.Syntax
                     $"position {position} is outside the node's range of {this.Span.Start} - {this.Span.End}");
 
             if (this.IsTerminalNode())
+            {
                 return this;
+            }
             else
             {
                 SyntaxNode? descendentNodeAtPosition = null;

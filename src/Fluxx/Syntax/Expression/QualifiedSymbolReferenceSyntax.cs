@@ -45,7 +45,9 @@ namespace Faml.Syntax.Expression
                 TypeBindingResult typeBindingResult = bindingResolver.FindTypeBindingForType(qualifiableName);
 
                 if (typeBindingResult is TypeBindingResult.Success successResult)
+                {
                     this._typeBinding = successResult.TypeBinding;
+                }
                 else if (typeBindingResult is TypeBindingResult.Error errorResult)
                 {
                     this.AddError(errorResult.Message);

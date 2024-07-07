@@ -49,14 +49,19 @@ namespace Faml.Syntax.Expression
             TypeBinding rightOperandTypeBinding = this._rightOperand.GetTypeBinding();
 
             if (!leftOperandTypeBinding.IsValid() || !rightOperandTypeBinding.IsValid())
+            {
                 this._typeBinding = InvalidTypeBinding.Instance;
+            }
             else if (!leftOperandTypeBinding.Equals(rightOperandTypeBinding))
             {
                 this.AddError(
                     $"Operand types not the same: {leftOperandTypeBinding.TypeName} and {rightOperandTypeBinding.TypeName}");
                 this._typeBinding = InvalidTypeBinding.Instance;
             }
-            else this._typeBinding = leftOperandTypeBinding;
+            else
+            {
+                this._typeBinding = leftOperandTypeBinding;
+            }
         }
 
         public override TypeBinding GetTypeBinding()

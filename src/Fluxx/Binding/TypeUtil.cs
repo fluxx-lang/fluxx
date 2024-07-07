@@ -17,7 +17,9 @@ namespace Faml.Binding
             foreach (TypeBinding type in types)
             {
                 if (commonType == null)
+                {
                     commonType = type;
+                }
                 else
                 {
                     return type;

@@ -115,7 +115,9 @@ namespace Faml
         {
             TypeBindingResult typeBindingResult = this.ResolveTypeBinding(new QualifiableName(type.FullName));
             if (typeBindingResult is TypeBindingResult.Success success)
+            {
                 return (ExternalObjectTypeBinding) success.TypeBinding;
+            }
             else
             {
                 this.AddProjectError(

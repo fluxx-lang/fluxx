@@ -129,7 +129,9 @@ namespace Faml.Messaging
                 }
             }
             else
+            {
                 throw new NotSupportedException($"Unknown property type: {value.GetType().FullName}");
+            }
         }
 
         private void WritePropertyType(BinaryWriter binaryWriter, PropertyType propertyType)

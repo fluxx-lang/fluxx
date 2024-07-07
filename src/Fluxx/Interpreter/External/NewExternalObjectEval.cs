@@ -61,7 +61,10 @@ namespace Faml.Interpreter.External
             {
                 return objectEval;
             }
-            else throw new Exception($"Unsupported property type for property {propertyName}: {propertyValue.GetType()}");
+            else
+            {
+                throw new Exception($"Unsupported property type for property {propertyName}: {propertyValue.GetType()}");
+            }
         }
 
         public override object Eval()

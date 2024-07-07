@@ -57,7 +57,9 @@ namespace Faml.Syntax.Expression
                 TypeBinding currentTypeBinding = conditionValuePair.Value.GetTypeBinding();
 
                 if (typeBinding == null)
+                {
                     typeBinding = currentTypeBinding;
+                }
                 else
                 {
                     if (!currentTypeBinding.IsSameAs(typeBinding))
@@ -82,7 +84,9 @@ namespace Faml.Syntax.Expression
                 TypeBinding currentTypeBinding = this._elseValue.GetTypeBinding();
 
                 if (typeBinding == null)
+                {
                     typeBinding = currentTypeBinding;
+                }
                 else
                 {
                     if (!currentTypeBinding.IsSameAs(typeBinding))

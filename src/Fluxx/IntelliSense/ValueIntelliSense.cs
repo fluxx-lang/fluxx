@@ -45,7 +45,10 @@ namespace Faml.IntelliSense
 
                 return Task.FromResult(new IntelliSenseCompletions(completions));
             }
-            else return Task.FromResult(IntelliSenseCompletions.Empty);
+            else
+            {
+                return Task.FromResult(IntelliSenseCompletions.Empty);
+            }
         }
     }
 }

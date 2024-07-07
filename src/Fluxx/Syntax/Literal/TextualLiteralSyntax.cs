@@ -53,7 +53,9 @@ namespace Faml.Syntax.Literal
             ExpressionSyntax expression;
 
             if (typeBinding == BuiltInTypeBinding.String || typeBinding == BuiltInTypeBinding.UIText)
+            {
                 expression = this;
+            }
             else if (typeBinding is ObjectTypeBinding objectTypeBinding && objectTypeBinding.SupportsCreateLiteral())
             {
                 if (!this.ValidateThatSimpleText(typeBinding))

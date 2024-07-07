@@ -52,7 +52,10 @@ namespace Faml.Syntax.Expression
                     this.AddError("Couldn't find a common type for elements of sequence");
                     this._typeBinding = new SequenceTypeBinding(InvalidTypeBinding.Instance);
                 }
-                else this._typeBinding = new SequenceTypeBinding(elementTypeBinding);
+                else
+                {
+                    this._typeBinding = new SequenceTypeBinding(elementTypeBinding);
+                }
             }
             else
             {

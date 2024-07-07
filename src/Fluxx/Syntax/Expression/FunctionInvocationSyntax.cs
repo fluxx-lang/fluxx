@@ -156,9 +156,13 @@ namespace Faml.Syntax.Expression
 
             QualifiableName functionName;
             if (this._functionReference is SymbolReferenceSyntax symbolReference)
+            {
                 functionName = new QualifiableName(symbolReference.Name.ToString());
+            }
             else if (this._functionReference is QualifiedSymbolReferenceSyntax qualifiedSymbolReference)
+            {
                 functionName = qualifiedSymbolReference.QualifiableName;
+            }
             else
             {
                 this.AddError($"Function reference expressions of type {this._functionReference.GetType()} not currently supported");

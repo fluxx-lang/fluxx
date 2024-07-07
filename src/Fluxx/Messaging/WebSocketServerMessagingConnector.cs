@@ -24,7 +24,9 @@ namespace Faml.Messaging
             {
                 HttpListenerContext listenerContext = await this._httpListener.GetContextAsync();
                 if (listenerContext.Request.IsWebSocketRequest)
+                {
                     this.HandleWebSocketRequest(listenerContext).ConfigureAwait(false);
+                }
                 else
                 {
                     listenerContext.Response.StatusCode = 400;

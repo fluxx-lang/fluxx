@@ -33,7 +33,10 @@ namespace Faml.QuickInfo
 
                 return new FunctionInvocationQuickInfo(syntaxNode.Span, functionBinding.FunctionName, returnTypeName);
             }
-            else return null;
+            else
+            {
+                return null;
+            }
         }
     }
 }

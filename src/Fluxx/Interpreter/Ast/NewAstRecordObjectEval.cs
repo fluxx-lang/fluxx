@@ -40,7 +40,10 @@ namespace Faml.Interpreter.record
                     recordPropertySetter = new RecordPropertyIntSetter(propertyName, (ListEval)propertyValue);
                 }
                 */
-                else throw new Exception($"Unsupported property type for '{propertyValue}'");
+                else
+                {
+                    throw new Exception($"Unsupported property type for '{propertyValue}'");
+                }
 
                 this._propertySetters[i] = astRecordPropertySetter;
             }

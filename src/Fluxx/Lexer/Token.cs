@@ -108,7 +108,9 @@ namespace Faml.Lexer
                 this.ScanMultiLineTextBlock(introducingPosition);
             }
             else
+            {
                 this.ScanSingleLineTextBlock(allowSemicolonToTerminate: allowSemicolonToTerminate, allowRightBraceToTerminate: allowRightBraceToTerminate, allowIfConditionPipeToTerminate: allowIfConditionPipeToTerminate);
+            }
 
             this.FinishRescanAsTextBlock();
         }
@@ -132,7 +134,9 @@ namespace Faml.Lexer
                 this.ScanMultiLineTextBlock(introducingPosition);
             }
             else
+            {
                 throw new InvalidOperationException("RescanAsMultiLineTextBlock called when token isn't a multiline text block");
+            }
 
             this.FinishRescanAsTextBlock();
         }
@@ -194,7 +198,9 @@ namespace Faml.Lexer
                 else if (currChar == ']')
                 {
                     if (nestedBrackets == 0)
+                    {
                         break;
+                    }
                     else
                     {
                         --nestedBrackets;
@@ -202,9 +208,13 @@ namespace Faml.Lexer
                     }
                 }
                 else if (currChar == '\0')
+                {
                     break;
+                }
                 else
+                {
                     this.AdvanceChar();
+                }
             }
 
             this.StringValue = "";  // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
@@ -267,7 +277,9 @@ namespace Faml.Lexer
                     }
                 }
                 else if (currChar == ';' && allowSemicolonToTerminate && delimiterStack.IsEmpty)
+                {
                     return;
+                }
                 else if (currChar == '{')
                 {
                     this.AdvanceChar();
@@ -294,9 +306,13 @@ namespace Faml.Lexer
                     this.AdvanceChar();
                 }
                 else if (currChar == '\n' || currChar == '\0')
+                {
                     return;
+                }
                 else
+                {
                     this.AdvanceChar();
+                }
             }
         }
 
@@ -370,7 +386,10 @@ namespace Faml.Lexer
                 {
                     this.AdvanceChar();   // Ignore carriage returns
                 }
-                else break;
+                else
+                {
+                    break;
+                }
             }
             return indentAmount;
         }
@@ -492,7 +511,9 @@ namespace Faml.Lexer
                 char currChar = this.GetCurrChar();
 
                 if (currChar == ':' && this.GetCurrCharPlusOne() == ':')
+                {
                     return new ArgumentLookahead(ArgumentLookaheadType.DoubleColon);
+                }
                 else if (IsPropertyIdentifierInitialCharacter(currChar))
                 {
                     this.AdvanceChar();
@@ -507,7 +528,9 @@ namespace Faml.Lexer
                     }
                 }
                 else if (currChar == '\0')
+                {
                     return new ArgumentLookahead(ArgumentLookaheadType.None);
+                }
 
                 if (indentAmount != -1)
                 {
@@ -808,7 +831,9 @@ namespace Faml.Lexer
                     this.AdvanceChar();
 
                     if (this.GetCurrChar() != '&')
+                    {
                         this._type = TokenType.Invalid;
+                    }
                     else
                     {
                         this.AdvanceChar();
@@ -820,7 +845,9 @@ namespace Faml.Lexer
                     this.AdvanceChar();
 
                     if (this.GetCurrChar() != '|')
+                    {
                         this._type = TokenType.Pipe;
+                    }
                     else
                     {
                         this.AdvanceChar();
@@ -834,9 +861,13 @@ namespace Faml.Lexer
 
                 default:
                     if (ParseableSource.IsLetter(currChar))
+                    {
                         this.ReadAlphanumericToken();
+                    }
                     else if (ParseableSource.IsDigit(currChar))
+                    {
                         this.ReadNumericToken();
+                    }
                     else
                     {
                         this.AdvanceChar();
@@ -875,17 +906,29 @@ namespace Faml.Lexer
                     }
                 }
                 else if (currChar == ';' && allowSemicolonToTerminate)
+                {
                     break;
+                }
                 else if (currChar == '{')
+                {
                     break;
+                }
                 else if (currChar == '}' && allowRightBraceToTerminate)
+                {
                     break;
+                }
                 else if (currChar == ']' && allowRightBracketToTerminate)
+                {
                     break;
+                }
                 else if (currChar == '\0')
+                {
                     break;
+                }
                 else if (currChar == '\n' && allowNewlineToTerminate)
+                {
                     break;
+                }
                 else
                 {
                     buffer.Append(currChar);
@@ -936,7 +979,9 @@ namespace Faml.Lexer
             {
                 char currChar = this.GetCurrChar();
                 if (ParseableSource.IsSpaceOrNewline(currChar))
+                {
                     this.AdvanceChar();
+                }
                 else if (currChar == '/' && this.GetCurrCharPlusOne() == '/')
                 {
                     this.AdvanceChar();
@@ -951,7 +996,10 @@ namespace Faml.Lexer
                     }
                     while (c != '\n' && c != '\0');
                 }
-                else break;
+                else
+                {
+                    break;
+                }
             }
         }
 

@@ -37,7 +37,9 @@ namespace Faml
         private void GetSyntaxNodeTags(TextSpan span, SyntaxNode syntaxNode, List<IconTag> tags)
         {
             if (syntaxNode.Span.IsNull() || !syntaxNode.OverlapsWith(span))
+            {
                 ;   // If there's not source associated with the node (true for some Invalid... nodes generated via parser error recvery), add nothing
+            }
             else if (! syntaxNode.IsTerminalNode())
             {
                 SyntaxNodeType nodeType = syntaxNode.NodeType;

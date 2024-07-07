@@ -71,7 +71,9 @@ namespace Faml.Syntax
 
             TypeBindingResult typeBindingResult = project.ResolveTypeBinding(className);
             if (typeBindingResult is TypeBindingResult.Success success)
+            {
                 this._typeBinding = success.TypeBinding;
+            }
             else
             {
                 this.AddError(
