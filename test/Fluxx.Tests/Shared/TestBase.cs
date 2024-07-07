@@ -10,12 +10,6 @@ using Faml.Syntax.Expression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeTooling.DotNet.CodeGeneration;
 
-
-/**
- * @author Bret Johnson
- * @since 3/28/2015
- */
-
 namespace Faml.Tests.Shared
 {
     [TestClass]
@@ -23,28 +17,28 @@ namespace Faml.Tests.Shared
     {
         public void AssertMainFunctionValueIs(string moduleSource, object expectedValue)
         {
-            object actualValue = this.EvaluateFunction(moduleSource, "main");
+            object? actualValue = this.EvaluateFunction(moduleSource, "main");
             Assert.AreEqual(actualValue, (object)expectedValue);
         }
 
         public void AssertExpressionValueIs(string expressionSource, object expectedValue)
         {
-            object actualValue = this.EvaluateFunction("fn = " + expressionSource, "fn");
+            object? actualValue = this.EvaluateFunction("fn = " + expressionSource, "fn");
             Assert.AreEqual(expectedValue, actualValue);
         }
 
-        public object EvaluateFunction(string moduleSource, string functionName)
+        public object? EvaluateFunction(string moduleSource, string functionName)
         {
             FamlModule mainModule = CreateSingleModuleProgram(moduleSource);
 
-            FunctionDefinitionSyntax functionDefinition = mainModule.ModuleSyntax.GetFunctionDefinition(new Name(functionName));
+            FunctionDefinitionSyntax? functionDefinition = mainModule.ModuleSyntax.GetFunctionDefinition(new Name(functionName));
             if (functionDefinition == null)
             {
                 throw new InvalidOperationException($"Function '{functionName}' unexpectedly doesn't exist");
             }
 
             FunctionDelegateHolder delegateHolder = mainModule.ModuleDelegates.GetOrCreateFunctionDelegate(functionDefinition);
-            return delegateHolder.FunctionDelegate.DynamicInvoke();
+            return delegateHolder.FunctionDelegate!.DynamicInvoke();
         }
 
         public static FamlModule CreateSingleModuleProgram(string source)

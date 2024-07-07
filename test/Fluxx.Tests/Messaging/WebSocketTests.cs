@@ -5,7 +5,6 @@ using Faml.Tests.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReactiveData;
 
-
 namespace Faml.Tests.Messaging
 {
     [TestClass]
@@ -57,14 +56,9 @@ namespace Faml.Tests.Messaging
             return new TestResponse(success);
         }
 
-        class TestResponse
+        internal class TestResponse(bool success)
         {
-            public bool Success { get; }
-
-            public TestResponse(bool success)
-            {
-                this.Success = success;
-            }
+            public bool Success { get; } = success;
         }
     }
 }
