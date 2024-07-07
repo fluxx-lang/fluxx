@@ -7,7 +7,7 @@ using Faml.Parser;
 using Faml.SourceProviders;
 using Faml.Syntax;
 using Faml.Syntax.Expression;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeTooling.DotNet.CodeGeneration;
 
 
@@ -18,18 +18,22 @@ using TypeTooling.DotNet.CodeGeneration;
 
 namespace Faml.Tests.Shared
 {
-    public class TestBase {
-        public void AssertMainFunctionValueIs(string moduleSource, object expectedValue) {
+    public class TestBase
+    {
+        public void AssertMainFunctionValueIs(string moduleSource, object expectedValue)
+        {
             object actualValue = this.EvaluateFunction(moduleSource, "main");
             Assert.AreEqual(actualValue, (object)expectedValue);
         }
 
-        public void AssertExpressionValueIs(string expressionSource, object expectedValue) {
-            object actualValue = EvaluateFunction("fn = " + expressionSource, "fn");
+        public void AssertExpressionValueIs(string expressionSource, object expectedValue)
+        {
+            object actualValue = this.EvaluateFunction("fn = " + expressionSource, "fn");
             Assert.AreEqual(expectedValue, actualValue);
         }
 
-        public object EvaluateFunction(string moduleSource, string functionName) {
+        public object EvaluateFunction(string moduleSource, string functionName)
+        {
             FamlModule mainModule = CreateSingleModuleProgram(moduleSource);
 
             FunctionDefinitionSyntax functionDefinition = mainModule.ModuleSyntax.GetFunctionDefinition(new Name(functionName));
@@ -40,7 +44,8 @@ namespace Faml.Tests.Shared
             return delegateHolder.FunctionDelegate.DynamicInvoke();
         }
 
-        public static FamlModule CreateSingleModuleProgram(string source) {
+        public static FamlModule CreateSingleModuleProgram(string source)
+        {
             var workspace = new FamlWorkspace();
 
             var sourceProvider = new InMemorySourceProvider();
@@ -62,7 +67,8 @@ namespace Faml.Tests.Shared
             return mainModule;
         }
 
-        public static Eval CreateMainFunctionInvocationEval(FamlModule mainModule) {
+        public static Eval CreateMainFunctionInvocationEval(FamlModule mainModule)
+        {
             return mainModule.Project.CreateFunctionInvocationEval(new QualifiableName("main.main"), new Args());
         }
     }

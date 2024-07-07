@@ -5,13 +5,15 @@ using Faml.Parser;
 using Faml.Syntax;
 using Faml.Syntax.Expression;
 using Faml.Tests.Shared;
-using NUnit.Framework;
-using NUnit.Framework.Constraints;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Faml.Tests.Parser {
-    public sealed class ParserTests : TestBase {
-        [Test]
-        public void TestParseExpression() {
+namespace Faml.Tests.Parser
+{
+    public sealed class ParserTests : TestBase
+    {
+        [TestMethod]
+        public void TestParseExpression()
+        {
             this.AssertExpressionParsingMatches("true || false && (false)");
             this.AssertExpressionParsingMatches("(abc > def) || (ghi != true)");
             //assertExpressionParsingMatches("{ abc:true }");
@@ -19,32 +21,38 @@ namespace Faml.Tests.Parser {
             //assertExpressionParsingMatches("foo(1, 2, 3)");
         }
 
-        [Test]
-        public void TestParseFunctionWithSimpleBody() {
+        [TestMethod]
+        public void TestParseFunctionWithSimpleBody()
+        {
             this.AssertModuleParsingMatches("foo:int = 2");
         }
 
-        [Test]
-        public void TestParseFunctionWithExprBody() {
+        [TestMethod]
+        public void TestParseFunctionWithExprBody()
+        {
             this.AssertModuleParsingMatches("foo{param: int} = { 2 * param }");
         }
 
-        [Test]
-        public void TestParseFunctionInvocation() {
+        [TestMethod]
+        public void TestParseFunctionInvocation()
+        {
             this.AssertModuleParsingMatches("foo = TestObject{abcdef}");
             this.AssertModuleParsingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}");
             this.AssertModuleParsingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc; abcdef}");
             this.AssertModuleParsingMatches("foo = TestObject{}");
         }
 
-        [Test]
-        public void TestParseFunctionInvocationExpressionValue() {
-            AssertModuleParsingMatches("foo =\n" +
+        [TestMethod]
+        public void TestParseFunctionInvocationExpressionValue()
+        {
+            this.AssertModuleParsingMatches("foo =\n" +
                                        "  TestObject{IntProp:{ 3 + 5 }; TextProp:abc}");
         }
 
-        [Test] public void TestParseFunctionInvocationMultiLines() {
-            AssertModuleParsingMatches("foo =\n" +
+        [TestMethod]
+        public void TestParseFunctionInvocationMultiLines()
+        {
+            this.AssertModuleParsingMatches("foo =\n" +
                                        "  TestObject {\n" +
                                        "    IntProp:3\n" +
                                        "    TextProp:abc\n" +
@@ -52,9 +60,10 @@ namespace Faml.Tests.Parser {
                                        "foo = TestObject{IntProp:3; TextProp:abc}");
         }
 
-        [Test]
-        public void TestParseContainer() {
-            AssertModuleParsingMatches("foo =\n" +
+        [TestMethod]
+        public void TestParseContainer()
+        {
+            this.AssertModuleParsingMatches("foo =\n" +
                                        "  TestContainer {\n" +
                                        "    Children:\n" +
                                        "      TestObject{IntProp:3}\n" +
@@ -62,18 +71,21 @@ namespace Faml.Tests.Parser {
                                        "  }");
         }
 
-        [Test]
-        public void Parse_RecordDefinition() {
-            AssertModuleParsingMatches("type Foo = {\n" +
+        [TestMethod]
+        public void Parse_RecordDefinition()
+        {
+            this.AssertModuleParsingMatches("type Foo = {\n" +
                                        "    foo:int\n" +
                                        "    bar:int\n" +
                                        "    baz:string\n" +
                                        "}");
         }
 
-        [Test]
-        public void Parse_RecordDefinitionSameLine() {
-            AssertModuleParsingMatches("type Foo = {\n" +
+        [TestMethod]
+        public void Parse_RecordDefinitionSameLine()
+        {
+            this.AssertModuleParsingMatches(
+                                       "type Foo = {\n" +
                                        "    foo:int; bar:int; baz:string\n" +
                                        "}",
                                        "type Foo = {\n" +
@@ -83,27 +95,33 @@ namespace Faml.Tests.Parser {
                                        "}");
         }
 
-        [Test]
-        public void Parse_RecordDefinitionDefaltValue() {
-            AssertModuleParsingMatches("type Foo = {\n" +
+        [TestMethod]
+        public void Parse_RecordDefinitionDefaltValue()
+        {
+            this.AssertModuleParsingMatches("type Foo = {\n" +
                                        "    foo:int = 3\n" +
                                        "    bar:int = 7\n" +
                                        "}");
         }
 
-        [Test] public void TestCustomLiteralFunction() {
+        [TestMethod]
+        public void TestCustomLiteralFunction()
+        {
             this.AssertModuleParsingMatches("foo:CustomLiteralObject = !!!");
-            AssertModuleParsingMatches("foo{}:CustomLiteralObject = !!!", "foo:CustomLiteralObject = !!!");
+            this.AssertModuleParsingMatches("foo{}:CustomLiteralObject = !!!", "foo:CustomLiteralObject = !!!");
             this.AssertModuleParsingMatches("foo = CustomLiteralObject{!!!}");
         }
 
-        [Test]
-        public void TestContentProperty() {
+        [TestMethod]
+        public void TestContentProperty()
+        {
             this.AssertModuleParsingMatches("foo = string{This is my string}");
             this.AssertModuleParsingMatches("foo = int{3}");
         }
 
-        [Test] public void TestErrorRecovery() {
+        [TestMethod]
+        public void TestErrorRecovery()
+        {
             /*
             typeof(Project).Assembly.GetName().Name;
             Assembly.Load().GetEntryAssembly().GetReferencedAssemblies().Select(assembly => Assembly.LoadFrom(assembly.Name)).ToList();
@@ -113,14 +131,16 @@ namespace Faml.Tests.Parser {
             */
         }
 
-        private void AssertModuleParsingMatches(string source, string? expectedReconstructedSource = null) {
+        private void AssertModuleParsingMatches(string source, string? expectedReconstructedSource = null)
+        {
             string sourceWithImport = "import Faml.Tests.TestTypes\n" + source;
 
             FamlModule mainModule = CreateSingleModuleProgram(sourceWithImport);
             this.AssertParsingMatches(source, expectedReconstructedSource, mainModule.ModuleSyntax);
         }
 
-        private void AssertExpressionParsingMatches(string source, string? expectedReconstructedSource = null) {
+        private void AssertExpressionParsingMatches(string source, string? expectedReconstructedSource = null)
+        {
             FamlProject project = new FamlWorkspace().CreateProject();
             FamlModule module = new FamlModule(project, new QualifiableName("main"), null);
             ExpressionSyntax expression = SourceParser.ParseExpression(module, source);
@@ -128,7 +148,8 @@ namespace Faml.Tests.Parser {
             this.AssertParsingMatches(source, expectedReconstructedSource, expression);
         }
 
-        private void AssertParsingMatches(string source, string? expectedReconstructedSource, SyntaxNode syntaxNode) {
+        private void AssertParsingMatches(string source, string? expectedReconstructedSource, SyntaxNode syntaxNode)
+        {
             var sourceWriter = new SourceWriter();
             syntaxNode.WriteSource(sourceWriter);
             string reconstructedSource = sourceWriter.GetSource();
@@ -146,15 +167,18 @@ namespace Faml.Tests.Parser {
         /// </summary>
         /// <param name="input">input string</param>
         /// <remarks> normalized string</remarks>
-        private static string NormalizeWhitespace(string input) {
+        private static string NormalizeWhitespace(string input)
+        {
             var output = new StringBuilder();
 
             int length = input.Length;
-            for (int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++)
+            {
                 char c = input[i];
                 char next = i + 1 < length ? input[i + 1] : '\0';
 
-                if (char.IsWhiteSpace(c)) {
+                if (char.IsWhiteSpace(c))
+                {
                     // Turn other whitespace into a space
                     c = ' ';
 

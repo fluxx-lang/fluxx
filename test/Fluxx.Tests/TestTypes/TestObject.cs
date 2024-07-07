@@ -1,7 +1,9 @@
 using TypeTooling.CompanionType;
 
-namespace Faml.Tests.TestTypes {
-    public sealed class TestObject {
+namespace Faml.Tests.TestTypes
+{
+    public sealed class TestObject
+    {
         private bool _boolProp;
         private int _intProp;
         private string? _textProp;
@@ -9,23 +11,27 @@ namespace Faml.Tests.TestTypes {
         private YesNo? _yesNo;
         private string? _content;
 
-        public TestObject(int intProp, bool boolProp, string textProp) {
+        public TestObject(int intProp, bool boolProp, string textProp)
+        {
             this._intProp = intProp;
             this._boolProp = boolProp;
             this._textProp = textProp;
         }
 
-        public bool BoolProp {
+        public bool BoolProp
+        {
             get => this._boolProp;
             set => this._boolProp = value;
         }
 
-        public int IntProp {
+        public int IntProp
+        {
             get => this._intProp;
             set => this._intProp = value;
         }
 
-        public string? TextProp {
+        public string? TextProp
+        {
             get => this._textProp;
             set => this._textProp = value;
         }
@@ -42,12 +48,14 @@ namespace Faml.Tests.TestTypes {
             set => this._yesNo = value;
         }
 
-        public string? ContentProp {
+        public string? ContentProp
+        {
             get => this._content;
             set => this._content = value;
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return "TestSimpleObj{" +
                    "intProp=" + this._intProp +
                    ", boolProp=" + this._boolProp +
@@ -55,15 +63,18 @@ namespace Faml.Tests.TestTypes {
                    '}';
         }
 
-        public int AddValue(int toAdd) {
+        public int AddValue(int toAdd)
+        {
             return this._intProp + toAdd;
         }
 
-        public bool IsIntEven() {
+        public bool IsIntEven()
+        {
             return this._intProp % 2 == 0;
         }
 
-        public override bool Equals(object o) {
+        public override bool Equals(object o)
+        {
             if (this == o) return true;
             // TEST CONV - fix this
             /*
@@ -77,7 +88,8 @@ namespace Faml.Tests.TestTypes {
             return !(this._textProp != null ? !this._textProp.Equals(that._textProp) : that._textProp != null);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             int result = this._intProp;
             result = 31*result + (this._boolProp ? 1 : 0);
             result = 31*result + (this._textProp != null ? this._textProp.GetHashCode() : 0);
@@ -85,8 +97,10 @@ namespace Faml.Tests.TestTypes {
         }
     }
 
-    public class TestObjectTypeTooling : IContentPropertyProvider {
-        public string GetContentProperty() {
+    public class TestObjectTypeTooling : IContentPropertyProvider
+    {
+        public string GetContentProperty()
+        {
             return nameof(TestObject.ContentProp);
         }
     }

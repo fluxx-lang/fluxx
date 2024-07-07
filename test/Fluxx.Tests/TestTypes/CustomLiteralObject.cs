@@ -4,13 +4,18 @@ using TypeTooling.DotNet.CodeGeneration;
 using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.Types;
 
-namespace Faml.Tests.TestTypes {
-    class CustomLiteralObject {
+namespace Faml.Tests.TestTypes
+{
+    public class CustomLiteralObject
+    {
     }
 
-    class CustomLiteralObjectTypeTooling : ICustomLiteralParser {
-        public CustomLiteral Parse(string literal) {
-            if (literal == "!!!") {
+    public class CustomLiteralObjectTypeTooling : ICustomLiteralParser
+    {
+        public CustomLiteral Parse(string literal)
+        {
+            if (literal == "!!!")
+            {
                 var myType = new ReflectionDotNetRawType(typeof(CustomLiteralObject));
                 ExpressionCode newCode = DotNetCode.New(myType, new string[] { });
                 return new CustomLiteral(null, newCode);

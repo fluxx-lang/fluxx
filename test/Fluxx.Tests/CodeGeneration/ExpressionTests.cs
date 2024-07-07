@@ -1,5 +1,5 @@
 using Faml.Tests.Shared;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 /**
@@ -11,13 +11,15 @@ namespace Faml.Tests.CodeGeneration
 {
     public class ExpressionTests : TestBase
     {
-        [Test] public void TestParenthesized()
+        [TestMethod]
+        public void TestParenthesized()
         {
             this.AssertExpressionValueIs("(true || false) && (false)", false);
             this.AssertExpressionValueIs("(3 > 4 || (2 > 4))", false);
         }
 
-        [Test] public void TestAndOr()
+        [TestMethod]
+        public void TestAndOr()
         {
             this.AssertExpressionValueIs("true && true", true);
             this.AssertExpressionValueIs("true && false", false);
@@ -30,7 +32,8 @@ namespace Faml.Tests.CodeGeneration
             this.AssertExpressionValueIs("false || false", false);
         }
 
-        [Test] public void TestEqualsNotEquals()
+        [TestMethod]
+        public void TestEqualsNotEquals()
         {
             this.AssertExpressionValueIs("1 == 3", false);
             this.AssertExpressionValueIs("1 == 1", true);
@@ -49,7 +52,8 @@ namespace Faml.Tests.CodeGeneration
             this.AssertExpressionValueIs("false != false", false);
         }
 
-        [Test] public void TestGreaterThanLessThan()
+        [TestMethod]
+        public void TestGreaterThanLessThan()
         {
             this.AssertExpressionValueIs("1 > 3", false);
             this.AssertExpressionValueIs("1 > 1", false);
@@ -68,60 +72,63 @@ namespace Faml.Tests.CodeGeneration
             this.AssertExpressionValueIs("1 <= 3", true);
         }
 
-        [Test] public void TestFunction()
+        [TestMethod]
+        public void TestFunction()
         {
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "bar:bool = true || false\n" +
                 "main:bool = ! bar", false);
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "bar{}:int = 3\r\n" +
                 "main{}:int = bar{}", 3);
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "bar{val:int}:int = 3\r\n" +
                 "main{}:int = bar{val:5}",
                 3);
             //assertBooleanFunctionValueIs("function foo(param1:Boolean):Boolean = false", "foo()", false);
         }
 
-        [Test] public void TestFunctionWithParams()
+        [TestMethod]
+        public void TestFunctionWithParams()
         {
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "bar{val: int}: int = 3\r\n" +
                 "main{}: int = bar{val: 5}",
                 3);
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "bar{val:int}:int = {val}\n" +
                 "main{}:int = bar{val:5}",
                 5);
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "bothTrue{val1:bool  val2:bool}: bool = {val1} && {val2}\n" +
                 "main{}: bool = bothTrue{val1:true val2:true}",
                 true);
         }
 
-        [Test] public void TestTextEscapes()
+        [TestMethod]
+        public void TestTextEscapes()
         {
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "foo{val: string}: string = {val}\n" +
                 "main{}: string = foo{val: ab\\:cdef}",
                 "ab:cdef");
 
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "foo{val: string}: string = {val}\n" +
                 "main{}: string = foo{val: ab\\{cdef}",
                 "ab{cdef");
 
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "foo{val: string}: string = {val}\n" +
                 "main{}: string = foo{val: ab\\}cdef}",
                 "ab}cdef");
 
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "foo{val: string}: string = {val}\n" +
                 "main{}: string = foo{val: ab\\\\cdef}",
                 "ab\\cdef");
 
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "foo{val: string}: string = {val}\n" +
                 "main{}: string = foo{val: abc\\n\\r\\tdef}",
                 "abc\n\r\tdef");
@@ -150,7 +157,8 @@ namespace Faml.Tests.CodeGeneration
         }
     */
 
-        [Test] public void TestNewExternalObject()
+        [TestMethod]
+        public void TestNewExternalObject()
         {
             this.AssertExpressionValueIs(
                 "Faml.Tests.TestTypes.TestObject{ IntProp: 23 }.IntProp\n",
@@ -211,17 +219,19 @@ namespace Faml.Tests.CodeGeneration
         }
 #endif
 
-        [Test] public void TestMaxFunction()
+        [TestMethod]
+        public void TestMaxFunction()
         {
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "max{x:int  y:int}: int = {x}\n" +
                 "main{}: int = max{x:3  y:4}",
                 3);
         }
 
-        [Test] public void TestStringFunction()
+        [TestMethod]
+        public void TestStringFunction()
         {
-            AssertMainFunctionValueIs(
+            this.AssertMainFunctionValueIs(
                 "foo{x:string}: string = {x}\n" +
                 "main{}: string = foo{ x:abc }",
                 "abc");

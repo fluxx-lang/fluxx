@@ -1,12 +1,13 @@
 using Faml.Lexer;
 using Microsoft.CodeAnalysisP.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Faml.Tests.Lexer
 {
     public sealed class TokenTest
     {
-        [Test] public void TestPunctuation()
+        [TestMethod]
+        public void TestPunctuation()
         {
             this.AssertTokenTypeIs("{", TokenType.LeftBrace);
             this.AssertTokenTypeIs("}", TokenType.RightBrace);
@@ -15,7 +16,8 @@ namespace Faml.Tests.Lexer
             this.AssertTokenTypeIs(",", TokenType.Comma);
         }
 
-        [Test] public void TestKeywords()
+        [TestMethod]
+        public void TestKeywords()
         {
             this.AssertTokenTypeIs("true", TokenType.True);
             this.AssertTokenTypeIs("false", TokenType.False);
@@ -23,14 +25,16 @@ namespace Faml.Tests.Lexer
             //assertTokenTypeIs("function", TokenType.FUNCTION);
         }
 
-        [Test] public void TestIdentifier()
+        [TestMethod]
+        public void TestIdentifier()
         {
             this.AssertTokenTypeIs("abc", TokenType.Identifier);
             this.AssertTokenTypeIs("abc123", TokenType.Identifier);
             this.AssertTokenTypeIs("ABC123", TokenType.Identifier);
         }
 
-        [Test] public void TestProperty()
+        [TestMethod]
+        public void TestProperty()
         {
             this.AssertTokenTypeIs("abc:", TokenType.PropertyIdentifier);
             this.AssertTokenTypeIs("abc123:", TokenType.PropertyIdentifier);
@@ -40,7 +44,8 @@ namespace Faml.Tests.Lexer
             this.AssertTokenTypeIs("abc.def:", TokenType.PropertyIdentifier);
         }
 
-        [Test] public void TestOperators()
+        [TestMethod]
+        public void TestOperators()
         {
             this.AssertTokenTypeIs("-", TokenType.Minus);
             this.AssertTokenTypeIs("!", TokenType.Not);

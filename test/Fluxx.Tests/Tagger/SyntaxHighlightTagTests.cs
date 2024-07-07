@@ -2,12 +2,14 @@ using Faml.Api;
 using Faml.Syntax;
 using Faml.Tests.Shared;
 using Microsoft.CodeAnalysisP.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Faml.Tests.Tagger {
-    public sealed class SyntaxHighlightTagTests : TestBase {
+namespace Faml.Tests.Tagger
+{
+    public sealed class SyntaxHighlightTagTests : TestBase
+    {
         const SyntaxHighlightTagType LeftBrace = SyntaxHighlightTagType.DeemphasizedPunctuation;
         const SyntaxHighlightTagType RightBrace = SyntaxHighlightTagType.DeemphasizedPunctuation;
         const SyntaxHighlightTagType Assign = SyntaxHighlightTagType.Punctuation;
@@ -25,27 +27,31 @@ namespace Faml.Tests.Tagger {
         const SyntaxHighlightTagType NumberLiteral = SyntaxHighlightTagType.NumberLiteral;
         const SyntaxHighlightTagType StringLiteral = SyntaxHighlightTagType.StringLiteral;
 
-        [Test]
-        public void Tag_FunctionWithSimpleBody() {
+        [TestMethod]
+        public void Tag_FunctionWithSimpleBody()
+        {
             this.AssertTaggingMatches("foo:int = 2",
                 FunctionReference, Colon, TypeReference, Assign, NumberLiteral);
         }
 
-        [Test]
-        public void Tag_FunctionWithExprBody() {
+        [TestMethod]
+        public void Tag_FunctionWithExprBody()
+        {
             this.AssertTaggingMatches("foo{param: int} = { 2 * param }",
                 FunctionReference, LeftBrace, PropertyReference, Colon, Int, RightBrace, Assign, // foo{param: int} =
                 LeftBrace, NumberLiteral, Times, SymbolReference, RightBrace); // { 2 * param }
         }
 
-        [Test]
-        public void Tag_FunctionInvocationContentArg() {
+        [TestMethod]
+        public void Tag_FunctionInvocationContentArg()
+        {
             this.AssertTaggingMatches("foo = TestObject{abcdef}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, StringLiteral, RightBrace);
         }
 
-        [Test]
-        public void Tag_FunctionInvocationMultipleArgs() {
+        [TestMethod]
+        public void Tag_FunctionInvocationMultipleArgs()
+        {
             this.AssertTaggingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, // foo = TestObject{
                 PropertyReference, Colon, NumberLiteral, Semicolon, // IntProp:3;
@@ -54,15 +60,17 @@ namespace Faml.Tests.Tagger {
                 RightBrace); // }
         }
 
-        [Test]
-        public void Tag_KeywordsInPropertyValue() {
+        [TestMethod]
+        public void Tag_KeywordsInPropertyValue()
+        {
             this.AssertTaggingMatches("foo = TestObject{TextProp:abc if is}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, // foo = TestObject{
                 PropertyReference, Colon, StringLiteral, RightBrace); // TextProp:abc if is}
         }
 
-        [Test]
-        public void Tag_RecordDefinition() {
+        [TestMethod]
+        public void Tag_RecordDefinition()
+        {
             this.AssertTaggingMatches("type Foo = {foo:int}",
                 Type, TypeReference, Assign, LeftBrace, PropertyReference, Colon, Int, RightBrace);
         }
@@ -122,13 +130,15 @@ namespace Faml.Tests.Tagger {
         }
 #endif
 
-        private void AssertTaggingMatches(string source, params SyntaxHighlightTagType[] expectedTagTypes) {
+        private void AssertTaggingMatches(string source, params SyntaxHighlightTagType[] expectedTagTypes)
+        {
             string sourceWithImport = "import Faml.Tests.TestTypes\n" + source;
 
             FamlModule module = CreateSingleModuleProgram(sourceWithImport);
 
             SyntaxNode? firstModuleItem = module.ModuleSyntax.ModuleItems.FirstOrDefault();
-            if (firstModuleItem == null) {
+            if (firstModuleItem == null)
+            {
                 Assert.AreEqual(expectedTagTypes.Length, 0, "With no module items, there shouldn't be any tags");
                 return;
             }
