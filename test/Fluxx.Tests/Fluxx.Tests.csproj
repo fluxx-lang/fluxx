@@ -3,9 +3,6 @@
     <TargetFrameworks>net8.0</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
-
-    <LangVersion>8.0</LangVersion>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,5 +12,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Fluxx\Fluxx.csproj" />
   </ItemGroup>
-
 </Project>
