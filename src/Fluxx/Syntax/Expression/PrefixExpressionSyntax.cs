@@ -12,21 +12,21 @@ namespace Faml.Syntax.Expression
 {
     public sealed class PrefixExpressionSyntax : ExpressionSyntax
     {
-        private readonly PrefixOperator _prefixOperator;
-        private readonly ExpressionSyntax _operand;
+        private readonly PrefixOperator prefixOperator;
+        private readonly ExpressionSyntax operand;
 
         // AST structure properties
         public PrefixExpressionSyntax(TextSpan span, PrefixOperator prefixOperator, ExpressionSyntax operand) : base(span)
         {
-            this._prefixOperator = prefixOperator;
+            this.prefixOperator = prefixOperator;
 
-            this._operand = operand;
+            this.operand = operand;
             operand.SetParent(this);
         }
 
-        public PrefixOperator Operator => this._prefixOperator;
+        public PrefixOperator Operator => this.prefixOperator;
 
-        public ExpressionSyntax Operand => this._operand;
+        public ExpressionSyntax Operand => this.operand;
 
         public override bool IsTerminalNode()
         {
@@ -37,18 +37,18 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
         {
-            visitor(this._operand);
+            visitor(this.operand);
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._operand.GetTypeBinding();
+            return this.operand.GetTypeBinding();
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._prefixOperator.GetSourceRepresentation());
-            this._operand.WriteSource(sourceWriter);
+            sourceWriter.Write(this.prefixOperator.GetSourceRepresentation());
+            this.operand.WriteSource(sourceWriter);
         }
     }
 }

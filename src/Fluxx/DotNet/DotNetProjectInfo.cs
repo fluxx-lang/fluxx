@@ -16,19 +16,19 @@ namespace Faml.DotNet
 {
     public class DotNetProjectInfo
     {
-        private readonly FamlProject _project;
-        private DotNetRawTypeProvider _rawTypeProvider;
-        private readonly List<LoadedAssembly> _dependencyAssemblies = new List<LoadedAssembly>();
+        private readonly FamlProject project;
+        private DotNetRawTypeProvider rawTypeProvider;
+        private readonly List<LoadedAssembly> dependencyAssemblies = new List<LoadedAssembly>();
 
         public DotNetProjectInfo(FamlProject project)
         {
-            this._project = project;
+            this.project = project;
         }
 
         public DotNetRawTypeProvider RawTypeProvider
         {
-            get => this._rawTypeProvider;
-            set => this._rawTypeProvider = value;
+            get => this.rawTypeProvider;
+            set => this.rawTypeProvider = value;
         }
 
 #if false
@@ -56,16 +56,16 @@ namespace Faml.DotNet
         /// </summary>
         public void InitSdk()
         {
-            IReadOnlyList<DotNetRawType> sdkTypes = this._rawTypeProvider.GetAssemblyAttributeReferencedTypes(typeof(FamlSdkAttribute).FullName);
+            IReadOnlyList<DotNetRawType> sdkTypes = this.rawTypeProvider.GetAssemblyAttributeReferencedTypes(typeof(FamlSdkAttribute).FullName);
 
             if (sdkTypes.Count == 0)
             {
-                this._project.AddProjectError($"No FAML SDK specified. Check that your NuGet dependencies include a FAML SDK (with a FamlSdk assembly attribute).");
+                this.project.AddProjectError($"No FAML SDK specified. Check that your NuGet dependencies include a FAML SDK (with a FamlSdk assembly attribute).");
                 return;
             }
             else if (sdkTypes.Count > 1)
             {
-                this._project.AddProjectError($"Multiple FAML SDKs specified. Check that your NuGet dependencies include only a single that's a FAML SDK (with a FamlSdk assembly attribute)");
+                this.project.AddProjectError($"Multiple FAML SDKs specified. Check that your NuGet dependencies include only a single that's a FAML SDK (with a FamlSdk assembly attribute)");
                 return;
             }
 
@@ -73,26 +73,26 @@ namespace Faml.DotNet
 
             try
             {
-                object sdk = this._rawTypeProvider.Instantiate(famlSdkType);
+                object sdk = this.rawTypeProvider.Instantiate(famlSdkType);
 
                 if (!(sdk is FamlSdk famlSdk))
                 {
-                    this._project.AddProjectError(
+                    this.project.AddProjectError(
                         $"[FamlSdk] attribute specifies type {famlSdkType.FullName} which doesn't derive from {typeof(FamlSdk).FullName}");
                     return;
                 }
 
-                famlSdk.Init(this._project);
+                famlSdk.Init(this.project);
             }
             catch (Exception e)
             {
-                this._project.AddProjectError($"Error initializing FAML SDK: {e.Message}");
+                this.project.AddProjectError($"Error initializing FAML SDK: {e.Message}");
             }
         }
 
         public void AddDependencyAssembly(Assembly assembly)
         {
-            this._dependencyAssemblies.Add(new LoadedAssembly(assembly));
+            this.dependencyAssemblies.Add(new LoadedAssembly(assembly));
         }
 
 #if false
@@ -167,13 +167,13 @@ namespace Faml.DotNet
 
         private DotNetRawType? FindRawType(string typeName)
         {
-            if (this._rawTypeProvider != null)
+            if (this.rawTypeProvider != null)
             {
-                return this._rawTypeProvider.GetType(typeName);
+                return this.rawTypeProvider.GetType(typeName);
             }
 
             // TODO: Log warning if multiple defined, in dev environment (and possibly in app too)
-            foreach (LoadedAssembly dependencyAssembly in this._dependencyAssemblies)
+            foreach (LoadedAssembly dependencyAssembly in this.dependencyAssemblies)
             {
                 Type type = dependencyAssembly.GetType(typeName);
                 if (type != null)
@@ -195,7 +195,7 @@ namespace Faml.DotNet
                 return TypeBindingResult.NotFoundResult;
             }
 
-            TypeToolingType typeToolingType = this._project.GetTypeToolingType(foundType);
+            TypeToolingType typeToolingType = this.project.GetTypeToolingType(foundType);
             if (typeToolingType == null)
             {
                 return TypeBindingResult.NotFoundResult;
@@ -208,7 +208,7 @@ namespace Faml.DotNet
         {
             StringBuilder message = new StringBuilder($"Found type {typeNameString} in multiple assemblies:");
 
-            foreach (LoadedAssembly depenedencyAssembly in this._dependencyAssemblies)
+            foreach (LoadedAssembly depenedencyAssembly in this.dependencyAssemblies)
             {
                 Type assemblyType = depenedencyAssembly.GetType(typeNameString);
                 if (assemblyType != null)
@@ -254,9 +254,9 @@ namespace Faml.DotNet
                         return elementTypeBindingResult;
                     }
 
-                    return new TypeBindingResult.Success(new ExternalSequenceTypeBinding(this._project, sequenceType, elementTypeBinding.TypeBinding));
+                    return new TypeBindingResult.Success(new ExternalSequenceTypeBinding(this.project, sequenceType, elementTypeBinding.TypeBinding));
                 case ObjectType objectType:
-                    return new TypeBindingResult.Success(new ExternalObjectTypeBinding(this._project, objectType));
+                    return new TypeBindingResult.Success(new ExternalObjectTypeBinding(this.project, objectType));
                 default:
                     return new TypeBindingResult.Error($"TypeTooling type {type.GetType().FullName} is currently not supported");
             }
@@ -270,37 +270,37 @@ namespace Faml.DotNet
                 return null;
             }
 
-            AttachedType attachedType = this._project.GetTypeToolingAttachedType(foundType);
+            AttachedType attachedType = this.project.GetTypeToolingAttachedType(foundType);
             if (attachedType == null)
             {
                 return null;
             }
 
-            return new ExternalAttachedTypeBinding(this._project, attachedType);
+            return new ExternalAttachedTypeBinding(this.project, attachedType);
         }
 
         public void DiscoverTypeToolingProviders()
         {
-            IReadOnlyList<DotNetRawType> typeToolingProviderTypes = this._rawTypeProvider.GetAssemblyAttributeReferencedTypes(typeof(TypeToolingProviderAttribute).FullName);
+            IReadOnlyList<DotNetRawType> typeToolingProviderTypes = this.rawTypeProvider.GetAssemblyAttributeReferencedTypes(typeof(TypeToolingProviderAttribute).FullName);
 
             foreach (DotNetRawType typeToolingProviderType in typeToolingProviderTypes)
             {
                 try
                 {
-                    object typeToolingProviderObject = this._rawTypeProvider.Instantiate(typeToolingProviderType, this._project.TypeToolingEnvironment);
+                    object typeToolingProviderObject = this.rawTypeProvider.Instantiate(typeToolingProviderType, this.project.TypeToolingEnvironment);
 
                     if (!(typeToolingProviderObject is TypeToolingProvider typeToolingProvider))
                     {
-                        this._project.AddProjectError(
+                        this.project.AddProjectError(
                             $"[TypeToolingProvider] attribute specified type {typeToolingProviderType.FullName} should derive from {typeof(TypeToolingProvider).FullName} but doesn't");
                         continue;
                     }
 
-                    this._project.AddTypeToolingProvider(typeToolingProvider);
+                    this.project.AddTypeToolingProvider(typeToolingProvider);
                 }
                 catch (Exception e)
                 {
-                    this._project.AddProjectError($"Error instantiating TypeTooling provider {typeToolingProviderType}: {e.Message}");
+                    this.project.AddProjectError($"Error instantiating TypeTooling provider {typeToolingProviderType}: {e.Message}");
                 }
             }
         }
@@ -331,7 +331,7 @@ namespace Faml.DotNet
                     continue;
                 }
 
-                object typeToolingProviderObject = constructorInfo.Invoke(new[] {this._project.TypeToolingEnvironment});
+                object typeToolingProviderObject = constructorInfo.Invoke(new[] {this.project.TypeToolingEnvironment});
 
                 if (!(typeToolingProviderObject is TypeToolingProvider typeToolingProvider))
                 {
@@ -340,7 +340,7 @@ namespace Faml.DotNet
                     continue;
                 }
 
-                this._project.AddTypeToolingProvider(typeToolingProvider);
+                this.project.AddTypeToolingProvider(typeToolingProvider);
             }
         }
 
@@ -370,7 +370,7 @@ namespace Faml.DotNet
                     continue;
                 }
 
-                object typeToolingEnhancerObject = constructorInfo.Invoke(new[] { this._project.TypeToolingEnvironment });
+                object typeToolingEnhancerObject = constructorInfo.Invoke(new[] { this.project.TypeToolingEnvironment });
 
                 if (!(typeToolingEnhancerObject is TypeToolingEnhancer typeToolingEnhancer))
                 {
@@ -379,7 +379,7 @@ namespace Faml.DotNet
                     continue;
                 }
 
-                this._project.AddDefaultTypeToolingEnhancer(typeToolingEnhancer);
+                this.project.AddDefaultTypeToolingEnhancer(typeToolingEnhancer);
             }
         }
     }

@@ -11,14 +11,14 @@ namespace Faml.Syntax.Literal
 {
     public sealed class TextualLiteralSyntax : ExpressionSyntax
     {
-        private ImmutableArray<TextualLiteralItemSyntax> _items;
-        private TypeBinding? _typeBinding;
+        private ImmutableArray<TextualLiteralItemSyntax> items;
+        private TypeBinding? typeBinding;
 
         public TextualLiteralSyntax(TextSpan span, ImmutableArray<TextualLiteralItemSyntax> items) : base(span)
         {
-            this._items = items;
+            this.items = items;
 
-            foreach (TextualLiteralItemSyntax item in this._items)
+            foreach (TextualLiteralItemSyntax item in this.items)
             {
                 item.SetParent(this);
             }
@@ -30,7 +30,7 @@ namespace Faml.Syntax.Literal
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            foreach (TextualLiteralItemSyntax item in this._items)
+            foreach (TextualLiteralItemSyntax item in this.items)
             {
                 visitor(item);
             }
@@ -38,17 +38,17 @@ namespace Faml.Syntax.Literal
 
         public override TypeBinding GetTypeBinding()
         {
-            if (this._typeBinding == null)
+            if (this.typeBinding == null)
             {
                 throw new InvalidOperationException("TypeBinding not set");
             }
 
-            return this._typeBinding;
+            return this.typeBinding;
         }
 
         public ExpressionSyntax ResolveMarkup(TypeBinding typeBinding, BindingResolver bindingResolver)
         {
-            this._typeBinding = typeBinding;
+            this.typeBinding = typeBinding;
 
             ExpressionSyntax expression;
 
@@ -125,7 +125,7 @@ namespace Faml.Syntax.Literal
             return true;
         }
 
-        public bool IsSimpleText => this._items.Length == 1 && this._items[0] is TextualLiteralTextItemSyntax;
+        public bool IsSimpleText => this.items.Length == 1 && this.items[0] is TextualLiteralTextItemSyntax;
 
         public TextSpan GetSimpleTextSpan()
         {
@@ -134,12 +134,12 @@ namespace Faml.Syntax.Literal
                 throw new InvalidOperationException("Markup isn't simple text");
             }
 
-            return this._items[0].Span;
+            return this.items[0].Span;
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            foreach (TextualLiteralItemSyntax item in this._items)
+            foreach (TextualLiteralItemSyntax item in this.items)
             {
                 sourceWriter.Write(item);
             }

@@ -4,24 +4,24 @@ namespace Faml.Binding.Internal
 {
     public class ForSymbolBinding : SymbolBinding
     {
-        private readonly ForExpressionSyntax _forExpression;
-        private readonly int _variableIndex;
-        private readonly TypeBinding _typeBinding;
+        private readonly ForExpressionSyntax forExpression;
+        private readonly int variableIndex;
+        private readonly TypeBinding typeBinding;
 
         public ForSymbolBinding(ForExpressionSyntax forExpression, int variableIndex)
         {
-            this._forExpression = forExpression;
-            this._variableIndex = variableIndex;
-            this._typeBinding = forExpression.ForVariableDefinition.GetVariableTypeBinding();
+            this.forExpression = forExpression;
+            this.variableIndex = variableIndex;
+            this.typeBinding = forExpression.ForVariableDefinition.GetVariableTypeBinding();
         }
 
-        public ForExpressionSyntax ForExpression => this._forExpression;
+        public ForExpressionSyntax ForExpression => this.forExpression;
 
-        public int VariableIndex => this._variableIndex;
+        public int VariableIndex => this.variableIndex;
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
     }
 }

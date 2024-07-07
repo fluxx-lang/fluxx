@@ -7,18 +7,18 @@ namespace Faml.Binding.Internal
 {
     public class RecordTypeBinding : ObjectTypeBinding
     {
-        private readonly RecordTypeDefinitionSyntax _recordTypeDefinition;
+        private readonly RecordTypeDefinitionSyntax recordTypeDefinition;
 
         public RecordTypeBinding(RecordTypeDefinitionSyntax recordTypeDefinition) : base(recordTypeDefinition.TypeNameSyntax.Name.ToQualifiableName())
         {
-            this._recordTypeDefinition = recordTypeDefinition;
+            this.recordTypeDefinition = recordTypeDefinition;
         }
 
-        public RecordTypeDefinitionSyntax RecordTypeDefinition => this._recordTypeDefinition;
+        public RecordTypeDefinitionSyntax RecordTypeDefinition => this.recordTypeDefinition;
 
         protected bool Equals(RecordTypeBinding other)
         {
-            return this._recordTypeDefinition.Equals(other._recordTypeDefinition);
+            return this.recordTypeDefinition.Equals(other.recordTypeDefinition);
         }
 
         public override bool Equals(object obj)
@@ -33,17 +33,17 @@ namespace Faml.Binding.Internal
 
         public override int GetHashCode()
         {
-            return this._recordTypeDefinition.GetHashCode();
+            return this.recordTypeDefinition.GetHashCode();
         }
 
         public override PropertyBinding? GetPropertyBinding(Name propertyName)
         {
-            if (!this._recordTypeDefinition.HasProperty(propertyName))
+            if (!this.recordTypeDefinition.HasProperty(propertyName))
             {
                 return null;
             }
 
-            return new RecordPropertyBinding(this._recordTypeDefinition, propertyName);
+            return new RecordPropertyBinding(this.recordTypeDefinition, propertyName);
         }
 
         public override bool SupportsCreateLiteral()
@@ -56,7 +56,7 @@ namespace Faml.Binding.Internal
             string literalSource = module.SourceText.ToString(sourceSpan);
 
             var invalidExpression = new InvalidExpressionSyntax(sourceSpan, literalSource, this);
-            module.AddError(invalidExpression, $"'{this._recordTypeDefinition.TypeNameSyntax}' can't be expressed with a literal value");
+            module.AddError(invalidExpression, $"'{this.recordTypeDefinition.TypeNameSyntax}' can't be expressed with a literal value");
             return invalidExpression;
         }
     }

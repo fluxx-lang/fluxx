@@ -6,7 +6,7 @@ namespace Faml.Messaging
 {
     public class MessageObject
     {
-        private readonly Dictionary<string, object> _properties;
+        private readonly Dictionary<string, object> properties;
 
         // Auto properties
         public string Type { get; }
@@ -27,16 +27,16 @@ namespace Faml.Messaging
         public MessageObject(string type)
         {
             this.Type = type;
-            this._properties = new Dictionary<string, object>();
+            this.properties = new Dictionary<string, object>();
         }
 
         public MessageObject(string type, Dictionary<string, object> properties)
         {
             this.Type = type;
-            this._properties = properties;
+            this.properties = properties;
         }
 
-        public object? GetPropertyIfExists(string propertyName) => !this._properties.TryGetValue(propertyName, out object value) ? null : value;
+        public object? GetPropertyIfExists(string propertyName) => !this.properties.TryGetValue(propertyName, out object value) ? null : value;
 
         public T GetProperty<T>(string propertyName)
         {
@@ -67,16 +67,16 @@ namespace Faml.Messaging
 
         private void DoAddProperty(string propertyName, object value)
         {
-            this._properties.Add(propertyName, value);
+            this.properties.Add(propertyName, value);
         }
 
         public void Write(BinaryWriter binaryWriter)
         {
             binaryWriter.Write(this.Type);
 
-            int propertyCount = this._properties.Count;
+            int propertyCount = this.properties.Count;
             binaryWriter.Write(propertyCount);
-            foreach (KeyValuePair<string, object> keyValuePair in this._properties)
+            foreach (KeyValuePair<string, object> keyValuePair in this.properties)
             {
                 binaryWriter.Write(keyValuePair.Key);
                 this.WritePropertyValue(binaryWriter, keyValuePair.Key, keyValuePair.Value);

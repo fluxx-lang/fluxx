@@ -9,7 +9,7 @@ namespace Faml.Messaging
         // little endian, the bytes are reversed here.
         public const int SignatureBytes = 0x67734d62;
 
-        private readonly MessageObject _messageObject;
+        private readonly MessageObject messageObject;
         public long ResponseId { get; }
 
         public static Message Read(Stream inputStream)
@@ -29,36 +29,36 @@ namespace Faml.Messaging
 
         public Message(string type)
         {
-            this._messageObject = new MessageObject(type);
+            this.messageObject = new MessageObject(type);
         }
 
         public Message(MessageObject messageObject)
         {
-            this._messageObject = messageObject;
+            this.messageObject = messageObject;
         }
 
         public Message(MessageObject messageObject, long responseId)
         {
-            this._messageObject = messageObject;
+            this.messageObject = messageObject;
             this.ResponseId = responseId;
         }
 
-        public string MessageType => this._messageObject.Type;
+        public string MessageType => this.messageObject.Type;
 
-        public MessageObject MessageObject => this._messageObject;
+        public MessageObject MessageObject => this.messageObject;
 
         public bool IsResponse => this.MessageType.EndsWith("Response");
 
-        public T GetProperty<T>(string propertyName) where T : class => this._messageObject.GetProperty<T>(propertyName);
+        public T GetProperty<T>(string propertyName) where T : class => this.messageObject.GetProperty<T>(propertyName);
 
         public void AddProperty(string propertyName, string value)
         {
-            this._messageObject.AddProperty(propertyName, value);
+            this.messageObject.AddProperty(propertyName, value);
         }
 
         public void AddProperty(string propertyName, int value)
         {
-            this._messageObject.AddProperty(propertyName, value);
+            this.messageObject.AddProperty(propertyName, value);
         }
 
         public void Write(Stream outputStream)
@@ -67,7 +67,7 @@ namespace Faml.Messaging
 
             binaryWriter.Write(SignatureBytes);
             binaryWriter.Write(this.ResponseId);
-            this._messageObject.Write(binaryWriter);
+            this.messageObject.Write(binaryWriter);
         }
     }
 }

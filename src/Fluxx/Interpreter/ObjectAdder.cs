@@ -9,11 +9,11 @@ namespace Faml.Interpreter
 {
     public abstract class ObjectAdder : Adder
     {
-        private ObjectEval _objectEval;
+        private ObjectEval objectEval;
 
         public ObjectAdder(ObjectEval objectEval)
         {
-            this._objectEval = objectEval;
+            this.objectEval = objectEval;
         }
 
         public abstract void Add(object @object);

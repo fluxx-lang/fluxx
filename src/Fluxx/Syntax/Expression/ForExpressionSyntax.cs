@@ -12,18 +12,18 @@ namespace Faml.Syntax.Expression
 {
     public sealed class ForExpressionSyntax : ExpressionSyntax
     {
-        private TypeBinding _typeBinding = null;
-        private readonly ExpressionSyntax _expression;
-        private readonly ForVariableDefinitionSyntax _forVariableDefinition;
+        private TypeBinding typeBinding = null;
+        private readonly ExpressionSyntax expression;
+        private readonly ForVariableDefinitionSyntax forVariableDefinition;
 
 
         public ForExpressionSyntax(TextSpan span, ExpressionSyntax expression, ForVariableDefinitionSyntax forVariableDefinition) : base(span)
         {
-            this._expression = expression;
+            this.expression = expression;
             expression.SetParent(this);
 
-            this._forVariableDefinition = forVariableDefinition;
-            this._forVariableDefinition.SetParent(this);
+            this.forVariableDefinition = forVariableDefinition;
+            this.forVariableDefinition.SetParent(this);
         }
 
         public override bool IsTerminalNode()
@@ -38,27 +38,27 @@ namespace Faml.Syntax.Expression
             // Visit in this order so that the variable type binding is resolved before the expression
             // type binding is resolved
 
-            visitor(this._forVariableDefinition);
-            visitor(this._expression);
+            visitor(this.forVariableDefinition);
+            visitor(this.expression);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver)
         {
-            TypeBinding expressionTypeBinding = this._expression.GetTypeBinding();
-            this._typeBinding = new SequenceTypeBinding(expressionTypeBinding);
+            TypeBinding expressionTypeBinding = this.expression.GetTypeBinding();
+            this.typeBinding = new SequenceTypeBinding(expressionTypeBinding);
         }
 
-        public override TypeBinding GetTypeBinding() => this._typeBinding;
+        public override TypeBinding GetTypeBinding() => this.typeBinding;
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            this._expression.WriteSource(sourceWriter);
+            this.expression.WriteSource(sourceWriter);
             sourceWriter.Write("for ");
-            sourceWriter.Write(this._forVariableDefinition);
+            sourceWriter.Write(this.forVariableDefinition);
         }
 
-        public ExpressionSyntax Expression => this._expression;
+        public ExpressionSyntax Expression => this.expression;
 
-        public ForVariableDefinitionSyntax ForVariableDefinition => this._forVariableDefinition;
+        public ForVariableDefinitionSyntax ForVariableDefinition => this.forVariableDefinition;
     }
 }

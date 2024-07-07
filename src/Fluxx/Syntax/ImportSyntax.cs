@@ -12,50 +12,50 @@ namespace Faml.Syntax
 {
     public sealed class ImportSyntax : SyntaxNode
     {
-        private readonly ImmutableArray<ImportTypeReferenceSyntax>? _importTypeReferences;         // If null, import all types
-        private readonly QualifiableNameSyntax _qualifierSyntax;
+        private readonly ImmutableArray<ImportTypeReferenceSyntax>? importTypeReferences;         // If null, import all types
+        private readonly QualifiableNameSyntax qualifierSyntax;
 
 
         public ImportSyntax(TextSpan span, ImmutableArray<ImportTypeReferenceSyntax>? importTypeReferences, QualifiableNameSyntax qualifierSyntax) : base(span)
         {
-            this._importTypeReferences = importTypeReferences;
+            this.importTypeReferences = importTypeReferences;
             if (importTypeReferences != null)
             {
-                foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
+                foreach (ImportTypeReferenceSyntax importReference in this.importTypeReferences)
                 {
                     importReference.SetParent(this);
                 }
             }
 
-            this._qualifierSyntax = qualifierSyntax;
-            this._qualifierSyntax.SetParent(this);
+            this.qualifierSyntax = qualifierSyntax;
+            this.qualifierSyntax.SetParent(this);
         }
 
         public ImportSyntax(TextSpan span, QualifiableNameSyntax qualifierSyntax) : base(span)
         {
-            this._importTypeReferences = null;
+            this.importTypeReferences = null;
 
-            this._qualifierSyntax = qualifierSyntax;
-            this._qualifierSyntax.SetParent(this);
+            this.qualifierSyntax = qualifierSyntax;
+            this.qualifierSyntax.SetParent(this);
         }
 
-        public ImmutableArray<ImportTypeReferenceSyntax>? ImportTypeReferences => this._importTypeReferences;
+        public ImmutableArray<ImportTypeReferenceSyntax>? ImportTypeReferences => this.importTypeReferences;
 
-        public QualifiableNameSyntax QualifierSyntax => this._qualifierSyntax;
+        public QualifiableNameSyntax QualifierSyntax => this.qualifierSyntax;
 
-        public QualifiableName Qualifier => this._qualifierSyntax.Name;
+        public QualifiableName Qualifier => this.qualifierSyntax.Name;
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            if (this._importTypeReferences != null)
+            if (this.importTypeReferences != null)
             {
-                foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
+                foreach (ImportTypeReferenceSyntax importReference in this.importTypeReferences)
                 {
                     visitor(importReference);
                 }
             }
 
-            visitor(this._qualifierSyntax);
+            visitor(this.qualifierSyntax);
         }
 
         public override bool IsTerminalNode()
@@ -67,12 +67,12 @@ namespace Faml.Syntax
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            if (this._importTypeReferences != null)
+            if (this.importTypeReferences != null)
             {
                 sourceWriter.Write("import {");
 
                 bool first = true;
-                foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
+                foreach (ImportTypeReferenceSyntax importReference in this.importTypeReferences)
                 {
                     if (!first)
                     {
@@ -84,12 +84,12 @@ namespace Faml.Syntax
                 }
 
                 sourceWriter.Write("} from ");
-                sourceWriter.Write(this._qualifierSyntax);
+                sourceWriter.Write(this.qualifierSyntax);
             }
             else
             {
                 sourceWriter.Write("import ");
-                sourceWriter.Write(this._qualifierSyntax);
+                sourceWriter.Write(this.qualifierSyntax);
             }
         }
     }

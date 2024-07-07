@@ -8,28 +8,28 @@ namespace Faml.Syntax
 {
     public sealed class MarkupOrExpression
     {
-        private readonly TextSpan _customLiteralTextSpan;
-        private ExpressionSyntax? _expression;
+        private readonly TextSpan customLiteralTextSpan;
+        private ExpressionSyntax? expression;
 
 
         public MarkupOrExpression(TextSpan customLiteralTextSpan)
         {
-            this._customLiteralTextSpan = customLiteralTextSpan;
+            this.customLiteralTextSpan = customLiteralTextSpan;
         }
 
         public MarkupOrExpression(ExpressionSyntax expression)
         {
-            this._expression = expression;
+            this.expression = expression;
         }
 
         public ExpressionSyntax ResolveExpression(SyntaxNode parentNode, TypeBinding typeBinding, BindingResolver bindingResolver)
         {
-            if (this._expression != null)
+            if (this.expression != null)
             {
-                return this._expression;
+                return this.expression;
             }
 
-            if (this._customLiteralTextSpan.IsEmpty)
+            if (this.customLiteralTextSpan.IsEmpty)
             {
                 throw new InvalidOperationException("Both _expression and _customLiteralTextSpan are unset, which shouldn't happen");
             }
@@ -39,13 +39,13 @@ namespace Faml.Syntax
             ExpressionSyntax expression;
             if (typeBinding is ObjectTypeBinding objectTypeBinding && objectTypeBinding.SupportsCreateLiteral())
             {
-                expression = objectTypeBinding.ParseLiteralValueSource(parentNode.GetModule(), this._customLiteralTextSpan);
+                expression = objectTypeBinding.ParseLiteralValueSource(parentNode.GetModule(), this.customLiteralTextSpan);
                 expression.SetParent(parentNode);
             }
             else
             {
-                string customLiteralString = module.ModuleSyntax.SourceText.ToString(this._customLiteralTextSpan);
-                expression = new InvalidExpressionSyntax(this._customLiteralTextSpan, customLiteralString, typeBinding);
+                string customLiteralString = module.ModuleSyntax.SourceText.ToString(this.customLiteralTextSpan);
+                expression = new InvalidExpressionSyntax(this.customLiteralTextSpan, customLiteralString, typeBinding);
             }
 
             // Now resolve the bindings on what we just parsed, since the parse was in turn triggered by resolving bindings

@@ -8,8 +8,8 @@ namespace Faml.App
 {
     public abstract class FamlApplication
     {
-        private ReactiveVar<Program>? _program;
-        private AppToDevEnvConnection? _appToDevEnvConnection;
+        private ReactiveVar<Program>? program;
+        private AppToDevEnvConnection? appToDevEnvConnection;
 
         protected void Initialize(Assembly assembly, string resourceFileName)
         {
@@ -39,20 +39,20 @@ namespace Faml.App
 
             project.UpdateSource(resourceFileName, mainSource);
 
-            this._program = new ReactiveVar<Program>(program);
-            this._appToDevEnvConnection = new AppToDevEnvConnection(this._program);
+            this.program = new ReactiveVar<Program>(program);
+            this.appToDevEnvConnection = new AppToDevEnvConnection(this.program);
         }
 
         public AppToDevEnvConnection AppToDevEnvConnection
         {
             get
             {
-                if (this._appToDevEnvConnection == null)
+                if (this.appToDevEnvConnection == null)
                 {
                     throw new InvalidOperationException("AppToDevEnvConnection never got initialized");
                 }
 
-                return this._appToDevEnvConnection;
+                return this.appToDevEnvConnection;
             }
         }
 
@@ -60,12 +60,12 @@ namespace Faml.App
         {
             get
             {
-                if (this._program == null)
+                if (this.program == null)
                 {
                     throw new InvalidOperationException("Program never got initialized");
                 }
 
-                return this._program;
+                return this.program;
             }
         }
 
@@ -92,7 +92,7 @@ namespace Faml.App
 
         public ReactiveVar<Program> GetProgram()
         {
-            return this._program;
+            return this.program;
         }
 
 

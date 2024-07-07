@@ -5,8 +5,8 @@ namespace Faml.DotNet
 {
     public sealed class LoadedAssembly
     {
-        private readonly Assembly _assembly;
-        private readonly string? _assemblyQualifier;
+        private readonly Assembly assembly;
+        private readonly string? assemblyQualifier;
 
 
         public LoadedAssembly(Assembly assembly) : this(assembly, null)
@@ -15,32 +15,32 @@ namespace Faml.DotNet
 
         public LoadedAssembly(Assembly assembly, string? assemblyQualifier)
         {
-            this._assembly = assembly;
-            this._assemblyQualifier = assemblyQualifier;
+            this.assembly = assembly;
+            this.assemblyQualifier = assemblyQualifier;
         }
 
-        public Assembly Assembly => this._assembly;
+        public Assembly Assembly => this.assembly;
 
         public override string ToString()
         {
-            if (this._assemblyQualifier != null)
+            if (this.assemblyQualifier != null)
             {
-                return this._assemblyQualifier;
+                return this.assemblyQualifier;
             }
             else
             {
-                return this._assembly.FullName;
+                return this.assembly.FullName;
             }
         }
 
         public Type? GetType(string typeName)
         {
-            if (this._assemblyQualifier != null)
+            if (this.assemblyQualifier != null)
             {
-                return Type.GetType(typeName + ", " + this._assemblyQualifier);
+                return Type.GetType(typeName + ", " + this.assemblyQualifier);
             }
 
-            return this._assembly.GetType(typeName);
+            return this.assembly.GetType(typeName);
         }
     }
 }

@@ -6,12 +6,12 @@ namespace Faml.Messaging
 {
     public class WebSocketClientMessagingConnector : WebSocketMessagingConnector
     {
-        private readonly string _developmentMachine;
+        private readonly string developmentMachine;
 
 
         public WebSocketClientMessagingConnector(string developmentMachine)
         {
-            this._developmentMachine = developmentMachine;
+            this.developmentMachine = developmentMachine;
         }
 
         public async Task Start()
@@ -20,7 +20,7 @@ namespace Faml.Messaging
             try
             {
                 var clientWebSocket = new ClientWebSocket();
-                await clientWebSocket.ConnectAsync(new Uri("ws://" + this._developmentMachine), this.StopCts.Token);
+                await clientWebSocket.ConnectAsync(new Uri("ws://" + this.developmentMachine), this.StopCts.Token);
 
                 await this.ProcessMessages(clientWebSocket);
             }

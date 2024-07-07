@@ -12,12 +12,12 @@ namespace Faml.Syntax.Expression
 {
     public sealed class BracedExpressionSyntax : ExpressionSyntax
     {
-        private readonly ExpressionSyntax _expression;
+        private readonly ExpressionSyntax expression;
         //private @Nullable Type type;
 
         public BracedExpressionSyntax(TextSpan span, ExpressionSyntax expression) : base(span)
         {
-            this._expression = expression;
+            this.expression = expression;
             expression.SetParent(this);
         }
 
@@ -26,21 +26,21 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
         {
-            visitor(this._expression);
+            visitor(this.expression);
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._expression.GetTypeBinding();
+            return this.expression.GetTypeBinding();
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
             sourceWriter.Write("{ ");
-            this._expression.WriteSource(sourceWriter);
+            this.expression.WriteSource(sourceWriter);
             sourceWriter.Write(" }");
         }
 
-        public ExpressionSyntax Expression => this._expression;
+        public ExpressionSyntax Expression => this.expression;
     }
 }

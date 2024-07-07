@@ -6,17 +6,17 @@ namespace Faml.Api.QuickInfo
     [Serializable]
     public class FunctionInvocationQuickInfo : QuickInfo
     {
-        private readonly QualifiableName _functionName;
-        private readonly QualifiableName? _returnTypeName;
+        private readonly QualifiableName functionName;
+        private readonly QualifiableName? returnTypeName;
 
         public FunctionInvocationQuickInfo(TextSpan textSpan, QualifiableName functionName, QualifiableName? returnTypeName) : base(textSpan)
         {
-            this._functionName = functionName;
-            this._returnTypeName = returnTypeName;
+            this.functionName = functionName;
+            this.returnTypeName = returnTypeName;
         }
 
-        public QualifiableName FunctionName => this._functionName;
+        public QualifiableName FunctionName => this.functionName;
 
-        public QualifiableName? ReturnTypeName => this._returnTypeName;
+        public QualifiableName? ReturnTypeName => this.returnTypeName;
     }
 }

@@ -7,15 +7,15 @@ namespace Faml.Binding
 {
     public class SequenceTypeBinding : ObjectTypeBinding
     {
-        private readonly TypeBinding _elementType;
+        private readonly TypeBinding elementType;
 
 
         public SequenceTypeBinding(TypeBinding elementType) : base(new QualifiableName("List<" + elementType.TypeName + ">"))
         {
-            this._elementType = elementType;
+            this.elementType = elementType;
         }
 
-        public TypeBinding ElementType => this._elementType;
+        public TypeBinding ElementType => this.elementType;
 
         public override bool SupportsCreateLiteral() => false;
 

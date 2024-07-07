@@ -4,16 +4,16 @@ namespace Faml.Interpreter.External
 {
     public sealed class ObjectConstantDelegateEval : ObjectEval
     {
-        private readonly Delegate _dlgate;
+        private readonly Delegate dlgate;
 
         public ObjectConstantDelegateEval(Delegate dlgate)
         {
-            this._dlgate = dlgate;
+            this.dlgate = dlgate;
         }
 
         public override object Eval()
         {
-            return this._dlgate.DynamicInvoke(null);
+            return this.dlgate.DynamicInvoke(null);
         }
     }
 }

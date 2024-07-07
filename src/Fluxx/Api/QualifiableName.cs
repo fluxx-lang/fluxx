@@ -11,7 +11,7 @@ namespace Faml.Api
     [Serializable]
     public struct QualifiableName : IEquatable<QualifiableName>
     {
-        private readonly string _name;
+        private readonly string name;
 
         public static readonly QualifiableName EmptyName = new QualifiableName("");
 
@@ -26,17 +26,17 @@ namespace Faml.Api
 
         public QualifiableName(string name)
         {
-            this._name = name;
+            this.name = name;
         }
 
         public QualifiableName(QualifiableName qualifier, Name lastComponent)
         {
-            this._name = qualifier + "." + lastComponent;
+            this.name = qualifier + "." + lastComponent;
         }
 
-        public bool IsQualified() => this._name.IndexOf('.') != -1;
+        public bool IsQualified() => this.name.IndexOf('.') != -1;
 
-        public bool IsEmpty() => this._name.Length == 0;
+        public bool IsEmpty() => this.name.Length == 0;
 
         public Name ToUnqualifiableName()
         {
@@ -45,24 +45,24 @@ namespace Faml.Api
                 throw new Exception($"Can't convert qualified name '{this}' to unqualified name");
             }
 
-            return new Name(this._name);
+            return new Name(this.name);
         }
 
         public string ToRelativePath()
         {
-            return this._name.Replace('.', Path.PathSeparator) + ".faml";
+            return this.name.Replace('.', Path.PathSeparator) + ".faml";
         }
 
         public Name GetLastComponent()
         {
-            int lastPeriod = this._name.LastIndexOf('.');
+            int lastPeriod = this.name.LastIndexOf('.');
             if (lastPeriod == -1)
             {
-                return new Name(this._name);
+                return new Name(this.name);
             }
             else
             {
-                return new Name(this._name.Substring(lastPeriod + 1));
+                return new Name(this.name.Substring(lastPeriod + 1));
             }
         }
 
@@ -74,8 +74,8 @@ namespace Faml.Api
         /// <returns>true if unqualifiedName is the last component of this name or the same as this name</returns>
         public bool LastComponentMatches(string unqualifiedName)
         {
-            int lastComponentIndex = this._name.Length - unqualifiedName.Length;
-            return this._name.EndsWith(unqualifiedName) && lastComponentIndex == 0 || (lastComponentIndex > 0 && this._name[lastComponentIndex - 1] == '.');
+            int lastComponentIndex = this.name.Length - unqualifiedName.Length;
+            return this.name.EndsWith(unqualifiedName) && lastComponentIndex == 0 || (lastComponentIndex > 0 && this.name[lastComponentIndex - 1] == '.');
         }
 
         public bool LastComponentMatches(Name unqualifiedName)
@@ -85,23 +85,23 @@ namespace Faml.Api
 
         public QualifiableName GetQualifier()
         {
-            int lastPeriodIndex = this._name.LastIndexOf('.');
+            int lastPeriodIndex = this.name.LastIndexOf('.');
             if (lastPeriodIndex == -1)
             {
-                throw new Exception($"Can't call GetQualifier on unqualified name: {this._name}");
+                throw new Exception($"Can't call GetQualifier on unqualified name: {this.name}");
             }
 
-            return new QualifiableName(this._name.Substring(0, lastPeriodIndex));
+            return new QualifiableName(this.name.Substring(0, lastPeriodIndex));
         }
 
         public override string ToString()
         {
-            return this._name;
+            return this.name;
         }
 
         public bool Equals(QualifiableName other)
         {
-            return string.Equals(this._name, other._name);
+            return string.Equals(this.name, other.name);
         }
 
         public override bool Equals(object obj)
@@ -121,7 +121,7 @@ namespace Faml.Api
 
         public override int GetHashCode()
         {
-            return this._name.GetHashCode();
+            return this.name.GetHashCode();
         }
     }
 }

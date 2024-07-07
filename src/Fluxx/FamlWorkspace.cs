@@ -10,12 +10,12 @@ namespace Faml
     /// </summary>
     public class FamlWorkspace
     {
-        private readonly List<FamlProject> _projects = new List<FamlProject>();
+        private readonly List<FamlProject> projects = new List<FamlProject>();
 
         public FamlProject CreateProject(SourceProvider sourceProvider)
         {
             var project = new FamlProject(this, sourceProvider);
-            this._projects.Add(project);
+            this.projects.Add(project);
 
             return project;
         }

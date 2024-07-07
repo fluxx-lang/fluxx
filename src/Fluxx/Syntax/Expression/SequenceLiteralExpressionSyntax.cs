@@ -13,21 +13,21 @@ namespace Faml.Syntax.Expression
 {
     public sealed class SequenceLiteralExpressionSyntax : ExpressionSyntax
     {
-        private SequenceTypeBinding _typeBinding;
-        private readonly ExpressionSyntax[] _expressions;
+        private SequenceTypeBinding typeBinding;
+        private readonly ExpressionSyntax[] expressions;
 
         // TODO: ADD AST structure properties
 
         public SequenceLiteralExpressionSyntax(TextSpan span, ExpressionSyntax[] expressions) : base(span)
         {
-            this._expressions = expressions;
+            this.expressions = expressions;
             foreach (ExpressionSyntax expression in expressions)
             {
                 expression.SetParent(this);
             }
         }
 
-        public ExpressionSyntax[] Expressions => this._expressions;
+        public ExpressionSyntax[] Expressions => this.expressions;
 
         public override bool IsTerminalNode() { return false; }
 
@@ -35,7 +35,7 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            foreach (ExpressionSyntax expression in this._expressions)
+            foreach (ExpressionSyntax expression in this.expressions)
             {
                 visitor(expression);
             }
@@ -43,36 +43,36 @@ namespace Faml.Syntax.Expression
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver)
         {
-            if (this._expressions.Length > 0)
+            if (this.expressions.Length > 0)
             {
-                TypeBinding elementTypeBinding = TypeUtil.FindCommonType(this._expressions.Select(e => e.GetTypeBinding()));
+                TypeBinding elementTypeBinding = TypeUtil.FindCommonType(this.expressions.Select(e => e.GetTypeBinding()));
 
                 if (elementTypeBinding == null)
                 {
                     this.AddError("Couldn't find a common type for elements of sequence");
-                    this._typeBinding = new SequenceTypeBinding(InvalidTypeBinding.Instance);
+                    this.typeBinding = new SequenceTypeBinding(InvalidTypeBinding.Instance);
                 }
                 else
                 {
-                    this._typeBinding = new SequenceTypeBinding(elementTypeBinding);
+                    this.typeBinding = new SequenceTypeBinding(elementTypeBinding);
                 }
             }
             else
             {
                 // TODO: Handle this better
                 this.AddError("Empty lists aren't currently supported");
-                this._typeBinding = new SequenceTypeBinding(InvalidTypeBinding.Instance);
+                this.typeBinding = new SequenceTypeBinding(InvalidTypeBinding.Instance);
             }
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            foreach (ExpressionSyntax expression in this._expressions)
+            foreach (ExpressionSyntax expression in this.expressions)
             {
                 expression.WriteSource(sourceWriter);
                 sourceWriter.Writeln();

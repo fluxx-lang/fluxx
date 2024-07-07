@@ -9,18 +9,18 @@ namespace Faml.Syntax.Expression
 {
     public sealed class SymbolReferenceSyntax : ExpressionSyntax
     {
-        private readonly NameSyntax _name;
-        private SymbolBinding _symbolBinding;
+        private readonly NameSyntax name;
+        private SymbolBinding symbolBinding;
 
         public SymbolReferenceSyntax(TextSpan span, NameSyntax name) : base(span)
         {
-            this._name = name;
+            this.name = name;
             name.SetParent(this);
         }
 
-        public NameSyntax Name => this._name;
+        public NameSyntax Name => this.name;
 
-        public Name VariableName => this._name.Name;
+        public Name VariableName => this.name.Name;
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver)
         {
@@ -30,30 +30,30 @@ namespace Faml.Syntax.Expression
             {
                 if (ancestor is FunctionDefinitionSyntax functionDefinition)
                 {
-                    int parameterIndex = functionDefinition.GetParameterIndex(this._name.Name);
+                    int parameterIndex = functionDefinition.GetParameterIndex(this.name.Name);
 
                     if (parameterIndex != -1)
                     {
-                        this._symbolBinding = new ParameterBinding(functionDefinition, parameterIndex);
+                        this.symbolBinding = new ParameterBinding(functionDefinition, parameterIndex);
                         return;
                     }
                 }
                 else if (ancestor is ForExpressionSyntax forExpressionSyntax)
                 {
-                    if (this._name.Name == forExpressionSyntax.ForVariableDefinition.VariableNameSyntax.Name)
+                    if (this.name.Name == forExpressionSyntax.ForVariableDefinition.VariableNameSyntax.Name)
                     {
                         // TODO: Fix hack that assumes there's just a single 'for' variable in a function
-                        this._symbolBinding = new ForSymbolBinding(forExpressionSyntax, 0);
+                        this.symbolBinding = new ForSymbolBinding(forExpressionSyntax, 0);
                         return;
                     }
                 }
                 else if (ancestor is ModuleSyntax)
                 {
                     // TODO: Call lower level API to resolve binding, which returns null if not found
-                    FunctionBinding functionBinding = bindingResolver.ResolveFunctionBinding(null, this._name.Name.ToQualifiableName(), this._name);
+                    FunctionBinding functionBinding = bindingResolver.ResolveFunctionBinding(null, this.name.Name.ToQualifiableName(), this.name);
                     if (functionBinding != null)
                     {
-                        this._symbolBinding = new FunctionSymbolBinding(functionBinding);
+                        this.symbolBinding = new FunctionSymbolBinding(functionBinding);
                         return;
                     }
                 }
@@ -62,16 +62,16 @@ namespace Faml.Syntax.Expression
             }
 
             // Not found
-            this.AddError($"Symbol '{this._name}' not found");
-            this._symbolBinding = InvalidSymbolBinding.Instance;
+            this.AddError($"Symbol '{this.name}' not found");
+            this.symbolBinding = InvalidSymbolBinding.Instance;
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._symbolBinding.GetTypeBinding();
+            return this.symbolBinding.GetTypeBinding();
         }
 
-        public SymbolBinding GetVariableBinding() { return this._symbolBinding; }
+        public SymbolBinding GetVariableBinding() { return this.symbolBinding; }
      
         public override bool IsTerminalNode() { return false; }
 
@@ -79,12 +79,12 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
         {
-            visitor(this._name);
+            visitor(this.name);
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            this._name.WriteSource(sourceWriter);
+            this.name.WriteSource(sourceWriter);
         }
     }
 }

@@ -11,52 +11,52 @@ namespace Faml.Syntax.Expression
 {
     public class FunctionInvocationSyntax : ExpressionSyntax
     {
-        private readonly InvocationStyle _invocationStyle;
-        private readonly ExpressionSyntax _functionReference;
-        private readonly ArgumentNameValuePairSyntax[] _namedArguments;
-        private readonly ContentArgumentSyntax? _contentArgument;
-        private FunctionBinding _functionBinding;
-        private ExpressionSyntax _literalConstructorValue;
+        private readonly InvocationStyle invocationStyle;
+        private readonly ExpressionSyntax functionReference;
+        private readonly ArgumentNameValuePairSyntax[] namedArguments;
+        private readonly ContentArgumentSyntax? contentArgument;
+        private FunctionBinding functionBinding;
+        private ExpressionSyntax literalConstructorValue;
 
 
         public FunctionInvocationSyntax(TextSpan span, InvocationStyle invocationStyle, ExpressionSyntax functionReference, ArgumentNameValuePairSyntax[] namedArguments, ContentArgumentSyntax? contentArgument) : base(span)
         {
-            this._invocationStyle = invocationStyle;
+            this.invocationStyle = invocationStyle;
 
-            this._functionReference = functionReference;
+            this.functionReference = functionReference;
             if (functionReference == null)
             {
                 throw new Exception("Invoking a function without specifying the function name not currently supported");
             }
 
-            this._functionReference.SetParent(this);
+            this.functionReference.SetParent(this);
 
-            this._namedArguments = namedArguments;
-            foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this._namedArguments)
+            this.namedArguments = namedArguments;
+            foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this.namedArguments)
             {
                 propertyNameValuePair.SetParent(this);
             }
 
-            this._contentArgument = contentArgument;
-            this._contentArgument?.SetParent(this);
+            this.contentArgument = contentArgument;
+            this.contentArgument?.SetParent(this);
         }
 
-        public InvocationStyle InvocationStyle => this._invocationStyle;
+        public InvocationStyle InvocationStyle => this.invocationStyle;
 
-        public ExpressionSyntax FunctionReference => this._functionReference;
+        public ExpressionSyntax FunctionReference => this.functionReference;
 
         //public ApiObjects.Name FunctionName => _functionExpression.Name;
 
-        public ArgumentNameValuePairSyntax[] NamedArguments => this._namedArguments;
+        public ArgumentNameValuePairSyntax[] NamedArguments => this.namedArguments;
 
-        public ContentArgumentSyntax? ContentArgument => this._contentArgument;
+        public ContentArgumentSyntax? ContentArgument => this.contentArgument;
 
-        public FunctionBinding FunctionBinding => this._functionBinding;
+        public FunctionBinding FunctionBinding => this.functionBinding;
 
         public QualifiableName[] GetQualifiedArgumentNames()
         {
             var argumentNames = new List<QualifiableName>();
-            foreach (ArgumentNameValuePairSyntax argument in this._namedArguments)
+            foreach (ArgumentNameValuePairSyntax argument in this.namedArguments)
             {
                 if (argument.ArgumentName.IsQualified())
                 {
@@ -75,20 +75,20 @@ namespace Faml.Syntax.Expression
         {
 
             var argumentsDictionary = new Dictionary<QualifiableName, ExpressionSyntax>();
-            foreach (ArgumentNameValuePairSyntax argument in this._namedArguments)
+            foreach (ArgumentNameValuePairSyntax argument in this.namedArguments)
             {
                 argumentsDictionary[argument.PropertySpecifier.PropertyName] = argument.Value;
             }
 
-            if (this._contentArgument != null)
+            if (this.contentArgument != null)
             {
-                Name? contentProperty = this._functionBinding.GetContentProperty();
+                Name? contentProperty = this.functionBinding.GetContentProperty();
                 if (contentProperty == null)
                 {
-                    throw new InvalidOperationException($"No content property exists for function {this._functionBinding.FunctionName}");
+                    throw new InvalidOperationException($"No content property exists for function {this.functionBinding.FunctionName}");
                 }
 
-                argumentsDictionary[contentProperty.Value.ToQualifiableName()] = this._contentArgument.Value;
+                argumentsDictionary[contentProperty.Value.ToQualifiableName()] = this.contentArgument.Value;
             }
 
             return argumentsDictionary;
@@ -115,12 +115,12 @@ namespace Faml.Syntax.Expression
 
         public override TypeBinding GetTypeBinding()
         {
-            if (this._functionBinding == null)
+            if (this.functionBinding == null)
             {
-                throw new Exception($"Function binding not computed for function: {this._functionReference}");
+                throw new Exception($"Function binding not computed for function: {this.functionReference}");
             }
 
-            return this._functionBinding.ReturnTypeBinding;
+            return this.functionBinding.ReturnTypeBinding;
         }
 
         public override bool IsTerminalNode() => false;
@@ -129,51 +129,51 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            if (this._functionReference != null)
+            if (this.functionReference != null)
             {
-                visitor(this._functionReference);
+                visitor(this.functionReference);
             }
 
-            foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this._namedArguments)
+            foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this.namedArguments)
             {
                 visitor(propertyNameValuePair);
             }
 
-            if (this._contentArgument != null)
+            if (this.contentArgument != null)
             {
-                visitor(this._contentArgument);
+                visitor(this.contentArgument);
             }
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver)
         {
-            if (this._functionReference == null)
+            if (this.functionReference == null)
             {
                 this.AddError("Invoking a function without specifying the function name not currently supported");
-                this._functionBinding = new InvalidFunctionBinding(new QualifiableName("no name"));
+                this.functionBinding = new InvalidFunctionBinding(new QualifiableName("no name"));
                 return;
             }
 
             QualifiableName functionName;
-            if (this._functionReference is SymbolReferenceSyntax symbolReference)
+            if (this.functionReference is SymbolReferenceSyntax symbolReference)
             {
                 functionName = new QualifiableName(symbolReference.Name.ToString());
             }
-            else if (this._functionReference is QualifiedSymbolReferenceSyntax qualifiedSymbolReference)
+            else if (this.functionReference is QualifiedSymbolReferenceSyntax qualifiedSymbolReference)
             {
                 functionName = qualifiedSymbolReference.QualifiableName;
             }
             else
             {
-                this.AddError($"Function reference expressions of type {this._functionReference.GetType()} not currently supported");
-                this._functionBinding = new InvalidFunctionBinding(new QualifiableName("no name"));
+                this.AddError($"Function reference expressions of type {this.functionReference.GetType()} not currently supported");
+                this.functionBinding = new InvalidFunctionBinding(new QualifiableName("no name"));
                 return;
             }
 
-            this._functionBinding = bindingResolver.ResolveFunctionBinding(null, functionName, this._functionReference);
+            this.functionBinding = bindingResolver.ResolveFunctionBinding(null, functionName, this.functionReference);
 
             // If the function binding can't be resolved, don't try to resolve anything else
-            if (this._functionBinding is InvalidFunctionBinding)
+            if (this.functionBinding is InvalidFunctionBinding)
             {
                 return;
             }
@@ -196,7 +196,7 @@ namespace Faml.Syntax.Expression
 
             var argumentSet = new HashSet<Name>();
 
-            foreach (ArgumentNameValuePairSyntax argumentNameValuePair in this._namedArguments)
+            foreach (ArgumentNameValuePairSyntax argumentNameValuePair in this.namedArguments)
             {
                 QualifiableName argumentName = argumentNameValuePair.ArgumentName;
                 if (!argumentName.IsQualified())
@@ -204,7 +204,7 @@ namespace Faml.Syntax.Expression
                     argumentSet.Add(argumentName.ToUnqualifiableName());
                 }
 
-                TypeBinding parameterTypeBinding = this._functionBinding.ResolveArgumentTypeBinding(argumentName, argumentNameValuePair, bindingResolver);
+                TypeBinding parameterTypeBinding = this.functionBinding.ResolveArgumentTypeBinding(argumentName, argumentNameValuePair, bindingResolver);
 
                 argumentNameValuePair.ResolveValueBindings(parameterTypeBinding, bindingResolver);
 
@@ -217,20 +217,20 @@ namespace Faml.Syntax.Expression
                 }
             }
 
-            if (this._contentArgument != null)
+            if (this.contentArgument != null)
             {
-                Name? contentProperty = this._functionBinding.GetContentProperty();
+                Name? contentProperty = this.functionBinding.GetContentProperty();
 
                 if (contentProperty != null)
                 {
                     argumentSet.Add(contentProperty.Value);
                 }
 
-                TypeBinding parameterTypeBinding = this._functionBinding.ResolveContentArgumentTypeBinding(this._contentArgument, bindingResolver);
+                TypeBinding parameterTypeBinding = this.functionBinding.ResolveContentArgumentTypeBinding(this.contentArgument, bindingResolver);
 
-                this._contentArgument.ResolveValueBindings(parameterTypeBinding, bindingResolver);
+                this.contentArgument.ResolveValueBindings(parameterTypeBinding, bindingResolver);
 
-                TypeBinding argumentTypeBinding = this._contentArgument.Value.GetTypeBinding();
+                TypeBinding argumentTypeBinding = this.contentArgument.Value.GetTypeBinding();
                 if (parameterTypeBinding.IsValid() && argumentTypeBinding.IsValid() && !parameterTypeBinding.IsAssignableFrom(argumentTypeBinding))
                 {
                     string typeCheckError = $"Argument type {argumentTypeBinding.TypeName} can't be converted to parameter type {parameterTypeBinding.TypeName}";
@@ -241,7 +241,7 @@ namespace Faml.Syntax.Expression
 
             // Now check for any required arguments that weren't provided
             List<Name> missingArguments = new List<Name>();
-            foreach (Name parameterName in this._functionBinding.GetParameters())
+            foreach (Name parameterName in this.functionBinding.GetParameters())
             {
                 if (!argumentSet.Contains(parameterName))
                 {
@@ -270,17 +270,17 @@ namespace Faml.Syntax.Expression
         /// literal. For other kinds of functions, LiteralConstructorValue is null and the arguments are used to invoke the function
         /// to get its value.
         /// </summary>
-        public ExpressionSyntax? LiteralConstructorValue => this._literalConstructorValue;
+        public ExpressionSyntax? LiteralConstructorValue => this.literalConstructorValue;
 
         protected internal override void GetObjectIdentifiersBinding(ObjectIdentifiersBinding objectIdentifiersBinding)
         {
-            TypeBinding returnType = this._functionBinding.ReturnTypeBinding;
+            TypeBinding returnType = this.functionBinding.ReturnTypeBinding;
             if (returnType is ExternalObjectTypeBinding)
             {
 
             }
 
-            foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this._namedArguments)
+            foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this.namedArguments)
             {
                 propertyNameValuePair.SetParent(this);
             }
@@ -289,7 +289,7 @@ namespace Faml.Syntax.Expression
         // This is just for unit test & debugging purposes
         public void SetFunctionBinding(FunctionBinding binding)
         {
-            this._functionBinding = binding;
+            this.functionBinding = binding;
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
@@ -302,10 +302,10 @@ namespace Faml.Syntax.Expression
             }
 #endif
 
-            if (this._functionReference != null)
-                sourceWriter.Write(this._functionReference.ToString());
+            if (this.functionReference != null)
+                sourceWriter.Write(this.functionReference.ToString());
 
-            if (this._invocationStyle == InvocationStyle.Delimiter)
+            if (this.invocationStyle == InvocationStyle.Delimiter)
             {
                 sourceWriter.Write("{");
             }
@@ -315,9 +315,9 @@ namespace Faml.Syntax.Expression
             }
 
             bool wroteProperty = false;
-            foreach (ArgumentNameValuePairSyntax namedArgument in this._namedArguments)
+            foreach (ArgumentNameValuePairSyntax namedArgument in this.namedArguments)
             {
-                if (wroteProperty && this._invocationStyle == InvocationStyle.Delimiter)
+                if (wroteProperty && this.invocationStyle == InvocationStyle.Delimiter)
                 {
                     sourceWriter.Write("; ");
                 }
@@ -327,19 +327,19 @@ namespace Faml.Syntax.Expression
                 wroteProperty = true;
             }
 
-            if (this._contentArgument != null)
+            if (this.contentArgument != null)
             {
-                if (wroteProperty && this._invocationStyle == InvocationStyle.Delimiter)
+                if (wroteProperty && this.invocationStyle == InvocationStyle.Delimiter)
                 {
                     sourceWriter.Write("; ");
                 }
 
-                sourceWriter.Write(this._contentArgument.Value);
+                sourceWriter.Write(this.contentArgument.Value);
 
                 wroteProperty = true;
             }
 
-            if (this._invocationStyle == InvocationStyle.Delimiter)
+            if (this.invocationStyle == InvocationStyle.Delimiter)
             {
                 sourceWriter.Write("}");
             }

@@ -4,21 +4,21 @@ namespace Faml.Interpreter
 {
     public class SequenceLiteralEval : ObjectEval
     {
-        private readonly ObjectEval[] _items;
+        private readonly ObjectEval[] items;
 
         public SequenceLiteralEval(ObjectEval[] items)
         {
-            this._items = items;
+            this.items = items;
         }
 
         public override object Eval()
         {
             // TODO: Make this more efficient; maybe just go back to GenerateSequence
             List<object> list = new List<object>();
-            int listItemsLength = this._items.Length;
+            int listItemsLength = this.items.Length;
             for (int i = 0; i < listItemsLength; i++)
             {
-                list.Add(this._items[i].Eval() );
+                list.Add(this.items[i].Eval() );
             }
 
             return list;
@@ -26,10 +26,10 @@ namespace Faml.Interpreter
 
         public IEnumerable<object> GenerateSequence()
         {
-            int listItemsLength = this._items.Length;
+            int listItemsLength = this.items.Length;
             for (int i = 0; i < listItemsLength; i++)
             {
-                yield return this._items[i].Eval();
+                yield return this.items[i].Eval();
             }
         }
     }

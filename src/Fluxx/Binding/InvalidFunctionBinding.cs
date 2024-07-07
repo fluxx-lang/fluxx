@@ -10,13 +10,13 @@ namespace Faml.Binding
 {
     public class InvalidFunctionBinding : FunctionBinding
     {
-        private readonly QualifiableName _functionName;
+        private readonly QualifiableName functionName;
 
-        public override QualifiableName FunctionName => this._functionName;
+        public override QualifiableName FunctionName => this.functionName;
 
         public InvalidFunctionBinding(QualifiableName functionName)
         {
-            this._functionName = functionName; 
+            this.functionName = functionName; 
         }
 
         public override TypeBinding ReturnTypeBinding => InvalidTypeBinding.Instance;

@@ -9,24 +9,24 @@ namespace Faml.Binding
 {
     public abstract class TypeBinding
     {
-        private readonly QualifiableName _typeName;
-        private readonly TypeFlags _typeFlags;
+        private readonly QualifiableName typeName;
+        private readonly TypeFlags typeFlags;
 
 
         protected TypeBinding(QualifiableName typeName, TypeFlags typeFlags)
         {
-            this._typeName = typeName;
-            this._typeFlags = typeFlags;
+            this.typeName = typeName;
+            this.typeFlags = typeFlags;
         }
 
-        public QualifiableName TypeName => this._typeName;
+        public QualifiableName TypeName => this.typeName;
 
-        public bool IsReactive => (this._typeFlags & TypeFlags.IsReactive) != 0;
+        public bool IsReactive => (this.typeFlags & TypeFlags.IsReactive) != 0;
 
         public bool IsSameAs(TypeBinding other)
         {
             // Two types are considered the same if they have the same name. FAML uses nominal, not structural, typing.
-            return this._typeName.Equals(other._typeName);
+            return this.typeName.Equals(other.typeName);
         }
 
         public virtual bool IsAssignableFrom(TypeBinding other)

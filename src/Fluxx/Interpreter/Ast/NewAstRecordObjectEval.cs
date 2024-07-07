@@ -6,12 +6,12 @@ namespace Faml.Interpreter.record
 {
     public sealed class NewAstRecordObjectEval : ObjectEval
     {
-        private readonly AstRecordPropertySetter[] _propertySetters;
+        private readonly AstRecordPropertySetter[] propertySetters;
 
         public NewAstRecordObjectEval(Name[] propertyNames, Eval[] propertyValues)
         {
             int propertiesLength = propertyNames.Length;
-            this._propertySetters = new AstRecordPropertySetter[propertiesLength];
+            this.propertySetters = new AstRecordPropertySetter[propertiesLength];
             for (int i = 0; i < propertiesLength; i++)
             {
                 string propertyNameString = propertyNames[i].ToString();
@@ -41,7 +41,7 @@ namespace Faml.Interpreter.record
                     throw new Exception($"Unsupported property type for '{propertyValue}'");
                 }
 
-                this._propertySetters[i] = astRecordPropertySetter;
+                this.propertySetters[i] = astRecordPropertySetter;
             }
         }
 
@@ -49,10 +49,10 @@ namespace Faml.Interpreter.record
         {
             var record = new AstRecord();
 
-            int length = this._propertySetters.Length;
+            int length = this.propertySetters.Length;
             for (int i = 0; i < length; i++)
             {
-                this._propertySetters[i].Invoke(record);
+                this.propertySetters[i].Invoke(record);
             }
 
             return record;

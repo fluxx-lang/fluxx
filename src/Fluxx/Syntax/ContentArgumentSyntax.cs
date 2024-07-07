@@ -9,41 +9,41 @@ namespace Faml.Syntax
 {
     public sealed class ContentArgumentSyntax : SyntaxNode
     {
-        private ExpressionSyntax _value;
-        private TypeBinding? _parameterTypeBinding;
+        private ExpressionSyntax value;
+        private TypeBinding? parameterTypeBinding;
 
 
         public ContentArgumentSyntax(TextSpan span, ExpressionSyntax value) : base(span)
         {
-            this._value = value;
+            this.value = value;
             value.SetParent(this);
         }
 
         public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver)
         {
             // If we've already resolved, do nothing
-            if (this._parameterTypeBinding != null)
+            if (this.parameterTypeBinding != null)
             {
                 return;
             }
 
-            this._parameterTypeBinding = parameterTypeBinding;
+            this.parameterTypeBinding = parameterTypeBinding;
 
-            if (this._value is TextualLiteralSyntax markupValue)
+            if (this.value is TextualLiteralSyntax markupValue)
             {
-                this._value = markupValue.ResolveMarkup(parameterTypeBinding, bindingResolver);
+                this.value = markupValue.ResolveMarkup(parameterTypeBinding, bindingResolver);
             }
         }
 
-        public ExpressionSyntax Value => this._value;
+        public ExpressionSyntax Value => this.value;
 
-        public TypeBinding ParameterTypeBinding => this._parameterTypeBinding;
+        public TypeBinding ParameterTypeBinding => this.parameterTypeBinding;
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            if (this._value != null)
+            if (this.value != null)
             {
-                visitor(this._value);
+                visitor(this.value);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Faml.Syntax
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._value);
+            sourceWriter.Write(this.value);
         }
     }
 }

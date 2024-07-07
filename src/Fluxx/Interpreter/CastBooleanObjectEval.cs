@@ -2,16 +2,16 @@ namespace Faml.Interpreter
 {
     public sealed class CastBooleanObjectEval : ObjectEval
     {
-        private readonly BooleanEval _booleanEval;
+        private readonly BooleanEval booleanEval;
 
         public CastBooleanObjectEval(BooleanEval booleanEval)
         {
-            this._booleanEval = booleanEval;
+            this.booleanEval = booleanEval;
         }
 
         public override object Eval()
         {
-            return this._booleanEval.Eval();
+            return this.booleanEval.Eval();
         }
     }
 }

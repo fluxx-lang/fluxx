@@ -10,22 +10,22 @@ namespace Faml.Syntax
     /// </summary>
     public sealed class PropertySpecifierSyntax : SyntaxNode
     {
-        private readonly QualifiableNameSyntax _propertyName;
+        private readonly QualifiableNameSyntax propertyName;
 
         public PropertySpecifierSyntax(TextSpan span, QualifiableNameSyntax propertyName) : base(span)
         {
-            this._propertyName = propertyName;
-            this._propertyName.SetParent(this);
+            this.propertyName = propertyName;
+            this.propertyName.SetParent(this);
         }
 
 
-        public QualifiableNameSyntax PropertyNameSyntax => this._propertyName;
+        public QualifiableNameSyntax PropertyNameSyntax => this.propertyName;
 
-        public QualifiableName PropertyName => this._propertyName.Name;
+        public QualifiableName PropertyName => this.propertyName.Name;
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._propertyName);
+            visitor(this.propertyName);
         }
 
         public override bool IsTerminalNode() => false;
@@ -34,7 +34,7 @@ namespace Faml.Syntax
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._propertyName);
+            sourceWriter.Write(this.propertyName);
             sourceWriter.Write(":");
         }
     }

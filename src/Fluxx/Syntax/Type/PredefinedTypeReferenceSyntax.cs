@@ -11,23 +11,23 @@ namespace Faml.Syntax.Type
 {
     public class PredefinedTypeReferenceSyntax : TypeReferenceSyntax
     {
-        private readonly BuiltInTypeBinding _predefinedTypeBinding;
+        private readonly BuiltInTypeBinding predefinedTypeBinding;
 
         public PredefinedTypeReferenceSyntax(TextSpan span, BuiltInTypeBinding predefinedTypeBinding) : base(span)
             {
-            this._predefinedTypeBinding = predefinedTypeBinding;
+            this.predefinedTypeBinding = predefinedTypeBinding;
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._predefinedTypeBinding;
+            return this.predefinedTypeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.PredefinedTypeReference;
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._predefinedTypeBinding.TypeName);
+            sourceWriter.Write(this.predefinedTypeBinding.TypeName);
         }
     }
 }

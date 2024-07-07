@@ -5,7 +5,7 @@ namespace Faml.Interpreter.Ast
 {
     public class AstRecord
     {
-        private readonly Dictionary<string, object> _propertyValues = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> propertyValues = new Dictionary<string, object>();
 
         public AstRecord()
         {
@@ -13,12 +13,12 @@ namespace Faml.Interpreter.Ast
 
         public void SetProperty(string name, object value)
         {
-            this._propertyValues[name] = value;
+            this.propertyValues[name] = value;
         }
 
         public object GetProperty(string name)
         {
-            if (!this._propertyValues.TryGetValue(name, out object value))
+            if (!this.propertyValues.TryGetValue(name, out object value))
             {
                 throw new Exception($"Property '{name}' not set on data record");
             }

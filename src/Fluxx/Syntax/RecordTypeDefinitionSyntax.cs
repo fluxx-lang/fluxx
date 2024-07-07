@@ -12,35 +12,35 @@ namespace Faml.Syntax
 {
     public class RecordTypeDefinitionSyntax : DefinitionSyntax
     {
-        private readonly NameSyntax _typeNameSyntax;
-        private readonly PropertyNameTypePairSyntax[] _propertyNameTypePairs;
-        private readonly RecordTypeBinding _typeBinding;
+        private readonly NameSyntax typeNameSyntax;
+        private readonly PropertyNameTypePairSyntax[] propertyNameTypePairs;
+        private readonly RecordTypeBinding typeBinding;
 
         public RecordTypeDefinitionSyntax(TextSpan span, NameSyntax typeNameSyntax, PropertyNameTypePairSyntax[] propertyNameTypePairs) : base(span)
         {
-            this._typeNameSyntax = typeNameSyntax;
-            this._typeNameSyntax.SetParent(this);
+            this.typeNameSyntax = typeNameSyntax;
+            this.typeNameSyntax.SetParent(this);
 
-            this._propertyNameTypePairs = propertyNameTypePairs;
-            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._propertyNameTypePairs)
+            this.propertyNameTypePairs = propertyNameTypePairs;
+            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this.propertyNameTypePairs)
             {
                 propertyNameTypePair.SetParent(this);
             }
 
-            this._typeBinding = new RecordTypeBinding(this);
+            this.typeBinding = new RecordTypeBinding(this);
         }
 
-        public NameSyntax TypeNameSyntax => this._typeNameSyntax;
+        public NameSyntax TypeNameSyntax => this.typeNameSyntax;
 
-        public Name TypeName => this._typeNameSyntax.Name;
+        public Name TypeName => this.typeNameSyntax.Name;
 
-        public PropertyNameTypePairSyntax[] PropertyNameTypePairs => this._propertyNameTypePairs;
+        public PropertyNameTypePairSyntax[] PropertyNameTypePairs => this.propertyNameTypePairs;
 
-        public RecordTypeBinding TypeBinding => this._typeBinding;
+        public RecordTypeBinding TypeBinding => this.typeBinding;
 
         public TypeBinding? GetPropertyTypeBinding(Name propertyName)
         {
-            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._propertyNameTypePairs)
+            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this.propertyNameTypePairs)
             {
                 if (propertyNameTypePair.PropertyNameSyntax.Name == propertyName)
                 {
@@ -58,11 +58,11 @@ namespace Faml.Syntax
 
         public Name[] GetProperties()
         {
-            int length = this._propertyNameTypePairs.Length;
+            int length = this.propertyNameTypePairs.Length;
             var properties = new Name[length];
             for (int i = 0; i < length; i++)
             {
-                properties[i] = this._propertyNameTypePairs[i].PropertyName;
+                properties[i] = this.propertyNameTypePairs[i].PropertyName;
             }
 
             return properties;
@@ -74,9 +74,9 @@ namespace Faml.Syntax
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._typeNameSyntax);
+            visitor(this.typeNameSyntax);
 
-            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._propertyNameTypePairs)
+            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this.propertyNameTypePairs)
             {
                 visitor(propertyNameTypePair);
             }
@@ -85,10 +85,10 @@ namespace Faml.Syntax
         public override void WriteSource(SourceWriter sourceWriter)
         {
             sourceWriter.Write("type ");
-            sourceWriter.Write(this._typeNameSyntax);
+            sourceWriter.Write(this.typeNameSyntax);
             sourceWriter.Writeln(" = {");
 
-            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._propertyNameTypePairs)
+            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this.propertyNameTypePairs)
             {
                 sourceWriter.Write("    ");
                 sourceWriter.Writeln(propertyNameTypePair);

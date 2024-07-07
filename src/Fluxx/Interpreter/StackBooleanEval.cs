@@ -10,16 +10,16 @@ namespace Faml.Interpreter
 {
     public class StackBooleanEval : BooleanEval
     {
-        private readonly int _stackOffset;
+        private readonly int stackOffset;
 
         internal StackBooleanEval(int stackOffset)
         {
-            this._stackOffset = stackOffset;
+            this.stackOffset = stackOffset;
         }
 
         public override bool Eval()
         {
-            return Context.BooleanStack[Context.BaseIndex + this._stackOffset];
+            return Context.BooleanStack[Context.BaseIndex + this.stackOffset];
         }
     }
 }

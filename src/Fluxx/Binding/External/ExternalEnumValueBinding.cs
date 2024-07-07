@@ -5,15 +5,15 @@ namespace Faml.Binding.External
 {
     public class ExternalEnumValueBinding : EnumValueBinding
     {
-        private readonly EnumValue _value;
+        private readonly EnumValue value;
 
         public ExternalEnumValueBinding(ExternalEnumTypeBinding enumTypeBinding, EnumValue value) : base(enumTypeBinding)
         {
-            this._value = value;
+            this.value = value;
         }
 
-        public override string Name => this._value.Name;
+        public override string Name => this.value.Name;
 
-        public EnumValue EnumValue => this._value;
+        public EnumValue EnumValue => this.value;
     }
 }

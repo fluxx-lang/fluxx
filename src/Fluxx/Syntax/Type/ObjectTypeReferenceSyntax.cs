@@ -13,18 +13,18 @@ namespace Faml.Syntax.Type
 {
     public sealed class ObjectTypeReferenceSyntax : TypeReferenceSyntax
     {
-        private readonly QualifiableNameSyntax _typeNameSyntax;
-        private TypeBinding _typeBinding;
+        private readonly QualifiableNameSyntax typeNameSyntax;
+        private TypeBinding typeBinding;
 
         public ObjectTypeReferenceSyntax(TextSpan span, QualifiableNameSyntax typeNameSyntax) : base(span)
         {
-            this._typeNameSyntax = typeNameSyntax;
-            this._typeNameSyntax.SetParent(this);
+            this.typeNameSyntax = typeNameSyntax;
+            this.typeNameSyntax.SetParent(this);
         }
 
-        public QualifiableNameSyntax TypeNameSyntax => this._typeNameSyntax;
+        public QualifiableNameSyntax TypeNameSyntax => this.typeNameSyntax;
 
-        public QualifiableName TypeName => this._typeNameSyntax.Name;
+        public QualifiableName TypeName => this.typeNameSyntax.Name;
 
         public override bool IsTerminalNode()
         {
@@ -35,22 +35,22 @@ namespace Faml.Syntax.Type
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
         {
-            visitor(this._typeNameSyntax);
+            visitor(this.typeNameSyntax);
         }
 
         protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver)
         {
-            this._typeBinding = bindingResolver.ResolveObjectTypeBinding(this);
+            this.typeBinding = bindingResolver.ResolveObjectTypeBinding(this);
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._typeNameSyntax);
+            sourceWriter.Write(this.typeNameSyntax);
         }
     }
 }

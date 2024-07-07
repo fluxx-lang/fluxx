@@ -8,31 +8,31 @@ namespace Faml.Binding.External
 {
     public sealed class DotNetMethodFunctionBinding : FunctionBinding
     {
-        private readonly ExternalObjectTypeBinding _objectTypeBinding;
-        private readonly DotNetRawMethod _rawMethod;
-        private readonly TypeBinding _returnTypeBinding;
+        private readonly ExternalObjectTypeBinding objectTypeBinding;
+        private readonly DotNetRawMethod rawMethod;
+        private readonly TypeBinding returnTypeBinding;
 
 
         public DotNetMethodFunctionBinding(ExternalObjectTypeBinding objectTypeBinding, DotNetRawMethod rawMethod)
         {
-            this._objectTypeBinding = objectTypeBinding;
-            this._rawMethod = rawMethod;
+            this.objectTypeBinding = objectTypeBinding;
+            this.rawMethod = rawMethod;
 
-            this._returnTypeBinding = ExternalBindingUtil.DotNetTypeToTypeBinding(objectTypeBinding.Project, rawMethod.ReturnType);
+            this.returnTypeBinding = ExternalBindingUtil.DotNetTypeToTypeBinding(objectTypeBinding.Project, rawMethod.ReturnType);
         }
 
-        public override QualifiableName FunctionName => new QualifiableName(this._objectTypeBinding.TypeName + "." + this._rawMethod.Name);
+        public override QualifiableName FunctionName => new QualifiableName(this.objectTypeBinding.TypeName + "." + this.rawMethod.Name);
 
-        public override TypeBinding ReturnTypeBinding => this._returnTypeBinding;
+        public override TypeBinding ReturnTypeBinding => this.returnTypeBinding;
 
         public override TypeBinding? GetParameterTypeBinding(Name parameterName)
         {
             string parameterNameString = parameterName.ToString();
-            foreach (DotNetRawParameter parameter in this._rawMethod.GetParameters())
+            foreach (DotNetRawParameter parameter in this.rawMethod.GetParameters())
             {
                 if (parameter.Name == parameterNameString)
                 {
-                    return ExternalBindingUtil.DotNetTypeToTypeBinding(this._objectTypeBinding.Project, parameter.ParameterType);
+                    return ExternalBindingUtil.DotNetTypeToTypeBinding(this.objectTypeBinding.Project, parameter.ParameterType);
                 }
             }
 
@@ -49,16 +49,16 @@ namespace Faml.Binding.External
             }
 
             string parameterNameString = argumentName.ToString();
-            foreach (DotNetRawParameter parameter in this._rawMethod.GetParameters())
+            foreach (DotNetRawParameter parameter in this.rawMethod.GetParameters())
             {
                 if (parameter.Name == parameterNameString)
                 {
-                    return ExternalBindingUtil.DotNetTypeToTypeBinding(this._objectTypeBinding.Project, parameter.ParameterType);
+                    return ExternalBindingUtil.DotNetTypeToTypeBinding(this.objectTypeBinding.Project, parameter.ParameterType);
                 }
             }
 
             argumentNameValuePair.GetModule().AddError(
-                argumentNameValuePair.PropertySpecifier, $"No '{argumentName}' parameter exists for method '{this._rawMethod.Name}'");
+                argumentNameValuePair.PropertySpecifier, $"No '{argumentName}' parameter exists for method '{this.rawMethod.Name}'");
             return InvalidTypeBinding.Instance;
         }
 
@@ -75,10 +75,10 @@ namespace Faml.Binding.External
 
         public override string GetNoContentPropertyExistsError()
         {
-            return $"Use of unnamed property not allowed. No content parameter exists for method '{this._rawMethod.Name}'";
+            return $"Use of unnamed property not allowed. No content parameter exists for method '{this.rawMethod.Name}'";
         }
 
-        public DotNetRawMethod RawMethod => this._rawMethod;
+        public DotNetRawMethod RawMethod => this.rawMethod;
 
         public override Name? GetThisParameter()
         {
@@ -95,7 +95,7 @@ namespace Faml.Binding.External
         public override Name[] GetParameters()
         {
             List<Name> parameterNames = new List<Name>();
-            foreach (DotNetRawParameter parameter in this._rawMethod.GetParameters())
+            foreach (DotNetRawParameter parameter in this.rawMethod.GetParameters())
             {
                 parameterNames.Add(new Name(parameter.Name));
             }

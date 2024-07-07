@@ -2,16 +2,16 @@ namespace Faml.Interpreter
 {
     public sealed class NotEval : BooleanEval
     {
-        private readonly BooleanEval _operand;
+        private readonly BooleanEval operand;
 
         public NotEval(BooleanEval operand)
         {
-            this._operand = operand;
+            this.operand = operand;
         }
 
         public override bool Eval()
         {
-            return !this._operand.Eval();
+            return !this.operand.Eval();
         }
     }
 

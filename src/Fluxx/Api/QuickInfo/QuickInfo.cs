@@ -6,13 +6,13 @@ namespace Faml.Api.QuickInfo
     [Serializable]
     public abstract class QuickInfo
     {
-        private readonly TextSpan _textSpan;
+        private readonly TextSpan textSpan;
 
         protected QuickInfo(TextSpan textSpan)
         {
-            this._textSpan = textSpan;
+            this.textSpan = textSpan;
         }
 
-        public TextSpan Span => this._textSpan;
+        public TextSpan Span => this.textSpan;
     }
 }

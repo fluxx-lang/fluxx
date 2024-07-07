@@ -10,59 +10,59 @@ namespace Faml.DotNet
 {
     public sealed class DotNetExternalLibrary : ExternalLibrary
     {
-        private readonly FamlProject _project;
-        private readonly Assembly _assembly;
+        private readonly FamlProject project;
+        private readonly Assembly assembly;
 
 
         public DotNetExternalLibrary(FamlProject project, Assembly assembly)
         {
-            this._project = project;
-            this._assembly = assembly;
+            this.project = project;
+            this.assembly = assembly;
         }
 
         public DotNetExternalLibrary(FamlProject project, string name)
         {
-            this._project = project;
+            this.project = project;
 
             var assemblyName = new AssemblyName(name);
-            this._assembly = Assembly.Load(assemblyName);
+            this.assembly = Assembly.Load(assemblyName);
         }
 
-        public Assembly Assembly => this._assembly;
+        public Assembly Assembly => this.assembly;
 
         public override TypeBinding? ResolveTypeBinding(QualifiableName className)
         {
-            Type classType = this._assembly.GetType(className.ToString());
+            Type classType = this.assembly.GetType(className.ToString());
             if (classType == null)
             {
                 return null;
             }
 
-            TypeToolingType typeToolingType = this._project.GetTypeToolingType(new ReflectionDotNetRawType(classType));
+            TypeToolingType typeToolingType = this.project.GetTypeToolingType(new ReflectionDotNetRawType(classType));
             if (typeToolingType == null)
             {
                 return null;
             }
 
             // TODO: Handle non-object types here too
-            return new ExternalObjectTypeBinding(this._project, (ObjectType)typeToolingType);
+            return new ExternalObjectTypeBinding(this.project, (ObjectType)typeToolingType);
         }
 
         public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName className)
         {
-            Type classType = this._assembly.GetType(className.ToString());
+            Type classType = this.assembly.GetType(className.ToString());
             if (classType == null)
             {
                 return null;
             }
 
-            AttachedType attachedType = this._project.GetTypeToolingAttachedType(new ReflectionDotNetRawType(classType));
+            AttachedType attachedType = this.project.GetTypeToolingAttachedType(new ReflectionDotNetRawType(classType));
             if (attachedType == null)
             {
                 return null;
             }
 
-            return new ExternalAttachedTypeBinding(this._project, attachedType);
+            return new ExternalAttachedTypeBinding(this.project, attachedType);
         }
     }
 }

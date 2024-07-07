@@ -19,33 +19,33 @@ namespace Faml.Binding
 
         public sealed class Success : TypeBindingResult
         {
-            private readonly TypeBinding _typeBinding;
+            private readonly TypeBinding typeBinding;
 
             public Success(TypeBinding typeBinding)
             {
-                this._typeBinding = typeBinding;
+                this.typeBinding = typeBinding;
             }
 
-            public TypeBinding TypeBinding => this._typeBinding;
+            public TypeBinding TypeBinding => this.typeBinding;
         }
 
         public sealed class NotFound : TypeBindingResult
         {
         }
 
-        private static readonly NotFound _notFoundResult = new NotFound();
-        public static NotFound NotFoundResult => _notFoundResult;
+        private static readonly NotFound notFoundResult = new NotFound();
+        public static NotFound NotFoundResult => notFoundResult;
 
         public sealed class Error : TypeBindingResult
         {
-            private readonly string _message;
+            private readonly string message;
 
             public Error(string message)
             {
-                this._message = message;
+                this.message = message;
             }
 
-            public string Message => this._message;
+            public string Message => this.message;
         }
     }
 }

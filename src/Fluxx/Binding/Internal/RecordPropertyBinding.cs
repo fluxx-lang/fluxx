@@ -9,26 +9,26 @@ namespace Faml.Binding.Internal
 {
     public class RecordPropertyBinding : PropertyBinding
     {
-        private readonly RecordTypeDefinitionSyntax _recordTypeDefinition;
-        private readonly Name _propertyName;
-        private readonly TypeBinding _propertyTypeBinding;
+        private readonly RecordTypeDefinitionSyntax recordTypeDefinition;
+        private readonly Name propertyName;
+        private readonly TypeBinding propertyTypeBinding;
 
         public RecordPropertyBinding(RecordTypeDefinitionSyntax recordTypeDefinition, Name propertyName)
         {
-            this._recordTypeDefinition = recordTypeDefinition;
-            this._propertyName = propertyName;
+            this.recordTypeDefinition = recordTypeDefinition;
+            this.propertyName = propertyName;
 
-            this._propertyTypeBinding = this._recordTypeDefinition.GetPropertyTypeBinding(propertyName);
+            this.propertyTypeBinding = this.recordTypeDefinition.GetPropertyTypeBinding(propertyName);
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._propertyTypeBinding;
+            return this.propertyTypeBinding;
         }
 
-        public override Name PropertyName => this._propertyName;
+        public override Name PropertyName => this.propertyName;
 
-        public override TypeBinding ObjectTypeBinding => this._recordTypeDefinition.TypeBinding;
+        public override TypeBinding ObjectTypeBinding => this.recordTypeDefinition.TypeBinding;
 
         public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken) =>
             Task.FromResult((ClassifiedTextMarkup?)null);

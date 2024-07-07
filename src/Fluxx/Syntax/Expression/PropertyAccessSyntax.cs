@@ -13,29 +13,29 @@ namespace Faml.Syntax.Expression
 {
     public sealed class PropertyAccessSyntax : ExpressionSyntax
     {
-        private readonly ExpressionSyntax _expression;
-        private readonly NameSyntax _propertyNameSyntax;
-        private PropertyBinding _propertyBinding = null;
-        private TypeBinding _typeBinding = null;
+        private readonly ExpressionSyntax expression;
+        private readonly NameSyntax propertyNameSyntax;
+        private PropertyBinding propertyBinding = null;
+        private TypeBinding typeBinding = null;
 
         public PropertyAccessSyntax(TextSpan span, ExpressionSyntax expression, NameSyntax propertyNameSyntax) : base(span)
         {
-            this._expression = expression;
+            this.expression = expression;
             expression.SetParent(this);
 
-            this._propertyNameSyntax = propertyNameSyntax;
+            this.propertyNameSyntax = propertyNameSyntax;
             propertyNameSyntax.SetParent(this);
         }
 
-        public ExpressionSyntax Expression => this._expression;
+        public ExpressionSyntax Expression => this.expression;
 
-        public NameSyntax PropertyNameSyntax => this._propertyNameSyntax;
+        public NameSyntax PropertyNameSyntax => this.propertyNameSyntax;
 
-        public Name PropertyName => this._propertyNameSyntax.Name;
+        public Name PropertyName => this.propertyNameSyntax.Name;
 
-        public string PropertyNameString => this._propertyNameSyntax.Name.ToString();
+        public string PropertyNameString => this.propertyNameSyntax.Name.ToString();
 
-        public PropertyBinding PropertyBinding => this._propertyBinding;
+        public PropertyBinding PropertyBinding => this.propertyBinding;
 
         public override bool IsTerminalNode()
         {
@@ -46,26 +46,26 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._expression);
-            visitor(this._propertyNameSyntax);
+            visitor(this.expression);
+            visitor(this.propertyNameSyntax);
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._expression);
+            sourceWriter.Write(this.expression);
             sourceWriter.Write(".");
-            sourceWriter.Write(this._propertyNameSyntax);
+            sourceWriter.Write(this.propertyNameSyntax);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver)
         {
-            this._propertyBinding = bindingResolver.ResolvePropertyBinding(this._expression.GetTypeBinding(), this._propertyNameSyntax);
-            this._typeBinding = this._propertyBinding.GetTypeBinding();
+            this.propertyBinding = bindingResolver.ResolvePropertyBinding(this.expression.GetTypeBinding(), this.propertyNameSyntax);
+            this.typeBinding = this.propertyBinding.GetTypeBinding();
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
     }
 }

@@ -10,11 +10,11 @@ namespace Faml
 {
     internal class GetSyntaxHighlightTags
     {
-        private readonly ModuleSyntax _module;
+        private readonly ModuleSyntax module;
 
         public GetSyntaxHighlightTags(ModuleSyntax module)
         {
-            this._module = module;
+            this.module = module;
         }
 
         // TODO: Implement this properly, supporting multiple spans
@@ -34,13 +34,13 @@ namespace Faml
         {
             // First return the lexical tokens that occur before the first terminal node. Getting the tags for an AST node
             // returns the lexical tags that come after it, but we need to do this here to get the lexical tags at the beginning
-            SyntaxNode? firstTerminalNode = this._module.GetNextTerminalNodeFromPosition(span.Start);
+            SyntaxNode? firstTerminalNode = this.module.GetNextTerminalNodeFromPosition(span.Start);
             int startOfFirstTerminalNode = firstTerminalNode?.Span.Start ?? -1;
-            var token = new Token(new ParseableSource(this._module.SourceText, span.Start, this._module.SourceText.Length));
+            var token = new Token(new ParseableSource(this.module.SourceText, span.Start, this.module.SourceText.Length));
             GetLexicalTags(span, token, startOfFirstTerminalNode, tags);
 
             // Now get everything else
-            this.GetSyntaxNodeTags(span, this._module, tags);
+            this.GetSyntaxNodeTags(span, this.module, tags);
         }
 
         private void GetSyntaxNodeTags(TextSpan span, SyntaxNode syntaxNode, List<SyntaxHighlightTag> tags)
@@ -132,13 +132,13 @@ namespace Faml
                 }
 
                 int nextTerminalNodeStartPosition;
-                if (currNodeEndPosition >= this._module.Span.End)
+                if (currNodeEndPosition >= this.module.Span.End)
                 {
                     nextTerminalNodeStartPosition = -1;
                 }
                 else
                 {
-                    SyntaxNode? nextTerminalNode = this._module.GetNextTerminalNodeFromPosition(currNodeEndPosition);
+                    SyntaxNode? nextTerminalNode = this.module.GetNextTerminalNodeFromPosition(currNodeEndPosition);
                     if (nextTerminalNode == null)
                     {
                         // This shouldn't happen, but gracefully fail if it does
@@ -151,7 +151,7 @@ namespace Faml
                 }
 
                 // Now process the lexical tokens (which aren't included in the AST) after the current terminal node up to the next terminal node
-                var token = new Token(new ParseableSource(this._module.SourceText, currNodeEndPosition, this._module.SourceText.Length));
+                var token = new Token(new ParseableSource(this.module.SourceText, currNodeEndPosition, this.module.SourceText.Length));
                 GetLexicalTags(span, token, nextTerminalNodeStartPosition, tags);
             }
             else

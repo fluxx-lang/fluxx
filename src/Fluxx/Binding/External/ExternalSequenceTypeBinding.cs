@@ -5,26 +5,26 @@ namespace Faml.Binding.External
 {
     public class ExternalSequenceTypeBinding : SequenceTypeBinding
     {
-        private readonly FamlProject _project;
-        private readonly SequenceType _typeToolingType;
-        public readonly DotNetRawType _dotNetType;
+        private readonly FamlProject project;
+        private readonly SequenceType typeToolingType;
+        public readonly DotNetRawType dotNetType;
 
 
         public ExternalSequenceTypeBinding(FamlProject project, SequenceType typeToolingType, TypeBinding elementTypeBinding) : base(elementTypeBinding)
         {
-            this._project = project;
-            this._typeToolingType = typeToolingType;
+            this.project = project;
+            this.typeToolingType = typeToolingType;
 
-            this._dotNetType = (DotNetRawType)typeToolingType.UnderlyingType;
+            this.dotNetType = (DotNetRawType)typeToolingType.UnderlyingType;
         }
 
-        public FamlProject Project => this._project;
+        public FamlProject Project => this.project;
 
-        public SequenceType TypeToolingType => this._typeToolingType;
+        public SequenceType TypeToolingType => this.typeToolingType;
 
         protected bool Equals(ExternalSequenceTypeBinding other)
         {
-            return this._dotNetType.Equals(other._dotNetType);
+            return this.dotNetType.Equals(other.dotNetType);
         }
 
         public override bool Equals(object obj)
@@ -39,14 +39,14 @@ namespace Faml.Binding.External
 
         public override int GetHashCode()
         {
-            return this._dotNetType.GetHashCode();
+            return this.dotNetType.GetHashCode();
         }
 
         public override bool IsAssignableFrom(TypeBinding other)
         {
             if (other is ExternalSequenceTypeBinding otherSequenceTypeBinding)
             {
-                return this._dotNetType.IsAssignableFrom(otherSequenceTypeBinding._dotNetType);
+                return this.dotNetType.IsAssignableFrom(otherSequenceTypeBinding.dotNetType);
             }
             else
             {

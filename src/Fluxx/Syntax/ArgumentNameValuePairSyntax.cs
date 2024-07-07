@@ -10,51 +10,51 @@ namespace Faml.Syntax
 {
     public sealed class ArgumentNameValuePairSyntax : SyntaxNode
     {
-        private readonly PropertySpecifierSyntax _propertySpecifier;
-        private ExpressionSyntax _value;
-        private TypeBinding? _parameterTypeBinding;
+        private readonly PropertySpecifierSyntax propertySpecifier;
+        private ExpressionSyntax value;
+        private TypeBinding? parameterTypeBinding;
 
 
         public ArgumentNameValuePairSyntax(TextSpan span, PropertySpecifierSyntax propertySpecifier, ExpressionSyntax value) : base(span)
         {
-            this._propertySpecifier = propertySpecifier;
-            this._propertySpecifier.SetParent(this);
+            this.propertySpecifier = propertySpecifier;
+            this.propertySpecifier.SetParent(this);
 
-            this._value = value;
+            this.value = value;
             value.SetParent(this);
         }
 
         public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver)
         {
             // If we've already resolved, do nothing
-            if (this._parameterTypeBinding != null)
+            if (this.parameterTypeBinding != null)
             {
                 return;
             }
 
-            this._parameterTypeBinding = parameterTypeBinding;
+            this.parameterTypeBinding = parameterTypeBinding;
 
-            if (this._value is TextualLiteralSyntax markupValue)
+            if (this.value is TextualLiteralSyntax markupValue)
             {
-                this._value = markupValue.ResolveMarkup(parameterTypeBinding, bindingResolver);
+                this.value = markupValue.ResolveMarkup(parameterTypeBinding, bindingResolver);
             }
         }
 
-        public PropertySpecifierSyntax PropertySpecifier => this._propertySpecifier;
+        public PropertySpecifierSyntax PropertySpecifier => this.propertySpecifier;
 
-        public QualifiableName ArgumentName => this._propertySpecifier.PropertyName;
+        public QualifiableName ArgumentName => this.propertySpecifier.PropertyName;
 
-        public ExpressionSyntax Value => this._value;
+        public ExpressionSyntax Value => this.value;
 
-        public TypeBinding ParameterTypeBinding => this._parameterTypeBinding;
+        public TypeBinding ParameterTypeBinding => this.parameterTypeBinding;
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._propertySpecifier);
+            visitor(this.propertySpecifier);
 
-            if (this._value != null)
+            if (this.value != null)
             {
-                visitor(this._value);
+                visitor(this.value);
             }
         }
 
@@ -64,8 +64,8 @@ namespace Faml.Syntax
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._propertySpecifier);
-            sourceWriter.Write(this._value);
+            sourceWriter.Write(this.propertySpecifier);
+            sourceWriter.Write(this.value);
         }
     }
 }

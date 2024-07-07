@@ -2,18 +2,18 @@ namespace Faml.Interpreter
 {
     public sealed class OrEval : BooleanEval
     {
-        private readonly BooleanEval _leftOperand;
-        private readonly BooleanEval _rightOperand;
+        private readonly BooleanEval leftOperand;
+        private readonly BooleanEval rightOperand;
 
         public OrEval(BooleanEval leftOperand, BooleanEval rightOperand)
         {
-            this._leftOperand = leftOperand;
-            this._rightOperand = rightOperand;
+            this.leftOperand = leftOperand;
+            this.rightOperand = rightOperand;
         }
 
         public override bool Eval()
         {
-            return this._leftOperand.Eval() || this._rightOperand.Eval();
+            return this.leftOperand.Eval() || this.rightOperand.Eval();
         }
     }
 }

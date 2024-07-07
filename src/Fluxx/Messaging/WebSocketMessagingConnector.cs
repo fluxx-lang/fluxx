@@ -8,29 +8,29 @@ namespace Faml.Messaging
 {
     public class WebSocketMessagingConnector : MessagingConnector
     {
-        private readonly AsyncQueue<Message> _sendMessageQueue = new AsyncQueue<Message>();
-        private readonly CancellationTokenSource _stopCts;
-        private readonly CancellationTokenSource _sendCts;
-        private readonly CancellationTokenSource _receiveCts;
+        private readonly AsyncQueue<Message> sendMessageQueue = new AsyncQueue<Message>();
+        private readonly CancellationTokenSource stopCts;
+        private readonly CancellationTokenSource sendCts;
+        private readonly CancellationTokenSource receiveCts;
 
 
         public WebSocketMessagingConnector()
         {
-            this._stopCts = new CancellationTokenSource();
-            this._sendCts = new CancellationTokenSource();
-            this._receiveCts = new CancellationTokenSource();
+            this.stopCts = new CancellationTokenSource();
+            this.sendCts = new CancellationTokenSource();
+            this.receiveCts = new CancellationTokenSource();
         }
 
         public virtual void Stop()
         {
-            this._stopCts.Cancel();
+            this.stopCts.Cancel();
         }
 
-        public CancellationTokenSource StopCts => this._stopCts;
+        public CancellationTokenSource StopCts => this.stopCts;
 
         protected override void SendMessage(Message message)
         {
-            this._sendMessageQueue.Enqueue(message);
+            this.sendMessageQueue.Enqueue(message);
         }
 
         protected async Task ProcessMessages(WebSocket webSocket)
@@ -46,7 +46,7 @@ namespace Faml.Messaging
         {
             try
             {
-                var receiveAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(this._receiveCts.Token, this._stopCts.Token);
+                var receiveAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(this.receiveCts.Token, this.stopCts.Token);
 
                 var buffer = new ArraySegment<byte>(new byte[4096]);
                 using var memoryStream = new MemoryStream();
@@ -106,7 +106,7 @@ namespace Faml.Messaging
                 // If the receive fails, then also cancel the send
                 if (!(e is OperationCanceledException))
                 {
-                    this._sendCts.Cancel();
+                    this.sendCts.Cancel();
                 }
 
                 throw;
@@ -117,11 +117,11 @@ namespace Faml.Messaging
         {
             try
             {
-                var sendAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(this._sendCts.Token, this._stopCts.Token);
+                var sendAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(this.sendCts.Token, this.stopCts.Token);
 
                 while (webSocket.State == WebSocketState.Open)
                 {
-                    Message message = await this._sendMessageQueue.DequeueAsync(sendAndOverallCts.Token);
+                    Message message = await this.sendMessageQueue.DequeueAsync(sendAndOverallCts.Token);
 
                     using var memoryStream = new MemoryStream();
                     message.Write(memoryStream);
@@ -139,7 +139,7 @@ namespace Faml.Messaging
                 // If the send fails then also cancel the receive
                 if (!(e is OperationCanceledException))
                 {
-                    this._receiveCts.Cancel();
+                    this.receiveCts.Cancel();
                 }
 
                 throw;

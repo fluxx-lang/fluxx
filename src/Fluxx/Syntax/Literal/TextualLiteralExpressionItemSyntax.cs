@@ -5,11 +5,11 @@ namespace Faml.Syntax.Literal
 {
     public sealed class TextualLiteralExpressionItemSyntax : TextualLiteralItemSyntax
     {
-        private readonly ExpressionSyntax _expression;
+        private readonly ExpressionSyntax expression;
 
         public TextualLiteralExpressionItemSyntax(ExpressionSyntax expression) : base(expression.Span)
         {
-            this._expression = expression;
+            this.expression = expression;
         }
 
         public override bool IsTerminalNode() => false;
@@ -18,12 +18,12 @@ namespace Faml.Syntax.Literal
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._expression);
+            visitor(this.expression);
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._expression);
+            sourceWriter.Write(this.expression);
         }
     }
 }

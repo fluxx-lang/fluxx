@@ -7,13 +7,13 @@ namespace Faml.Syntax.Type
 {
     public sealed class SequenceTypeReferenceSyntax : TypeReferenceSyntax
     {
-        private readonly TypeReferenceSyntax _elementTypeReferenceSyntax;
-        private TypeBinding _typeBinding;
+        private readonly TypeReferenceSyntax elementTypeReferenceSyntax;
+        private TypeBinding typeBinding;
 
         public SequenceTypeReferenceSyntax(TextSpan span, TypeReferenceSyntax elementTypeReferenceSyntax) : base(span)
         {
-            this._elementTypeReferenceSyntax = elementTypeReferenceSyntax;
-            this._elementTypeReferenceSyntax.SetParent(this);
+            this.elementTypeReferenceSyntax = elementTypeReferenceSyntax;
+            this.elementTypeReferenceSyntax.SetParent(this);
         }
 
         public override bool IsTerminalNode()
@@ -25,22 +25,22 @@ namespace Faml.Syntax.Type
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._elementTypeReferenceSyntax);
+            visitor(this.elementTypeReferenceSyntax);
         }
 
         protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver)
         {
-            this._typeBinding = new SequenceTypeBinding(this._elementTypeReferenceSyntax.GetTypeBinding());
+            this.typeBinding = new SequenceTypeBinding(this.elementTypeReferenceSyntax.GetTypeBinding());
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
                                      
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._elementTypeReferenceSyntax);
+            sourceWriter.Write(this.elementTypeReferenceSyntax);
             sourceWriter.Write("...");
         }
     }

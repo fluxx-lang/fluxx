@@ -10,14 +10,14 @@ namespace Faml.CodeGeneration
 {
     public class ModuleDelegates
     {
-        private readonly TypeToolingEnvironment _typeToolingEnvironment;
-        private readonly Dictionary<Name, FunctionDelegateHolder> _functionDelegateHolders = new Dictionary<Name, FunctionDelegateHolder>();
-        private readonly Dictionary<ExampleDefinitionSyntax, Delegate> _exampleDelegates = new Dictionary<ExampleDefinitionSyntax, Delegate>();
+        private readonly TypeToolingEnvironment typeToolingEnvironment;
+        private readonly Dictionary<Name, FunctionDelegateHolder> functionDelegateHolders = new Dictionary<Name, FunctionDelegateHolder>();
+        private readonly Dictionary<ExampleDefinitionSyntax, Delegate> exampleDelegates = new Dictionary<ExampleDefinitionSyntax, Delegate>();
         
 
         public ModuleDelegates(TypeToolingEnvironment typeToolingEnvironment)
         {
-            this._typeToolingEnvironment = typeToolingEnvironment;
+            this.typeToolingEnvironment = typeToolingEnvironment;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Faml.CodeGeneration
         public FunctionDelegateHolder GetOrCreateFunctionDelegate(FunctionDefinitionSyntax functionDefinition)
         {
             Name functionName = functionDefinition.FunctionName;
-            if (this._functionDelegateHolders.TryGetValue(functionName, out FunctionDelegateHolder existingDelegateHolder))
+            if (this.functionDelegateHolders.TryGetValue(functionName, out FunctionDelegateHolder existingDelegateHolder))
             {
                 return existingDelegateHolder;
             }
@@ -39,10 +39,10 @@ namespace Faml.CodeGeneration
             // recreate its delegate. The rule is that if the delegate holder exists, then the delegate exists or is
             // already in the process of getting created.
             var delegateHolder = new FunctionDelegateHolder();
-            this._functionDelegateHolders.Add(functionName, delegateHolder);
+            this.functionDelegateHolders.Add(functionName, delegateHolder);
 
             var createFunctionCode = new CreateFunctionCode(functionDefinition);
-            LambdaExpression lambdaExpression = new ConvertToExpressionTree(this._typeToolingEnvironment, createFunctionCode.Result).Result;
+            LambdaExpression lambdaExpression = new ConvertToExpressionTree(this.typeToolingEnvironment, createFunctionCode.Result).Result;
             Delegate functionDelegate = lambdaExpression.Compile();
 
             delegateHolder.FunctionDelegate = functionDelegate;
@@ -52,12 +52,12 @@ namespace Faml.CodeGeneration
 
         public void AddExampleDelegate(ExampleDefinitionSyntax exampleDefinition, Delegate expressionDelegate)
         {
-            this._exampleDelegates.Add(exampleDefinition, expressionDelegate);
+            this.exampleDelegates.Add(exampleDefinition, expressionDelegate);
         }
 
         public Delegate? GetExampleDelegate(ExampleDefinitionSyntax exampleDefinition)
         {
-            if (!this._exampleDelegates.TryGetValue(exampleDefinition, out Delegate exampleDelegate))
+            if (!this.exampleDelegates.TryGetValue(exampleDefinition, out Delegate exampleDelegate))
             {
                 return null;
             }

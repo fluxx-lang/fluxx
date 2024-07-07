@@ -31,51 +31,51 @@ namespace Faml
 {
     public class FamlProject
     {
-        private readonly FamlWorkspace _workspace;
-        private readonly SourceProvider _sourceProvider;
-        private readonly Dictionary<string, string> _sourceOverrides = new Dictionary<string, string>();
-        private bool _fullyInitialized;
+        private readonly FamlWorkspace workspace;
+        private readonly SourceProvider sourceProvider;
+        private readonly Dictionary<string, string> sourceOverrides = new Dictionary<string, string>();
+        private bool fullyInitialized;
 
-        private readonly FamlTypeToolingEnvironment _typeToolingEnvironment;
-        private readonly List<TypeToolingProvider> _defaultTypeToolingProviders = new List<TypeToolingProvider>();
-        private readonly List<TypeToolingEnhancer> _defaultTypeToolingEnhancers = new List<TypeToolingEnhancer>();
-        private readonly List<TypeToolingProvider> _typeToolingProviders = new List<TypeToolingProvider>();
-        private readonly List<TypeToolingEnhancer> _typeToolingEnhancers = new List<TypeToolingEnhancer>();
-        private readonly ConcurrentDictionary<RawType, TypeToolingType> _cachedTypeToolingTypes = new ConcurrentDictionary<RawType, TypeToolingType>();
-        private readonly ConcurrentDictionary<string, RawType> _cachedTypeToolingTypeNamesToRawTypes = new ConcurrentDictionary<string, RawType>();
-        private readonly ConcurrentDictionary<RawType, AttachedType> _cachedTypeToolingAttachedTypes = new ConcurrentDictionary<RawType, AttachedType>();
-        private ExternalObjectTypeBinding? _exampleTypeBinding;
-        private ExternalObjectTypeBinding? _examplesTypeBinding;
+        private readonly FamlTypeToolingEnvironment typeToolingEnvironment;
+        private readonly List<TypeToolingProvider> defaultTypeToolingProviders = new List<TypeToolingProvider>();
+        private readonly List<TypeToolingEnhancer> defaultTypeToolingEnhancers = new List<TypeToolingEnhancer>();
+        private readonly List<TypeToolingProvider> typeToolingProviders = new List<TypeToolingProvider>();
+        private readonly List<TypeToolingEnhancer> typeToolingEnhancers = new List<TypeToolingEnhancer>();
+        private readonly ConcurrentDictionary<RawType, TypeToolingType> cachedTypeToolingTypes = new ConcurrentDictionary<RawType, TypeToolingType>();
+        private readonly ConcurrentDictionary<string, RawType> cachedTypeToolingTypeNamesToRawTypes = new ConcurrentDictionary<string, RawType>();
+        private readonly ConcurrentDictionary<RawType, AttachedType> cachedTypeToolingAttachedTypes = new ConcurrentDictionary<RawType, AttachedType>();
+        private ExternalObjectTypeBinding? exampleTypeBinding;
+        private ExternalObjectTypeBinding? examplesTypeBinding;
 
-        private readonly Dictionary<QualifiableName, FamlModule> _modules = new Dictionary<QualifiableName, FamlModule>();
-        private readonly ConcurrentDictionary<ModuleSyntax, ModuleEvals> _modulesEvals = new ConcurrentDictionary<ModuleSyntax, ModuleEvals>();
-        private readonly ConcurrentDictionary<ModuleSyntax, ModuleDelegates> _moduleDelegates = new ConcurrentDictionary<ModuleSyntax, ModuleDelegates>();
+        private readonly Dictionary<QualifiableName, FamlModule> modules = new Dictionary<QualifiableName, FamlModule>();
+        private readonly ConcurrentDictionary<ModuleSyntax, ModuleEvals> modulesEvals = new ConcurrentDictionary<ModuleSyntax, ModuleEvals>();
+        private readonly ConcurrentDictionary<ModuleSyntax, ModuleDelegates> moduleDelegates = new ConcurrentDictionary<ModuleSyntax, ModuleDelegates>();
 
-        private readonly CaseStyle _caseStyle;
+        private readonly CaseStyle caseStyle;
 
         // .NET specific platform implementation stuff is kept here
-        private readonly DotNetProjectInfo _dotNetProjectInfo;
-        private AppProjectInfo _appProjectInfo;    // Set on app projects; null on library projects
+        private readonly DotNetProjectInfo dotNetProjectInfo;
+        private AppProjectInfo appProjectInfo;    // Set on app projects; null on library projects
 
-        private readonly List<Diagnostic> _projectDiagnostics = new List<CodeAnalysis.Diagnostic>();
-        private readonly Dictionary<QualifiableName, List<Diagnostic>> _modulesDiagnostics =
+        private readonly List<Diagnostic> projectDiagnostics = new List<CodeAnalysis.Diagnostic>();
+        private readonly Dictionary<QualifiableName, List<Diagnostic>> modulesDiagnostics =
             new Dictionary<QualifiableName, List<Diagnostic>>();
 
         public FamlProject(FamlWorkspace workspace, SourceProvider sourceProvider)
         {
-            this._workspace = workspace;
-            this._sourceProvider = sourceProvider;
-            this._dotNetProjectInfo = new DotNetProjectInfo(this);
+            this.workspace = workspace;
+            this.sourceProvider = sourceProvider;
+            this.dotNetProjectInfo = new DotNetProjectInfo(this);
 
-            this._typeToolingEnvironment = new FamlTypeToolingEnvironment(this);
+            this.typeToolingEnvironment = new FamlTypeToolingEnvironment(this);
 
             //_defaultTypeToolingProviders.Add(new XamlTypeToolingProvider(_typeToolingEnvironment));
-            this._defaultTypeToolingProviders.Add(new DotNetTypeToolingProvider(this._typeToolingEnvironment));
+            this.defaultTypeToolingProviders.Add(new DotNetTypeToolingProvider(this.typeToolingEnvironment));
         }
 
         public void FullyInitialize()
         {
-            if (this._fullyInitialized)
+            if (this.fullyInitialized)
             {
                 throw new Exception("Project already initialized");
             }
@@ -99,16 +99,16 @@ namespace Faml
             _examplesTypeBinding = ResolveStandardType(typeof(ExamplesResult));
 #endif
 
-            this._dotNetProjectInfo.DiscoverTypeToolingProviders();
+            this.dotNetProjectInfo.DiscoverTypeToolingProviders();
 
-            this._fullyInitialized = true;
+            this.fullyInitialized = true;
         }
 
-        public bool FullyInitialized => this._fullyInitialized;
+        public bool FullyInitialized => this.fullyInitialized;
 
         public bool TypeProviderReady()
         {
-            return this._dotNetProjectInfo.RawTypeProvider?.IsReady ?? false;
+            return this.dotNetProjectInfo.RawTypeProvider?.IsReady ?? false;
         }
 
         private ExternalObjectTypeBinding? ResolveStandardType(Type type)
@@ -127,36 +127,36 @@ namespace Faml
             }
         }
 
-        public FamlWorkspace Workspace => this._workspace;
+        public FamlWorkspace Workspace => this.workspace;
 
-        public SourceProvider SourceProvider => this._sourceProvider;
+        public SourceProvider SourceProvider => this.sourceProvider;
 
         public void SetSource(string path, string? source)
         {
             if (source == null)
             {
-                this._sourceOverrides.Remove(path);
+                this.sourceOverrides.Remove(path);
             }
             else
             {
-                this._sourceOverrides[path] = source;
+                this.sourceOverrides[path] = source;
             }
         }
 
         public string? GetSource(string path)
         {
-            if (this._sourceOverrides.TryGetValue(path, out string source))
+            if (this.sourceOverrides.TryGetValue(path, out string source))
             {
                 return source;
             }
 
-            return this._sourceProvider.GetTextResource(path);
+            return this.sourceProvider.GetTextResource(path);
         }
 
         public string GetModuleFilePath(QualifiableName moduleName)
         {
             string moduleRelativePath = moduleName.ToString().Replace('.', Path.PathSeparator) + ".faml";
-            return this._sourceProvider.RootPath + Path.PathSeparator + moduleRelativePath;
+            return this.sourceProvider.RootPath + Path.PathSeparator + moduleRelativePath;
         }
 
         private void UpdateModule(QualifiableName moduleName, string moduleSource, bool isStandaloneModule)
@@ -183,40 +183,40 @@ namespace Faml
                 moduleSyntax.ResolveAllBindings();
             }
 
-            this._modules[moduleName] = module;
+            this.modules[moduleName] = module;
         }
 
-        public TypeToolingEnvironment TypeToolingEnvironment => this._typeToolingEnvironment;
+        public TypeToolingEnvironment TypeToolingEnvironment => this.typeToolingEnvironment;
 
         public void AddTypeToolingProvider(TypeToolingProvider typeToolingProvider)
         {
-            this._typeToolingProviders.Add(typeToolingProvider);
+            this.typeToolingProviders.Add(typeToolingProvider);
         }
 
         public void AddDefaultTypeToolingProvider(TypeToolingProvider typeToolingProvider)
         {
-            this._defaultTypeToolingProviders.Add(typeToolingProvider);
+            this.defaultTypeToolingProviders.Add(typeToolingProvider);
         }
 
         public void AddDefaultTypeToolingEnhancer(TypeToolingEnhancer typeToolingEnhancer)
         {
-            this._defaultTypeToolingEnhancers.Add(typeToolingEnhancer);
+            this.defaultTypeToolingEnhancers.Add(typeToolingEnhancer);
         }
 
         public TypeToolingType? GetTypeToolingType(RawType rawType)
         {
-            return this._cachedTypeToolingTypes.GetOrAdd(rawType, this.DoGetTypeToolingType);
+            return this.cachedTypeToolingTypes.GetOrAdd(rawType, this.DoGetTypeToolingType);
         }
 
         public void ExternalDependenciesChanged()
         {
-            this._cachedTypeToolingTypes.Clear();
-            this._cachedTypeToolingTypeNamesToRawTypes.Clear();
-            this._cachedTypeToolingAttachedTypes.Clear();
+            this.cachedTypeToolingTypes.Clear();
+            this.cachedTypeToolingTypeNamesToRawTypes.Clear();
+            this.cachedTypeToolingAttachedTypes.Clear();
 
-            if (!this._fullyInitialized)
+            if (!this.fullyInitialized)
             {
-                if (this._dotNetProjectInfo.RawTypeProvider != null && this._dotNetProjectInfo.RawTypeProvider.IsReady)
+                if (this.dotNetProjectInfo.RawTypeProvider != null && this.dotNetProjectInfo.RawTypeProvider.IsReady)
                 {
                     this.FullyInitialize();
                 }
@@ -225,9 +225,9 @@ namespace Faml
 
         private TypeToolingType? DoGetTypeToolingType(RawType rawType)
         {
-            RawType? companionType = this._dotNetProjectInfo.FindCompanionType(rawType);
+            RawType? companionType = this.dotNetProjectInfo.FindCompanionType(rawType);
 
-            foreach (TypeToolingProvider provider in this._typeToolingProviders)
+            foreach (TypeToolingProvider provider in this.typeToolingProviders)
             {
                 TypeToolingType? typeToolingType = provider.ProvideType(rawType, companionType);
 
@@ -238,7 +238,7 @@ namespace Faml
             }
 
             // Check the default providers last
-            foreach (TypeToolingProvider defaultProvider in this._defaultTypeToolingProviders)
+            foreach (TypeToolingProvider defaultProvider in this.defaultTypeToolingProviders)
             {
                 TypeToolingType? typeToolingType = defaultProvider.ProvideType(rawType, companionType);
 
@@ -253,24 +253,24 @@ namespace Faml
 
         public RawType? GetTypeToolingRawType(string typeName)
         {
-            return this._cachedTypeToolingTypeNamesToRawTypes.GetOrAdd(typeName, this.DoGetTypeToolingRawType);
+            return this.cachedTypeToolingTypeNamesToRawTypes.GetOrAdd(typeName, this.DoGetTypeToolingRawType);
         }
 
         private RawType? DoGetTypeToolingRawType(string typeName)
         {
-            return this._dotNetProjectInfo.GetTypeToolingRawType(typeName);
+            return this.dotNetProjectInfo.GetTypeToolingRawType(typeName);
         }
 
         public AttachedType? GetTypeToolingAttachedType(RawType rawType)
         {
-            return this._cachedTypeToolingAttachedTypes.GetOrAdd(rawType, this.DoGetTypeToolingAttachedType);
+            return this.cachedTypeToolingAttachedTypes.GetOrAdd(rawType, this.DoGetTypeToolingAttachedType);
         }
 
         public object Instantiate(RawType rawType, params object[] args)
         {
             if (rawType is DotNetRawType dotNetRawType)
             {
-                return this._dotNetProjectInfo.RawTypeProvider.Instantiate(dotNetRawType, args);
+                return this.dotNetProjectInfo.RawTypeProvider.Instantiate(dotNetRawType, args);
             }
             else
             {
@@ -280,7 +280,7 @@ namespace Faml
 
         private AttachedType? DoGetTypeToolingAttachedType(RawType rawType)
         {
-            foreach (TypeToolingProvider provider in this._typeToolingProviders)
+            foreach (TypeToolingProvider provider in this.typeToolingProviders)
             {
                 AttachedType? attachedType = provider.ProvideAttachedType(rawType, null);
 
@@ -291,7 +291,7 @@ namespace Faml
             }
 
             // Check the default providers last
-            foreach (TypeToolingProvider defaultProvider in this._defaultTypeToolingProviders)
+            foreach (TypeToolingProvider defaultProvider in this.defaultTypeToolingProviders)
             {
                 AttachedType? attachedType = defaultProvider.ProvideAttachedType(rawType, null);
 
@@ -306,7 +306,7 @@ namespace Faml
 
         private TypeToolingType EnhanceTypeToolingType(TypeToolingType typeToolingType)
         {
-            foreach (TypeToolingEnhancer enhancer in this._typeToolingEnhancers)
+            foreach (TypeToolingEnhancer enhancer in this.typeToolingEnhancers)
             {
                 TypeToolingType enhancedType = enhancer.EnhanceType(typeToolingType);
                 if (enhancedType != null)
@@ -316,7 +316,7 @@ namespace Faml
             }
 
             // Check the default enhancers last
-            foreach (TypeToolingEnhancer defaultEnhancer in this._defaultTypeToolingEnhancers)
+            foreach (TypeToolingEnhancer defaultEnhancer in this.defaultTypeToolingEnhancers)
             {
                 TypeToolingType enhancedType = defaultEnhancer.EnhanceType(typeToolingType);
                 if (enhancedType != null)
@@ -330,7 +330,7 @@ namespace Faml
 
         private AttachedType EnhanceTypeToolingAttachedType(AttachedType attachedType)
         {
-            foreach (TypeToolingEnhancer enhancer in this._typeToolingEnhancers)
+            foreach (TypeToolingEnhancer enhancer in this.typeToolingEnhancers)
             {
                 AttachedType enhancedType = enhancer.EnhanceAttachedType(attachedType);
                 if (enhancedType != null)
@@ -340,7 +340,7 @@ namespace Faml
             }
 
             // Check the default enhancers last
-            foreach (TypeToolingEnhancer defaultEnhancer in this._defaultTypeToolingEnhancers)
+            foreach (TypeToolingEnhancer defaultEnhancer in this.defaultTypeToolingEnhancers)
             {
                 AttachedType enhancedType = defaultEnhancer.EnhanceAttachedType(attachedType);
                 if (enhancedType != null)
@@ -376,7 +376,7 @@ namespace Faml
             if (projectObject is ProjectTypes.App app)
             {
                 string developmentMachine = app.DevelopmentMachine;
-                this._appProjectInfo = new AppProjectInfo
+                this.appProjectInfo = new AppProjectInfo
                 {
                     DevelopmentMachine = developmentMachine
                 };
@@ -389,38 +389,38 @@ namespace Faml
 
         public TypeBindingResult ResolveTypeBinding(QualifiableName typeName)
         {
-            return this._dotNetProjectInfo.ResolveTypeBinding(typeName);
+            return this.dotNetProjectInfo.ResolveTypeBinding(typeName);
         }
 
         public AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName)
         {
-            return this._dotNetProjectInfo.ResolveAttachedTypeBinding(typeName);
+            return this.dotNetProjectInfo.ResolveAttachedTypeBinding(typeName);
         }
 
         public ModuleEvals GetModuleEvals(ModuleSyntax moduleSyntax)
         {
-            return this._modulesEvals.GetOrAdd(moduleSyntax, syntax => new ModuleEvals());
+            return this.modulesEvals.GetOrAdd(moduleSyntax, syntax => new ModuleEvals());
         }
 
         public ModuleDelegates GetModuleDelegates(ModuleSyntax moduleSyntax)
         {
-            return this._moduleDelegates.GetOrAdd(moduleSyntax, syntax => new ModuleDelegates(this.TypeToolingEnvironment));
+            return this.moduleDelegates.GetOrAdd(moduleSyntax, syntax => new ModuleDelegates(this.TypeToolingEnvironment));
         }
 
-        public DotNetProjectInfo DotNetProjectInfo => this._dotNetProjectInfo;
+        public DotNetProjectInfo DotNetProjectInfo => this.dotNetProjectInfo;
 
-        public AppProjectInfo AppProjectInfo => this._appProjectInfo;
+        public AppProjectInfo AppProjectInfo => this.appProjectInfo;
 
-        public IEnumerable<Diagnostic> ProjectDiagnostics => this._projectDiagnostics;
+        public IEnumerable<Diagnostic> ProjectDiagnostics => this.projectDiagnostics;
 
         public IEnumerable<Diagnostic> GetAllDiagnostics()
         {
-            foreach (Diagnostic diagnostic in this._projectDiagnostics)
+            foreach (Diagnostic diagnostic in this.projectDiagnostics)
             {
                 yield return diagnostic;
             }
 
-            foreach (KeyValuePair<QualifiableName, List<CodeAnalysis.Diagnostic>> moduleDiagnosticsPair in this._modulesDiagnostics)
+            foreach (KeyValuePair<QualifiableName, List<CodeAnalysis.Diagnostic>> moduleDiagnosticsPair in this.modulesDiagnostics)
             {
                 foreach (Diagnostic diagnostic in moduleDiagnosticsPair.Value)
                 {
@@ -431,7 +431,7 @@ namespace Faml
 
         public IEnumerable<Diagnostic> GetModuleDiagnostics(QualifiableName moduleName)
         {
-            if (!this._modulesDiagnostics.TryGetValue(moduleName, out List<CodeAnalysis.Diagnostic> moduleDiagnostics))
+            if (!this.modulesDiagnostics.TryGetValue(moduleName, out List<CodeAnalysis.Diagnostic> moduleDiagnostics))
             {
                 return Enumerable.Empty<CodeAnalysis.Diagnostic>();
             }
@@ -443,7 +443,7 @@ namespace Faml
         {
             QualifiableName moduleName = moduleSyntax.ModuleName;
 
-            if (!this._modulesDiagnostics.TryGetValue(moduleName, out List<Diagnostic> diagnostics))
+            if (!this.modulesDiagnostics.TryGetValue(moduleName, out List<Diagnostic> diagnostics))
             {
                 return false;
             }
@@ -460,18 +460,18 @@ namespace Faml
         }
 
         // TODO: Update this to only check for errors
-        public bool AnyErrors => this._projectDiagnostics.Count > 0 || this._modulesDiagnostics.Count > 0;
+        public bool AnyErrors => this.projectDiagnostics.Count > 0 || this.modulesDiagnostics.Count > 0;
 
-        public ExternalObjectTypeBinding? ExampleTypeBinding => this._exampleTypeBinding;
+        public ExternalObjectTypeBinding? ExampleTypeBinding => this.exampleTypeBinding;
 
-        public ExternalObjectTypeBinding? ExamplesTypeBinding => this._examplesTypeBinding;
+        public ExternalObjectTypeBinding? ExamplesTypeBinding => this.examplesTypeBinding;
 
         public void AddModuleDiagnostic(QualifiableName moduleName, CodeAnalysis.Diagnostic diagnostic)
         {
-            if (!this._modulesDiagnostics.TryGetValue(moduleName, out List<Diagnostic> diagnostics))
+            if (!this.modulesDiagnostics.TryGetValue(moduleName, out List<Diagnostic> diagnostics))
             {
                 diagnostics = new List<CodeAnalysis.Diagnostic>();
-                this._modulesDiagnostics.Add(moduleName, diagnostics);
+                this.modulesDiagnostics.Add(moduleName, diagnostics);
             }
 
             diagnostics.Add(diagnostic);
@@ -479,7 +479,7 @@ namespace Faml
 
         public void AddProjectDiagnostic(CodeAnalysis.Diagnostic diagnostic)
         {
-            this._projectDiagnostics.Add(diagnostic);
+            this.projectDiagnostics.Add(diagnostic);
         }
 
         public void AddProjectError(string message)
@@ -625,7 +625,7 @@ namespace Faml
 
         public FamlModule? GetModuleIfExists(QualifiableName moduleName)
         {
-            this._modules.TryGetValue(moduleName, out FamlModule module);
+            this.modules.TryGetValue(moduleName, out FamlModule module);
             return module;
         }
 
@@ -689,22 +689,22 @@ namespace Faml
         {
             QualifiableName moduleName = QualifiableName.ModuleNameFromRelativePath(path);
 
-            this._modules.Remove(moduleName);
-            this._modulesEvals.Clear();
+            this.modules.Remove(moduleName);
+            this.modulesEvals.Clear();
 
             // TODO: Fix this up - or just remove everything
-            this._modulesDiagnostics.Remove(moduleName);
+            this.modulesDiagnostics.Remove(moduleName);
 
-            this._sourceOverrides[path] = updatedSource;
+            this.sourceOverrides[path] = updatedSource;
 
             this.UpdateModule(moduleName, updatedSource, false);
         }
 
         public FamlModule? GetLoadedModule(QualifiableName moduleName)
         {
-            return !this._modules.TryGetValue(moduleName, out FamlModule syntaxTree) ? null : syntaxTree;
+            return !this.modules.TryGetValue(moduleName, out FamlModule syntaxTree) ? null : syntaxTree;
         }
 
-        public IEnumerable<FamlModule> Modules => this._modules.Values;
+        public IEnumerable<FamlModule> Modules => this.modules.Values;
     }
 }

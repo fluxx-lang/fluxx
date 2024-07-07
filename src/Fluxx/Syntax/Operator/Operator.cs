@@ -10,8 +10,8 @@ namespace Faml.Syntax.Operator
 {
     public class Operator
     {
-        private readonly string _sourceRepresentation;
-        private readonly int _precedence;
+        private readonly string sourceRepresentation;
+        private readonly int precedence;
 
         private static readonly Dictionary<Lexer.TokenType, InfixOperator> InfixOperators = new Dictionary<Lexer.TokenType, InfixOperator>();
         private static readonly Dictionary<Lexer.TokenType, PrefixOperator> PrefixOperators = new Dictionary<Lexer.TokenType, PrefixOperator>();
@@ -52,13 +52,13 @@ namespace Faml.Syntax.Operator
 
         public Operator(string sourceRepresentation, int precedence)
         {
-            this._sourceRepresentation = sourceRepresentation;
-            this._precedence = precedence;
+            this.sourceRepresentation = sourceRepresentation;
+            this.precedence = precedence;
         }
 
-        public virtual int GetPrecedence() => this._precedence;
+        public virtual int GetPrecedence() => this.precedence;
 
-        public virtual string GetSourceRepresentation() => this._sourceRepresentation;
+        public virtual string GetSourceRepresentation() => this.sourceRepresentation;
     }
 
 }

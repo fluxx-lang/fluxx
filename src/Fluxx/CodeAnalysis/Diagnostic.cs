@@ -9,12 +9,12 @@ namespace Faml.CodeAnalysis
 {
     public class Diagnostic
     {
-        private readonly FamlModule? _module;
+        private readonly FamlModule? module;
         //private readonly Location? _location;
-        private readonly LinePosition? _startLinePosition;
-        private readonly TextSpan _sourceSpan;
-        private readonly DiagnosticSeverity _severity;
-        private readonly string _message;
+        private readonly LinePosition? startLinePosition;
+        private readonly TextSpan sourceSpan;
+        private readonly DiagnosticSeverity severity;
+        private readonly string message;
 
 
         public static Diagnostic FromTypeToolingDiagnostic(FamlModule module, TextSpan sourceSpan,
@@ -43,36 +43,36 @@ namespace Faml.CodeAnalysis
 
         public Diagnostic(FamlModule module, TextSpan sourceSpan, DiagnosticSeverity severity, string message)
         {
-            this._module = module;
+            this.module = module;
 
-            this._sourceSpan = sourceSpan;
-            this._startLinePosition = module.SourceText.Lines.GetLinePosition(this._sourceSpan.Start);
+            this.sourceSpan = sourceSpan;
+            this.startLinePosition = module.SourceText.Lines.GetLinePosition(this.sourceSpan.Start);
 
-            this._severity = severity;
-            this._message = message;
+            this.severity = severity;
+            this.message = message;
         }
 
         public Diagnostic(DiagnosticSeverity severity, string message)
         {
-            this._module = null;
-            this._sourceSpan = TextSpanExtensions.NullTextSpan;
-            this._startLinePosition = null;
+            this.module = null;
+            this.sourceSpan = TextSpanExtensions.NullTextSpan;
+            this.startLinePosition = null;
 
-            this._severity = severity;
-            this._message = message;
+            this.severity = severity;
+            this.message = message;
         }
 
         public Diagnostic(SyntaxNode syntaxNode, DiagnosticSeverity severity, string message)
             : this(syntaxNode.GetModule(), syntaxNode.Span, severity, message) { }
 
-        public QualifiableName ModuleName => this._module?.ModuleName ?? new QualifiableName("");
+        public QualifiableName ModuleName => this.module?.ModuleName ?? new QualifiableName("");
 
-        public LinePosition? StartLinePosition => this._startLinePosition;
+        public LinePosition? StartLinePosition => this.startLinePosition;
 
-        public TextSpan SourceSpan => this._sourceSpan;
+        public TextSpan SourceSpan => this.sourceSpan;
 
-        public DiagnosticSeverity Severity => this._severity;
+        public DiagnosticSeverity Severity => this.severity;
 
-        public string Message => this._message;
+        public string Message => this.message;
     }
 }

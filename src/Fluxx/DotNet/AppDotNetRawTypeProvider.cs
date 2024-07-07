@@ -14,14 +14,14 @@ namespace Faml.DotNet
     /// </summary>
     public class AppDotNetRawTypeProvider : DotNetRawTypeProvider
     {
-        private readonly Assembly _mainAssembly;
-        private readonly Lazy<List<Assembly>> _assemblies;
-        private string _windowsRuntimeAssemblyQualifier = null;
+        private readonly Assembly mainAssembly;
+        private readonly Lazy<List<Assembly>> assemblies;
+        private string windowsRuntimeAssemblyQualifier = null;
 
         public AppDotNetRawTypeProvider(Assembly mainAssembly)
         {
-            this._mainAssembly = mainAssembly;
-            this._assemblies = new Lazy<List<Assembly>>(this.LoadAssemblies);
+            this.mainAssembly = mainAssembly;
+            this.assemblies = new Lazy<List<Assembly>>(this.LoadAssemblies);
         }
 
         public override bool IsReady => true;
@@ -42,7 +42,7 @@ namespace Faml.DotNet
             var assemblies = new List<Assembly>();
             var assemblyNames = new HashSet<string>();
 
-            this.AddAssemblies(this._mainAssembly, assemblies, assemblyNames);
+            this.AddAssemblies(this.mainAssembly, assemblies, assemblyNames);
 
             return assemblies;
         }
@@ -77,7 +77,7 @@ namespace Faml.DotNet
                 // assembly.
                 if (referencedAssemblyName.ContentType == AssemblyContentType.WindowsRuntime)
                 {
-                    this._windowsRuntimeAssemblyQualifier = "Windows, ContentType = WindowsRuntime";
+                    this.windowsRuntimeAssemblyQualifier = "Windows, ContentType = WindowsRuntime";
                     continue;
                 }
 
@@ -91,7 +91,7 @@ namespace Faml.DotNet
 
         public override DotNetRawType? GetType(string typeName)
         {
-            foreach (Assembly referencedAssembly in this._assemblies.Value)
+            foreach (Assembly referencedAssembly in this.assemblies.Value)
             {
                 Type type = referencedAssembly.GetType(typeName);
                 if (type != null)
@@ -100,9 +100,9 @@ namespace Faml.DotNet
                 }
             }
 
-            if (this._windowsRuntimeAssemblyQualifier != null)
+            if (this.windowsRuntimeAssemblyQualifier != null)
             {
-                Type type = Type.GetType(typeName + ", " + this._windowsRuntimeAssemblyQualifier);
+                Type type = Type.GetType(typeName + ", " + this.windowsRuntimeAssemblyQualifier);
                 if (type != null)
                 {
                     return new ReflectionDotNetRawType(type);

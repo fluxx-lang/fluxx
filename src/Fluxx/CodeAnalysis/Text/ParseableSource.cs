@@ -5,9 +5,9 @@ namespace Faml.CodeAnalysis.Text
 {
     public class ParseableSource
     {
-        private readonly SourceText _sourceText;
-        private readonly int _startPosition;
-        private readonly int _endPosition;
+        private readonly SourceText sourceText;
+        private readonly int startPosition;
+        private readonly int endPosition;
 
 
         public static bool IsLetter(char character)
@@ -23,20 +23,20 @@ namespace Faml.CodeAnalysis.Text
 
         public ParseableSource(SourceText sourceText, int startPosition, int endPosition)
         {
-            this._sourceText = sourceText;
-            this._startPosition = startPosition;
-            this._endPosition = endPosition;
+            this.sourceText = sourceText;
+            this.startPosition = startPosition;
+            this.endPosition = endPosition;
         }
 
         public ParseableSource(SourceText sourceText) : this(sourceText, 0, sourceText.Length) { }
 
         public ParseableSource(SourceText sourceText, TextSpan span) : this(sourceText, span.Start, span.End) { }
 
-        public SourceText SourceText => this._sourceText;
+        public SourceText SourceText => this.sourceText;
 
-        public int StartPosition => this._startPosition;
+        public int StartPosition => this.startPosition;
 
-        public int EndPosition => this._endPosition;
+        public int EndPosition => this.endPosition;
 
         public int GetPrevNonSpace(int position)
         {
@@ -44,12 +44,12 @@ namespace Faml.CodeAnalysis.Text
             while (true)
             {
                 --testPosition;
-                if (testPosition < this._startPosition)
+                if (testPosition < this.startPosition)
                 {
                     return testPosition;
                 }
 
-                char currChar = this._sourceText[testPosition];
+                char currChar = this.sourceText[testPosition];
                 if (!IsSpace(currChar))
                 {
                     return testPosition;
@@ -63,12 +63,12 @@ namespace Faml.CodeAnalysis.Text
             while (true)
             {
                 ++testPosition;
-                if (testPosition >= this._endPosition)
+                if (testPosition >= this.endPosition)
                 {
                     return testPosition;
                 }
 
-                char currChar = this._sourceText[testPosition];
+                char currChar = this.sourceText[testPosition];
                 if (!IsSpace(currChar))
                 {
                     return testPosition;
@@ -76,21 +76,21 @@ namespace Faml.CodeAnalysis.Text
             }
         }
 
-        public char GetCharAt(int position) => position < this._startPosition || position >= this._endPosition ? '\0' : this._sourceText[position];
+        public char GetCharAt(int position) => position < this.startPosition || position >= this.endPosition ? '\0' : this.sourceText[position];
 
         public string Substring(int position, int length)
         {
-            if (position < this._startPosition)
+            if (position < this.startPosition)
             {
                 throw new ArgumentException("Substring position is before start of ParseableSource");
             }
 
-            if (position + length > this._endPosition)
+            if (position + length > this.endPosition)
             {
                 throw new ArgumentException("Substring length is extends past end of ParseableSource");
             }
 
-            return this._sourceText.ToString(new TextSpan(position, length));
+            return this.sourceText.ToString(new TextSpan(position, length));
         }
 
         public bool IsSpanSoleItemOnLine(TextSpan span)
@@ -178,6 +178,6 @@ namespace Faml.CodeAnalysis.Text
 
         public bool IsSpaceOrNewlineAt(int position) => IsSpaceOrNewline(this.GetCharAt(position));
 
-        public int GetColumn(int position) => this._sourceText.Lines.GetLinePosition(position).Character;
+        public int GetColumn(int position) => this.sourceText.Lines.GetLinePosition(position).Character;
     }
 }

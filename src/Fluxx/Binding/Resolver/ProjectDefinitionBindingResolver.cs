@@ -8,11 +8,11 @@ namespace Faml.Binding.Resolver
 {
     public class ProjectDefinitionBindingResolver : BindingResolver
     {
-        private readonly FamlProject _project;
+        private readonly FamlProject project;
 
         public ProjectDefinitionBindingResolver(FamlProject project)
         {
-            this._project = project;
+            this.project = project;
         }
 
         public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName)
@@ -51,7 +51,7 @@ namespace Faml.Binding.Resolver
             // imports
             string potentialTypeName = unqualifiableName.GetPascalCase();
             var className = new QualifiableName("Faml.ProjectTypes." + potentialTypeName);
-            TypeBindingResult typeBindingResult = this._project.ResolveTypeBinding(className);
+            TypeBindingResult typeBindingResult = this.project.ResolveTypeBinding(className);
 
             if (typeBindingResult is TypeBindingResult.Success success)
             {

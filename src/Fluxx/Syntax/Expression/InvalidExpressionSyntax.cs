@@ -10,31 +10,31 @@ namespace Faml.Syntax.Expression
 {
     public sealed class InvalidExpressionSyntax : ExpressionSyntax
     {
-        private readonly TypeBinding _typeBinding;
-        private readonly string _expressionSource;
+        private readonly TypeBinding typeBinding;
+        private readonly string expressionSource;
 
         public InvalidExpressionSyntax(TextSpan span, string expressionSource, TypeBinding typeBinding) : base(span)
         {
-            this._typeBinding = typeBinding;
-            this._expressionSource = expressionSource;
+            this.typeBinding = typeBinding;
+            this.expressionSource = expressionSource;
         }
 
         public InvalidExpressionSyntax() : base(TextSpanExtensions.NullTextSpan)
         {
-            this._typeBinding = InvalidTypeBinding.Instance;
-            this._expressionSource = "<invalid-expression>";
+            this.typeBinding = InvalidTypeBinding.Instance;
+            this.expressionSource = "<invalid-expression>";
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.InvalidExpression;
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._expressionSource);
+            sourceWriter.Write(this.expressionSource);
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
     }
 }

@@ -9,36 +9,36 @@ namespace Faml.Syntax
 {
     public class ExternalTypeCustomLiteralSytax : ExpressionSyntax
     {
-        private readonly ExternalObjectTypeBinding _propertyTypeBinding;
-        private readonly TypeToolingType _externalType;
-        private readonly string _literalSource;
-        private readonly CustomLiteral _customLiteral;
+        private readonly ExternalObjectTypeBinding propertyTypeBinding;
+        private readonly TypeToolingType externalType;
+        private readonly string literalSource;
+        private readonly CustomLiteral customLiteral;
 
 
         public ExternalTypeCustomLiteralSytax(TextSpan span, ExternalObjectTypeBinding propertyTypeBinding, TypeToolingType externalType, string literalSource, CustomLiteral customLiteral) : base(span)
         {
-            this._propertyTypeBinding = propertyTypeBinding;
-            this._externalType = externalType;
-            this._literalSource = literalSource;
-            this._customLiteral = customLiteral;
+            this.propertyTypeBinding = propertyTypeBinding;
+            this.externalType = externalType;
+            this.literalSource = literalSource;
+            this.customLiteral = customLiteral;
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._propertyTypeBinding;
+            return this.propertyTypeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ExternalTypeLiteral;
 
-        public TypeToolingType ExternalType => this._externalType;
+        public TypeToolingType ExternalType => this.externalType;
 
-        public string LiteralSource => this._literalSource;
+        public string LiteralSource => this.literalSource;
 
-        public CustomLiteral CustomLiteral => this._customLiteral;
+        public CustomLiteral CustomLiteral => this.customLiteral;
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._literalSource);
+            sourceWriter.Write(this.literalSource);
         }
     }
 }

@@ -9,16 +9,16 @@ namespace Faml.DotNet
 {
     public class AssemblySourceProvider : SourceProvider
     {
-        private readonly List<Assembly> _assemblies;
+        private readonly List<Assembly> assemblies;
 
         public AssemblySourceProvider(Assembly assembly)
         {
-            this._assemblies = new List<Assembly> {assembly};
+            this.assemblies = new List<Assembly> {assembly};
         }
 
         public override string? GetTextResource(string path)
         {
-            foreach (Assembly assembly in this._assemblies)
+            foreach (Assembly assembly in this.assemblies)
             {
                 string[] resourceNames = assembly.GetManifestResourceNames();
 
@@ -58,6 +58,6 @@ namespace Faml.DotNet
             throw new NotImplementedException();
         }
 
-        public override string RootPath => this._assemblies.Count == 1 ? this._assemblies[0].FullName : "assemblies";
+        public override string RootPath => this.assemblies.Count == 1 ? this.assemblies[0].FullName : "assemblies";
     }
 }

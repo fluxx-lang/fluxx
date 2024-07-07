@@ -11,13 +11,13 @@ namespace Faml.Syntax.Type
 {
     public class InvalidTypeReferenceSyntax : TypeReferenceSyntax
     {
-        private readonly TypeBinding _typeBinding = new InvalidTypeBinding(new QualifiableName("INVALID_TYPE"));
+        private readonly TypeBinding typeBinding = new InvalidTypeBinding(new QualifiableName("INVALID_TYPE"));
 
         public InvalidTypeReferenceSyntax() : base(TextSpanExtensions.NullTextSpan) {}
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.InvalidTypeReference;

@@ -11,37 +11,37 @@ namespace Faml.Syntax
 {
     public sealed class PropertyNameTypePairSyntax : SyntaxNode
     {
-        private readonly NameSyntax _propertyNameSyntax;
-        private readonly TypeReferenceSyntax _typeReferenceSyntax;
-        private readonly ExpressionSyntax? _defaultValue;
+        private readonly NameSyntax propertyNameSyntax;
+        private readonly TypeReferenceSyntax typeReferenceSyntax;
+        private readonly ExpressionSyntax? defaultValue;
         // TODO: Handle inferred types here
 
         // AST structure properties
         public PropertyNameTypePairSyntax(TextSpan span, NameSyntax propertyNameSyntax, TypeReferenceSyntax typeReferenceSyntax, ExpressionSyntax? defaultValue) : base(span)
             {
-            this._propertyNameSyntax = propertyNameSyntax;
-            this._propertyNameSyntax.SetParent(this);
+            this.propertyNameSyntax = propertyNameSyntax;
+            this.propertyNameSyntax.SetParent(this);
 
-            this._typeReferenceSyntax = typeReferenceSyntax;
-            this._typeReferenceSyntax.SetParent(this);
+            this.typeReferenceSyntax = typeReferenceSyntax;
+            this.typeReferenceSyntax.SetParent(this);
 
-            this._defaultValue = defaultValue;
-            this._defaultValue?.SetParent(this);
+            this.defaultValue = defaultValue;
+            this.defaultValue?.SetParent(this);
         }
 
-        public NameSyntax PropertyNameSyntax => this._propertyNameSyntax;
+        public NameSyntax PropertyNameSyntax => this.propertyNameSyntax;
 
-        public Name PropertyName => this._propertyNameSyntax.Name;
+        public Name PropertyName => this.propertyNameSyntax.Name;
 
-        public TypeReferenceSyntax TypeReferenceSyntax => this._typeReferenceSyntax;
+        public TypeReferenceSyntax TypeReferenceSyntax => this.typeReferenceSyntax;
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._propertyNameSyntax);
-            visitor(this._typeReferenceSyntax);
-            if (this._defaultValue != null)
+            visitor(this.propertyNameSyntax);
+            visitor(this.typeReferenceSyntax);
+            if (this.defaultValue != null)
             {
-                visitor(this._defaultValue);
+                visitor(this.defaultValue);
             }
         }
 
@@ -50,13 +50,13 @@ namespace Faml.Syntax
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._propertyNameSyntax);
+            sourceWriter.Write(this.propertyNameSyntax);
             sourceWriter.Write(":");
-            sourceWriter.Write(this._typeReferenceSyntax);
-            if (this._defaultValue != null)
+            sourceWriter.Write(this.typeReferenceSyntax);
+            if (this.defaultValue != null)
             {
                 sourceWriter.Write(" = ");
-                sourceWriter.Write(this._defaultValue);
+                sourceWriter.Write(this.defaultValue);
             }
         }
     }

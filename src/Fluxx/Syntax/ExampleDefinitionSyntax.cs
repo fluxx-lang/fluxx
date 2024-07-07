@@ -11,24 +11,24 @@ namespace Faml.Syntax
 {
     public class ExampleDefinitionSyntax : SyntaxNode
     {
-        private readonly ExpressionSyntax _expression;
-        private int _exampleIndex;
+        private readonly ExpressionSyntax expression;
+        private int exampleIndex;
 
         public ExampleDefinitionSyntax(TextSpan span, ExpressionSyntax expression) : base(span)
         {
-            this._expression = expression;
+            this.expression = expression;
 
-            this._expression.SetParent(this);
+            this.expression.SetParent(this);
         }
 
-        public ExpressionSyntax Expression => this._expression;
+        public ExpressionSyntax Expression => this.expression;
 
         internal void SetExampleIndex(int exampleIndex)
         {
-            this._exampleIndex = exampleIndex;
+            this.exampleIndex = exampleIndex;
         }
 
-        public int ExampleIndex => this._exampleIndex;
+        public int ExampleIndex => this.exampleIndex;
 
         public override bool IsTerminalNode()
         {
@@ -39,12 +39,12 @@ namespace Faml.Syntax
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._expression);
+            visitor(this.expression);
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._expression);
+            sourceWriter.Write(this.expression);
         }
     }
 }

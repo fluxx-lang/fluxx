@@ -2,16 +2,16 @@ namespace Faml.Interpreter
 {
     public sealed class CastObjectDoubleEval : DoubleEval
     {
-        private readonly ObjectEval _objectEval;
+        private readonly ObjectEval objectEval;
 
         public CastObjectDoubleEval(ObjectEval objectEval)
         {
-            this._objectEval = objectEval;
+            this.objectEval = objectEval;
         }
 
         public override double Eval()
         {
-            return (double)this._objectEval.Eval();
+            return (double)this.objectEval.Eval();
         }
     }
 }

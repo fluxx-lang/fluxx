@@ -30,13 +30,13 @@ namespace Faml.Interpreter
 {
     public class CreateEvals
     {
-        private TypeToolingEnvironment _typeToolingEnvironment;
-        private readonly ConcurrentDictionary<FunctionDefinitionSyntax, List<FunctionEvalResolved>> _functionsNeedingResolving =
+        private TypeToolingEnvironment typeToolingEnvironment;
+        private readonly ConcurrentDictionary<FunctionDefinitionSyntax, List<FunctionEvalResolved>> functionsNeedingResolving =
             new ConcurrentDictionary<FunctionDefinitionSyntax, List<FunctionEvalResolved>>();
 
         public CreateEvals(TypeToolingEnvironment typeToolingEnvironment)
         {
-            this._typeToolingEnvironment = typeToolingEnvironment;
+            this.typeToolingEnvironment = typeToolingEnvironment;
         }
 
         public ObjectEval GetOrCreateExampleEval(ExampleDefinitionSyntax example)
@@ -103,7 +103,7 @@ namespace Faml.Interpreter
             }
             else
             {
-                List<FunctionEvalResolved> functionEvalResolveds = this._functionsNeedingResolving.GetOrAdd(functionDefinition, (_) => new List<FunctionEvalResolved>());
+                List<FunctionEvalResolved> functionEvalResolveds = this.functionsNeedingResolving.GetOrAdd(functionDefinition, (_) => new List<FunctionEvalResolved>());
                 functionEvalResolveds.Add(functionEvalResolved);
             }
         }
@@ -115,13 +115,13 @@ namespace Faml.Interpreter
         {
             while (true)
             {
-                FunctionDefinitionSyntax function = this._functionsNeedingResolving.Keys.FirstOrDefault();
+                FunctionDefinitionSyntax function = this.functionsNeedingResolving.Keys.FirstOrDefault();
                 if (function == null)
                 {
                     break;
                 }
 
-                if (!this._functionsNeedingResolving.TryRemove(function, out List<FunctionEvalResolved> functionEvalResolveds))
+                if (!this.functionsNeedingResolving.TryRemove(function, out List<FunctionEvalResolved> functionEvalResolveds))
                 {
                     continue;
                 }
@@ -722,7 +722,7 @@ namespace Faml.Interpreter
 
         private ObjectConstantDelegateEval CreateObjectConstantDelegateEval(ExpressionAndHelpersCode literalValueCode)
         {
-            Expression literalExpression = new ConvertToExpressionTree(this._typeToolingEnvironment, literalValueCode.Expression).Result;
+            Expression literalExpression = new ConvertToExpressionTree(this.typeToolingEnvironment, literalValueCode.Expression).Result;
             LambdaExpression literalLambda = Expression.Lambda(literalExpression);
             Delegate literalDelegate = literalLambda.Compile();
 
@@ -895,11 +895,11 @@ namespace Faml.Interpreter
 
         private class ItemNeedingEval
         {
-            private SyntaxNode _item;
+            private SyntaxNode item;
 
             public ItemNeedingEval(SyntaxNode item)
             {
-                this._item = item;
+                this.item = item;
             }
         }
     }

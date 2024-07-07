@@ -8,25 +8,25 @@ namespace Faml.Syntax.Expression
 {
     public class IfExpressionSyntax : ExpressionSyntax
     {
-        private readonly ConditionValuePairSyntax[] _conditionValuePairs;
-        private readonly TextSpan? _elseSpan;
-        private ExpressionSyntax? _elseValue;
-        private TypeBinding? _typeBinding;
+        private readonly ConditionValuePairSyntax[] conditionValuePairs;
+        private readonly TextSpan? elseSpan;
+        private ExpressionSyntax? elseValue;
+        private TypeBinding? typeBinding;
 
         public IfExpressionSyntax(TextSpan span, ConditionValuePairSyntax[] conditionValuePairs, TextSpan? elseSpan) : base(span)
         {
-            this._conditionValuePairs = conditionValuePairs;
+            this.conditionValuePairs = conditionValuePairs;
             foreach (ConditionValuePairSyntax conditionValuePair in conditionValuePairs)
             {
                 conditionValuePair.SetParent(this);
             }
 
-            this._elseSpan = elseSpan;
+            this.elseSpan = elseSpan;
         }
 
-        public ConditionValuePairSyntax[] ConditionValuePairs => this._conditionValuePairs;
+        public ConditionValuePairSyntax[] ConditionValuePairs => this.conditionValuePairs;
 
-        public ExpressionSyntax? ElseValue => this._elseValue;
+        public ExpressionSyntax? ElseValue => this.elseValue;
 
         public override bool IsTerminalNode()
         {
@@ -35,14 +35,14 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
+            foreach (ConditionValuePairSyntax conditionValuePair in this.conditionValuePairs)
             {
                 visitor(conditionValuePair);
             }
 
-            if (this._elseValue != null)
+            if (this.elseValue != null)
             {
-                visitor(this._elseValue);
+                visitor(this.elseValue);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Faml.Syntax.Expression
         {
             TypeBinding? typeBinding = null;
 
-            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
+            foreach (ConditionValuePairSyntax conditionValuePair in this.conditionValuePairs)
             {
                 conditionValuePair.ParseValueSource(bindingResolver);
 
@@ -70,18 +70,18 @@ namespace Faml.Syntax.Expression
                 }
             }
 
-            if (this._elseSpan.HasValue)
+            if (this.elseSpan.HasValue)
             {
-                if (this._elseValue == null)
+                if (this.elseValue == null)
                 {
-                    this._elseValue = SourceParser.ParseTextBlockExpression(this.GetModule(), this._elseSpan.Value);
-                    this._elseValue.SetParent(this);
+                    this.elseValue = SourceParser.ParseTextBlockExpression(this.GetModule(), this.elseSpan.Value);
+                    this.elseValue.SetParent(this);
 
                     // Now resolve the bindings on what we just parsed
-                    this._elseValue.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
+                    this.elseValue.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
                 }
 
-                TypeBinding currentTypeBinding = this._elseValue.GetTypeBinding();
+                TypeBinding currentTypeBinding = this.elseValue.GetTypeBinding();
 
                 if (typeBinding == null)
                 {
@@ -97,12 +97,12 @@ namespace Faml.Syntax.Expression
                 }
             }
 
-            this._typeBinding = typeBinding;
+            this.typeBinding = typeBinding;
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.IfExpression;
@@ -111,15 +111,15 @@ namespace Faml.Syntax.Expression
         {
             sourceWriter.Writeln("if");
 
-            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
+            foreach (ConditionValuePairSyntax conditionValuePair in this.conditionValuePairs)
             {
                 sourceWriter.Writeln(conditionValuePair);
             }
 
-            if (this._elseValue != null)
+            if (this.elseValue != null)
             {
                 sourceWriter.Write("|: ");
-                sourceWriter.Writeln(this._elseValue);
+                sourceWriter.Writeln(this.elseValue);
             }
         }
     }

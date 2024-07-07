@@ -9,11 +9,11 @@ namespace Faml.Syntax.Literal
 {
     public sealed class DoubleLiteralSyntax : Expression.ExpressionSyntax
     {
-        private readonly int _value;
+        private readonly int value;
 
         public DoubleLiteralSyntax(TextSpan span, int value) : base(span)
         {
-            this._value = value;
+            this.value = value;
         }
 
         public override TypeBinding GetTypeBinding()
@@ -25,9 +25,9 @@ namespace Faml.Syntax.Literal
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._value.ToString());
+            sourceWriter.Write(this.value.ToString());
         }
 
-        public double Value => this._value;
+        public double Value => this.value;
     }
 }

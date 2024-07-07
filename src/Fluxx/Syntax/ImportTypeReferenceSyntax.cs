@@ -14,41 +14,41 @@ namespace Faml.Syntax
 {
     public sealed class ImportTypeReferenceSyntax : SyntaxNode
     {
-        private readonly NameSyntax _nameSyntax;
-        private TypeBinding? _typeBinding;
-        private AttachedTypeBinding? _attachedTypeBinding;
+        private readonly NameSyntax nameSyntax;
+        private TypeBinding? typeBinding;
+        private AttachedTypeBinding? attachedTypeBinding;
 
 
         public ImportTypeReferenceSyntax(TextSpan span, NameSyntax nameSyntax) : base(span)
         {
-            this._nameSyntax = nameSyntax;
-            this._nameSyntax.SetParent(this);
+            this.nameSyntax = nameSyntax;
+            this.nameSyntax.SetParent(this);
         }
 
-        public NameSyntax NameSyntax => this._nameSyntax;
+        public NameSyntax NameSyntax => this.nameSyntax;
 
-        public Name Name => this._nameSyntax.Name;
+        public Name Name => this.nameSyntax.Name;
 
         public QualifiableName QualifiedName => new QualifiableName(((ImportSyntax)this.Parent).Qualifier, this.Name);
 
         public TypeBinding GetTypeBinding()
         {
-            if (this._typeBinding == null)
+            if (this.typeBinding == null)
             {
                 throw new Exception("TypeBinding not set for import; it hasn't been resolved yet");
             }
 
-            return this._typeBinding;
+            return this.typeBinding;
         }
 
         public AttachedTypeBinding GetAttachedTypeBinding()
         {
-            return this._attachedTypeBinding;
+            return this.attachedTypeBinding;
         }
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._nameSyntax);
+            visitor(this.nameSyntax);
         }
 
         public override bool IsTerminalNode()
@@ -60,7 +60,7 @@ namespace Faml.Syntax
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._nameSyntax);
+            sourceWriter.Write(this.nameSyntax);
         }
 
         // TODO: Fix this up to use bindingResolver, in some form
@@ -72,17 +72,17 @@ namespace Faml.Syntax
             TypeBindingResult typeBindingResult = project.ResolveTypeBinding(className);
             if (typeBindingResult is TypeBindingResult.Success success)
             {
-                this._typeBinding = success.TypeBinding;
+                this.typeBinding = success.TypeBinding;
             }
             else
             {
                 this.AddError(
                     typeBindingResult.GetNotFoundOrOtherErrorMessage(
                         $"Type '{className}' not found in any of the provided libraries"));
-                this._typeBinding = InvalidTypeBinding.Instance;
+                this.typeBinding = InvalidTypeBinding.Instance;
             }
 
-            this._attachedTypeBinding = project.ResolveAttachedTypeBinding(className);
+            this.attachedTypeBinding = project.ResolveAttachedTypeBinding(className);
         }
     }
 }

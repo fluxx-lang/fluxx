@@ -2,16 +2,16 @@ namespace Faml.Interpreter
 {
     public class StringLiteralEval : ObjectEval
     {
-        private readonly string _value;
+        private readonly string value;
 
         public StringLiteralEval(string value)
         {
-            this._value = value;
+            this.value = value;
         }
 
         public override object Eval()
         {
-            return this._value;
+            return this.value;
         }
     }
 

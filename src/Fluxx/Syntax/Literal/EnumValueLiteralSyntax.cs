@@ -7,27 +7,27 @@ namespace Faml.Syntax.Expression
 {
     public class EnumValueLiteralSyntax : ExpressionSyntax
     {
-        private readonly NameSyntax _enumValueSyntax;
-        private readonly EnumValueBinding _enumValueBinding;
+        private readonly NameSyntax enumValueSyntax;
+        private readonly EnumValueBinding enumValueBinding;
 
 
         public EnumValueLiteralSyntax(TextSpan span, NameSyntax enumValueSyntax, EnumValueBinding enumValueBinding) : base(span)
         {
-            this._enumValueSyntax = enumValueSyntax;
-            this._enumValueSyntax.SetParent(this);
+            this.enumValueSyntax = enumValueSyntax;
+            this.enumValueSyntax.SetParent(this);
 
-            this._enumValueBinding = enumValueBinding;
+            this.enumValueBinding = enumValueBinding;
         }
 
-        public NameSyntax EnumValueSyntax => this._enumValueSyntax;
+        public NameSyntax EnumValueSyntax => this.enumValueSyntax;
 
-        public Name EnumValueName => this._enumValueSyntax.Name;
+        public Name EnumValueName => this.enumValueSyntax.Name;
 
-        public EnumValueBinding EnumValueBinding => this._enumValueBinding;
+        public EnumValueBinding EnumValueBinding => this.enumValueBinding;
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._enumValueBinding.EnumTypeBinding;
+            return this.enumValueBinding.EnumTypeBinding;
         }
 
         public override bool IsTerminalNode()
@@ -39,15 +39,15 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            if (this._enumValueSyntax != null)
+            if (this.enumValueSyntax != null)
             {
-                visitor(this._enumValueSyntax);
+                visitor(this.enumValueSyntax);
             }
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._enumValueSyntax.ToString());
+            sourceWriter.Write(this.enumValueSyntax.ToString());
         }
     }
 }

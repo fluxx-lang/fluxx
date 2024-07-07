@@ -2,14 +2,14 @@
 {
     public abstract class EnumValueBinding
     {
-        private readonly EnumTypeBinding _enumTypeBinding;
+        private readonly EnumTypeBinding enumTypeBinding;
 
         protected EnumValueBinding(EnumTypeBinding enumTypeBinding)
         {
-            this._enumTypeBinding = enumTypeBinding;
+            this.enumTypeBinding = enumTypeBinding;
         }
 
-        public EnumTypeBinding EnumTypeBinding => this._enumTypeBinding;
+        public EnumTypeBinding EnumTypeBinding => this.enumTypeBinding;
 
         public abstract string Name { get; }
     }

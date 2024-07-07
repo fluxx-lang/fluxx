@@ -9,35 +9,35 @@ namespace Faml.Syntax.Expression
 {
     public sealed class QualifiedSymbolReferenceSyntax : ExpressionSyntax
     {
-        private readonly QualifiedSymbolReferenceSyntax? _qualifier;
-        private readonly NameSyntax _symbol;
-        private readonly QualifiableName _qualifiableName;
-        private TypeBinding? _typeBinding;
-        private PropertyBinding? _propertyBinding;
+        private readonly QualifiedSymbolReferenceSyntax? qualifier;
+        private readonly NameSyntax symbol;
+        private readonly QualifiableName qualifiableName;
+        private TypeBinding? typeBinding;
+        private PropertyBinding? propertyBinding;
 
 
         public QualifiedSymbolReferenceSyntax(TextSpan span, QualifiedSymbolReferenceSyntax? qualifier, NameSyntax symbol) : base(span)
         {
-            this._qualifier = qualifier;
-            this._qualifier?.SetParent(this);
+            this.qualifier = qualifier;
+            this.qualifier?.SetParent(this);
 
-            this._symbol = symbol;
-            this._symbol.SetParent(this);
+            this.symbol = symbol;
+            this.symbol.SetParent(this);
 
             Name symbolName = symbol.Name;
-            this._qualifiableName = qualifier == null ? symbolName.ToQualifiableName() : new QualifiableName(qualifier.QualifiableName, symbolName);
+            this.qualifiableName = qualifier == null ? symbolName.ToQualifiableName() : new QualifiableName(qualifier.QualifiableName, symbolName);
         }
 
-        public QualifiableName QualifiableName => this._qualifiableName;
+        public QualifiableName QualifiableName => this.qualifiableName;
 
-        public bool IsType => this._typeBinding != null;
+        public bool IsType => this.typeBinding != null;
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver)
         {
-            if (this._qualifier != null && this._qualifier.IsType)
+            if (this.qualifier != null && this.qualifier.IsType)
             {
-                TypeBinding typeBinding = this._qualifier.GetTypeBinding();
-                this._propertyBinding = bindingResolver.ResolvePropertyBinding(typeBinding, this._symbol);
+                TypeBinding typeBinding = this.qualifier.GetTypeBinding();
+                this.propertyBinding = bindingResolver.ResolvePropertyBinding(typeBinding, this.symbol);
             }
             else
             {
@@ -46,12 +46,12 @@ namespace Faml.Syntax.Expression
 
                 if (typeBindingResult is TypeBindingResult.Success successResult)
                 {
-                    this._typeBinding = successResult.TypeBinding;
+                    this.typeBinding = successResult.TypeBinding;
                 }
                 else if (typeBindingResult is TypeBindingResult.Error errorResult)
                 {
                     this.AddError(errorResult.Message);
-                    this._typeBinding = new InvalidTypeBinding(qualifiableName);
+                    this.typeBinding = new InvalidTypeBinding(qualifiableName);
                 }
                 else
                 {
@@ -64,12 +64,12 @@ namespace Faml.Syntax.Expression
         {
             if (this.IsType)
             {
-                return this._typeBinding;
+                return this.typeBinding;
             }
 
-            if (this._propertyBinding != null)
+            if (this.propertyBinding != null)
             {
-                return this._propertyBinding.GetTypeBinding();
+                return this.propertyBinding.GetTypeBinding();
             }
 
             throw new Exception(
@@ -82,23 +82,23 @@ namespace Faml.Syntax.Expression
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
         {
-            if (this._qualifier != null)
+            if (this.qualifier != null)
             {
-                visitor(this._qualifier);
+                visitor(this.qualifier);
             }
 
-            visitor(this._symbol);
+            visitor(this.symbol);
         }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            if (this._qualifier != null)
+            if (this.qualifier != null)
             {
-                this._qualifier.WriteSource(sourceWriter);
+                this.qualifier.WriteSource(sourceWriter);
                 sourceWriter.Write(".");
             }
 
-            sourceWriter.Write(this._symbol);
+            sourceWriter.Write(this.symbol);
         }
     }
 }

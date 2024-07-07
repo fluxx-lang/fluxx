@@ -2,16 +2,16 @@ namespace Faml.Interpreter
 {
     public sealed class CastByteObjectEval : ObjectEval
     {
-        private readonly IntEval _intEval;
+        private readonly IntEval intEval;
 
         public CastByteObjectEval(IntEval intEval)
         {
-            this._intEval = intEval;
+            this.intEval = intEval;
         }
 
         public override object Eval()
         {
-            return (byte)this._intEval.Eval();
+            return (byte)this.intEval.Eval();
         }
     }
 }

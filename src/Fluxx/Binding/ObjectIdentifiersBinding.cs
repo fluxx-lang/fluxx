@@ -5,6 +5,6 @@ namespace Faml.Binding
 {
     public class ObjectIdentifiersBinding
     {
-        Dictionary<Name, ObjectTypeBinding> _identifiers;
+        Dictionary<Name, ObjectTypeBinding> identifiers;
     }
 }

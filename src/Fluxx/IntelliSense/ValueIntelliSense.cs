@@ -9,19 +9,19 @@ namespace Faml.IntelliSense
 {
     public class ValueIntelliSense : IntelliSense
     {
-        private readonly TypeBinding _typeBinding;
+        private readonly TypeBinding typeBinding;
 
 
         public ValueIntelliSense(FamlModule module, int position, TypeBinding typeBinding)
             : base(module, position, null)
             {
-            this._typeBinding = typeBinding;
+            this.typeBinding = typeBinding;
         }
 
         public override Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken)
         {
 
-            if (this._typeBinding is EnumTypeBinding enumTypeBinding)
+            if (this.typeBinding is EnumTypeBinding enumTypeBinding)
             {
                 List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>();
                 foreach (EnumValueBinding enumValueBinding in enumTypeBinding.GetValues())
@@ -35,7 +35,7 @@ namespace Faml.IntelliSense
 
                 return Task.FromResult(new IntelliSenseCompletions(completions));
             }
-            else if (this._typeBinding == BuiltInTypeBinding.Bool)
+            else if (this.typeBinding == BuiltInTypeBinding.Bool)
             {
                 List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>
                 {

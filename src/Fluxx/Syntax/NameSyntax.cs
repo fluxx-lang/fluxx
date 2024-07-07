@@ -11,20 +11,20 @@ namespace Faml.Syntax
 {
     public class NameSyntax : SyntaxNode
     {
-        private readonly Name _name;
+        private readonly Name name;
 
         public NameSyntax(TextSpan span, Name name) : base(span)
         {
-            this._name = name;
+            this.name = name;
         }
 
-        public Name Name => this._name;
+        public Name Name => this.name;
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.NameIdentifier;
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._name);
+            sourceWriter.Write(this.name);
         }
     }
 }

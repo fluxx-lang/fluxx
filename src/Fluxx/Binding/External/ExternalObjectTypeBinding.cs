@@ -14,50 +14,50 @@ namespace Faml.Binding.External
 {
     public class ExternalObjectTypeBinding : ObjectTypeBinding
     {
-        private readonly FamlProject _project;
-        private readonly ObjectType _typeToolingType;
-        private bool _gotAttachedType;
-        private AttachedType? _attachedType;
-        private readonly DotNetRawType _rawType;
-        private bool _gotProperties;
-        private Dictionary<string, ObjectProperty>? _objectProperties;
-        private Name? _contentProperty;
+        private readonly FamlProject project;
+        private readonly ObjectType typeToolingType;
+        private bool gotAttachedType;
+        private AttachedType? attachedType;
+        private readonly DotNetRawType rawType;
+        private bool gotProperties;
+        private Dictionary<string, ObjectProperty>? objectProperties;
+        private Name? contentProperty;
 
 
         // TODO: This name is fully qualified.   Do we want that?
         public ExternalObjectTypeBinding(FamlProject project, DotNetRawType rawType) : base(new QualifiableName(rawType.FullName))
         {
-            this._project = project;
-            this._rawType = rawType;
+            this.project = project;
+            this.rawType = rawType;
 
-            this._typeToolingType = (ObjectType)this._project.GetTypeToolingType(this._rawType);
-            this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
+            this.typeToolingType = (ObjectType)this.project.GetTypeToolingType(this.rawType);
+            this.attachedType = this.project.GetTypeToolingAttachedType(this.rawType);
         }
 
         public ExternalObjectTypeBinding(FamlProject project, ObjectType typeToolingType) : base(new QualifiableName(typeToolingType.FullName))
         {
-            this._project = project;
-            this._typeToolingType = typeToolingType;
+            this.project = project;
+            this.typeToolingType = typeToolingType;
 
-            this._rawType = (DotNetRawType)typeToolingType.UnderlyingType;
+            this.rawType = (DotNetRawType)typeToolingType.UnderlyingType;
         }
 
-        public FamlProject Project => this._project;
+        public FamlProject Project => this.project;
 
-        public ObjectType TypeToolingType => this._typeToolingType;
+        public ObjectType TypeToolingType => this.typeToolingType;
 
         public AttachedType? AttachedType
         {
             get
             {
                 // Only lookup the attached type if someone actually needs it
-                if (!this._gotAttachedType)
+                if (!this.gotAttachedType)
                 {
-                    this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
-                    this._gotAttachedType = true;
+                    this.attachedType = this.project.GetTypeToolingAttachedType(this.rawType);
+                    this.gotAttachedType = true;
                 }
 
-                return this._attachedType;
+                return this.attachedType;
             }
         }
 
@@ -66,55 +66,55 @@ namespace Faml.Binding.External
             get
             {
                 this.GetPropertiesIfNeeded();
-                return this._objectProperties;
+                return this.objectProperties;
             }
         }
 
-        public ObjectProperty GetObjectProperty(QualifiableName name) => this._objectProperties[name.ToString()];
+        public ObjectProperty GetObjectProperty(QualifiableName name) => this.objectProperties[name.ToString()];
 
         public Name? ContentProperty
         {
             get
             {
                 this.GetPropertiesIfNeeded();
-                return this._contentProperty;
+                return this.contentProperty;
             }
         }
 
         public void GetPropertiesIfNeeded()
         {
-            if (this._gotProperties)
+            if (this.gotProperties)
             {
                 return;
             }
 
-            this._objectProperties = new Dictionary<string, ObjectProperty>();
+            this.objectProperties = new Dictionary<string, ObjectProperty>();
 
             // Add all properties - for the type itself and its ancestors
-            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType))
+            foreach (ObjectType type in GetTypeAndAncestors(this.typeToolingType))
             {
                 foreach (ObjectProperty property in type.Properties)
                 {
-                    if (!this._objectProperties.ContainsKey(property.Name))
+                    if (!this.objectProperties.ContainsKey(property.Name))
                     {
-                        this._objectProperties.Add(property.Name, property);
+                        this.objectProperties.Add(property.Name, property);
                     }
                 }
             }
 
             // Looks first in the type itself to see if it has a content property, then search its ancestors
-            this._contentProperty = null;
-            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType))
+            this.contentProperty = null;
+            foreach (ObjectType type in GetTypeAndAncestors(this.typeToolingType))
             {
                 ObjectProperty? contentProperty = type.ContentProperty;
                 if (contentProperty != null)
                 {
-                    this._contentProperty = new Name(contentProperty.Name);
+                    this.contentProperty = new Name(contentProperty.Name);
                     break;
                 }
             }
 
-            this._gotProperties = true;
+            this.gotProperties = true;
         }
 
         public static IEnumerable<ObjectType> GetTypeAndAncestors(ObjectType objectType)
@@ -132,7 +132,7 @@ namespace Faml.Binding.External
 
         protected bool Equals(ExternalObjectTypeBinding other)
         {
-            return this._rawType.Equals(other._rawType);
+            return this.rawType.Equals(other.rawType);
         }
 
         public override bool Equals(object obj)
@@ -147,14 +147,14 @@ namespace Faml.Binding.External
 
         public override int GetHashCode()
         {
-            return this._rawType.GetHashCode();
+            return this.rawType.GetHashCode();
         }
 
         public override bool IsAssignableFrom(TypeBinding other)
         {
             if (other is ExternalObjectTypeBinding otherDotNetObjectTypeBinding)
             {
-                return this._rawType.IsAssignableFrom(otherDotNetObjectTypeBinding._rawType);
+                return this.rawType.IsAssignableFrom(otherDotNetObjectTypeBinding.rawType);
             }
             else
             {
@@ -187,7 +187,7 @@ namespace Faml.Binding.External
 
         public override bool SupportsCreateLiteral()
         {
-            return this._typeToolingType?.GetCustomLiteralParser() != null;
+            return this.typeToolingType?.GetCustomLiteralParser() != null;
         }
 
         public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan span)
@@ -196,7 +196,7 @@ namespace Faml.Binding.External
             string literalSource = sourceText.ToString(span);
 
             // Now see if there's a custom literal manager for the type
-            CustomLiteralParser customLiteralParser = this._typeToolingType?.GetCustomLiteralParser();
+            CustomLiteralParser customLiteralParser = this.typeToolingType?.GetCustomLiteralParser();
             if (customLiteralParser != null)
             {
                 try
@@ -221,7 +221,7 @@ namespace Faml.Binding.External
                         }
                     }
 
-                    return new ExternalTypeCustomLiteralSytax(span, this, this._typeToolingType, literalSource, customLiteral);
+                    return new ExternalTypeCustomLiteralSytax(span, this, this.typeToolingType, literalSource, customLiteral);
                 }
                 catch (Exception e)
                 {
@@ -231,7 +231,7 @@ namespace Faml.Binding.External
             }
 
             module.AddError(span,
-                $"'{this._rawType.Name}' can't be expressed as textual literal--it's not an enum nor does it have a custom literal manager");
+                $"'{this.rawType.Name}' can't be expressed as textual literal--it's not an enum nor does it have a custom literal manager");
             return new InvalidExpressionSyntax(span, literalSource, this);
         }
 

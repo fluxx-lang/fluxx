@@ -10,20 +10,20 @@ namespace Faml.Messaging
 
     public abstract class MessagingConnector
     {
-        private long _responseIdCounter = 1;
-        private readonly Dictionary<string, MessageHandler> _messageHandlers = new Dictionary<string, MessageHandler>();
-        private readonly Dictionary<long, ResponseHandler> _neededResponses = new Dictionary<long, ResponseHandler>();
+        private long responseIdCounter = 1;
+        private readonly Dictionary<string, MessageHandler> messageHandlers = new Dictionary<string, MessageHandler>();
+        private readonly Dictionary<long, ResponseHandler> neededResponses = new Dictionary<long, ResponseHandler>();
 
         public void AddMessageHandler(string messageType, MessageHandler handler)
         {
-            this._messageHandlers.Add(messageType, handler);
+            this.messageHandlers.Add(messageType, handler);
         }
 
         protected async Task HandleMessage(Message message)
         {
             string messageType = message.MessageType;
 
-            if (!this._messageHandlers.TryGetValue(messageType, out MessageHandler handler))
+            if (!this.messageHandlers.TryGetValue(messageType, out MessageHandler handler))
             {
                 throw new InvalidOperationException($"Unsupported message type: {messageType}");
             }
@@ -61,11 +61,11 @@ namespace Faml.Messaging
 
         public IReactive<TResponse> SendRequestNeedingResponse<TResponse>(MessageObject request, ResponseConverter<TResponse> responseConverter) where TResponse : class?
         {
-            long responseId = this._responseIdCounter++;
+            long responseId = this.responseIdCounter++;
             Message requestMessage = new Message(request, responseId);
 
             var responseHandler = new ResponseHandler<TResponse>(responseConverter);
-            this._neededResponses.Add(responseId, responseHandler);
+            this.neededResponses.Add(responseId, responseHandler);
 
             this.SendMessage(requestMessage);
 
@@ -80,12 +80,12 @@ namespace Faml.Messaging
                 throw new InvalidOperationException($"{responseMessage.MessageType} response message does not contain a responseId");
             }
 
-            if (!this._neededResponses.TryGetValue(responseId, out ResponseHandler responseHandler))
+            if (!this.neededResponses.TryGetValue(responseId, out ResponseHandler responseHandler))
             {
                 throw new InvalidOperationException($"{responseMessage.MessageType} response message does not have a registered response handler for responseId {responseId}");
             }
 
-            this._neededResponses.Remove(responseId);
+            this.neededResponses.Remove(responseId);
             responseHandler.ResponseReceived(responseMessage);
         }
 
@@ -96,17 +96,17 @@ namespace Faml.Messaging
 
         private class ResponseHandler<TResponse> : ResponseHandler where TResponse : class?
         {
-            private readonly ResponseConverter<TResponse> _responseConverter;
+            private readonly ResponseConverter<TResponse> responseConverter;
             public ReactiveVar<TResponse> ReactiveResponse { get; } = new ReactiveVar<TResponse>(null);
 
             public ResponseHandler(ResponseConverter<TResponse> responseConverter)
             {
-                this._responseConverter = responseConverter;
+                this.responseConverter = responseConverter;
             }
 
             public override void ResponseReceived(Message responseMessage)
             {
-                TResponse response = this._responseConverter(responseMessage.MessageObject);
+                TResponse response = this.responseConverter(responseMessage.MessageObject);
                 this.ReactiveResponse.Set(response);
             }
         }

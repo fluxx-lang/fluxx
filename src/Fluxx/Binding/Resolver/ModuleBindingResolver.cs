@@ -9,13 +9,13 @@ namespace Faml.Binding.Resolver
 {
     public class ModuleBindingResolver : BindingResolver
     {
-        private readonly ModuleSyntax _module;
-        private readonly FamlProject _project;
+        private readonly ModuleSyntax module;
+        private readonly FamlProject project;
 
         public ModuleBindingResolver(ModuleSyntax module)
         {
-            this._module = module;
-            this._project = module.Project;
+            this.module = module;
+            this.project = module.Project;
         }
 
         public override FunctionBinding ResolveFunctionBinding(TypeBinding? thisArgumentTypeBinding,
@@ -40,13 +40,13 @@ namespace Faml.Binding.Resolver
             {
                 Name unqualifiableName = functionName.ToUnqualifiableName();
 
-                FunctionDefinitionSyntax? functionDefinition = this._module.GetFunctionDefinition(unqualifiableName);
+                FunctionDefinitionSyntax? functionDefinition = this.module.GetFunctionDefinition(unqualifiableName);
                 if (functionDefinition != null)
                 {
                     return new InternalFunctionBinding(functionDefinition);
                 }
 
-                RecordTypeDefinitionSyntax? recordTypeDefinition = this._module.GetRecordTypeDefinition(unqualifiableName);
+                RecordTypeDefinitionSyntax? recordTypeDefinition = this.module.GetRecordTypeDefinition(unqualifiableName);
                 if (recordTypeDefinition != null)
                 {
                     return new NewRecordFunctionBinding(recordTypeDefinition);
@@ -55,12 +55,12 @@ namespace Faml.Binding.Resolver
                 // These function names are special
                 if (unqualifiableName.ToString() == "example")
                 {
-                    return new NewExternalObjectFunctionBinding(this._project.ExampleTypeBinding);
+                    return new NewExternalObjectFunctionBinding(this.project.ExampleTypeBinding);
                 }
 
                 if (unqualifiableName.ToString() == "examples")
                 {
-                    return new NewExternalObjectFunctionBinding(this._project.ExamplesTypeBinding);
+                    return new NewExternalObjectFunctionBinding(this.project.ExamplesTypeBinding);
                 }
             }
 
@@ -111,7 +111,7 @@ namespace Faml.Binding.Resolver
         {
             if (typeName.IsQualified())
             {
-                return this._project.ResolveTypeBinding(typeName);
+                return this.project.ResolveTypeBinding(typeName);
             }
 
             Name unqualifiableTypeName = typeName.ToUnqualifiableName();
@@ -122,13 +122,13 @@ namespace Faml.Binding.Resolver
                 return new TypeBindingResult.Success(predefinedTypeBinding);
             }
 
-            RecordTypeDefinitionSyntax? recordTypeDefinition = this._module.GetRecordTypeDefinition(unqualifiableTypeName);
+            RecordTypeDefinitionSyntax? recordTypeDefinition = this.module.GetRecordTypeDefinition(unqualifiableTypeName);
             if (recordTypeDefinition != null)
             {
                 return new TypeBindingResult.Success(recordTypeDefinition.TypeBinding);
             }
 
-            foreach (ImportSyntax import in this._module.Imports)
+            foreach (ImportSyntax import in this.module.Imports)
             {
                 ImmutableArray<ImportTypeReferenceSyntax>? importImportTypeReferences = import.ImportTypeReferences;
 
@@ -138,7 +138,7 @@ namespace Faml.Binding.Resolver
                     // type. If so, match on it.
 
                     var potentialQualifiedTypeName = new QualifiableName(import.Qualifier, unqualifiableTypeName);
-                    TypeBindingResult typeBindingResult = this._project.ResolveTypeBinding(potentialQualifiedTypeName);
+                    TypeBindingResult typeBindingResult = this.project.ResolveTypeBinding(potentialQualifiedTypeName);
 
                     // If we found something or got an error, return that
                     if (!(typeBindingResult is TypeBindingResult.NotFound))
@@ -167,12 +167,12 @@ namespace Faml.Binding.Resolver
         {
             if (typeName.IsQualified())
             {
-                return this._project.ResolveAttachedTypeBinding(typeName);
+                return this.project.ResolveAttachedTypeBinding(typeName);
             }
 
             Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
-            foreach (ImportSyntax import in this._module.Imports)
+            foreach (ImportSyntax import in this.module.Imports)
             {
                 ImmutableArray<ImportTypeReferenceSyntax>? importImportTypeReferences = import.ImportTypeReferences;
 
@@ -182,7 +182,7 @@ namespace Faml.Binding.Resolver
                     // type. If so, match on it.
 
                     var potentialQualifiedTypeName = new QualifiableName(import.Qualifier, unqualifiableTypeName);
-                    AttachedTypeBinding? typeBinding = this._project.ResolveAttachedTypeBinding(potentialQualifiedTypeName);
+                    AttachedTypeBinding? typeBinding = this.project.ResolveAttachedTypeBinding(potentialQualifiedTypeName);
 
                     if (typeBinding != null)
                     {

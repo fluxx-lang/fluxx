@@ -14,43 +14,43 @@ namespace Faml.Syntax
 {
     public sealed class ConditionValuePairSyntax : SyntaxNode
     {
-        private readonly ExpressionSyntax _condition;
-        private readonly TextSpan _valueSpan;
-        private ExpressionSyntax _value;
+        private readonly ExpressionSyntax condition;
+        private readonly TextSpan valueSpan;
+        private ExpressionSyntax value;
 
         public ConditionValuePairSyntax(TextSpan span, Expression.ExpressionSyntax condition, TextSpan valueSpan) : base(span)
         {
-            this._condition = condition;
-            this._condition.SetParent(this);
+            this.condition = condition;
+            this.condition.SetParent(this);
 
-            this._valueSpan = valueSpan;
+            this.valueSpan = valueSpan;
         }
 
-        public ExpressionSyntax Condition => this._condition;
+        public ExpressionSyntax Condition => this.condition;
 
-        public ExpressionSyntax Value => this._value;
+        public ExpressionSyntax Value => this.value;
 
         public void ParseValueSource(BindingResolver bindingResolver)
         {
-            if (this._value != null)
+            if (this.value != null)
             {
                 return;
             }
 
-            this._value = SourceParser.ParseTextBlockExpression(this.GetModule(), this._valueSpan);
-            this._value.SetParent(this);
+            this.value = SourceParser.ParseTextBlockExpression(this.GetModule(), this.valueSpan);
+            this.value.SetParent(this);
 
             // Now resolve the bindings on what we just parsed, since the parse was in turn triggered by resolving bindings
-            this._value.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
+            this.value.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
         }
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._condition);
+            visitor(this.condition);
 
-            if (this._value != null)
+            if (this.value != null)
             {
-                visitor(this._value);
+                visitor(this.value);
             }
         }
 

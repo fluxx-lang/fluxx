@@ -4,18 +4,18 @@ namespace Faml.Lexer
 {
     public sealed class DelimiterStack
     {
-        private Stack<char> _stack = new Stack<char>();
+        private Stack<char> stack = new Stack<char>();
 
         public void Push(char delimiter)
         {
-            this._stack.Push(delimiter);
+            this.stack.Push(delimiter);
         }
 
         public void PopUntil(char delimiter)
         {
-            while (this._stack.Count > 0)
+            while (this.stack.Count > 0)
             {
-                char popped = this._stack.Pop();
+                char popped = this.stack.Pop();
                 if (popped == delimiter)
                 {
                     return;
@@ -23,6 +23,6 @@ namespace Faml.Lexer
             }
         }
 
-        public bool IsEmpty => this._stack.Count == 0;
+        public bool IsEmpty => this.stack.Count == 0;
     }
 }

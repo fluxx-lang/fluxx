@@ -11,21 +11,21 @@ namespace Faml.Syntax
 {
     public abstract class SyntaxNode
     {
-        private SyntaxNode _parent;
-        private readonly TextSpan _span;
+        private SyntaxNode parent;
+        private readonly TextSpan span;
 
 
         protected SyntaxNode(TextSpan span)
         {
-            this._span = span;
+            this.span = span;
         }
 
-        public virtual SyntaxNode Parent => this._parent;
+        public virtual SyntaxNode Parent => this.parent;
 
         /// <summary>
         /// The absolute span of this node in characters, including its leading and trailing trivia.
         /// </summary>
-        public TextSpan FullSpan => this._span;
+        public TextSpan FullSpan => this.span;
 
         /// <summary>
         /// The absolute span of this node in characters, not including its leading and trailing trivia.
@@ -49,7 +49,7 @@ namespace Faml.Syntax
 
         public virtual void SetParent(SyntaxNode parent)
         {
-            this._parent = parent;
+            this.parent = parent;
         }
 
         public virtual object GetPropertyValue(AstProperty property)

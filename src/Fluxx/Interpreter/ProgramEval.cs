@@ -5,12 +5,12 @@ namespace Faml.Interpreter
     public class 
         ProgramEval
         {
-        private readonly FamlProject _program;
-        private readonly SourceProvider _sourceProvider;
+        private readonly FamlProject program;
+        private readonly SourceProvider sourceProvider;
 
         public ProgramEval(SourceProvider sourceProvider)
         {
-            this._sourceProvider = sourceProvider;
+            this.sourceProvider = sourceProvider;
         }
     }
 }

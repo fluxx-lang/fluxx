@@ -6,17 +6,17 @@ namespace Faml.Api
     [Serializable]
     public struct SyntaxHighlightTag
     {
-        private readonly TextSpan _sourceSpan;
-        private readonly SyntaxHighlightTagType _syntaxHighlightTagType;
+        private readonly TextSpan sourceSpan;
+        private readonly SyntaxHighlightTagType syntaxHighlightTagType;
 
         public SyntaxHighlightTag(TextSpan sourceSpan, SyntaxHighlightTagType syntaxHighlightTagType)
         {
-            this._sourceSpan = sourceSpan;
-            this._syntaxHighlightTagType = syntaxHighlightTagType;
+            this.sourceSpan = sourceSpan;
+            this.syntaxHighlightTagType = syntaxHighlightTagType;
         }
 
-        public TextSpan SourceSpan => this._sourceSpan;
+        public TextSpan SourceSpan => this.sourceSpan;
 
-        public SyntaxHighlightTagType SyntaxHighlightTagType => this._syntaxHighlightTagType;
+        public SyntaxHighlightTagType SyntaxHighlightTagType => this.syntaxHighlightTagType;
     }
 }

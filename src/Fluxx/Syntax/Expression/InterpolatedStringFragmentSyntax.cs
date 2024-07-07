@@ -9,14 +9,14 @@ namespace Faml.Syntax.Expression
 {
     public sealed class InterpolatedStringFragmentSyntax : SyntaxNode
     {
-        private readonly string _value;
+        private readonly string value;
 
-        public InterpolatedStringFragmentSyntax(TextSpan span, string value) : base(span) { this._value = value; }
+        public InterpolatedStringFragmentSyntax(TextSpan span, string value) : base(span) { this.value = value; }
 
-        public string Value => this._value;
+        public string Value => this.value;
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.InterpolatedStringFragment;
 
-        public override void WriteSource(SourceWriter sourceWriter) { sourceWriter.Write(this._value); }
+        public override void WriteSource(SourceWriter sourceWriter) { sourceWriter.Write(this.value); }
     }
 }

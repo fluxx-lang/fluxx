@@ -12,16 +12,16 @@ namespace Faml.Binding.Internal
     {
         private static readonly Name ContentParameter = new Name("Content");
 
-        private readonly BuiltInTypeBinding _predefinedTypeBinding;
+        private readonly BuiltInTypeBinding predefinedTypeBinding;
 
         public NewPredefinedTypeFunctionBinding(BuiltInTypeBinding predefinedTypeBinding)
         {
-            this._predefinedTypeBinding = predefinedTypeBinding;
+            this.predefinedTypeBinding = predefinedTypeBinding;
         }
 
-        public override QualifiableName FunctionName => this._predefinedTypeBinding.TypeName;
+        public override QualifiableName FunctionName => this.predefinedTypeBinding.TypeName;
 
-        public override TypeBinding ReturnTypeBinding => this._predefinedTypeBinding;
+        public override TypeBinding ReturnTypeBinding => this.predefinedTypeBinding;
 
         public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
             BindingResolver bindingResolver)
@@ -42,7 +42,7 @@ namespace Faml.Binding.Internal
 
         public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver)
         {
-            return this._predefinedTypeBinding;
+            return this.predefinedTypeBinding;
         }
 
         public override TypeBinding? GetParameterTypeBinding(Name parameterName)
@@ -50,7 +50,7 @@ namespace Faml.Binding.Internal
             string parameterNameString = parameterName.ToString();
             if (parameterNameString == "content" || parameterNameString == "Content")
             {
-                return this._predefinedTypeBinding;
+                return this.predefinedTypeBinding;
             }
 
             return null;

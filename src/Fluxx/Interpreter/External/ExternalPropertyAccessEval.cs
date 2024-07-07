@@ -4,21 +4,21 @@ namespace Faml.Interpreter.External
 {
     public sealed class ExternalPropertyAccessEval : ObjectEval
     {
-        private readonly ObjectEval _objectEval;
-        private readonly ObjectPropertyReader _objectPropertyReader;
+        private readonly ObjectEval objectEval;
+        private readonly ObjectPropertyReader objectPropertyReader;
 
 
         public ExternalPropertyAccessEval(ObjectEval objectEval, ObjectType objectType, ObjectProperty objectProperty)
         {
-            this._objectEval = objectEval;
+            this.objectEval = objectEval;
 
-            this._objectPropertyReader = objectType.GetPropertyReader(objectProperty);
+            this.objectPropertyReader = objectType.GetPropertyReader(objectProperty);
         }
 
         public override object Eval()
         {
-            object obj = this._objectEval.Eval();
-            return this._objectPropertyReader.Get(obj);
+            object obj = this.objectEval.Eval();
+            return this.objectPropertyReader.Get(obj);
         }
     }
 }

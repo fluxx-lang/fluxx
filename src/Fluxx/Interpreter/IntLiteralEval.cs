@@ -2,16 +2,16 @@ namespace Faml.Interpreter
 {
     public class IntLiteralEval : IntEval
     {
-        private readonly int _value;
+        private readonly int value;
 
         public IntLiteralEval(int value)
         {
-            this._value = value;
+            this.value = value;
         }
 
         public override int Eval()
         {
-            return this._value;
+            return this.value;
         }
     }
 }

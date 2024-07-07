@@ -9,8 +9,8 @@ namespace Faml.Interpreter.External
 {
     public sealed class NewExternalObjectEval : ObjectEval
     {
-        private readonly ObjectEval[] _propertyValueEvals;
-        private readonly InterpretedObjectCreator _objectCreator;
+        private readonly ObjectEval[] propertyValueEvals;
+        private readonly InterpretedObjectCreator objectCreator;
 
         public NewExternalObjectEval(ModuleSyntax module, NewExternalObjectFunctionBinding functionBinding, Name[] propertyNames, Eval[] propertyValues,
             QualifiableName[] qualifiedPropertyNames, Eval[] qualifiedPropertyValues)
@@ -22,19 +22,19 @@ namespace Faml.Interpreter.External
 
             var initializationObjectProperties = new List<ObjectProperty>();
 
-            this._propertyValueEvals = new ObjectEval[propertiesLength];
+            this.propertyValueEvals = new ObjectEval[propertiesLength];
 
             for (int i = 0; i < propertiesLength; i++)
             {
                 // TODO: Fix this up to cast primitive types
-                this._propertyValueEvals[i] = CreateObjectEval(propertyValues[i], propertyNames[i]);
+                this.propertyValueEvals[i] = CreateObjectEval(propertyValues[i], propertyNames[i]);
 
                 ObjectProperty objectProperty = objectProperties[propertyNames[i].ToString()];
                 initializationObjectProperties.Add(objectProperty);
             }
 
             ObjectType objectType = functionBinding.ReturnExternalObjectTypeBinding.TypeToolingType;
-            this._objectCreator = objectType.GetInterpretedObjectCreator(initializationObjectProperties.ToArray(), new AttachedProperty[0]);
+            this.objectCreator = objectType.GetInterpretedObjectCreator(initializationObjectProperties.ToArray(), new AttachedProperty[0]);
         }
 
         private static ObjectEval CreateObjectEval(Eval propertyValue, Name propertyName)
@@ -65,16 +65,16 @@ namespace Faml.Interpreter.External
 
         public override object Eval()
         {
-            int propertiesLength = this._propertyValueEvals.Length;
+            int propertiesLength = this.propertyValueEvals.Length;
 
             int startOffset = Context.StackIndex;
 
             for (int i = 0; i < propertiesLength; i++)
             {
-                this._propertyValueEvals[i].Push();
+                this.propertyValueEvals[i].Push();
             }
 
-            object returnValue = this._objectCreator.Create(Context.ObjectStack, startOffset);
+            object returnValue = this.objectCreator.Create(Context.ObjectStack, startOffset);
 
             Context.StackIndex -= propertiesLength;
 

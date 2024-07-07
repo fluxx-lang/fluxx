@@ -5,17 +5,17 @@ namespace Faml.Api
     [Serializable]
     public struct IconTag
     {
-        private readonly TextSpan _sourceSpan;
-        private readonly IconTagType _iconTagType;
+        private readonly TextSpan sourceSpan;
+        private readonly IconTagType iconTagType;
 
         public IconTag(TextSpan sourceSpan, IconTagType iconTagType)
         {
-            this._sourceSpan = sourceSpan;
-            this._iconTagType = iconTagType;
+            this.sourceSpan = sourceSpan;
+            this.iconTagType = iconTagType;
         }
 
-        public TextSpan SourceSpan => this._sourceSpan;
+        public TextSpan SourceSpan => this.sourceSpan;
 
-        public IconTagType IconTagType => this._iconTagType;
+        public IconTagType IconTagType => this.iconTagType;
     }
 }

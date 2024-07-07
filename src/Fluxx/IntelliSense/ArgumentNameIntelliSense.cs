@@ -10,28 +10,28 @@ namespace Faml.IntelliSense
 {
     public class ArgumentNameIntelliSense : IntelliSense
     {
-        private readonly FunctionBinding _functionBinding;
-        private readonly QualifiableNameSyntax? _argumentName;
+        private readonly FunctionBinding functionBinding;
+        private readonly QualifiableNameSyntax? argumentName;
 
         public ArgumentNameIntelliSense(FamlModule module, int position, FunctionBinding functionBinding)
             : base(module, position, null)
             {
-            this._functionBinding = functionBinding;
-            this._argumentName = null;
+            this.functionBinding = functionBinding;
+            this.argumentName = null;
         }
 
         public ArgumentNameIntelliSense(FamlModule module, int position, FunctionBinding functionBinding, QualifiableNameSyntax argumentName)
             : base(module, position, argumentName)
             {
-            this._functionBinding = functionBinding;
-            this._argumentName = argumentName;
+            this.functionBinding = functionBinding;
+            this.argumentName = argumentName;
         }
 
         public override Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken)
         {
             string prefix = "";
             string suffix = "";
-            if (this._argumentName == null)
+            if (this.argumentName == null)
             {
                 int spacesBefore = 0;
                 if (this.ParseableSource.IsSpaceAt(this.Position - 1))
@@ -55,7 +55,7 @@ namespace Faml.IntelliSense
                 }
             }
 
-            Name[] properties = this._functionBinding.GetParameters();
+            Name[] properties = this.functionBinding.GetParameters();
 
             List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>();
             foreach (Name propertyName in properties)
@@ -70,7 +70,7 @@ namespace Faml.IntelliSense
 
                 IntelliSenseProvider.GetDescriptionAsyncDelegate getDescriptionDelegate =
                     async (preferredCulture, delegateCancellationToken) =>
-                        await this._functionBinding.GetParameterDescriptionAsync(propertyName, delegateCancellationToken);
+                        await this.functionBinding.GetParameterDescriptionAsync(propertyName, delegateCancellationToken);
 
                 var completion = new IntelliSenseCompletion(
                     type: CompletionType.Property,

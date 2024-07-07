@@ -9,36 +9,36 @@ namespace Faml.Binding.External
 {
     public class ExternalEnumTypeBinding : EnumTypeBinding
     {
-        private readonly FamlProject _project;
-        private readonly EnumType _typeToolingType;
-        private readonly ImmutableArray<EnumValueBinding> _values;
+        private readonly FamlProject project;
+        private readonly EnumType typeToolingType;
+        private readonly ImmutableArray<EnumValueBinding> values;
 
 
         // TODO: This name is fully qualified.   Do we want that?
         public ExternalEnumTypeBinding(FamlProject project, EnumType typeToolingType) : base(new QualifiableName(typeToolingType.FullName))
             {
-            this._project = project;
-            this._typeToolingType = typeToolingType;
+            this.project = project;
+            this.typeToolingType = typeToolingType;
 
             var values = ImmutableArray.CreateBuilder<EnumValueBinding>();
-            foreach (EnumValue enumValue in this._typeToolingType.Values)
+            foreach (EnumValue enumValue in this.typeToolingType.Values)
             {
                 values.Add(new ExternalEnumValueBinding(this, enumValue));
             }
 
-            this._values = values.ToImmutable();
+            this.values = values.ToImmutable();
         }
 
-        public FamlProject Project => this._project;
+        public FamlProject Project => this.project;
 
-        public EnumType TypeToolingType => this._typeToolingType;
+        public EnumType TypeToolingType => this.typeToolingType;
 
         public override ExpressionSyntax ParseEnumValue(FamlModule module, TextSpan sourceSpan)
         {
             SourceText sourceText = module.SourceText;
             string valueSource = sourceText.ToString(sourceSpan);
 
-            foreach (EnumValue enumValue in this._typeToolingType.Values)
+            foreach (EnumValue enumValue in this.typeToolingType.Values)
             {
                 if (enumValue.Name == valueSource)
                 {
@@ -48,15 +48,15 @@ namespace Faml.Binding.External
                 }
             }
 
-            module.AddError(sourceSpan, $"'{valueSource}' isn't a valid value for enum {this._typeToolingType.FullName}");
+            module.AddError(sourceSpan, $"'{valueSource}' isn't a valid value for enum {this.typeToolingType.FullName}");
             return new InvalidExpressionSyntax(sourceSpan, valueSource, this);
         }
 
-        public override ImmutableArray<EnumValueBinding> GetValues() => this._values;
+        public override ImmutableArray<EnumValueBinding> GetValues() => this.values;
 
         protected bool Equals(ExternalEnumTypeBinding other)
         {
-            return this._typeToolingType.Equals(other._typeToolingType);
+            return this.typeToolingType.Equals(other.typeToolingType);
         }
 
         public override bool Equals(object obj)
@@ -71,7 +71,7 @@ namespace Faml.Binding.External
 
         public override int GetHashCode()
         {
-            return this._typeToolingType.GetHashCode();
+            return this.typeToolingType.GetHashCode();
         }
     }
 }

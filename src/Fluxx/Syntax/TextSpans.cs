@@ -4,17 +4,17 @@ namespace Faml.Syntax
 {
     public struct TextSpans
     {
-        private readonly TextSpan[] _textSpans;
+        private readonly TextSpan[] textSpans;
         
 
         public TextSpans(TextSpan[] textSpans)
         {
-            this._textSpans = textSpans;
+            this.textSpans = textSpans;
         }
 
         public bool OverlapsWith(TextSpan other)
         {
-            foreach (TextSpan textSpan in this._textSpans)
+            foreach (TextSpan textSpan in this.textSpans)
             {
                 if (textSpan.OverlapsWith(other))
                 {
@@ -25,6 +25,6 @@ namespace Faml.Syntax
             return false;
         }
 
-        public TextSpan[] Spans => this._textSpans;
+        public TextSpan[] Spans => this.textSpans;
     }
 }

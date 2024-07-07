@@ -12,11 +12,11 @@ namespace Faml.Syntax.Literal
 {
     public class StringLiteralSyntax : ExpressionSyntax
     {
-        private readonly string _value;
+        private readonly string value;
 
         public StringLiteralSyntax(TextSpan span, string value) : base(span)
         {
-            this._value = value;
+            this.value = value;
         }
 
         public override Binding.TypeBinding GetTypeBinding()
@@ -28,9 +28,9 @@ namespace Faml.Syntax.Literal
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._value);
+            sourceWriter.Write(this.value);
         }
 
-        public virtual string Value => this._value;
+        public virtual string Value => this.value;
     }
 }

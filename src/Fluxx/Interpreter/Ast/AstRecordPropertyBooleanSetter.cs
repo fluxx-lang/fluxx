@@ -2,16 +2,16 @@ namespace Faml.Interpreter.Ast
 {
     public class AstRecordPropertyBooleanSetter : AstRecordPropertySetter
     {
-        private readonly BooleanEval _booleanEval;
+        private readonly BooleanEval booleanEval;
 
         public AstRecordPropertyBooleanSetter(string propertyName, BooleanEval booleanEval) : base(propertyName)
         {
-            this._booleanEval = booleanEval;
+            this.booleanEval = booleanEval;
         }
 
         public override void Invoke(AstRecord astRecord)
         {
-            astRecord.SetProperty(this.PropertyName, this._booleanEval.Eval());
+            astRecord.SetProperty(this.PropertyName, this.booleanEval.Eval());
         }
     }
 }

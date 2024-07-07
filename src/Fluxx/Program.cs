@@ -7,22 +7,22 @@ namespace Faml
 {
     public class Program
     {
-        private readonly FamlProject _rootProject;
-        private DataEventHandler? _dataEventHandler;
-        private readonly string _developmentMachine;
+        private readonly FamlProject rootProject;
+        private DataEventHandler? dataEventHandler;
+        private readonly string developmentMachine;
 
         public Program(FamlProject rootProject)
         {
-            this._rootProject = rootProject;
+            this.rootProject = rootProject;
         }
 
-        public FamlProject RootProject => this._rootProject;
+        public FamlProject RootProject => this.rootProject;
 
         public ExampleResult[] EvaluateExample(QualifiableName moduleName, int exampleIndex)
         {
             try
             {
-                return this._rootProject.EvaluateExample(moduleName, exampleIndex);
+                return this.rootProject.EvaluateExample(moduleName, exampleIndex);
             }
             catch (Exception e)
             {
@@ -37,8 +37,8 @@ namespace Faml
 
         public DataEventHandler? DataEventHandler
         {
-            get => this._dataEventHandler;
-            set => this._dataEventHandler = value;
+            get => this.dataEventHandler;
+            set => this.dataEventHandler = value;
         }
     }
 }

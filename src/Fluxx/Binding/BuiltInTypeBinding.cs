@@ -9,7 +9,7 @@ namespace Faml.Binding
     {
         public TypeToolingType TypeToolingType { get; }
 
-        private static readonly Dictionary<string, BuiltInTypeBinding> _bindings = new Dictionary<string, BuiltInTypeBinding>();
+        private static readonly Dictionary<string, BuiltInTypeBinding> bindings = new Dictionary<string, BuiltInTypeBinding>();
 
         public static readonly BuiltInTypeBinding Bool = new BuiltInTypeBinding("bool", BooleanType.Instance);
         public static readonly BuiltInTypeBinding Int = new BuiltInTypeBinding("int", IntegerType.Instance);
@@ -20,7 +20,7 @@ namespace Faml.Binding
 
         public static BuiltInTypeBinding? GetBindingForTypeName(string typeName)
         {
-            if (!_bindings.TryGetValue(typeName, out BuiltInTypeBinding binding))
+            if (!bindings.TryGetValue(typeName, out BuiltInTypeBinding binding))
             {
                 return null;
             }
@@ -35,7 +35,7 @@ namespace Faml.Binding
         {
             this.TypeToolingType = typeToolingType;
 
-            _bindings.Add(typeName, this);
+            bindings.Add(typeName, this);
         }
     }
 }

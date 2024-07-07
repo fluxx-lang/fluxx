@@ -5,15 +5,15 @@ namespace Faml
 {
     public class DotNetDataEventHandler : DataEventHandler
     {
-        private readonly DataEventHandlerDelegate _eventHandlerDelegate;
+        private readonly DataEventHandlerDelegate eventHandlerDelegate;
 
         public delegate void DataEventHandlerDelegate(object sender, EventArgs e, IList<object> data);
 
         public DotNetDataEventHandler(DataEventHandlerDelegate eventHandlerDelegate)
         {
-            this._eventHandlerDelegate = eventHandlerDelegate;
+            this.eventHandlerDelegate = eventHandlerDelegate;
         }
 
-        public DataEventHandlerDelegate EventHandlerDelegate => this._eventHandlerDelegate;
+        public DataEventHandlerDelegate EventHandlerDelegate => this.eventHandlerDelegate;
     }
 }

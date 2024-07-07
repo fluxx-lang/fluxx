@@ -9,23 +9,23 @@ namespace Faml.Binding.External
 {
     public class ExternalAttachedTypeBinding : AttachedTypeBinding
     {
-        private readonly FamlProject _project;
-        private readonly AttachedType _attachedType;
+        private readonly FamlProject project;
+        private readonly AttachedType attachedType;
 
 
         public ExternalAttachedTypeBinding(FamlProject project, AttachedType attachedType) : base(new QualifiableName(attachedType.FullName))
         {
-            this._project = project;
-            this._attachedType = attachedType;
+            this.project = project;
+            this.attachedType = attachedType;
         }
 
-        public FamlProject Project => this._project;
+        public FamlProject Project => this.project;
 
-        public AttachedType AttachedType => this._attachedType;
+        public AttachedType AttachedType => this.attachedType;
 
         public AttachedProperty GetAttachedProperty(Name propertyName)
         {
-            foreach (AttachedProperty attachedProperty in this._attachedType.AttachedProperties)
+            foreach (AttachedProperty attachedProperty in this.attachedType.AttachedProperties)
             {
                 if (attachedProperty.Name == propertyName.ToString())
                 {

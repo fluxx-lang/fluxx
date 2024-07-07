@@ -6,29 +6,29 @@ namespace Faml.Interpreter.External
 {
     public sealed class DotNetMethodInvocaionEval : ObjectEval
     {
-        private readonly ObjectEval _thisArgumentEval;
-        private readonly ObjectEval[] _argumentEvals;
-        private readonly DotNetRawMethod _method;
+        private readonly ObjectEval thisArgumentEval;
+        private readonly ObjectEval[] argumentEvals;
+        private readonly DotNetRawMethod method;
 
         public DotNetMethodInvocaionEval(ObjectEval thisArgumentEval, ObjectEval[] argumentEvals, DotNetRawMethod method)
         {
-            this._thisArgumentEval = thisArgumentEval;
-            this._argumentEvals = argumentEvals;
-            this._method = method;
+            this.thisArgumentEval = thisArgumentEval;
+            this.argumentEvals = argumentEvals;
+            this.method = method;
         }
 
         public override object Eval()
         {
-            object thisArgument = this._thisArgumentEval.Eval();
+            object thisArgument = this.thisArgumentEval.Eval();
 
-            int argumentsLength = this._argumentEvals.Length;
+            int argumentsLength = this.argumentEvals.Length;
             object[] arguments = new object[argumentsLength];
             for (int i = 0; i < argumentsLength; i++)
             {
-                arguments[i] = this._argumentEvals[i].Eval();
+                arguments[i] = this.argumentEvals[i].Eval();
             }
 
-            MethodInfo methodInfo = ((ReflectionDotNetRawMethod)this._method).MethodInfo;
+            MethodInfo methodInfo = ((ReflectionDotNetRawMethod)this.method).MethodInfo;
             return methodInfo.Invoke(thisArgument, arguments);
         }
     }

@@ -7,16 +7,16 @@ namespace Faml
 {
     public class FamlTypeToolingEnvironment : TypeToolingEnvironment
     {
-        private readonly FamlProject _project;
+        private readonly FamlProject project;
 
         public FamlTypeToolingEnvironment(FamlProject project)
         {
-            this._project = project;
+            this.project = project;
         }
 
         public override TypeToolingType? GetType(RawType rawType)
         {
-            return this._project.GetTypeToolingType(rawType);
+            return this.project.GetTypeToolingType(rawType);
         }
 
         public override TypeToolingType GetRequiredType(RawType rawType)
@@ -32,7 +32,7 @@ namespace Faml
 
         public override RawType? GetRawType(string rawTypeName)
         {
-            return this._project.GetTypeToolingRawType(rawTypeName);
+            return this.project.GetTypeToolingRawType(rawTypeName);
         }
 
         public override RawType GetRequiredRawType(string rawTypeName)
@@ -48,9 +48,9 @@ namespace Faml
 
         public override object Instantiate(RawType rawType, params object[] args)
         {
-            return this._project.Instantiate(rawType, args);
+            return this.project.Instantiate(rawType, args);
         }
 
-        public override CultureInfo UICulture => this._project.Workspace.UICulture;
+        public override CultureInfo UICulture => this.project.Workspace.UICulture;
     }
 }

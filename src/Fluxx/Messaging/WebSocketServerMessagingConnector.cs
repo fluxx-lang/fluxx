@@ -7,22 +7,22 @@ namespace Faml.Messaging
 {
     public class WebSocketServerMessagingConnector : WebSocketMessagingConnector
     {
-        private readonly HttpListener _httpListener;
+        private readonly HttpListener httpListener;
 
 
         public WebSocketServerMessagingConnector(int port)
         {
-            this._httpListener = new HttpListener();
-            this._httpListener.Prefixes.Add($"http://localhost:{port}/");
+            this.httpListener = new HttpListener();
+            this.httpListener.Prefixes.Add($"http://localhost:{port}/");
         }
 
         public async Task Start()
         {
-            this._httpListener.Start();
+            this.httpListener.Start();
 
             while (true)
             {
-                HttpListenerContext listenerContext = await this._httpListener.GetContextAsync();
+                HttpListenerContext listenerContext = await this.httpListener.GetContextAsync();
                 if (listenerContext.Request.IsWebSocketRequest)
                 {
                     this.HandleWebSocketRequest(listenerContext).ConfigureAwait(false);

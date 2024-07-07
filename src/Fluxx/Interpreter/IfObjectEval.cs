@@ -6,30 +6,30 @@ namespace Faml.Interpreter
 {
     public sealed class IfObjectEval : ObjectEval
     {
-        private readonly BooleanEval[] _conditionEvals;
-        private readonly ObjectEval[] _valueEvals;
-        private readonly ObjectEval _elseEval;
+        private readonly BooleanEval[] conditionEvals;
+        private readonly ObjectEval[] valueEvals;
+        private readonly ObjectEval elseEval;
 
         public IfObjectEval(BooleanEval[] conditionEvals, ObjectEval[] valueEvals, ObjectEval elseEval)
         {
-            this._conditionEvals = conditionEvals;
-            this._valueEvals = valueEvals;
-            this._elseEval = elseEval;
+            this.conditionEvals = conditionEvals;
+            this.valueEvals = valueEvals;
+            this.elseEval = elseEval;
         }
 
         public override object Eval()
         {
-            int length = this._conditionEvals.Length;
+            int length = this.conditionEvals.Length;
 
             for (int i = 0; i < length; i++)
             {
-                if (this._conditionEvals[i].Eval())
+                if (this.conditionEvals[i].Eval())
                 {
-                    return this._valueEvals[i].Eval();
+                    return this.valueEvals[i].Eval();
                 }
             }
 
-            return this._elseEval.Eval();
+            return this.elseEval.Eval();
         }
     }
 }

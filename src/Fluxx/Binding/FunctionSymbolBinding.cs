@@ -7,17 +7,17 @@ namespace Faml.Binding
 {
     public class FunctionSymbolBinding : SymbolBinding
     {
-        private readonly FunctionBinding _functionBinding;
-        private readonly FunctionBindingFunctionTypeBinding _typeBinding;
+        private readonly FunctionBinding functionBinding;
+        private readonly FunctionBindingFunctionTypeBinding typeBinding;
 
         public FunctionSymbolBinding(FunctionBinding functionBinding)
         {
-            this._functionBinding = functionBinding;
-            this._typeBinding = new FunctionBindingFunctionTypeBinding(functionBinding);
+            this.functionBinding = functionBinding;
+            this.typeBinding = new FunctionBindingFunctionTypeBinding(functionBinding);
         }
 
-        public FunctionBinding FunctionBinding => this._functionBinding;
+        public FunctionBinding FunctionBinding => this.functionBinding;
 
-        public override TypeBinding GetTypeBinding() => this._typeBinding;
+        public override TypeBinding GetTypeBinding() => this.typeBinding;
     }
 }

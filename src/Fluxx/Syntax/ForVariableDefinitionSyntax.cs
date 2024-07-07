@@ -11,49 +11,49 @@ namespace Faml.Syntax
 {
     public sealed class ForVariableDefinitionSyntax : SyntaxNode
     {
-        private readonly NameSyntax _variableNameSyntax;
-        private TypeBinding _variableTypeBinding = null;
-        private readonly ExpressionSyntax _inExpression;
+        private readonly NameSyntax variableNameSyntax;
+        private TypeBinding variableTypeBinding = null;
+        private readonly ExpressionSyntax inExpression;
 
         public ForVariableDefinitionSyntax(TextSpan span, NameSyntax variableNameSyntax, ExpressionSyntax inExpression) : base(span)
         {
-            this._variableNameSyntax = variableNameSyntax;
+            this.variableNameSyntax = variableNameSyntax;
             variableNameSyntax.SetParent(this);
 
-            this._inExpression = inExpression;
+            this.inExpression = inExpression;
             inExpression.SetParent(this);
         }
 
-        public NameSyntax VariableNameSyntax => this._variableNameSyntax;
+        public NameSyntax VariableNameSyntax => this.variableNameSyntax;
 
-        public ExpressionSyntax InExpression => this._inExpression;
+        public ExpressionSyntax InExpression => this.inExpression;
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            visitor(this._inExpression);
-            visitor(this._variableNameSyntax);
+            visitor(this.inExpression);
+            visitor(this.variableNameSyntax);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver)
         {
-            TypeBinding inExpressionTypeBinding = this._inExpression.GetTypeBinding();
+            TypeBinding inExpressionTypeBinding = this.inExpression.GetTypeBinding();
             if (inExpressionTypeBinding == null)
             {
-                this._variableNameSyntax.AddError("Couldn't infer variable type from 'in' expression");
+                this.variableNameSyntax.AddError("Couldn't infer variable type from 'in' expression");
             }
 
             // TODO: Remove this restriction
             if (!(inExpressionTypeBinding is SequenceTypeBinding inExpressionSequenceTypeBinding))
             {
-                this._inExpression.AddError("'in' expression isn't a sequence; currently it must have at least two items");
+                this.inExpression.AddError("'in' expression isn't a sequence; currently it must have at least two items");
             }
             else
             {
-                this._variableTypeBinding = inExpressionSequenceTypeBinding.ElementType;
+                this.variableTypeBinding = inExpressionSequenceTypeBinding.ElementType;
             }
         }
 
-        public TypeBinding GetVariableTypeBinding() => this._variableTypeBinding;
+        public TypeBinding GetVariableTypeBinding() => this.variableTypeBinding;
 
         public override bool IsTerminalNode()
         {
@@ -64,9 +64,9 @@ namespace Faml.Syntax
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._variableNameSyntax);
+            sourceWriter.Write(this.variableNameSyntax);
             sourceWriter.Write(" in ");
-            sourceWriter.Write(this._inExpression);
+            sourceWriter.Write(this.inExpression);
         }
     }
 }

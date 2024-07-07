@@ -8,11 +8,11 @@ namespace Faml
 {
     internal class GetIconTags
     {
-        private readonly ModuleSyntax _module;
+        private readonly ModuleSyntax module;
         
         public GetIconTags(ModuleSyntax module)
         {
-            this._module = module;
+            this.module = module;
         }
 
         // TODO: Implement this propertly
@@ -31,7 +31,7 @@ namespace Faml
         public void GetTags(TextSpan span, List<IconTag> tags)
         {
             // Now get everything else
-            this.GetSyntaxNodeTags(span, this._module, tags);
+            this.GetSyntaxNodeTags(span, this.module, tags);
         }
 
         private void GetSyntaxNodeTags(TextSpan span, SyntaxNode syntaxNode, List<IconTag> tags)

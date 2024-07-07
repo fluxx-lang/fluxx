@@ -13,7 +13,7 @@ namespace Faml.IntelliSense
         public FamlModule Module { get; }
         public int Position { get; }
         public SyntaxNode? TerminalNode { get; }
-        private ParseableSource? _parseableSource;
+        private ParseableSource? parseableSource;
 
 
         protected IntelliSense(FamlModule module, int position, SyntaxNode? terminalNode)
@@ -41,12 +41,12 @@ namespace Faml.IntelliSense
         {
             get
             {
-                if (this._parseableSource == null)
+                if (this.parseableSource == null)
                 {
-                    this._parseableSource = new ParseableSource(this.Module.SourceText);
+                    this.parseableSource = new ParseableSource(this.Module.SourceText);
                 }
 
-                return this._parseableSource;
+                return this.parseableSource;
             }
         }
 

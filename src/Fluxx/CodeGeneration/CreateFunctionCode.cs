@@ -27,8 +27,8 @@ namespace Faml.CodeGeneration
 {
     public class CreateFunctionCode
     {
-        private readonly FamlProject _famlProject;
-        private readonly Dictionary<string, ParameterExpressionCode> _parametersCodeDictionary;
+        private readonly FamlProject famlProject;
+        private readonly Dictionary<string, ParameterExpressionCode> parametersCodeDictionary;
         public LambdaCode Result { get; }
 
 #if false
@@ -51,7 +51,7 @@ namespace Faml.CodeGeneration
 
         public CreateFunctionCode(FunctionDefinitionSyntax function)
         {
-            this._famlProject = function.GetProject();
+            this.famlProject = function.GetProject();
 
             ImmutableArray<ParameterExpressionCode> parametersCode = function.Parameters.Select(
                 propertyNameTypePairSyntax =>
@@ -60,7 +60,7 @@ namespace Faml.CodeGeneration
                         this.GetRawType(propertyNameTypePairSyntax.TypeReferenceSyntax.GetTypeBinding()))
             ).ToImmutableArray();
 
-            this._parametersCodeDictionary =
+            this.parametersCodeDictionary =
                 parametersCode.ToDictionary(parameterExpressionCode => parameterExpressionCode.Name.ToString());
 
             ExpressionCode body = this.CreateExpressionCode(function.Expression);
@@ -124,7 +124,7 @@ namespace Faml.CodeGeneration
             if (symbolBinding is ParameterBinding parameterBinding)
             {
                 string parameterName = symbolReference.VariableName.ToString();
-                return this._parametersCodeDictionary[parameterName];
+                return this.parametersCodeDictionary[parameterName];
             }
             else if (symbolBinding is FunctionSymbolBinding functionSymbolBinding)
             {

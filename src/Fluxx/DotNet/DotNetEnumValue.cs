@@ -13,30 +13,30 @@ namespace Faml.DotNet
 {
     public class DotNetEnumValue : ExpressionSyntax
     {
-        private readonly ExternalObjectTypeBinding _typeBinding;
-        private readonly FieldInfo _value;
+        private readonly ExternalObjectTypeBinding typeBinding;
+        private readonly FieldInfo value;
 
         public DotNetEnumValue(ExternalObjectTypeBinding typeBinding, TextSpan span, FieldInfo value) : base(span)
         {
-            this._typeBinding = typeBinding;
-            this._value = value;
+            this.typeBinding = typeBinding;
+            this.value = value;
         }
 
         public override TypeBinding GetTypeBinding()
         {
-            return this._typeBinding;
+            return this.typeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.DotNetEnumValue;
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            sourceWriter.Write(this._value.ToString());
+            sourceWriter.Write(this.value.ToString());
         }
 
         public FieldInfo GetValue()
         {
-            return this._value;
+            return this.value;
         }
     }
 }
