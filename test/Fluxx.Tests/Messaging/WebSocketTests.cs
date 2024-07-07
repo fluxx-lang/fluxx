@@ -30,7 +30,9 @@ namespace Faml.Tests.Messaging
                 testResponse = serverConnector.SendRequestNeedingResponse(request, this.TestResponseConverter);
 
                 while (testResponse.Value == null)
+                {
                     Thread.Sleep(500);
+                }
             }
             finally
             {

@@ -39,7 +39,9 @@ namespace Faml.Tests.Shared
 
             FunctionDefinitionSyntax functionDefinition = mainModule.ModuleSyntax.GetFunctionDefinition(new Name(functionName));
             if (functionDefinition == null)
+            {
                 throw new InvalidOperationException($"Function '{functionName}' unexpectedly doesn't exist");
+            }
 
             FunctionDelegateHolder delegateHolder = mainModule.ModuleDelegates.GetOrCreateFunctionDelegate(functionDefinition);
             return delegateHolder.FunctionDelegate.DynamicInvoke();
@@ -63,7 +65,9 @@ namespace Faml.Tests.Shared
 
             FamlModule mainModule = project.GetModule(new QualifiableName("main"));
             if (project.AnyErrors)
+            {
                 throw new Exception($"Project has errors, the first being: {project.GetAllDiagnostics().First().Message}");
+            }
 
             return mainModule;
         }

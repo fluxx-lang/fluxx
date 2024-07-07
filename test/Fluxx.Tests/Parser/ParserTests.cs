@@ -172,7 +172,9 @@ namespace Faml.Tests.Parser
             string reconstructedSource = sourceWriter.GetSource();
 
             if (expectedReconstructedSource == null)
+            {
                 expectedReconstructedSource = source;
+            }
 
             Assert.AreEqual(NormalizeWhitespace(expectedReconstructedSource), NormalizeWhitespace(reconstructedSource));
         }
@@ -201,17 +203,23 @@ namespace Faml.Tests.Parser
 
                     // Conslidate spaces, just using the last one in a sequence
                     if (char.IsWhiteSpace(next))
+                    {
                         continue;
+                    }
 
                     char previous = output.Length > 0 ? output[output.Length - 1] : '\0';
 
                     // If the previous character doesn't require a space after, don't include one
                     if (previous == '\0' || previous == '{' || previous == ':')
+                    {
                         continue;
+                    }
 
                     // If the next character doesn't require a space before, don't include one
                     if (next == '\0' || next == '{' || next == '}')
+                    {
                         continue;
+                    }
                 }
 
                 output.Append(c);
