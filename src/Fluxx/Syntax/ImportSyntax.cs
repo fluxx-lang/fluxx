@@ -18,7 +18,9 @@ namespace Faml.Syntax {
             this._importTypeReferences = importTypeReferences;
             if (importTypeReferences != null) {
                 foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
+                {
                     importReference.SetParent(this);
+                }
             }
 
             this._qualifierSyntax = qualifierSyntax;
@@ -41,7 +43,9 @@ namespace Faml.Syntax {
         public override void VisitChildren(SyntaxVisitor visitor) {
             if (this._importTypeReferences != null)
                 foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
+                {
                     visitor(importReference);
+                }
 
             visitor(this._qualifierSyntax);
         }
@@ -59,7 +63,10 @@ namespace Faml.Syntax {
                 bool first = true;
                 foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences) {
                     if (!first)
+                    {
                         sourceWriter.Write("  ");
+                    }
+
                     sourceWriter.Write(importReference);
                     first = false;
                 }

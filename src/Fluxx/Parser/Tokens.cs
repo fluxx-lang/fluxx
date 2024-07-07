@@ -43,7 +43,9 @@ namespace Faml.Parser {
             Tokens tokens = this;
             while (tokens != null) {
                 if (tokens._tokenType == tokenType && (tokens._maxColumn == -1 || column <= tokens._maxColumn))
+                {
                     return true;
+                }
 
                 tokens = tokens._restTokens;
             }

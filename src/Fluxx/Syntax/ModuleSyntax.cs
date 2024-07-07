@@ -29,15 +29,21 @@ namespace Faml.Syntax {
 
             this._projectDefinition = projectDefinition;
             if (this._projectDefinition != null)
+            {
                 this._projectDefinition.SetParent(this);
+            }
 
             this._imports = imports;
             foreach (ImportSyntax importObj in imports)
+            {
                 importObj.SetParent(this);
+            }
 
             this._moduleItem = moduleItems;
             foreach (SyntaxNode moduleItem in this.ModuleItems)
+            {
                 moduleItem.SetParent(this);
+            }
 
             var exampleDefinitions = new List<ExampleDefinitionSyntax>();
             foreach (SyntaxNode moduleItem in this.ModuleItems) {
@@ -45,19 +51,33 @@ namespace Faml.Syntax {
                     Name functionName = functionDefinition.FunctionName;
 
                     if (this._functionDefinitions.ContainsKey(functionName))
+                    {
                         functionDefinition.FunctionNameSyntax.AddError($"Function '{functionName}' is already defined in module");
+                    }
                     else if (this._recordTypeDefinitions.ContainsKey(functionName))
+                    {
                         functionDefinition.FunctionNameSyntax.AddError($"There is already a record type named '{functionName}' in this module; functions and record types cannot share the same name");
-                    else this._functionDefinitions.Add(functionName, functionDefinition);
+                    }
+                    else
+                    {
+                        this._functionDefinitions.Add(functionName, functionDefinition);
+                    }
                 }
                 else if (moduleItem is RecordTypeDefinitionSyntax recordTypeDefinition) {
                     Name typeName = recordTypeDefinition.TypeNameSyntax.Name;
 
                     if (this._recordTypeDefinitions.ContainsKey(typeName))
+                    {
                         recordTypeDefinition.TypeNameSyntax.AddError($"Type '{typeName}' is already defined in module");
+                    }
                     else if (this._functionDefinitions.ContainsKey(typeName))
+                    {
                         recordTypeDefinition.TypeNameSyntax.AddError($"There is already a function named '{typeName}' in this module; functions and record types cannot share the same name");
-                    else this._recordTypeDefinitions.Add(typeName, recordTypeDefinition);
+                    }
+                    else
+                    {
+                        this._recordTypeDefinitions.Add(typeName, recordTypeDefinition);
+                    }
                 }
                 else if (moduleItem is ExampleDefinitionSyntax exampleDefinition) {
                     int index = exampleDefinitions.Count;
@@ -93,14 +113,19 @@ namespace Faml.Syntax {
 
         public ExampleDefinitionSyntax GetExampleDefinitionAtIndex(int exampleIndex) {
             if (exampleIndex >= this._exampleDefinitions.Length)
+            {
                 throw new UserViewableException($"Example index {exampleIndex} doesn't exist for module {this.ModuleName}; it only has {this._exampleDefinitions.Length} examples");
+            }
+
             return this._exampleDefinitions[exampleIndex];
         }
 
         public ExampleDefinitionSyntax? GetExampleDefinitionAtSourcePosition(int position) {
             foreach (ExampleDefinitionSyntax exampleDefinition in this._exampleDefinitions)
                 if (exampleDefinition.Span.Contains(position))
+                {
                     return exampleDefinition;
+                }
 
             return null;
         }
@@ -118,10 +143,14 @@ namespace Faml.Syntax {
 
         public override void VisitChildren(SyntaxVisitor visitor) {
             foreach (ImportSyntax import in this._imports)
+            {
                 visitor(import);
+            }
 
             foreach (SyntaxNode moduleItem in this._moduleItem)
+            {
                 visitor(moduleItem);
+            }
         }
 
         public override bool IsTerminalNode() {
@@ -144,13 +173,17 @@ namespace Faml.Syntax {
 
                 RecordTypeDefinitionSyntax recordTypeDefinition;
                 if (this._recordTypeDefinitions.TryGetValue(unqualifiableTypeName, out recordTypeDefinition))
+                {
                     return recordTypeDefinition.TypeBinding;
+                }
 
                 // See if it matches any imports
                 foreach (ImportSyntax import in module.Imports) {
                     foreach (ImportTypeReferenceSyntax importReference in import.ImportTypeReferences) {
                         if (importReference.Name == unqualifiableTypeName)
+                        {
                             return importReference.GetTypeBinding();
+                        }
                     }
                 }
             }
@@ -168,7 +201,9 @@ namespace Faml.Syntax {
                 foreach (ImportSyntax import in module.Imports) {
                     foreach (ImportTypeReferenceSyntax importReference in import.ImportTypeReferences) {
                         if (importReference.Name == unqualifiableTypeName)
+                        {
                             return importReference.GetAttachedTypeBinding();
+                        }
                     }
                 }
             }

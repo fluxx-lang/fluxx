@@ -25,7 +25,9 @@ namespace Faml.Interpreter.External {
             int argumentsLength = this._argumentEvals.Length;
             object[] arguments = new object[argumentsLength];
             for (int i = 0; i < argumentsLength; i++)
+            {
                 arguments[i] = this._argumentEvals[i].Eval();
+            }
 
             MethodInfo methodInfo = ((ReflectionDotNetRawMethod) this._method).MethodInfo;
             return methodInfo.Invoke(thisArgument, arguments);

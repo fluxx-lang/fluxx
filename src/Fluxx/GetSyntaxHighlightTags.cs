@@ -17,8 +17,13 @@ namespace Faml {
         // TODO: Implement this properly, supporting multiple spans
         public void GetTags(TextSpan[] textSpans, List<SyntaxHighlightTag> tags) {
             if (textSpans.Length == 1)
+            {
                 this.GetTags(textSpans[0], tags);
-            else throw new NotImplementedException();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void GetTags(TextSpan span, List<SyntaxHighlightTag> tags) {
@@ -35,11 +40,15 @@ namespace Faml {
 
         private void GetSyntaxNodeTags(TextSpan span, SyntaxNode syntaxNode, List<SyntaxHighlightTag> tags) {
             if (!syntaxNode.OverlapsWith(span))
+            {
                 return;
+            }
 
             // If there's not source associated with the node (true for some Invalid... nodes generated via parser error recovery), add nothing
             if (syntaxNode.Span.IsNull())
+            {
                 return;
+            }
 
             if (syntaxNode.IsTerminalNode()) {
                 //                if (currPosition[0] != astNodeProxy.sourceSpan.startPosition) {
@@ -76,19 +85,32 @@ namespace Faml {
 
                         SyntaxHighlightTagType syntaxHighlightTagType;
                         if (parentNodeType == SyntaxNodeType.PredefinedTypeReference || parentNodeType == SyntaxNodeType.ObjectTypeReference)
-                            syntaxHighlightTagType = SyntaxHighlightTagType.TypeReference;
-                        else if (parentNodeType == SyntaxNodeType.PropertySpecifier || parentNodeType == SyntaxNodeType.PropertyNameTypePair)
-                            syntaxHighlightTagType = SyntaxHighlightTagType.PropertyReference;
-                        else if (parentNodeType == SyntaxNodeType.FunctionDefinition)
-                            syntaxHighlightTagType = SyntaxHighlightTagType.FunctionReference;
-                        else if (parentNodeType == SyntaxNodeType.RecordTypeDefinition)
-                            syntaxHighlightTagType = SyntaxHighlightTagType.TypeReference;
-                        else if (syntaxNode.Parent?.Parent?.NodeType == SyntaxNodeType.FunctionInvocation)
-                            /*  && ((FunctionInvocation) nameParent).functionBinding is SyntaxNodeType.NewCSharpObjectFunctionBinding */
-                            syntaxHighlightTagType = SyntaxHighlightTagType.FunctionReference;
-                        else syntaxHighlightTagType = SyntaxHighlightTagType.SymbolReference;
+                            {
+                                syntaxHighlightTagType = SyntaxHighlightTagType.TypeReference;
+                            }
+                            else if (parentNodeType == SyntaxNodeType.PropertySpecifier || parentNodeType == SyntaxNodeType.PropertyNameTypePair)
+                            {
+                                syntaxHighlightTagType = SyntaxHighlightTagType.PropertyReference;
+                            }
+                            else if (parentNodeType == SyntaxNodeType.FunctionDefinition)
+                            {
+                                syntaxHighlightTagType = SyntaxHighlightTagType.FunctionReference;
+                            }
+                            else if (parentNodeType == SyntaxNodeType.RecordTypeDefinition)
+                            {
+                                syntaxHighlightTagType = SyntaxHighlightTagType.TypeReference;
+                            }
+                            else if (syntaxNode.Parent?.Parent?.NodeType == SyntaxNodeType.FunctionInvocation)
+                            {
+                                /*  && ((FunctionInvocation) nameParent).functionBinding is SyntaxNodeType.NewCSharpObjectFunctionBinding */
+                                syntaxHighlightTagType = SyntaxHighlightTagType.FunctionReference;
+                            }
+                            else
+                            {
+                                syntaxHighlightTagType = SyntaxHighlightTagType.SymbolReference;
+                            }
 
-                        tags.Add(new SyntaxHighlightTag(terminalSnapshotSpan, syntaxHighlightTagType));
+                            tags.Add(new SyntaxHighlightTag(terminalSnapshotSpan, syntaxHighlightTagType));
                         break;
                     }
                     case SyntaxNodeType.PredefinedTypeReference:
@@ -120,7 +142,9 @@ namespace Faml {
             else {
                 syntaxNode.VisitChildren((child) => {
                     if (child.OverlapsWith(span))
+                    {
                         this.GetSyntaxNodeTags(span, child, tags);
+                    }
                 });
             }
         }
@@ -130,7 +154,9 @@ namespace Faml {
                 // If there's an endPosition specified and we are at or past it, then we're done
                 if (endPosition != -1) {
                     if (token.TokenStartPosition >= endPosition)
+                    {
                         break;
+                    }
                 }
 
                 //Span? tokenRange = new Span(currSpan.Start.Position + token.tokenStartPosition, token.tokenLength).Intersection(currSpan);
@@ -138,10 +164,14 @@ namespace Faml {
                 //                    continue;
 
                 if (token.Type == TokenType.Eof)
+                {
                     break;
+                }
 
                 if (token.TokenSpan.OverlapsWith(span))
+                {
                     sourceTags.Add(GetTokenSourceTag(token));
+                }
 
                 token.Advance();
             }

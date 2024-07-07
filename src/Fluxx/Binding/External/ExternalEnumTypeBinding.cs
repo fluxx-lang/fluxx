@@ -20,7 +20,10 @@ namespace Faml.Binding.External {
 
             var values = ImmutableArray.CreateBuilder<EnumValueBinding>();
             foreach (EnumValue enumValue in this._typeToolingType.Values)
+            {
                 values.Add(new ExternalEnumValueBinding(this, enumValue));
+            }
+
             this._values = values.ToImmutable();
         }
 
@@ -52,7 +55,10 @@ namespace Faml.Binding.External {
 
         public override bool Equals(object obj) {
             if (!(obj is ExternalEnumTypeBinding))
+            {
                 return false;
+            }
+
             return this.Equals((ExternalEnumTypeBinding) obj);
         }
 

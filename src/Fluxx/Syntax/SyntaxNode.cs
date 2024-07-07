@@ -77,7 +77,10 @@ namespace Faml.Syntax {
             SyntaxNode currentNode = this;
             while (currentNode != null) {
                 if (currentNode is ModuleSyntax moduleSyntax)
+                {
                     return moduleSyntax;
+                }
+
                 currentNode = currentNode.Parent;
             }
 
@@ -94,7 +97,10 @@ namespace Faml.Syntax {
             SyntaxNode currentNode = this;
             while (currentNode != null) {
                 if (currentNode is FunctionDefinitionSyntax)
+                {
                     return (FunctionDefinitionSyntax) currentNode;
+                }
+
                 currentNode = currentNode.Parent;
             }
 
@@ -144,7 +150,9 @@ namespace Faml.Syntax {
 
         public SyntaxNode? GetNextTerminalNodeFromPosition(int position) {
             if (position >= this.Span.End)
+            {
                 throw new ArgumentOutOfRangeException(nameof(position), position, "position is past the end of the node");
+            }
 
             if (this.IsTerminalNode())
                 return this;
@@ -152,7 +160,9 @@ namespace Faml.Syntax {
                 SyntaxNode? terminalNodeAtPosition = null;
                 this.VisitChildren((child) => {
                     if (terminalNodeAtPosition == null && position < child.Span.End)
+                    {
                         terminalNodeAtPosition = child.GetNextTerminalNodeFromPosition(position);
+                    }
                 });
                 return terminalNodeAtPosition;
             }
@@ -162,7 +172,9 @@ namespace Faml.Syntax {
             // The invariant here is that the position is always contained by the span or after it
 
             if (position < this.Span.Start)
+            {
                 throw new ArgumentOutOfRangeException(nameof(position), position, "position is before the start the node");
+            }
 
             if (this.IsTerminalNode())
                 return this;
@@ -172,16 +184,28 @@ namespace Faml.Syntax {
                 this.VisitChildren((child) => {
                     if (terminalNodeAtPosition == null && position >= child.Span.Start) {
                         if (child.Span.Contains(position))
+                        {
                             terminalNodeAtPosition = child.GetPreviousTerminalNodeFromPosition(position);
-                        else previousChildToCheck = child;
+                        }
+                        else
+                        {
+                            previousChildToCheck = child;
+                        }
                     }
                 });
 
                 if (terminalNodeAtPosition != null)
+                {
                     return terminalNodeAtPosition;
+                }
                 else if (previousChildToCheck != null)
+                {
                     return previousChildToCheck.GetPreviousTerminalNodeFromPosition(position);
-                else return null;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -207,7 +231,9 @@ namespace Faml.Syntax {
                 SyntaxNode? descendentNodeAtPosition = null;
                 this.VisitChildren((child) => {
                     if (descendentNodeAtPosition == null && child.Span.ContainsInclusiveEnd(position))
+                    {
                         descendentNodeAtPosition = child.GetNodeAtPosition(position);
+                    }
                 });
 
                 return descendentNodeAtPosition ?? this;

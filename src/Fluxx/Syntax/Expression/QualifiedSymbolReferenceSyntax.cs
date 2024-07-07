@@ -52,9 +52,15 @@ namespace Faml.Syntax.Expression {
 
         public override TypeBinding GetTypeBinding() {
             if (this.IsType)
+            {
                 return this._typeBinding;
+            }
+
             if (this._propertyBinding != null)
+            {
                 return this._propertyBinding.GetTypeBinding();
+            }
+
             throw new Exception(
                 $"Can't call GetTypeBinding on symbol reference that isn't a type; check IsType first");
         }
@@ -65,7 +71,10 @@ namespace Faml.Syntax.Expression {
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
             if (this._qualifier != null)
+            {
                 visitor(this._qualifier);
+            }
+
             visitor(this._symbol);
         }
 

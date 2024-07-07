@@ -20,7 +20,9 @@ namespace Faml.IntelliSense {
 
             DotNetRawType? viewType = dotNetRawTypeProvider.GetType("Xamarin.Forms.View");
             if (viewType == null)
+            {
                 return IntelliSenseCompletions.Empty;
+            }
 
             IEnumerable<DotNetRawType> types = await dotNetRawTypeProvider.FindTypesAssignableToAsync(viewType, cancellationToken);
 
@@ -28,7 +30,9 @@ namespace Faml.IntelliSense {
             foreach (DotNetRawType rawType in types) {
                 TypeToolingType? type = this.Module.Project.GetTypeToolingType(rawType);
                 if (type == null)
+                {
                     continue;
+                }
 
                 string fullName = type.FullName;
                 string name = new QualifiableName(fullName).GetLastComponent().ToString();

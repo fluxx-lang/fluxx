@@ -22,8 +22,13 @@ namespace Faml.IntelliSense {
 
         public IntelliSenseStartData GetStartData() {
             if (this.TerminalNode == null)
+            {
                 return new IntelliSenseStartData(new TextSpan(this.Position, 0));
-            else return new IntelliSenseStartData(this.TerminalNode.Span);
+            }
+            else
+            {
+                return new IntelliSenseStartData(this.TerminalNode.Span);
+            }
         }
 
         public abstract Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken);
@@ -31,7 +36,10 @@ namespace Faml.IntelliSense {
         protected ParseableSource ParseableSource {
             get {
                 if (this._parseableSource == null)
+                {
                     this._parseableSource = new ParseableSource(this.Module.SourceText);
+                }
+
                 return this._parseableSource;
             }
         }

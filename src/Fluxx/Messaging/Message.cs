@@ -15,7 +15,9 @@ namespace Faml.Messaging {
 
             int signature = binaryReader.ReadInt32();
             if (signature != SignatureBytes)
+            {
                 throw new FormatException("Message doesn't start with expected 4 signature bytes");
+            }
 
             long responseId = binaryReader.ReadInt64();
             MessageObject messageObject = MessageObject.Read(binaryReader);

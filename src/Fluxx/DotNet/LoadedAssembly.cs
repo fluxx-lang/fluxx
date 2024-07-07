@@ -19,13 +19,20 @@ namespace Faml.DotNet {
 
         public override string ToString() {
             if (this._assemblyQualifier != null)
+            {
                 return this._assemblyQualifier;
-            else return this._assembly.FullName;
+            }
+            else
+            {
+                return this._assembly.FullName;
+            }
         }
 
         public Type? GetType(string typeName) {
             if (this._assemblyQualifier != null)
+            {
                 return Type.GetType(typeName + ", " + this._assemblyQualifier);
+            }
 
             return this._assembly.GetType(typeName);
         }

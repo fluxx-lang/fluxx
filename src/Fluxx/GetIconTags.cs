@@ -15,8 +15,13 @@ namespace Faml {
         // TODO: Implement this propertly
         public void GetTags(TextSpan[] textSpans, List<IconTag> tags) {
             if (textSpans.Length == 1)
+            {
                 this.GetTags(textSpans[0], tags);
-            else throw new NotImplementedException();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void GetTags(TextSpan span, List<IconTag> tags) {
@@ -31,11 +36,15 @@ namespace Faml {
                 SyntaxNodeType nodeType = syntaxNode.NodeType;
 
                 if (nodeType == SyntaxNodeType.ExampleDefinition || nodeType == SyntaxNodeType.ExamplesDefinition)
+                {
                     tags.Add(new IconTag(new TextSpan(syntaxNode.Span.Start, 0), IconTagType.Example));
+                }
 
                 syntaxNode.VisitChildren((child) => {
                     if (child.OverlapsWith(span))
+                    {
                         this.GetSyntaxNodeTags(span, child, tags);
+                    }
                 });
             }
         }

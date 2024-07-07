@@ -30,7 +30,9 @@ namespace Faml.Lexer {
             this._prevTokenEndPosition = -1;
 
             if (! noInitialAdvance)
+            {
                 this.Advance();
+            }
         }
 
         public ParseableSource Source => this._source;
@@ -64,8 +66,13 @@ namespace Faml.Lexer {
         public override string ToString() {
             string typeString = this._type.ToString();
             if (this._type == TokenType.Identifier || this._type == TokenType.PropertyIdentifier /* || type == TokenType.FUNCTION_NAME */)
+            {
                 return typeString + "(" + this.StringValue + ")";
-            else return typeString;
+            }
+            else
+            {
+                return typeString;
+            }
         }
 
         public int TokenStartPosition => this._tokenStartPosition;
@@ -129,8 +136,13 @@ namespace Faml.Lexer {
             // Trim trailing whitespace
             while (this._position > this._tokenStartPosition) {
                 if (this._source.IsSpaceOrNewlineAt(this._position - 1))
+                {
                     --this._position;
-                else break;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
@@ -152,7 +164,9 @@ namespace Faml.Lexer {
                 if (currChar == '\\') {
                     this.AdvanceChar();
                     if (this.GetCurrChar() != '\n')
+                    {
                         this.AdvanceChar();
+                    }
                 }
                 else if (currChar == '[') {
                     this.AdvanceChar();
@@ -224,7 +238,9 @@ namespace Faml.Lexer {
                 if (currChar == '\\') {
                     this.AdvanceChar();
                     if (this.GetCurrChar() != '\n')
+                    {
                         this.AdvanceChar();
+                    }
                 }
                 else if (currChar == ';' && allowSemicolonToTerminate && delimiterStack.IsEmpty)
                     return;
@@ -234,7 +250,10 @@ namespace Faml.Lexer {
                 }
                 else if (currChar == '}') {
                     if (allowRightBraceToTerminate && delimiterStack.IsEmpty)
+                    {
                         return;
+                    }
+
                     delimiterStack.PopUntil('{');
                     this.AdvanceChar();
                 }
@@ -273,11 +292,15 @@ namespace Faml.Lexer {
 
                 // If at end of file, stop
                 if (currChar == '\0')
+                {
                     break;
+                }
 
                 // If the current indent isn't more than the introducing line, we're done
                 if (this._source.GetColumn(this._position) <= introducingColumn)
+                {
                     break;
+                }
 
                 // Read the rest of the line
                 while (currChar != '\n' && currChar != '\0') {
@@ -285,7 +308,9 @@ namespace Faml.Lexer {
                     currChar = this.GetCurrChar();
                 }
                 if (currChar == '\n')
+                {
                     this.AdvanceChar();
+                }
             }
         }
 
@@ -322,15 +347,21 @@ namespace Faml.Lexer {
 
             // Skip whitespace
             while (this._source.IsSpaceOrNewlineAt(peekPosition))
+            {
                 ++peekPosition;
+            }
 
             // See if there's a property name, ending with a colon
             char initialChar = this._source.GetCharAt(peekPosition++);
             if (!IsPropertyIdentifierInitialCharacter(initialChar))
+            {
                 return false;
+            }
 
             while (IsPropertyIdentifierCharacter(this._source.GetCharAt(peekPosition)))
+            {
                 ++peekPosition;
+            }
 
             return this._source.GetCharAt(peekPosition) == ':';
         }
@@ -344,7 +375,9 @@ namespace Faml.Lexer {
 
             // Skip whitespace
             while (this._source.IsSpaceOrNewlineAt(peekPosition))
+            {
                 ++peekPosition;
+            }
 
             return this._source.GetCharAt(peekPosition++) == '[';
         }
@@ -358,7 +391,9 @@ namespace Faml.Lexer {
 
             // Skip whitespace
             while (this._source.IsSpaceOrNewlineAt(peekPosition))
+            {
                 ++peekPosition;
+            }
 
             return this._source.GetCharAt(peekPosition++) == '}';
         }
@@ -368,14 +403,18 @@ namespace Faml.Lexer {
 
             // Skip whitespace
             while (this._source.IsSpaceAt(peekPosition))
+            {
                 ++peekPosition;
+            }
 
             return this._source.IsNewlineAt(peekPosition);
         }
 
         public bool IsQualifiedIdentifier() {
             if (this._type != TokenType.Identifier)
+            {
                 return false;
+            }
 
             return this.GetLookaheadAt(0) == '.' && IsIdentifierInitialCharacter(this.GetLookaheadAt(1));
         }
@@ -396,7 +435,10 @@ namespace Faml.Lexer {
                     while (true) {
                         indentAmount = this.AdvanceForIndentWhitespace();
                         if (this.GetCurrChar() != '\n')
+                        {
                             break;
+                        }
+
                         this.AdvanceChar();
                     }
                 }
@@ -408,16 +450,26 @@ namespace Faml.Lexer {
                 else if (IsPropertyIdentifierInitialCharacter(currChar)) {
                     this.AdvanceChar();
                     while (IsPropertyIdentifierCharacter(this.GetCurrChar()))
+                    {
                         this.AdvanceChar();
+                    }
+
                     if (this.GetCurrChar() == ':')
+                    {
                         return new ArgumentLookahead(ArgumentLookaheadType.PropertyIdentifier);
+                    }
                 }
                 else if (currChar == '\0')
                     return new ArgumentLookahead(ArgumentLookaheadType.None);
 
                 if (indentAmount != -1)
+                {
                     return new ArgumentLookahead(indentAmount);
-                else return new ArgumentLookahead(ArgumentLookaheadType.None);
+                }
+                else
+                {
+                    return new ArgumentLookahead(ArgumentLookaheadType.None);
+                }
             }
             finally {
                 this._position = savedPosition;
@@ -428,14 +480,18 @@ namespace Faml.Lexer {
             int peekPosition = this._position;
 
             while (this._source.IsSpaceOrNewlineAt(peekPosition))
+            {
                 ++peekPosition;
+            }
 
             return this._source.GetCharAt(peekPosition) == '{';
         }
 
         public bool LooksLikeStartOfExpression() {
             if (this.Type == TokenType.LeftBrace || this.Type == TokenType.If)
+            {
                 return true;
+            }
 
             // If the value starts with an identifier, see if it looks like a function invocation
             if (this.Type == TokenType.Identifier) {
@@ -444,7 +500,9 @@ namespace Faml.Lexer {
                 var lookaheadToken = new Token(remainingSourceTextSubsequence);
 
                 if (lookaheadToken.Type == TokenType.LeftBrace)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -482,7 +540,9 @@ namespace Faml.Lexer {
 
             // If the value starts with a left brace, we treat that as an expression
             if (lookaheadToken.Type == TokenType.LeftBrace)
+            {
                 return true;
+            }
 
             // If the value starts with an identifier, see if it looks like a function invocation (meaning it's followed by a left brace or a property identifier)
             if (lookaheadToken.Type == TokenType.Identifier) {
@@ -490,7 +550,9 @@ namespace Faml.Lexer {
 
                 TokenType tokenType = lookaheadToken.Type;
                 if (tokenType == TokenType.LeftBrace || tokenType == TokenType.PropertyIdentifier)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -765,7 +827,9 @@ namespace Faml.Lexer {
 
         public void RescanPropertyIdentifierAsIdentifier() {
             if (this._type != TokenType.PropertyIdentifier)
+            {
                 throw new InvalidOperationException("Called RescanPropertyIdentifierAsIdentifier when current token isn't a PropertyIdentifier");
+            }
 
             this._position = this._tokenStartPosition;
             int startPosition = this._position;
@@ -773,7 +837,10 @@ namespace Faml.Lexer {
             while (true) {
                 char currChar = this.GetCurrChar();
                 if (!IsIdentifierCharacter(currChar))
+                {
                     break;
+                }
+
                 this.AdvanceChar();
             }
 
@@ -803,12 +870,16 @@ namespace Faml.Lexer {
 
         private void SkipSpaces() {
             while (this._source.IsSpaceAt(this._position))
+            {
                 this.AdvanceChar();
+            }
         }
 
         private void SkipSpacesAndNewlines() {
             while (this._source.IsSpaceOrNewlineAt(this._position))
+            {
                 this.AdvanceChar();
+            }
         }
 
         private char GetCurrChar() => this._source.GetCharAt(this._position);
@@ -830,7 +901,9 @@ namespace Faml.Lexer {
         /// </summary>
         private void AdvanceChar() {
             if (this._position < this._sourceEnd)
+            {
                 ++this._position;
+            }
         }
 
         private void SetPosition(int position) {
@@ -843,7 +916,10 @@ namespace Faml.Lexer {
             while (true) {
                 char currChar = this.GetCurrChar();
                 if (!IsIdentifierCharacter(currChar))
+                {
                     break;
+                }
+
                 this.AdvanceChar();
             }
 
@@ -904,7 +980,9 @@ namespace Faml.Lexer {
                             break;
                         }
                         if (!IsPropertyIdentifierCharacter(peekCharacter))
+                        {
                             break;
+                        }
                     }
 
                     break;

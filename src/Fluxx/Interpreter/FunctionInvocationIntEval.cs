@@ -20,7 +20,9 @@ namespace Faml.Interpreter {
         public override int Eval() {
             int argumentsLength = this.Arguments.Length;
             for (int i = 0; i < argumentsLength; i++)
+            {
                 this.Arguments[i].Push();
+            }
 
             int savedBaseIndex = Context.BaseIndex;
             Context.BaseIndex = Context.StackIndex;

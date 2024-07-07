@@ -98,7 +98,9 @@ namespace Faml.Syntax {
         public Api.QuickInfo.QuickInfo? GetQuickInfo(int position) {
             SyntaxNode? terminalNode = this.ModuleSyntax.GetNextTerminalNodeFromPosition(position);
             if (terminalNode == null || !terminalNode.Span.Contains(position))
+            {
                 return null;
+            }
 
             return QuickInfoProvider.GetQuickInfo(terminalNode);
         }
@@ -110,7 +112,10 @@ namespace Faml.Syntax {
         public async Task<IntelliSenseCompletions?> GetIntelliSenseCompletionsAsync(int position, CancellationToken cancellationToken) {
             IntelliSense.IntelliSense? intelliSense = IntelliSenseProvider.GetIntelliSense(this, position);
             if (intelliSense == null)
+            {
                 return null;
+            }
+
             return await intelliSense.GetCompletionsAsync(cancellationToken);
         }
 

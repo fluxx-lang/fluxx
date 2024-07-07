@@ -17,11 +17,15 @@ namespace Faml.Syntax.Expression {
         {
             this._stringFragments = stringFragments;
             foreach (InterpolatedStringFragmentSyntax stringFragment in stringFragments)
+            {
                 stringFragment.SetParent(this);
+            }
 
             this._expressions = expressions;
             foreach (ExpressionSyntax expression in expressions)
+            {
                 expression.SetParent(this);
+            }
         }
 
         public override bool IsTerminalNode() {

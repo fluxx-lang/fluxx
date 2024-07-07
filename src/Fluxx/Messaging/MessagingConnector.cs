@@ -20,19 +20,27 @@ namespace Faml.Messaging {
             string messageType = message.MessageType;
 
             if (!this._messageHandlers.TryGetValue(messageType, out MessageHandler handler))
+            {
                 throw new InvalidOperationException($"Unsupported message type: {messageType}");
+            }
 
             MessageObject? response = await handler(message.MessageObject);
 
             if (response == null)
+            {
                 return;
+            }
 
             if (!response.Type.EndsWith("Response"))
+            {
                 throw new InvalidOperationException($"Response message type {response.Type} does not have suffix 'Response'");
+            }
 
             long responseId = message.ResponseId;
             if (responseId == 0)
+            {
                 throw new InvalidOperationException($"Response for {messageType} was returned, but there's no responseId to return it");
+            }
 
             var responseMessage = new Message(response, responseId);
 
@@ -61,10 +69,14 @@ namespace Faml.Messaging {
         protected void HandleResponse(Message responseMessage) {
             long responseId = responseMessage.ResponseId;
             if (responseId == 0)
+            {
                 throw new InvalidOperationException($"{responseMessage.MessageType} response message does not contain a responseId");
+            }
 
             if (! this._neededResponses.TryGetValue(responseId, out ResponseHandler responseHandler))
+            {
                 throw new InvalidOperationException($"{responseMessage.MessageType} response message does not have a registered response handler for responseId {responseId}");
+            }
 
             this._neededResponses.Remove(responseId);
             responseHandler.ResponseReceived(responseMessage);

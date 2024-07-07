@@ -24,7 +24,9 @@ namespace Faml.Binding.External {
         {
             foreach (AttachedProperty attachedProperty in this._attachedType.AttachedProperties)
                 if (attachedProperty.Name == propertyName.ToString())
+                {
                     return attachedProperty;
+                }
 
             return null;
         }

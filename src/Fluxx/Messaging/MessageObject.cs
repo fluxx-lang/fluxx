@@ -36,7 +36,9 @@ namespace Faml.Messaging {
         public T GetProperty<T>(string propertyName) {
             object? value = this.GetPropertyIfExists(propertyName);
             if (value == null)
+            {
                 throw new InvalidOperationException($"Property not present: {propertyName}");
+            }
 
             if (!(value is T typedValue))
                 throw new InvalidOperationException(
@@ -102,7 +104,9 @@ namespace Faml.Messaging {
                 this.WritePropertyType(binaryWriter, PropertyType.MessageObjectArray);
                 binaryWriter.Write(messageObjectArrayValue.Length);
                 foreach (MessageObject messageObject in messageObjectArrayValue)
+                {
                     messageObject.Write(binaryWriter);
+                }
             }
             else
                 throw new NotSupportedException($"Unknown property type: {value.GetType().FullName}");
@@ -152,8 +156,11 @@ namespace Faml.Messaging {
                     int length = binaryReader.ReadInt32();
                     var list = new List<MessageObject>();
                     while (length-- > 0)
-                        list.Add(Read(binaryReader));
-                    return list.ToArray();
+                        {
+                            list.Add(Read(binaryReader));
+                        }
+
+                        return list.ToArray();
                 }
                 default:
                     throw new NotSupportedException($"Unknown property type: {type}");

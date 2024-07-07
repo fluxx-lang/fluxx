@@ -13,7 +13,9 @@ namespace Faml.Interpreter.Ast {
 
         public object GetProperty(string name) {
             if (!this._propertyValues.TryGetValue(name, out object value))
+            {
                 throw new Exception($"Property '{name}' not set on data record");
+            }
 
             return value;
        }

@@ -34,7 +34,9 @@ namespace Faml.Syntax.Expression {
 
         public override void VisitChildren(SyntaxVisitor visitor) {
             if (this._enumValueSyntax != null)
+            {
                 visitor(this._enumValueSyntax);
+            }
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {

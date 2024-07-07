@@ -23,7 +23,10 @@ namespace Faml.Binding.Internal {
 
         public override bool Equals(object obj) {
             if (! (obj is RecordTypeBinding))
+            {
                 return false;
+            }
+
             return this.Equals((RecordTypeBinding) obj);
         }
 
@@ -33,7 +36,10 @@ namespace Faml.Binding.Internal {
 
         public override PropertyBinding? GetPropertyBinding(Name propertyName) {
             if (!this._recordTypeDefinition.HasProperty(propertyName))
+            {
                 return null;
+            }
+
             return new RecordPropertyBinding(this._recordTypeDefinition, propertyName);
         }
 

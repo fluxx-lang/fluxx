@@ -103,10 +103,14 @@ namespace Faml.Interpreter {
             while (true) {
                 FunctionDefinitionSyntax function = this._functionsNeedingResolving.Keys.FirstOrDefault();
                 if (function == null)
+                {
                     break;
+                }
 
                 if (!this._functionsNeedingResolving.TryRemove(function, out List<FunctionEvalResolved> functionEvalResolveds))
+                {
                     continue;
+                }
 
                 ModuleSyntax moduleSyntax = function.GetModuleSyntax();
                 ModuleEvals moduleEvals = moduleSyntax.GetProject().GetModuleEvals(moduleSyntax);
@@ -118,7 +122,9 @@ namespace Faml.Interpreter {
                 }
 
                 foreach (FunctionEvalResolved functionEvalResolved in functionEvalResolveds)
+                {
                     functionEvalResolved(functionEval);
+                }
             }
         }
 
@@ -137,14 +143,25 @@ namespace Faml.Interpreter {
                 TypeBinding typeBinding = symbolReference.GetTypeBinding();
 
                 if (typeBinding == BuiltInTypeBinding.Int)
+                {
                     return new StackIntEval(parameterBaseOffset);
+                }
                 else if (typeBinding == BuiltInTypeBinding.Double)
+                {
                     return new StackDoubleEval(parameterBaseOffset);
+                }
                 else if (typeBinding == BuiltInTypeBinding.Bool)
+                {
                     return new StackBooleanEval(parameterBaseOffset);
+                }
                 else if (typeBinding == BuiltInTypeBinding.String || typeBinding is ObjectTypeBinding)
+                {
                     return new StackObjectEval(parameterBaseOffset);
-                else throw new Exception($"Unexpected parameter type {typeBinding} for parameter {symbolReference}");
+                }
+                else
+                {
+                    throw new Exception($"Unexpected parameter type {typeBinding} for parameter {symbolReference}");
+                }
             }
             else if (symbolBinding is ForSymbolBinding forVariableBinding) {
                 TypeBinding typeBinding = forVariableBinding.GetTypeBinding();
@@ -152,10 +169,17 @@ namespace Faml.Interpreter {
                 int variableIndex = forVariableBinding.VariableIndex;
 
                 if (typeBinding == BuiltInTypeBinding.Int)
+                {
                     return new StackIntEval(variableIndex);
+                }
                 else if (typeBinding == BuiltInTypeBinding.String || typeBinding is ObjectTypeBinding)
+                {
                     return new StackObjectEval(variableIndex);
-                else throw new Exception($"Unexpected 'for' variable type {typeBinding} for variable {symbolReference}");
+                }
+                else
+                {
+                    throw new Exception($"Unexpected 'for' variable type {typeBinding} for variable {symbolReference}");
+                }
             }
             else
                 throw new Exception(
@@ -173,13 +197,21 @@ namespace Faml.Interpreter {
                 string propertyName = propertyAccess.PropertyNameString;
 
                 if (typeBinding == BuiltInTypeBinding.Int)
+                {
                     return new AstRecordPropertyIntEval(propertyName, expressionEval);
+                }
                 else if (typeBinding == BuiltInTypeBinding.Double)
+                {
                     return new AstRecordPropertyDoubleEval(propertyName, expressionEval);
+                }
                 else if (typeBinding == BuiltInTypeBinding.Bool)
+                {
                     return new AstRecordPropertyBooleanEval(propertyName, expressionEval);
+                }
                 else if (typeBinding == BuiltInTypeBinding.String || typeBinding is ObjectTypeBinding)
+                {
                     return new AstRecordPropertyObjectEval(propertyName, expressionEval);
+                }
                 else
                     throw new Exception("Unexpected expression type '" + typeBinding + "' for property access " +
                                         propertyAccess.ToString());
@@ -195,7 +227,9 @@ namespace Faml.Interpreter {
             ObjectEval[] expressionEvals = new ObjectEval[length];
 
             for (int i = 0; i < length; i++)
+            {
                 expressionEvals[i] = BoxIfPrimitiveType(this.CreateExpressionEval(expressions[i]));
+            }
 
             return new SequenceLiteralEval(expressionEvals);
         }
@@ -242,7 +276,9 @@ namespace Faml.Interpreter {
 
         private Eval CreateFunctionInvocationEval(FunctionInvocationSyntax functionInvocation) {
             if (functionInvocation.LiteralConstructorValue != null)
+            {
                 return this.CreateExpressionEval(functionInvocation.LiteralConstructorValue);
+            }
 
             FunctionBinding functionBinding = functionInvocation.FunctionBinding;
             Name? contentParameter = functionBinding.GetContentProperty();
@@ -295,9 +331,13 @@ namespace Faml.Interpreter {
             FunctionBinding functionBinding = functionSymbolBinding.FunctionBinding;
 
             if (functionBinding is InternalFunctionBinding astFunctionBinding)
+            {
                 return this.CreateAstFunctionInvocationEval(astFunctionBinding.FunctionDefinition, new Eval[0]);
+            }
             else if (functionBinding is NewRecordFunctionBinding)
+            {
                 return new NewAstRecordObjectEval(new Name[0], new Eval[0]);
+            }
             else
                 throw new Exception(
                     $"Unexpected function binding type {functionBinding} for zero argument function {functionSymbolBinding.FunctionBinding.FunctionName}");
@@ -315,7 +355,10 @@ namespace Faml.Interpreter {
                 Name parameterName = parameters[i];
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName.ToQualifiableName());
                 if (argumentValue == null)
+                {
                     throw new Exception($"Argument '{parameterName}' isn't specified for function '{functionBinding.FunctionName}'");
+                }
+
                 argumentEvals[i] = this.CreateExpressionEval(argumentValue);
             }
             return argumentEvals;
@@ -333,7 +376,10 @@ namespace Faml.Interpreter {
                 QualifiableName parameterName = parameters[i];
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName);
                 if (argumentValue == null)
+                {
                     throw new Exception($"Parameter '{parameterName}' doesn't exist for function '{functionBinding.FunctionName}'");
+                }
+
                 argumentEvals[i] = this.CreateExpressionEval(argumentValue);
             }
             return argumentEvals;
@@ -345,7 +391,9 @@ namespace Faml.Interpreter {
 
             ObjectEval[] argumentObjectEvals = new ObjectEval[length];
             for (int i = 0; i < length; i++)
+            {
                 argumentObjectEvals[i] = BoxIfPrimitiveType(argumentEvals[i]);
+            }
 
             return argumentObjectEvals;
         }
@@ -362,7 +410,9 @@ namespace Faml.Interpreter {
                 Name parameterName = parameters[i];
                 object argumentValue = args.GetValueOrNull(parameterName.ToString());
                 if (argumentValue == null)
+                {
                     throw new Exception($"Argument '{parameterName}' isn't specified for function '{functionBinding.FunctionName}'");
+                }
 
                 argumentEvals[i] = new ObjectConstantEval(argumentValue);
             }
@@ -371,12 +421,21 @@ namespace Faml.Interpreter {
 
         public static ObjectEval BoxIfPrimitiveType(Eval eval) {
             if (eval is BooleanEval booleanEval)
+            {
                 return new CastBooleanObjectEval(booleanEval);
+            }
             else if (eval is IntEval intEval)
+            {
                 return new CastIntObjectEval(intEval);
+            }
             else if (eval is ObjectEval objectEval)
+            {
                 return objectEval;
-            else throw new Exception($"Unsupported property type for {eval}");
+            }
+            else
+            {
+                throw new Exception($"Unsupported property type for {eval}");
+            }
         }
 
         private static Eval UnboxIfDesirePrimitiveType(ObjectEval objectEval, TypeBinding desiredTypeBinding) {
@@ -384,18 +443,31 @@ namespace Faml.Interpreter {
 
             // If there's no need to convert to a primitive type binding, just return the unaltered eval
             if (primitveTypeBinding == null)
+            {
                 return objectEval;
+            }
 
             if (primitveTypeBinding == BuiltInTypeBinding.Bool)
+            {
                 return new CastObjectBooleanEval(objectEval);
+            }
             else if (primitveTypeBinding == BuiltInTypeBinding.Int)
+            {
                 return new CastObjectIntEval(objectEval);
+            }
             else if (primitveTypeBinding == BuiltInTypeBinding.Double)
+            {
                 return new CastObjectDoubleEval(objectEval);
+            }
             // Strings are an object type
             else if (primitveTypeBinding == BuiltInTypeBinding.String)
+            {
                 return objectEval;
-            else throw new Exception($"Unknown primitive type: {primitveTypeBinding}");
+            }
+            else
+            {
+                throw new Exception($"Unknown primitive type: {primitveTypeBinding}");
+            }
         }
 
         private Eval CreateAstFunctionInvocationEval(FunctionDefinitionSyntax functionDefinition, Eval[] parameterEvals) {
@@ -403,13 +475,21 @@ namespace Faml.Interpreter {
 
             TypeBinding returnTypeBinding = functionDefinition.ReturnTypeBinding;
             if (returnTypeBinding == BuiltInTypeBinding.Int)
+            {
                 return new FunctionInvocationIntEval(parameterEvals, this, functionDefinition);
+            }
             else if (returnTypeBinding == BuiltInTypeBinding.Double)
+            {
                 return new FunctionInvocationDoubleEval(parameterEvals, this, functionDefinition);
+            }
             else if (returnTypeBinding == BuiltInTypeBinding.Bool)
+            {
                 return new FunctionInvocationBooleanEval(parameterEvals, this, functionDefinition);
+            }
             else if (returnTypeBinding is ObjectTypeBinding || returnTypeBinding is SequenceTypeBinding || returnTypeBinding == BuiltInTypeBinding.String)
+            {
                 return new FunctionInvocationObjectEval(parameterEvals, this, functionDefinition);
+            }
             else
                 throw new Exception(
                     $"Unexpected function return type to eval, '{returnTypeBinding}', for function {functionDefinition.FunctionNameSyntax}");
@@ -494,8 +574,13 @@ namespace Faml.Interpreter {
                 return new StringLiteralEval(stringLiteral.Value);
             else if (expression is SymbolReferenceSyntax variableReferenceSyntax) {
                 if (variableReferenceSyntax.GetVariableBinding() is FunctionSymbolBinding zeroArgumentFunctionBinding)
+                {
                     return this.CreateZeroArgumentFunctionInvocationEval(zeroArgumentFunctionBinding);
-                else return this.CreateVariableEval(variableReferenceSyntax);
+                }
+                else
+                {
+                    return this.CreateVariableEval(variableReferenceSyntax);
+                }
             }
             else if (expression is PropertyAccessSyntax propertyAccess)
                 return this.CreatePropertyAccessEval(propertyAccess);
@@ -577,20 +662,28 @@ namespace Faml.Interpreter {
                 return new TimesEval((IntEval) leftEval, (IntEval) rightEval);
             else if (infixOperator == Operator.Equals) {
                 if (leftTypeBinding == BuiltInTypeBinding.Int && rightTypeBiding == BuiltInTypeBinding.Int)
+                {
                     return new EqualsIntEval((IntEval) leftEval, (IntEval) rightEval);
+                }
                 else if (leftTypeBinding == BuiltInTypeBinding.Bool &&
                          rightTypeBiding == BuiltInTypeBinding.Bool)
+                {
                     return new EqualsBooleanEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+                }
                 else
                     throw new Exception("Cannot compare these two types with == :" + leftTypeBinding + " and " +
                                         rightTypeBiding);
             }
             else if (infixOperator == Operator.NotEquals) {
                 if (leftTypeBinding == BuiltInTypeBinding.Int && rightTypeBiding == BuiltInTypeBinding.Int)
+                {
                     return new NotEqualsIntEval((IntEval) leftEval, (IntEval) rightEval);
+                }
                 else if (leftTypeBinding == BuiltInTypeBinding.Bool &&
                          rightTypeBiding == BuiltInTypeBinding.Bool)
+                {
                     return new NotEqualsBooleanEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+                }
                 else
                     throw new Exception("Cannot compare these two types with == :" + leftTypeBinding + " and " +
                                         rightTypeBiding);
@@ -605,18 +698,27 @@ namespace Faml.Interpreter {
             Eval operandEval = this.CreateExpressionEval(expression.Operand);
 
             if (prefixOperator == Operator.Not)
+            {
                 return new NotEval((BooleanEval) operandEval);
-            else throw new Exception("Unexpected prefix operator to eval: " + prefixOperator.GetSourceRepresentation());
+            }
+            else
+            {
+                throw new Exception("Unexpected prefix operator to eval: " + prefixOperator.GetSourceRepresentation());
+            }
         }
 
         private Eval CreateIfExpressionEval(IfExpressionSyntax ifExpression) {
             TypeBinding typeBinding = ifExpression.GetTypeBinding();
             if (typeBinding == null)
+            {
                 throw new Exception("Unable to determine type binding of IfExpression");
+            }
 
             // TODO: Handle this error at parsing time
             if (! (typeBinding is ObjectTypeBinding))
+            {
                 throw new Exception("'if' expressions are just supported for object types currently");
+            }
 
             var conditionEvals = new List<BooleanEval>();
             var valueEvals = new List<ObjectEval>();
@@ -629,8 +731,13 @@ namespace Faml.Interpreter {
             ExpressionSyntax elseValue = ifExpression.ElseValue;
             ObjectEval elseValueEval;
             if (elseValue == null)
+            {
                 elseValueEval = this.CreateEmptySequenceEval();
-            else elseValueEval = (ObjectEval) this.CreateExpressionEval(elseValue);
+            }
+            else
+            {
+                elseValueEval = (ObjectEval) this.CreateExpressionEval(elseValue);
+            }
 
             return new IfObjectEval(conditionEvals.ToArray(), valueEvals.ToArray(), elseValueEval);
         }
@@ -638,11 +745,15 @@ namespace Faml.Interpreter {
         private Eval CreateForExpressionEval(ForExpressionSyntax forExpression) {
             TypeBinding typeBinding = forExpression.GetTypeBinding();
             if (typeBinding == null)
+            {
                 throw new Exception("Unable to determine type binding of ForExpression");
+            }
 
             // TODO: Handle this error at parsing time
             if (!(typeBinding is ObjectTypeBinding))
+            {
                 throw new Exception("'for' expressions are just supported for object types currently");
+            }
 
             var expressionEval = (ObjectEval) this.CreateExpressionEval(forExpression.Expression);
             var inExpressionEval = (ObjectEval) this.CreateExpressionEval(forExpression.ForVariableDefinition.InExpression);

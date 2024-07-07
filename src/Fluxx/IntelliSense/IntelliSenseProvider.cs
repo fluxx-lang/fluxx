@@ -27,7 +27,9 @@ namespace Faml.IntelliSense {
 
             SyntaxNode? previousTerminalNode = null;
             if (!node.IsTerminalNode())
+            {
                 previousTerminalNode = moduleSyntax.GetPreviousTerminalNodeFromPosition(position);
+            }
 
             // If the caret is at the end of a property specifier (right after the colon) then we want to show
             // IntelliSense for the value that comes after. That's an exception to the normal rule that
@@ -50,12 +52,16 @@ namespace Faml.IntelliSense {
 
                     FunctionBinding functionBinding = functionInvocation.FunctionBinding;
                     if (functionBinding is InvalidFunctionBinding)
+                    {
                         return null;
+                    }
 
                     // If the caret is at the start of the property, then IntelliSense should add a new
                     // property, not update the existing one
                     if (propertySpecifier.Span.Start == position)
+                    {
                         return new ArgumentNameIntelliSense(module, position, functionBinding);
+                    }
 
                     return new ArgumentNameIntelliSense(module, position, functionBinding,
                         propertySpecifier.PropertyNameSyntax);
@@ -67,7 +73,9 @@ namespace Faml.IntelliSense {
                 if (node is FunctionInvocationSyntax functionInvocation) {
                     FunctionBinding functionBinding = functionInvocation.FunctionBinding;
                     if (functionBinding is InvalidFunctionBinding)
+                    {
                         return null;
+                    }
 
                     return new ArgumentNameIntelliSense(module, position, functionBinding);
                 }
@@ -81,7 +89,9 @@ namespace Faml.IntelliSense {
 
                     TypeBinding parameterTypeBinding = argumentNameValuePair.ParameterTypeBinding;
                     if (parameterTypeBinding is InvalidTypeBinding)
+                    {
                         return null;
+                    }
 
                     return new ValueIntelliSense(module, position, parameterTypeBinding);
                 }

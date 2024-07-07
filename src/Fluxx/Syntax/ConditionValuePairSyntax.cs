@@ -29,7 +29,9 @@ namespace Faml.Syntax {
 
         public void ParseValueSource(BindingResolver bindingResolver) {
             if (this._value != null)
+            {
                 return;
+            }
 
             this._value = SourceParser.ParseTextBlockExpression(this.GetModule(), this._valueSpan);
             this._value.SetParent(this);
@@ -42,7 +44,9 @@ namespace Faml.Syntax {
             visitor(this._condition);
 
             if (this._value != null)
+            {
                 visitor(this._value);
+            }
         }
 
         public override bool IsTerminalNode() => false;

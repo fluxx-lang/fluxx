@@ -72,7 +72,9 @@ namespace Faml {
 
         public void FullyInitialize() {
             if (this._fullyInitialized)
+            {
                 throw new Exception("Project already initialized");
+            }
 
 #if false
             // Faml.Types is always present, by default
@@ -122,13 +124,20 @@ namespace Faml {
 
         public void SetSource(string path, string? source) {
             if (source == null)
+            {
                 this._sourceOverrides.Remove(path);
-            else this._sourceOverrides[path] = source;
+            }
+            else
+            {
+                this._sourceOverrides[path] = source;
+            }
         }
 
         public string? GetSource(string path) {
             if (this._sourceOverrides.TryGetValue(path, out string source))
+            {
                 return source;
+            }
 
             return this._sourceProvider.GetTextResource(path);
         }
@@ -146,12 +155,19 @@ namespace Faml {
             FunctionInvocationSyntax? projectDefinition = moduleSyntax.ProjectDefinition;
             if (projectDefinition != null) {
                 if (isStandaloneModule || moduleName.ToString() == "project")
+                {
                     this.ProcessProject(moduleName, projectDefinition);
-                else projectDefinition.AddError("'App' function can only be specified in the main module or in 'project.faml'");
+                }
+                else
+                {
+                    projectDefinition.AddError("'App' function can only be specified in the main module or in 'project.faml'");
+                }
             }
 
             if (this.TypeProviderReady())
+            {
                 moduleSyntax.ResolveAllBindings();
+            }
 
             this._modules[moduleName] = module;
         }
@@ -181,7 +197,9 @@ namespace Faml {
 
             if (!this._fullyInitialized) {
                 if (this._dotNetProjectInfo.RawTypeProvider != null && this._dotNetProjectInfo.RawTypeProvider.IsReady)
+                {
                     this.FullyInitialize();
+                }
             }
         }
 
@@ -192,7 +210,9 @@ namespace Faml {
                 TypeToolingType? typeToolingType = provider.ProvideType(rawType, companionType);
 
                 if (typeToolingType != null)
+                {
                     return this.EnhanceTypeToolingType(typeToolingType);
+                }
             }
 
             // Check the default providers last
@@ -200,7 +220,9 @@ namespace Faml {
                 TypeToolingType? typeToolingType = defaultProvider.ProvideType(rawType, companionType);
 
                 if (typeToolingType != null)
+                {
                     return this.EnhanceTypeToolingType(typeToolingType);
+                }
             }
 
             return null;
@@ -220,8 +242,13 @@ namespace Faml {
 
         public object Instantiate(RawType rawType, params object[] args) {
             if (rawType is DotNetRawType dotNetRawType)
+            {
                 return this._dotNetProjectInfo.RawTypeProvider.Instantiate(dotNetRawType, args);
-            else throw new UserViewableException($"Only DotNetRawType raw types can be instantiated; raw type {rawType.GetType().FullName} isn't supported");
+            }
+            else
+            {
+                throw new UserViewableException($"Only DotNetRawType raw types can be instantiated; raw type {rawType.GetType().FullName} isn't supported");
+            }
         }
 
         private AttachedType? DoGetTypeToolingAttachedType(RawType rawType) {
@@ -229,7 +256,9 @@ namespace Faml {
                 AttachedType? attachedType = provider.ProvideAttachedType(rawType, null);
 
                 if (attachedType != null)
+                {
                     return this.EnhanceTypeToolingAttachedType(attachedType);
+                }
             }
 
             // Check the default providers last
@@ -237,7 +266,9 @@ namespace Faml {
                 AttachedType? attachedType = defaultProvider.ProvideAttachedType(rawType, null);
 
                 if (attachedType != null)
+                {
                     return this.EnhanceTypeToolingAttachedType(attachedType);
+                }
             }
 
             return null;
@@ -247,14 +278,18 @@ namespace Faml {
             foreach (TypeToolingEnhancer enhancer in this._typeToolingEnhancers) {
                 TypeToolingType enhancedType = enhancer.EnhanceType(typeToolingType);
                 if (enhancedType != null)
+                {
                     typeToolingType = enhancedType;
+                }
             }
 
             // Check the default enhancers last
             foreach (TypeToolingEnhancer defaultEnhancer in this._defaultTypeToolingEnhancers) {
                 TypeToolingType enhancedType = defaultEnhancer.EnhanceType(typeToolingType);
                 if (enhancedType != null)
+                {
                     typeToolingType = enhancedType;
+                }
             }
 
             return typeToolingType;
@@ -264,14 +299,18 @@ namespace Faml {
             foreach (TypeToolingEnhancer enhancer in this._typeToolingEnhancers) {
                 AttachedType enhancedType = enhancer.EnhanceAttachedType(attachedType);
                 if (enhancedType != null)
+                {
                     attachedType = enhancedType;
+                }
             }
 
             // Check the default enhancers last
             foreach (TypeToolingEnhancer defaultEnhancer in this._defaultTypeToolingEnhancers) {
                 AttachedType enhancedType = defaultEnhancer.EnhanceAttachedType(attachedType);
                 if (enhancedType != null)
+                {
                     attachedType = enhancedType;
+                }
             }
 
             return attachedType;
@@ -288,7 +327,9 @@ namespace Faml {
 
             // If the project node has any errors in it, give up - don't try to interpret it
             if (this.AnyErrorsInModuleSourceSpan(projectDefinition.GetModuleSyntax(), projectDefinition.Span))
+            {
                 return;
+            }
 
             var projectFunctionEval = (ObjectEval) new CreateEvals(this.TypeToolingEnvironment).CreateExpressionEval(projectDefinition);
 
@@ -331,17 +372,24 @@ namespace Faml {
 
         public IEnumerable<Diagnostic> GetAllDiagnostics() {
             foreach (Diagnostic diagnostic in this._projectDiagnostics)
+            {
                 yield return diagnostic;
+            }
 
             foreach (KeyValuePair<QualifiableName, List<CodeAnalysis.Diagnostic>> moduleDiagnosticsPair in this._modulesDiagnostics) {
                 foreach (Diagnostic diagnostic in moduleDiagnosticsPair.Value)
+                {
                     yield return diagnostic;
+                }
             }
         }
 
         public IEnumerable<Diagnostic> GetModuleDiagnostics(QualifiableName moduleName) {
             if (! this._modulesDiagnostics.TryGetValue(moduleName, out List<CodeAnalysis.Diagnostic> moduleDiagnostics))
+            {
                 return Enumerable.Empty<CodeAnalysis.Diagnostic>();
+            }
+
             return moduleDiagnostics;
         }
 
@@ -349,11 +397,15 @@ namespace Faml {
             QualifiableName moduleName = moduleSyntax.ModuleName;
 
             if (!this._modulesDiagnostics.TryGetValue(moduleName, out List<Diagnostic> diagnostics))
+            {
                 return false;
+            }
 
             foreach (Diagnostic diagnostic in diagnostics) {
                 if (diagnostic.Severity == Api.DiagnosticSeverity.Error && diagnostic.SourceSpan.OverlapsWith(span))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -384,23 +436,32 @@ namespace Faml {
 
         public FunctionDefinitionSyntax? GetFunctionWithName(QualifiableName name) {
             if (! name.IsQualified())
+            {
                 throw new UserViewableException($"The function name '{name}' should be fully qualified (contain at least one period)");
+            }
+
             return this.GetModuleIfExists(name.GetQualifier())?.ModuleSyntax.GetFunctionDefinition(name.GetLastComponent());
         }
 
         public Delegate CreateFunctionInvocationDelegate(QualifiableName functionName, Args args) {
             FunctionDefinitionSyntax? function = this.GetFunctionWithName(functionName);
             if (function == null)
+            {
                 throw new UserViewableException($"Function {functionName} not found");
+            }
 
             FunctionDelegateHolder delegateHolder = function.GetModule().ModuleDelegates.GetOrCreateFunctionDelegate(function);
 
             if (args.Count != 0)
+            {
                 throw new UserViewableException("Currently, only zero-argument functions are supported for CreateFunctionInvocationDelegate");
+            }
 
             Delegate? functionDelegate = delegateHolder.FunctionDelegate;
             if (functionDelegate == null)
+            {
                 throw new UserViewableException($"FunctionDelegateHolder doesn't contain a delegate for function {functionName}");
+            }
 
             return functionDelegate;
         }
@@ -408,7 +469,10 @@ namespace Faml {
         public Eval CreateFunctionInvocationEval(QualifiableName functionName, Args args) {
             FunctionDefinitionSyntax? function = this.GetFunctionWithName(functionName);
             if (function == null)
+            {
                 throw new UserViewableException($"Function {functionName} not found");
+            }
+
             return new CreateEvals(this.TypeToolingEnvironment).CreateFunctionInvocationEval(function, args);
         }
 
@@ -419,7 +483,9 @@ namespace Faml {
         public ExampleResult[] EvaluateExample(QualifiableName moduleName, int exampleIndex) {
             FamlModule? module = this.GetModuleIfExists(moduleName);
             if (module == null)
+            {
                 throw new UserViewableException($"Module '{moduleName.ToString()}' not found");
+            }
 
             ExampleDefinitionSyntax exampleDefinition = module.ModuleSyntax.GetExampleDefinitionAtIndex(exampleIndex);
             return this.EvaluateExample(exampleDefinition);
@@ -434,12 +500,16 @@ namespace Faml {
 
                 if (exampleValue is ExamplesResult examplesResult) {
                     foreach (ExampleResult exampleResult in examplesResult.Content)
+                    {
                         exampleResults.Add(exampleResult);
+                    }
                 }
                 else if (exampleValue is IEnumerable exampleResultsEnumerable) {
                     foreach (object exampleResultObject in exampleResultsEnumerable) {
                         if (exampleResultObject is ExampleResult exampleResult)
+                        {
                             exampleResults.Add(exampleResult);
+                        }
                         else
                             exampleResults.Add(new ExampleResult {
                                 Content = exampleValue
@@ -473,7 +543,9 @@ namespace Faml {
             object? visualizedObject = contentTypeToolingType?.GetVisualizer()?.Visualize(exampleResult.Content);
 
             if (visualizedObject != null)
+            {
                 exampleResult.Content = visualizedObject;
+            }
 
             return exampleResult;
         }
@@ -486,7 +558,10 @@ namespace Faml {
         public FamlModule GetModule(QualifiableName moduleName) {
             FamlModule? module = this.GetModuleIfExists(moduleName);
             if (module == null)
+            {
                 throw new UserViewableException($"Module '{moduleName}' not found");
+            }
+
             return module;
         }
 

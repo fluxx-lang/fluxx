@@ -19,12 +19,16 @@ namespace Faml.Syntax {
         public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver) {
             // If we've already resolved, do nothing
             if (this._parameterTypeBinding != null)
+            {
                 return;
-            
+            }
+
             this._parameterTypeBinding = parameterTypeBinding;
 
             if (this._value is TextualLiteralSyntax markupValue)
+            {
                 this._value = markupValue.ResolveMarkup(parameterTypeBinding, bindingResolver);
+            }
         }
 
         public ExpressionSyntax Value => this._value;
@@ -33,7 +37,9 @@ namespace Faml.Syntax {
 
         public override void VisitChildren(SyntaxVisitor visitor) {
             if (this._value != null)
+            {
                 visitor(this._value);
+            }
         }
 
         public override bool IsTerminalNode() => false;

@@ -16,7 +16,9 @@ namespace Faml.Syntax.Literal {
             this._items = items;
 
             foreach (TextualLiteralItemSyntax item in this._items)
+            {
                 item.SetParent(this);
+            }
         }
 
         public override bool IsTerminalNode() => false;
@@ -31,7 +33,10 @@ namespace Faml.Syntax.Literal {
 
         public override TypeBinding GetTypeBinding() {
             if (this._typeBinding == null)
+            {
                 throw new InvalidOperationException("TypeBinding not set");
+            }
+
             return this._typeBinding;
         }
 
@@ -44,25 +49,34 @@ namespace Faml.Syntax.Literal {
                 expression = this;
             else if (typeBinding is ObjectTypeBinding objectTypeBinding && objectTypeBinding.SupportsCreateLiteral()) {
                 if (!this.ValidateThatSimpleText(typeBinding))
+                {
                     return this;
+                }
 
                 TextSpan sourceSpan = this.GetSimpleTextSpan();
                 expression = objectTypeBinding.ParseLiteralValueSource(this.GetModule(), sourceSpan);
             }
             else if (typeBinding is EnumTypeBinding enumTypeBinding) {
                 if (!this.ValidateThatSimpleText(typeBinding))
+                {
                     return this;
+                }
+
                 expression = enumTypeBinding.ParseEnumValue(this.GetModule(), this.Span);
             }
             else if (typeBinding == BuiltInTypeBinding.Bool) {
                 if (!this.ValidateThatSimpleText(typeBinding))
+                {
                     return this;
+                }
 
                 expression = SourceParser.ParseSingleBooleanLiteral(this.GetModule(), this.Span);
             }
             else if (typeBinding == BuiltInTypeBinding.Int) {
                 if (!this.ValidateThatSimpleText(typeBinding))
+                {
                     return this;
+                }
 
                 expression = SourceParser.ParseSingleIntLiteral(this.GetModule(), this.Span);
             }
@@ -74,7 +88,9 @@ namespace Faml.Syntax.Literal {
             }
 
             if (!ReferenceEquals(expression, this))
+            {
                 expression.SetParent(this.Parent);
+            }
 
             // TODO: Fix this up to pass type down
             // Now resolve the bindings on what we just parsed, since the parse was in turn triggered by resolving bindings
@@ -97,13 +113,18 @@ namespace Faml.Syntax.Literal {
 
         public TextSpan GetSimpleTextSpan() {
             if (!this.IsSimpleText)
+            {
                 throw new InvalidOperationException("Markup isn't simple text");
+            }
+
             return this._items[0].Span;
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
             foreach (TextualLiteralItemSyntax item in this._items)
+            {
                 sourceWriter.Write(item);
+            }
         }
     }
 }

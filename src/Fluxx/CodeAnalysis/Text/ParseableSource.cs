@@ -40,11 +40,15 @@ namespace Faml.CodeAnalysis.Text {
             while (true) {
                 --testPosition;
                 if (testPosition < this._startPosition)
+                {
                     return testPosition;
+                }
 
                 char currChar = this._sourceText[testPosition];
                 if (!IsSpace(currChar))
+                {
                     return testPosition;
+                }
             }
         }
 
@@ -53,11 +57,15 @@ namespace Faml.CodeAnalysis.Text {
             while (true) {
                 ++testPosition;
                 if (testPosition >= this._endPosition)
+                {
                     return testPosition;
+                }
 
                 char currChar = this._sourceText[testPosition];
                 if (!IsSpace(currChar))
+                {
                     return testPosition;
+                }
             }
         }
 
@@ -65,21 +73,30 @@ namespace Faml.CodeAnalysis.Text {
 
         public string Substring(int position, int length) {
             if (position < this._startPosition)
+            {
                 throw new ArgumentException("Substring position is before start of ParseableSource");
+            }
+
             if (position + length > this._endPosition)
+            {
                 throw new ArgumentException("Substring length is extends past end of ParseableSource");
+            }
 
             return this._sourceText.ToString(new TextSpan(position, length));
         }
 
         public bool IsSpanSoleItemOnLine(TextSpan span) {
             if (!this.IsAtStartOfLine(span.Start))
+            {
                 return false;
+            }
 
             int nextPosition = this.GetNextNonSpace(span.End - 1);
             char nextChar = this.GetCharAt(nextPosition);
             if (nextChar != '\n' && nextChar != '\0')
+            {
                 return false;
+            }
 
             return true;
         }
@@ -104,16 +121,22 @@ namespace Faml.CodeAnalysis.Text {
         /// <returns>true iff position is on line and column that come after basePosition</returns>
         public bool IsIndentedOnSubsequentLine(int basePosition, int position) {
             if (position <= basePosition)
+            {
                 return false;
+            }
 
             // Ensure the position is on a subsequent line
             int baseEndOfLine = this.GetEndOfLine(basePosition);
             if (position <= baseEndOfLine)
+            {
                 return false;
+            }
 
             // Ensure that position is the first non-whitespace thing on the line
             if (!this.IsAtStartOfLine(position))
+            {
                 return false;
+            }
 
             // Ensure that indent exceeds the base indent
             int column = this.GetColumn(position);
@@ -130,7 +153,9 @@ namespace Faml.CodeAnalysis.Text {
             for (int currPosition = position; true; ++currPosition) {
                 char currChar = this.GetCharAt(currPosition);
                 if (currChar == '\n' || currChar == '\0')
+                {
                     return currPosition;
+                }
             }
         }
 

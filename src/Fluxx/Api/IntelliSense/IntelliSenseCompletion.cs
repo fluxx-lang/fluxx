@@ -19,7 +19,10 @@ namespace Faml.Api.IntelliSense {
             this.DisplayText = displayText;
 
             if (insertText == null)
+            {
                 insertText = displayText;
+            }
+
             this.InsertText = insertText;
 
             this.Icon = icon;

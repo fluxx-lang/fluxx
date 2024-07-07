@@ -29,7 +29,9 @@ namespace Faml.Binding.Internal {
         public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
             int parameterIndex = this.FunctionDefinition.GetParameterIndex(parameterName);
             if (parameterIndex == -1)
+            {
                 return null;
+            }
 
             return this.FunctionDefinition.GetParameterTypeBinding(parameterIndex);
         }
@@ -64,7 +66,9 @@ namespace Faml.Binding.Internal {
 
             int parameterIndex = this.FunctionDefinition.GetParameterIndex(contentProperty.Value);
             if (parameterIndex == -1)
+            {
                 throw new InvalidOperationException($"Content parameter '{contentProperty}' for FAML function '{this.FunctionName}'");
+            }
 
             // TODO: Handle ordering issues; function parameter type bindings might not be initialized, if inferred, before caller tries to resolve for FunctionInvocation
             return this.FunctionDefinition.GetParameterTypeBinding(parameterIndex);
@@ -88,13 +92,17 @@ namespace Faml.Binding.Internal {
             // If there's just a single property, it's the content/default parameter
             PropertyNameTypePairSyntax[] propertyNameTypePairs = this.FunctionDefinition.Parameters;
             if (propertyNameTypePairs.Length == 1)
+            {
                 return propertyNameTypePairs[0].PropertyName;
+            }
 
             // If there's a property Named "Content" or "content", then it's the content property
             foreach (PropertyNameTypePairSyntax propertyNameTypePair in propertyNameTypePairs) {
                 Name propertyName = propertyNameTypePair.PropertyName;
                 if (propertyName.ToString().Equals("Content") || propertyName.ToString().Equals("content"))
+                {
                     return propertyName;
+                }
             }
 
             return null;
@@ -109,8 +117,10 @@ namespace Faml.Binding.Internal {
 
             Name[] parameters = new Name[propertyNameTypePairs.Length];
             for (int i = 0; i < propertyNameTypePairs.Length; i++)
+            {
                 parameters[i] = propertyNameTypePairs[i].PropertyName;
-            
+            }
+
             return parameters;
         }
     }

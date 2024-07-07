@@ -12,7 +12,9 @@ namespace Faml.Lexer {
             while (this._stack.Count > 0) {
                 char popped = this._stack.Pop();
                 if (popped == delimiter)
+                {
                     return;
+                }
             }
         }
 

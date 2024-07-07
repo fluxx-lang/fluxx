@@ -19,7 +19,10 @@ namespace Faml.Interpreter {
 
         public Eval? GetFunctionDefinitionEvalIfExists(FunctionDefinitionSyntax functionDefinition) {
             if (!this._functionDefinitionEvals.TryGetValue(functionDefinition, out Eval functionDefinitionEval))
+            {
                 return null;
+            }
+
             return functionDefinitionEval;
         }
 
@@ -29,7 +32,10 @@ namespace Faml.Interpreter {
 
         public ObjectEval? GetExampleEvalIfExists(ExampleDefinitionSyntax exampleDefinition) {
             if (!this._exampleEvals.TryGetValue(exampleDefinition, out ObjectEval objectEval))
+            {
                 return null;
+            }
+
             return objectEval;
         }
     }

@@ -37,7 +37,9 @@ namespace Faml.Syntax {
         public TypeBinding? GetPropertyTypeBinding(Name propertyName) {
             foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._propertyNameTypePairs) {
                 if (propertyNameTypePair.PropertyNameSyntax.Name == propertyName)
+                {
                     return propertyNameTypePair.TypeReferenceSyntax.GetTypeBinding();
+                }
             }
 
             return null;
@@ -51,7 +53,9 @@ namespace Faml.Syntax {
             int length = this._propertyNameTypePairs.Length;
             var properties = new Name[length];
             for (int i = 0; i < length; i++)
+            {
                 properties[i] = this._propertyNameTypePairs[i].PropertyName;
+            }
 
             return properties;
         }
@@ -64,7 +68,9 @@ namespace Faml.Syntax {
             visitor(this._typeNameSyntax);
 
             foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._propertyNameTypePairs)
+            {
                 visitor(propertyNameTypePair);
+            }
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {

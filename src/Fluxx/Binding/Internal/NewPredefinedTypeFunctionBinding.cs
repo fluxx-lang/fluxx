@@ -25,7 +25,9 @@ namespace Faml.Binding.Internal {
             if (!argumentName.IsQualified()) {
                 TypeBinding? typeBinding = this.GetParameterTypeBinding(argumentName.ToUnqualifiableName());
                 if (typeBinding != null)
+                {
                     return typeBinding;
+                }
             }
 
             argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
@@ -40,7 +42,10 @@ namespace Faml.Binding.Internal {
         public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
             string parameterNameString = parameterName.ToString();
             if (parameterNameString == "content" || parameterNameString == "Content")
+            {
                 return this._predefinedTypeBinding;
+            }
+
             return null;
         }
 

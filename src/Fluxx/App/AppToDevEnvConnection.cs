@@ -21,8 +21,10 @@ namespace Faml.App {
             AppProjectInfo? appProjectInfo = this._program.Value.RootProject.AppProjectInfo;
             string? developmentMachine = appProjectInfo?.DevelopmentMachine;
             if (developmentMachine == null)
+            {
                 // developmentMachine = "10.0.2.2:5311";   // Use the Android emulator host IP for now
                 developmentMachine = "localhost:5311";
+            }
 
             WebSocketClientMessagingConnector webSocketConnector = new WebSocketClientMessagingConnector(developmentMachine);
             webSocketConnector.AddMessageHandler("updateSource", this.UpdateSourceHandler);
@@ -56,7 +58,9 @@ namespace Faml.App {
             int exampleIndex = request.GetProperty<int>("exampleIndex");
 
             if (this._visualizer == null)
+            {
                 throw new UserViewableException("No Visualizer is set on the app");
+            }
 
             ExampleResult[] visualizedExamples = await this._visualizer?.VisualizeExample(new QualifiableName(moduleNameString), exampleIndex);
             throw new NotImplementedException("TODO: Finish visual example");

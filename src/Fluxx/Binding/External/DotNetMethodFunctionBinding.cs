@@ -30,7 +30,9 @@ namespace Faml.Binding.External {
             string parameterNameString = parameterName.ToString();
             foreach (DotNetRawParameter parameter in this._rawMethod.GetParameters()) {
                 if (parameter.Name == parameterNameString)
+                {
                     return ExternalBindingUtil.DotNetTypeToTypeBinding(this._objectTypeBinding.Project, parameter.ParameterType);
+                }
             }
 
             return null;
@@ -47,7 +49,9 @@ namespace Faml.Binding.External {
             string parameterNameString = argumentName.ToString();
             foreach (DotNetRawParameter parameter in this._rawMethod.GetParameters()) {
                 if (parameter.Name == parameterNameString)
+                {
                     return ExternalBindingUtil.DotNetTypeToTypeBinding(this._objectTypeBinding.Project, parameter.ParameterType);
+                }
             }
 
             argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
@@ -84,7 +88,9 @@ namespace Faml.Binding.External {
         public override Name[] GetParameters() {
             List<Name> parameterNames = new List<Name>();
             foreach (DotNetRawParameter parameter in this._rawMethod.GetParameters())
+            {
                 parameterNames.Add(new Name(parameter.Name));
+            }
 
             return parameterNames.ToArray();
         }

@@ -35,7 +35,9 @@ namespace Faml.Api {
 
         public Name ToUnqualifiableName() {
             if (this.IsQualified())
+            {
                 throw new Exception($"Can't convert qualified name '{this}' to unqualified name");
+            }
 
             return new Name(this._name);
         }
@@ -47,8 +49,13 @@ namespace Faml.Api {
         public Name GetLastComponent() {
             int lastPeriod = this._name.LastIndexOf('.');
             if (lastPeriod == -1)
+            {
                 return new Name(this._name);
-            else return new Name(this._name.Substring(lastPeriod + 1));
+            }
+            else
+            {
+                return new Name(this._name.Substring(lastPeriod + 1));
+            }
         }
 
         /// <summary>
@@ -69,7 +76,10 @@ namespace Faml.Api {
         public QualifiableName GetQualifier() {
             int lastPeriodIndex = this._name.LastIndexOf('.');
             if (lastPeriodIndex == -1)
+            {
                 throw new Exception($"Can't call GetQualifier on unqualified name: {this._name}");
+            }
+
             return new QualifiableName(this._name.Substring(0, lastPeriodIndex));
         }
 

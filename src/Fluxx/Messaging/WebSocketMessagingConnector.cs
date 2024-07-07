@@ -78,14 +78,22 @@ namespace Faml.Messaging {
                     }
 
                     if (message.IsResponse)
+                    {
                         this.HandleResponse(message);
-                    else await this.HandleMessage(message);
+                    }
+                    else
+                    {
+                        await this.HandleMessage(message);
+                    }
                 }
             }
             catch (Exception e) {
                 // If the receive fails, then also cancel the send
                 if (!(e is OperationCanceledException))
+                {
                     this._sendCts.Cancel();
+                }
+
                 throw;
             }
         }
@@ -101,7 +109,9 @@ namespace Faml.Messaging {
                     message.Write(memoryStream);
 
                     if (!memoryStream.TryGetBuffer(out ArraySegment<byte> buffer))
+                    {
                         throw new InvalidOperationException("TryGetBuffer failed");
+                    }
 
                     await webSocket.SendAsync(buffer, WebSocketMessageType.Binary, true, sendAndOverallCts.Token);
                 }
@@ -109,7 +119,10 @@ namespace Faml.Messaging {
             catch (Exception e) {
                 // If the send fails then also cancel the receive
                 if (! (e is OperationCanceledException))
+                {
                     this._receiveCts.Cancel();
+                }
+
                 throw;
             }
         }

@@ -13,7 +13,10 @@ namespace Faml.Util {
         public static string UpperCaseFirstCharacter(string s)
         {
             if (s.Length == 0)
+            {
                 return s;
+            }
+
             return s.Substring(0, 1).ToUpper() + s.Substring(1);
         }
     }

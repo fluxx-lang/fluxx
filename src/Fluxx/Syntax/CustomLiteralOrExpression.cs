@@ -20,10 +20,14 @@ namespace Faml.Syntax {
 
         public ExpressionSyntax ResolveExpression(SyntaxNode parentNode, TypeBinding typeBinding, BindingResolver bindingResolver) {
             if (this._expression != null)
+            {
                 return this._expression;
+            }
 
             if (this._customLiteralTextSpan.IsEmpty)
+            {
                 throw new InvalidOperationException("Both _expression and _customLiteralTextSpan are unset, which shouldn't happen");
+            }
 
             FamlModule? module = parentNode.GetModule();
 

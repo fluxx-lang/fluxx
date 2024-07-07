@@ -54,8 +54,13 @@ namespace Faml.Binding.Resolver {
 
             if (typeBindingResult is TypeBindingResult.Success success) {
                 if (success.TypeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)
+                {
                     return new NewExternalObjectFunctionBinding(externalObjectTypeBinding);
-                else return new InvalidFunctionBinding(functionName);
+                }
+                else
+                {
+                    return new InvalidFunctionBinding(functionName);
+                }
             }
             else {
                 string message =

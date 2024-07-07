@@ -18,7 +18,10 @@ namespace Faml {
         public override TypeToolingType GetRequiredType(RawType rawType) {
             TypeToolingType typeToolingType = this.GetType(rawType);
             if (typeToolingType == null)
+            {
                 throw new UserViewableException($"Could not find TypeToolingType for {rawType}");
+            }
+
             return typeToolingType;
         }
 
@@ -29,7 +32,10 @@ namespace Faml {
         public override RawType GetRequiredRawType(string rawTypeName) {
             RawType rawType = this.GetRawType(rawTypeName);
             if (rawType == null)
+            {
                 throw new UserViewableException($"Could not find type {rawTypeName}");
+            }
+
             return rawType;
         }
 

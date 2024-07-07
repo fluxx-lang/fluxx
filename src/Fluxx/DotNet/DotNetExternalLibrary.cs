@@ -29,11 +29,15 @@ namespace Faml.DotNet {
         public override TypeBinding? ResolveTypeBinding(QualifiableName className) {
             Type classType = this._assembly.GetType(className.ToString());
             if (classType == null)
+            {
                 return null;
+            }
 
             TypeToolingType typeToolingType = this._project.GetTypeToolingType(new ReflectionDotNetRawType(classType));
             if (typeToolingType == null)
+            {
                 return null;
+            }
 
             // TODO: Handle non-object types here too
             return new ExternalObjectTypeBinding(this._project, (ObjectType) typeToolingType);
@@ -42,11 +46,15 @@ namespace Faml.DotNet {
         public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName className) {
             Type classType = this._assembly.GetType(className.ToString());
             if (classType == null)
+            {
                 return null;
+            }
 
             AttachedType attachedType = this._project.GetTypeToolingAttachedType(new ReflectionDotNetRawType(classType));
             if (attachedType == null)
+            {
                 return null;
+            }
 
             return new ExternalAttachedTypeBinding(this._project, attachedType);
         }

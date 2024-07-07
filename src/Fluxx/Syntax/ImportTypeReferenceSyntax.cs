@@ -30,7 +30,10 @@ namespace Faml.Syntax {
 
         public TypeBinding GetTypeBinding() {
             if (this._typeBinding == null)
+            {
                 throw new Exception("TypeBinding not set for import; it hasn't been resolved yet");
+            }
+
             return this._typeBinding;
         }
 

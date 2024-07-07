@@ -19,7 +19,9 @@ namespace Faml.Interpreter {
 
             for (int i = 0; i < length; i++) {
                 if (this._conditionEvals[i].Eval())
+                {
                     return this._valueEvals[i].Eval();
+                }
             }
 
             return this._elseEval.Eval();

@@ -32,14 +32,21 @@ namespace Faml.IntelliSense {
                 if (this.ParseableSource.IsSpaceAt(this.Position - 1)) {
                     ++spacesBefore;
                     if (this.ParseableSource.IsSpaceAt(this.Position - 2))
+                    {
                         ++spacesBefore;
+                    }
                 }
 
                 prefix = this.GetSpaces(2 - spacesBefore);
 
                 if (this.ParseableSource.IsSpaceOrNewlineAt(this.Position))
+                {
                     suffix = ":";
-                else suffix = ": ";
+                }
+                else
+                {
+                    suffix = ": ";
+                }
             }
 
             Name[] properties = this._functionBinding.GetParameters();
@@ -50,7 +57,9 @@ namespace Faml.IntelliSense {
 
                 string? insertText = null;
                 if (prefix.Length > 0 || suffix.Length > 0)
+                {
                     insertText = prefix + displayText + suffix;
+                }
 
                 IntelliSenseProvider.GetDescriptionAsyncDelegate getDescriptionDelegate =
                     async (preferredCulture, delegateCancellationToken) =>

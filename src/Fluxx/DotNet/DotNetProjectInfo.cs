@@ -144,7 +144,9 @@ namespace Faml.DotNet {
 
                 DotNetRawType? companionRawType = this.FindRawType(companionFullName);
                 if (companionRawType != null)
+                {
                     return companionRawType;
+                }
             }
 
             return null;
@@ -152,13 +154,17 @@ namespace Faml.DotNet {
 
         private DotNetRawType? FindRawType(string typeName) {
             if (this._rawTypeProvider != null)
+            {
                 return this._rawTypeProvider.GetType(typeName);
+            }
 
             // TODO: Log warning if multiple defined, in dev environment (and possibly in app too)
             foreach (LoadedAssembly dependencyAssembly in this._dependencyAssemblies) {
                 Type type = dependencyAssembly.GetType(typeName);
                 if (type != null)
+                {
                     return new ReflectionDotNetRawType(type);
+                }
             }
 
             return null;
@@ -169,11 +175,15 @@ namespace Faml.DotNet {
 
             DotNetRawType? foundType = this.FindRawType(typeNameString);
             if (foundType == null)
+            {
                 return TypeBindingResult.NotFoundResult;
+            }
 
             TypeToolingType typeToolingType = this._project.GetTypeToolingType(foundType);
             if (typeToolingType == null)
+            {
                 return TypeBindingResult.NotFoundResult;
+            }
 
             return this.TypeToolingTypeToTypeBinding(typeToolingType);
         }
@@ -199,11 +209,15 @@ namespace Faml.DotNet {
             if (foundType == null && typeName.StartsWith("System.")) {
                 Type currentAssemblyType = Type.GetType(typeName);
                 if (currentAssemblyType != null)
+                {
                     foundType = new ReflectionDotNetRawType(currentAssemblyType);
+                }
             }
 
             if (foundType == null)
+            {
                 return null;
+            }
 
             return foundType;
         }
@@ -214,7 +228,10 @@ namespace Faml.DotNet {
                 case SequenceType sequenceType:
                     TypeBindingResult elementTypeBindingResult = this.TypeToolingTypeToTypeBinding(sequenceType.ElementType);
                     if (!(elementTypeBindingResult is TypeBindingResult.Success elementTypeBinding))
+                    {
                         return elementTypeBindingResult;
+                    }
+
                     return new TypeBindingResult.Success(new ExternalSequenceTypeBinding(this._project, sequenceType, elementTypeBinding.TypeBinding));
                 case ObjectType objectType:
                     return new TypeBindingResult.Success(new ExternalObjectTypeBinding(this._project, objectType));
@@ -226,11 +243,15 @@ namespace Faml.DotNet {
         public AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName) {
             DotNetRawType? foundType = this.FindRawType(typeName.ToString());
             if (foundType == null)
+            {
                 return null;
+            }
 
             AttachedType attachedType = this._project.GetTypeToolingAttachedType(foundType);
             if (attachedType == null)
+            {
                 return null;
+            }
 
             return new ExternalAttachedTypeBinding(this._project, attachedType);
         }
@@ -259,11 +280,15 @@ namespace Faml.DotNet {
         private void AddTypeToolingProviders(Assembly loadedAssembly, SyntaxNode nodeForDiagnostics) {
             // Don't try to load type tooling providers for reflection only assemblies
             if (loadedAssembly.ReflectionOnly)
+            {
                 return;
+            }
 
             foreach (Attribute attribute in loadedAssembly.GetCustomAttributes()) {
                 if (!(attribute is TypeToolingProviderAttribute providerAttribute))
+                {
                     continue;
+                }
 
                 Type providerType = providerAttribute.ProviderType;
 
@@ -290,11 +315,15 @@ namespace Faml.DotNet {
         private void AddTypeToolingEnhancers(Assembly loadedAssembly, SyntaxNode nodeForDiagnostics) {
             // Don't try to load type tooling providers for reflection only assemblies
             if (loadedAssembly.ReflectionOnly)
+            {
                 return;
+            }
 
             foreach (Attribute attribute in loadedAssembly.GetCustomAttributes()) {
                 if (!(attribute is TypeToolingEnhancerAttribute enhancerAttribute))
+                {
                     continue;
+                }
 
                 Type enhancerType = enhancerAttribute.EnhancerType;
 

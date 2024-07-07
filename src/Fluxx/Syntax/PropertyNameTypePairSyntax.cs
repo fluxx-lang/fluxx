@@ -37,7 +37,9 @@ namespace Faml.Syntax {
             visitor(this._propertyNameSyntax);
             visitor(this._typeReferenceSyntax);
             if (this._defaultValue != null)
+            {
                 visitor(this._defaultValue);
+            }
         }
 
         public override bool IsTerminalNode() { return false; }

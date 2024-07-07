@@ -23,7 +23,9 @@ namespace Faml.DotNet {
                     .ToArray();
 
                 if (!resourcePaths.Any())
+                {
                     return null;
+                }
 
                 if (resourcePaths.Count() > 1)
                     throw new Exception(
@@ -31,7 +33,9 @@ namespace Faml.DotNet {
 
                 Stream stream = assembly.GetManifestResourceStream(resourcePaths.Single());
                 if (stream == null)
+                {
                     return null;
+                }
 
                 using (var streamReader = new StreamReader(stream)) {
                     return streamReader.ReadToEnd();

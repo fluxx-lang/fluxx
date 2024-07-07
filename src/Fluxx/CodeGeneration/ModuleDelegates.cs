@@ -27,7 +27,9 @@ namespace Faml.CodeGeneration {
         public FunctionDelegateHolder GetOrCreateFunctionDelegate(FunctionDefinitionSyntax functionDefinition) {
             Name functionName = functionDefinition.FunctionName;
             if (this._functionDelegateHolders.TryGetValue(functionName, out FunctionDelegateHolder existingDelegateHolder))
+            {
                 return existingDelegateHolder;
+            }
 
             // First add the delegate holder, so anything that recursively calls back to this function won't try to
             // recreate its delegate. The rule is that if the delegate holder exists, then the delegate exists or is
@@ -50,7 +52,10 @@ namespace Faml.CodeGeneration {
 
         public Delegate? GetExampleDelegate(ExampleDefinitionSyntax exampleDefinition) {
             if (!this._exampleDelegates.TryGetValue(exampleDefinition, out Delegate exampleDelegate))
+            {
                 return null;
+            }
+
             return exampleDelegate;
         }
     }

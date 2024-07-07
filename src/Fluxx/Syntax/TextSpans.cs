@@ -12,7 +12,9 @@ namespace Faml.Syntax {
         public bool OverlapsWith(TextSpan other) {
             foreach (TextSpan textSpan in this._textSpans) {
                 if (textSpan.OverlapsWith(other))
+                {
                     return true;
+                }
             }
 
             return false;

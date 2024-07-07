@@ -22,12 +22,17 @@ namespace Faml.Syntax.Expression {
 
             this._functionReference = functionReference;
             if (functionReference == null)
+            {
                 throw new Exception("Invoking a function without specifying the function name not currently supported");
+            }
+
             this._functionReference.SetParent(this);
 
             this._namedArguments = namedArguments;
             foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this._namedArguments)
+            {
                 propertyNameValuePair.SetParent(this);
+            }
 
             this._contentArgument = contentArgument;
             this._contentArgument?.SetParent(this);
@@ -49,7 +54,9 @@ namespace Faml.Syntax.Expression {
             var argumentNames = new List<QualifiableName>();
             foreach (ArgumentNameValuePairSyntax argument in this._namedArguments) {
                 if (argument.ArgumentName.IsQualified())
+                {
                     argumentNames.Add(argument.ArgumentName);
+                }
             }
 
             return argumentNames.ToArray();
@@ -63,12 +70,16 @@ namespace Faml.Syntax.Expression {
 
             var argumentsDictionary = new Dictionary<QualifiableName, ExpressionSyntax>();
             foreach (ArgumentNameValuePairSyntax argument in this._namedArguments)
+            {
                 argumentsDictionary[argument.PropertySpecifier.PropertyName] = argument.Value;
+            }
 
             if (this._contentArgument != null) {
                 Name? contentProperty = this._functionBinding.GetContentProperty();
                 if (contentProperty == null)
+                {
                     throw new InvalidOperationException($"No content property exists for function {this._functionBinding.FunctionName}");
+                }
 
                 argumentsDictionary[contentProperty.Value.ToQualifiableName()] = this._contentArgument.Value;
             }
@@ -97,7 +108,10 @@ namespace Faml.Syntax.Expression {
 
         public override TypeBinding GetTypeBinding() {
             if (this._functionBinding == null)
+            {
                 throw new Exception($"Function binding not computed for function: {this._functionReference}");
+            }
+
             return this._functionBinding.ReturnTypeBinding;
         }
 
@@ -107,13 +121,19 @@ namespace Faml.Syntax.Expression {
 
         public override void VisitChildren(SyntaxVisitor visitor) {
             if (this._functionReference != null)
+            {
                 visitor(this._functionReference);
+            }
 
             foreach (ArgumentNameValuePairSyntax propertyNameValuePair in this._namedArguments)
+            {
                 visitor(propertyNameValuePair);
+            }
 
             if (this._contentArgument != null)
+            {
                 visitor(this._contentArgument);
+            }
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
@@ -138,7 +158,9 @@ namespace Faml.Syntax.Expression {
 
             // If the function binding can't be resolved, don't try to resolve anything else
             if (this._functionBinding is InvalidFunctionBinding)
+            {
                 return;
+            }
 
 #if false
             // See if this is a literal constructor
@@ -161,7 +183,9 @@ namespace Faml.Syntax.Expression {
             foreach (ArgumentNameValuePairSyntax argumentNameValuePair in this._namedArguments) {
                 QualifiableName argumentName = argumentNameValuePair.ArgumentName;
                 if (! argumentName.IsQualified())
+                {
                     argumentSet.Add(argumentName.ToUnqualifiableName());
+                }
 
                 TypeBinding parameterTypeBinding = this._functionBinding.ResolveArgumentTypeBinding(argumentName, argumentNameValuePair, bindingResolver);
 
@@ -179,7 +203,9 @@ namespace Faml.Syntax.Expression {
                 Name? contentProperty = this._functionBinding.GetContentProperty();
 
                 if (contentProperty != null)
+                {
                     argumentSet.Add(contentProperty.Value);
+                }
 
                 TypeBinding parameterTypeBinding = this._functionBinding.ResolveContentArgumentTypeBinding(this._contentArgument, bindingResolver);
 
@@ -197,7 +223,9 @@ namespace Faml.Syntax.Expression {
             List<Name> missingArguments = new List<Name>();
             foreach (Name parameterName in this._functionBinding.GetParameters()) {
                 if (! argumentSet.Contains(parameterName))
+                {
                     missingArguments.Add(parameterName);
+                }
             }
 
             // TODO: Also check for missing content parameter and content parameter specified twice (by default and via name)
@@ -252,13 +280,20 @@ namespace Faml.Syntax.Expression {
                 sourceWriter.Write(this._functionReference.ToString());
 
             if (this._invocationStyle == InvocationStyle.Delimiter)
+            {
                 sourceWriter.Write("{");
-            else sourceWriter.Write("  ");
+            }
+            else
+            {
+                sourceWriter.Write("  ");
+            }
 
             bool wroteProperty = false;
             foreach (ArgumentNameValuePairSyntax namedArgument in this._namedArguments) {
                 if (wroteProperty && this._invocationStyle == InvocationStyle.Delimiter)
+                {
                     sourceWriter.Write("; ");
+                }
 
                 sourceWriter.Write(namedArgument);
 
@@ -267,7 +302,9 @@ namespace Faml.Syntax.Expression {
 
             if (this._contentArgument != null) {
                 if (wroteProperty && this._invocationStyle == InvocationStyle.Delimiter)
+                {
                     sourceWriter.Write("; ");
+                }
 
                 sourceWriter.Write(this._contentArgument.Value);
 
@@ -275,7 +312,9 @@ namespace Faml.Syntax.Expression {
             }
 
             if (this._invocationStyle == InvocationStyle.Delimiter)
+            {
                 sourceWriter.Write("}");
+            }
 
             // TODO: Fix up output formatting when line style, to indent
         }

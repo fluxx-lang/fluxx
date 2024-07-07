@@ -37,17 +37,26 @@ namespace Faml.Binding.Resolver {
 
                 FunctionDefinitionSyntax? functionDefinition = this._module.GetFunctionDefinition(unqualifiableName);
                 if (functionDefinition != null)
+                {
                     return new InternalFunctionBinding(functionDefinition);
+                }
 
                 RecordTypeDefinitionSyntax? recordTypeDefinition = this._module.GetRecordTypeDefinition(unqualifiableName);
                 if (recordTypeDefinition != null)
+                {
                     return new NewRecordFunctionBinding(recordTypeDefinition);
+                }
 
                 // These function names are special
                 if (unqualifiableName.ToString() == "example")
+                {
                     return new NewExternalObjectFunctionBinding(this._project.ExampleTypeBinding);
+                }
+
                 if (unqualifiableName.ToString() == "examples")
+                {
                     return new NewExternalObjectFunctionBinding(this._project.ExamplesTypeBinding);
+                }
             }
 
             // Treat function name to a type name and see if that type exists, as it may be a
@@ -56,10 +65,17 @@ namespace Faml.Binding.Resolver {
 
             if (typeBindingResult is TypeBindingResult.Success success) {
                 if (success.TypeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)
+                {
                     return new NewExternalObjectFunctionBinding(externalObjectTypeBinding);
+                }
                 else if (success.TypeBinding is BuiltInTypeBinding predefinedTypeBinding)
+                {
                     return new NewPredefinedTypeFunctionBinding(predefinedTypeBinding);
-                else return new InvalidFunctionBinding(functionName);
+                }
+                else
+                {
+                    return new InvalidFunctionBinding(functionName);
+                }
             }
             else {
                 nameSyntaxForErrors.AddError(typeBindingResult.GetNotFoundOrOtherErrorMessage($"Function '{functionName}' not found"));
@@ -82,17 +98,23 @@ namespace Faml.Binding.Resolver {
 
         public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName) {
             if (typeName.IsQualified())
+            {
                 return this._project.ResolveTypeBinding(typeName);
+            }
 
             Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
             BuiltInTypeBinding? predefinedTypeBinding = BuiltInTypeBinding.GetBindingForTypeName(unqualifiableTypeName.ToString());
             if (predefinedTypeBinding != null)
+            {
                 return new TypeBindingResult.Success(predefinedTypeBinding);
+            }
 
             RecordTypeDefinitionSyntax? recordTypeDefinition = this._module.GetRecordTypeDefinition(unqualifiableTypeName);
             if (recordTypeDefinition != null)
+            {
                 return new TypeBindingResult.Success(recordTypeDefinition.TypeBinding);
+            }
 
             foreach (ImportSyntax import in this._module.Imports) {
                 ImmutableArray<ImportTypeReferenceSyntax>? importImportTypeReferences = import.ImportTypeReferences;
@@ -106,14 +128,18 @@ namespace Faml.Binding.Resolver {
 
                     // If we found something or got an error, return that
                     if (! (typeBindingResult is TypeBindingResult.NotFound))
+                    {
                         return typeBindingResult;
+                    }
                 }
                 else {
                     // If just importing specified types, see if any of them match this name
 
                     foreach (ImportTypeReferenceSyntax importReference in importImportTypeReferences) {
                         if (importReference.Name == unqualifiableTypeName)
+                        {
                             return new TypeBindingResult.Success(importReference.GetTypeBinding());
+                        }
                     }
                 }
             }
@@ -123,7 +149,9 @@ namespace Faml.Binding.Resolver {
 
         public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName) {
             if (typeName.IsQualified())
+            {
                 return this._project.ResolveAttachedTypeBinding(typeName);
+            }
 
             Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
@@ -138,14 +166,18 @@ namespace Faml.Binding.Resolver {
                     AttachedTypeBinding? typeBinding = this._project.ResolveAttachedTypeBinding(potentialQualifiedTypeName);
 
                     if (typeBinding != null)
+                    {
                         return typeBinding;
+                    }
                 }
                 else {
                     // If just importing specified types, see if any of them match this name
 
                     foreach (ImportTypeReferenceSyntax importReference in importImportTypeReferences) {
                         if (importReference.Name == unqualifiableTypeName)
+                        {
                             return importReference.GetAttachedTypeBinding();
+                        }
                     }
                 }
             }

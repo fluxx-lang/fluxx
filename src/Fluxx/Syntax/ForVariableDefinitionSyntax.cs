@@ -33,12 +33,19 @@ namespace Faml.Syntax {
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
             TypeBinding inExpressionTypeBinding = this._inExpression.GetTypeBinding();
             if (inExpressionTypeBinding == null)
+            {
                 this._variableNameSyntax.AddError("Couldn't infer variable type from 'in' expression");
+            }
 
             // TODO: Remove this restriction
             if (!(inExpressionTypeBinding is SequenceTypeBinding inExpressionSequenceTypeBinding))
+            {
                 this._inExpression.AddError("'in' expression isn't a sequence; currently it must have at least two items");
-            else this._variableTypeBinding = inExpressionSequenceTypeBinding.ElementType;
+            }
+            else
+            {
+                this._variableTypeBinding = inExpressionSequenceTypeBinding.ElementType;
+            }
         }
 
         public TypeBinding GetVariableTypeBinding () => this._variableTypeBinding;

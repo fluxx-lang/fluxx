@@ -18,7 +18,9 @@ namespace Faml.Messaging {
             while (true) {
                 await this._semaphore.WaitAsync(cancellationToken);
                 if (this._queue.TryDequeue(out T item))
+                {
                     return item;
+                }
             }
         }
     }

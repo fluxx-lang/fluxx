@@ -71,7 +71,9 @@ namespace Faml.Binding.External {
 
         public void GetPropertiesIfNeeded() {
             if (this._gotProperties)
+            {
                 return;
+            }
 
             this._objectProperties = new Dictionary<string, ObjectProperty>();
 
@@ -79,7 +81,9 @@ namespace Faml.Binding.External {
             foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType)) {
                 foreach (ObjectProperty property in type.Properties) {
                     if (! this._objectProperties.ContainsKey(property.Name))
+                    {
                         this._objectProperties.Add(property.Name, property);
+                    }
                 }
             }
 
@@ -101,7 +105,9 @@ namespace Faml.Binding.External {
 
             foreach (ObjectType baseType in objectType.GetBaseTypes())
                 foreach (ObjectType ancestorType in GetTypeAndAncestors(baseType))
+                {
                     yield return ancestorType;
+                }
         }
 
         protected bool Equals(ExternalObjectTypeBinding other) {
@@ -110,7 +116,10 @@ namespace Faml.Binding.External {
 
         public override bool Equals(object obj) {
             if (!(obj is ExternalObjectTypeBinding))
+            {
                 return false;
+            }
+
             return this.Equals((ExternalObjectTypeBinding) obj);
         }
 
@@ -120,8 +129,13 @@ namespace Faml.Binding.External {
 
         public override bool IsAssignableFrom(TypeBinding other) {
             if (other is ExternalObjectTypeBinding otherDotNetObjectTypeBinding)
+            {
                 return this._rawType.IsAssignableFrom(otherDotNetObjectTypeBinding._rawType);
-            else return base.IsAssignableFrom(other);
+            }
+            else
+            {
+                return base.IsAssignableFrom(other);
+            }
         }
 
         public override FunctionBinding? GetMethodBinding(Name methodName) {
@@ -138,7 +152,9 @@ namespace Faml.Binding.External {
 
         public override PropertyBinding? GetPropertyBinding(Name propertyName) {
             if (! this.ObjectProperties.TryGetValue(propertyName.ToString(), out ObjectProperty property))
+            {
                 return null;
+            }
 
             return new ExternalPropertyBinding(this, property);
         }
@@ -162,11 +178,15 @@ namespace Faml.Binding.External {
                         foreach (TypeTooling.Diagnostic diagnostic in customLiteral.Diagnostics) {
                             module.AddError(span, diagnostic.Message);
                             if (diagnostic.Severity == TypeTooling.DiagnosticSeverity.Error)
+                            {
                                 anyErrors = true;
+                            }
                         }
 
                         if (anyErrors)
+                        {
                             return new InvalidExpressionSyntax(span, literalSource, this);
+                        }
                     }
 
                     return new ExternalTypeCustomLiteralSytax(span, this, this._typeToolingType, literalSource, customLiteral);

@@ -62,7 +62,9 @@ namespace Faml.Interpreter.External {
             int startOffset = Context.StackIndex;
 
             for (int i = 0; i < propertiesLength; i++)
+            {
                 this._propertyValueEvals[i].Push();
+            }
 
             object returnValue = this._objectCreator.Create(Context.ObjectStack, startOffset);
 

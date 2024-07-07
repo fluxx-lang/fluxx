@@ -29,7 +29,10 @@ namespace Faml.Binding.External {
 
         public override bool Equals(object obj) {
             if (!(obj is ExternalSequenceTypeBinding))
+            {
                 return false;
+            }
+
             return this.Equals((ExternalSequenceTypeBinding) obj);
         }
 
@@ -39,8 +42,13 @@ namespace Faml.Binding.External {
 
         public override bool IsAssignableFrom(TypeBinding other) {
             if (other is ExternalSequenceTypeBinding otherSequenceTypeBinding)
+            {
                 return this._dotNetType.IsAssignableFrom(otherSequenceTypeBinding._dotNetType);
-            else return base.IsAssignableFrom(other);
+            }
+            else
+            {
+                return base.IsAssignableFrom(other);
+            }
         }
     }
 }

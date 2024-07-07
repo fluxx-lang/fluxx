@@ -50,12 +50,16 @@ namespace Faml.DotNet {
             // The loaded assembly can have a slightly different name than its reference, so check again if we've already
             // processed this assembly
             if (assemblyFullNames.Contains(assemblyFullName))
+            {
                 return;
+            }
 
             // Skip system assemblies
             string assemblySimpleName = assemblyName.Name;
             if (assemblySimpleName == "System" || assemblySimpleName.StartsWith("System.") || assemblySimpleName.StartsWith("netstandard"))
+            {
                 return;
+            }
 
             assemblies.Add(assembly);
             assemblyFullNames.Add(assemblyFullName);
@@ -81,14 +85,17 @@ namespace Faml.DotNet {
             foreach (Assembly referencedAssembly in this._assemblies.Value) {
                 Type type = referencedAssembly.GetType(typeName);
                 if (type != null)
+                {
                     return new ReflectionDotNetRawType(type);
+                }
             }
 
             if (this._windowsRuntimeAssemblyQualifier != null) {
                 Type type = Type.GetType(typeName + ", " + this._windowsRuntimeAssemblyQualifier);
                 if (type != null)
+                {
                     return new ReflectionDotNetRawType(type);
-
+                }
             }
 
             return null;

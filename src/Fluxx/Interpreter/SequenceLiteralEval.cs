@@ -18,7 +18,9 @@ namespace Faml.Interpreter {
             List<object> list = new List<object>();
             int listItemsLength = this._items.Length;
             for (int i = 0; i < listItemsLength; i++)
+            {
                 list.Add( this._items[i].Eval() );
+            }
 
             return list;
         }
@@ -26,7 +28,9 @@ namespace Faml.Interpreter {
         public IEnumerable<object> GenerateSequence() {
             int listItemsLength = this._items.Length;
             for (int i = 0; i < listItemsLength; i++)
+            {
                 yield return this._items[i].Eval();
+            }
         }
     }
 }

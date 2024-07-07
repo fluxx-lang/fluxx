@@ -19,7 +19,9 @@ namespace Faml.Syntax.Expression {
         public SequenceLiteralExpressionSyntax(TextSpan span, ExpressionSyntax[] expressions) : base(span) {
             this._expressions = expressions;
             foreach (ExpressionSyntax expression in expressions)
+            {
                 expression.SetParent(this);
+            }
         }
 
         public ExpressionSyntax[] Expressions => this._expressions;
@@ -30,7 +32,9 @@ namespace Faml.Syntax.Expression {
 
         public override void VisitChildren(SyntaxVisitor visitor) {
             foreach (ExpressionSyntax expression in this._expressions)
+            {
                 visitor(expression);
+            }
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {

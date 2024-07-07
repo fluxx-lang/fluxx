@@ -183,8 +183,13 @@ namespace Faml.Parser {
                 char curr = literalValueCharIterator.ReadChar();
 
                 if (curr == '\0')
+                {
                     break;
-                else buffer.Append(curr);
+                }
+                else
+                {
+                    buffer.Append(curr);
+                }
             }
 
             return buffer.ToString();
@@ -218,7 +223,9 @@ namespace Faml.Parser {
             int startPosition = this._token.TokenStartPosition;
 
             if (this._token.Type == TokenType.Identifier && this._token.StringValue == "App")
+            {
                 projectDefinition = this.ParseFunctionInvocation(null);
+            }
 
             while (this._token.Type == TokenType.Use) {
                 UseSyntax use = this.ParseUse();
@@ -275,7 +282,9 @@ namespace Faml.Parser {
                     // If we found something unexpected, try to sync. If after the sync we're still in error mode, give up
                     this.Sync(definitionStartTokens, synchronizingTokens);
                     if (this._token.InErrorMode)
+                    {
                         break;
+                    }
                 }
             }
 
@@ -294,7 +303,9 @@ namespace Faml.Parser {
 
         private FunctionDefinitionSyntax ParseFunctionDefinition(Tokens synchronizingTokens) {
             if (this._token.Type == TokenType.PropertyIdentifier)
+            {
                 this._token.RescanPropertyIdentifierAsIdentifier();
+            }
 
             int startPosition = this._token.TokenStartPosition;
 
@@ -331,7 +342,9 @@ namespace Faml.Parser {
 
                 string tokenString = this._token.StringValue;
                 if (tokenString.IndexOf('.') != -1)
+                {
                     this.AddError(this._token.TokenSpan, $"Function parameter names can't contain a period: {tokenString}");
+                }
 
                 var propertyNameIdentifier = new NameSyntax(this._token.TokenSourceSpanExceptForLastCharacter, new Name(tokenString));
 
@@ -349,7 +362,9 @@ namespace Faml.Parser {
                     new PropertyNameTypePairSyntax(this.TextSpanFrom(parameterStartPosition), propertyNameIdentifier, typeReferenceSyntax, defaultValue));
 
                 if (this._token.Type != TokenType.RightBrace && !this._token.IsAtStartOfLine)
+                {
                     this.CheckAndAdvance(TokenType.Semicolon);
+                }
             }
 
             return parameters;
@@ -377,7 +392,9 @@ namespace Faml.Parser {
 
             // If not qualified, return a SymbolReference
             if (this._token.Type != TokenType.Period)
+            {
                 return new SymbolReferenceSyntax(initialSymbol.Span, initialSymbol);
+            }
 
             QualifiedSymbolReferenceSyntax qualifiedSymbolReference = new QualifiedSymbolReferenceSyntax(
                 this.TextSpanFrom(startPosition), null, initialSymbol);
@@ -396,8 +413,13 @@ namespace Faml.Parser {
 
         private void CheckAndAdvanceIdentifierKeyword(string keywordText) {
             if (this._token.Type != TokenType.Identifier || this._token.StringValue != keywordText)
+            {
                 this.UnexpectedToken($"'{keywordText}'");
-            else this.Advance();
+            }
+            else
+            {
+                this.Advance();
+            }
         }
 
         private ImportSyntax ParseImport() {
@@ -459,7 +481,9 @@ namespace Faml.Parser {
                 namedArguments.Add(new ArgumentNameValuePairSyntax(this.TextSpanFrom(argumentStartPosition), propertySpecifier, value));
 
                 if (this._token.Type != TokenType.RightBrace && !this._token.IsAtStartOfLine)
+                {
                     this.CheckAndAdvance(TokenType.Semicolon);
+                }
             }
 
             // Parse the content property, if there is content
@@ -485,7 +509,10 @@ namespace Faml.Parser {
                 this.Advance();
 
                 if (this._token.Type != TokenType.Period)
+                {
                     break;
+                }
+
                 buffer.Append('.');
                 this._token.Advance();
             }
@@ -542,9 +569,13 @@ namespace Faml.Parser {
 
                 BuiltInTypeBinding? predefinedTypeBinding = BuiltInTypeBinding.GetBindingForTypeName(typeNameString);
                 if (predefinedTypeBinding != null)
+                {
                     typeReferenceSyntax = new PredefinedTypeReferenceSyntax (sourceSpan, predefinedTypeBinding);
+                }
                 else
+                {
                     typeReferenceSyntax = new ObjectTypeReferenceSyntax (sourceSpan, typeNameSyntax);
+                }
 
                 if (this._token.Type == TokenType.Ellipsis) {
                     this.Advance();
@@ -596,33 +627,46 @@ namespace Faml.Parser {
 
         private void Check(TokenType expectedType, string expected) {
             if (this._token.Type != expectedType)
+            {
                 this.UnexpectedToken(expected);
+            }
         }
 
         private void CheckAndAdvance(TokenType expectedType) {
             this.Check(expectedType);
             if (!this._token.InErrorMode)
+            {
                 this._token.Advance();
+            }
         }
 
         private void CheckOrSync(TokenType expectedType, Tokens synchronizingTokens) {
             this.Check(expectedType);
             if (this._token.InErrorMode)
+            {
                 this.Sync(new Tokens(expectedType), synchronizingTokens);
+            }
         }
 
         private void CheckOrSync(TokenType expectedType, string expected, Tokens synchronizingTokens) {
             this.Check(expectedType, expected);
             if (this._token.InErrorMode)
+            {
                 this.Sync(new Tokens(expectedType), synchronizingTokens);
+            }
         }
 
         private void CheckOrSyncAndAdvance(TokenType expectedType, Tokens synchronizingTokens) {
             this.Check(expectedType);
             if (this._token.InErrorMode)
+            {
                 this.Sync(new Tokens(expectedType), synchronizingTokens);
+            }
+
             if (!this._token.InErrorMode)
+            {
                 this._token.Advance();
+            }
         }
 
         private void AddError(TextSpan problemSourceSpan, string message) {
@@ -640,7 +684,9 @@ namespace Faml.Parser {
 
         private void Sync(Tokens? allowedTokens, Tokens otherTokens) {
             if (!this._token.InErrorMode)
+            {
                 return;
+            }
 
             while (true) {
                 TokenType currentTokenType = this._token.TypeForErrorMode;
@@ -652,8 +698,10 @@ namespace Faml.Parser {
                 }
 
                 if (otherTokens.Contains(currentTokenType, column))
+                {
                     break;
-                
+                }
+
                 this._token.Advance();
             }
         }
@@ -676,8 +724,13 @@ namespace Faml.Parser {
         private ExpressionSyntax ParseExpressionAllowTextualLiteral(Tokens synchronizingTokens, TextualLiteralContext markupContext) {
             if (this._token.LooksLikeStartOfExpression()) {
                 if (markupContext == TextualLiteralContext.FunctionDefinition)
+                {
                     return this.ParseSingleExpression(synchronizingTokens);
-                else return this.ParseExpression(synchronizingTokens);
+                }
+                else
+                {
+                    return this.ParseExpression(synchronizingTokens);
+                }
             }
             else {
                 int startPosition = -1;
@@ -706,7 +759,9 @@ namespace Faml.Parser {
                         allowRightBracketToTerminate: allowRightBracketToTerminate);
 
                     if (startPosition == -1)
+                    {
                         startPosition = this._token.TokenStartPosition;
+                    }
 
                     if (this._token.Type == TokenType.TextualLiteralText) {
                         items.Add(new TextualLiteralTextItemSyntax(this._token.TokenSpan, this._token.StringValue));
@@ -715,7 +770,9 @@ namespace Faml.Parser {
 
                         this.Advance();
                         if (atEnd)
+                        {
                             break;
+                        }
                     }
                     else if (this._token.Type == TokenType.LeftBrace) {
                         ExpressionSyntax expression = this.ParseExpression(synchronizingTokens);
@@ -731,7 +788,9 @@ namespace Faml.Parser {
                 }
 
                 if (bracketed)
+                {
                     this.CheckAndAdvance(TokenType.RightBracket);
+                }
 
                 return new TextualLiteralSyntax(this.TextSpanFrom(startPosition), items.ToImmutableArray());
             }
@@ -746,7 +805,9 @@ namespace Faml.Parser {
                 TokenType lookahead = this._token.Type;
                 if (lookahead == TokenType.Eof || lookahead == TokenType.ErrorMode || lookahead == TokenType.Semicolon ||
                         lookahead == TokenType.RightBrace || lookahead == TokenType.PropertyIdentifier )
+                {
                     break;
+                }
 
                 ExpressionSyntax expression = this.ParseSingleExpression(synchronizingTokens);
                 expressions.Add(expression);
@@ -754,8 +815,13 @@ namespace Faml.Parser {
 
             ExpressionSyntax overallExpression;
             if (expressions.Count == 1)
+            {
                 overallExpression = expressions[0];
-            else overallExpression = new SequenceLiteralExpressionSyntax(this.TextSpanFrom(startPosition), expressions.ToArray());
+            }
+            else
+            {
+                overallExpression = new SequenceLiteralExpressionSyntax(this.TextSpanFrom(startPosition), expressions.ToArray());
+            }
 
             return overallExpression;
         }
@@ -784,7 +850,10 @@ namespace Faml.Parser {
             while (true) {
                 InfixOperator infixOperator = Operator.GetInfixOperator(this._token.Type);
                 if (infixOperator == null || infixOperator.GetPrecedence() < precedence)
+                {
                     break;
+                }
+
                 this.Advance();
 
                 if (infixOperator == Operator.Dot) {
@@ -850,8 +919,13 @@ namespace Faml.Parser {
                         ExpressionSyntax qualifiableSymbolReference = this.ParseQualifiableSymbolReference();
 
                         if (this._token.Type == TokenType.LeftBrace)
+                        {
                             return this.ParseFunctionInvocation(qualifiableSymbolReference);
-                        else return qualifiableSymbolReference;
+                        }
+                        else
+                        {
+                            return qualifiableSymbolReference;
+                        }
 
                     // TODO: FIX THIS, SEEING WHERE IT'S USED;  StringValue isn't set for ContextSensitiveText, for one thing
                     case TokenType.TextBlock:
@@ -938,7 +1012,9 @@ namespace Faml.Parser {
                 conditionValuePairs.Add(conditionValuePair);
 
                 if (this._token.Type != TokenType.Pipe)
+                {
                     break;
+                }
             }
 
             return new IfExpressionSyntax(this.TextSpanFrom(startPosition), conditionValuePairs.ToArray(), elseTextBlock);
@@ -967,7 +1043,9 @@ namespace Faml.Parser {
             // In error scenarios, when the token is in eror mode, it may not have advanced at all when parsing.
             // In that case, the source span can be of 0 length but shouldn't be negative
             if (endPosition < startPosition)
+            {
                 endPosition = startPosition;
+            }
 
             return TextSpan.FromBounds(startPosition, endPosition);
         }

@@ -14,7 +14,9 @@ namespace Faml.Syntax.Expression {
         public IfExpressionSyntax(TextSpan span, ConditionValuePairSyntax[] conditionValuePairs, TextSpan? elseSpan) : base(span) {
             this._conditionValuePairs = conditionValuePairs;
             foreach (ConditionValuePairSyntax conditionValuePair in conditionValuePairs)
+            {
                 conditionValuePair.SetParent(this);
+            }
 
             this._elseSpan = elseSpan;
         }
@@ -33,7 +35,9 @@ namespace Faml.Syntax.Expression {
             }
 
             if (this._elseValue != null)
+            {
                 visitor(this._elseValue);
+            }
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
@@ -88,7 +92,9 @@ namespace Faml.Syntax.Expression {
             sourceWriter.Writeln("if");
 
             foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
+            {
                 sourceWriter.Writeln(conditionValuePair);
+            }
 
             if (this._elseValue != null) {
                 sourceWriter.Write("|: ");

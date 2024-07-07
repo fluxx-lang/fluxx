@@ -18,7 +18,9 @@ namespace Faml.Binding {
 
         public static BuiltInTypeBinding? GetBindingForTypeName(string typeName) {
             if (!_bindings.TryGetValue(typeName, out BuiltInTypeBinding binding))
+            {
                 return null;
+            }
 
             return binding;
         }

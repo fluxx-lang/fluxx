@@ -96,13 +96,21 @@ namespace Faml.CodeGeneration {
 
         public RawType GetRawType(TypeBinding typeBinding) {
             if (typeBinding is BuiltInTypeBinding predefinedTypeBinding)
+            {
                 return ReflectionDotNetRawType.ForPredefinedType((PredefinedType) predefinedTypeBinding.TypeToolingType);
+            }
             else if (typeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)
+            {
                 return externalObjectTypeBinding.TypeToolingType.UnderlyingType;
+            }
             else if (typeBinding is ExternalEnumTypeBinding externalEnumTypeBinding)
+            {
                 return externalEnumTypeBinding.TypeToolingType.UnderlyingType;
+            }
             else
+            {
                 throw new Exception($"Type {typeBinding.GetType().FullName} doesn't current support returning its RawType");
+            }
         }
 
         private ExpressionCode CreateSymbolReferenceCode(SymbolReferenceSyntax symbolReference) {
@@ -115,7 +123,9 @@ namespace Faml.CodeGeneration {
             else if (symbolBinding is FunctionSymbolBinding functionSymbolBinding) {
                 FunctionBinding functionBinding = functionSymbolBinding.FunctionBinding;
                 if (functionBinding is InternalFunctionBinding internalFunctionBinding)
+                {
                     return this.CreateInternalFunctionInvocationCode(internalFunctionBinding, ImmutableArray<ExpressionCode>.Empty);
+                }
                 else
                     throw new InvalidOperationException(
                         $"Unexpected function symbol binding type {functionBinding.GetType().FullName} for symbol reference '{symbolReference.Name}'");
@@ -164,7 +174,10 @@ namespace Faml.CodeGeneration {
 #endif
             if (propertyBinding is ExternalPropertyBinding externalPropertyBinding)
                 return externalPropertyBinding.ObjectType.GetGetPropertyCode(expressionCode, propertyAccess.PropertyNameString);
-            else throw new Exception($"Unexpected property access object type: {propertyBinding.ObjectTypeBinding}");
+            else
+            {
+                throw new Exception($"Unexpected property access object type: {propertyBinding.ObjectTypeBinding}");
+            }
         }
 
         private ExpressionCode CreateSequenceLiteralCode(SequenceLiteralExpressionSyntax sequenceLiteral) {
@@ -253,7 +266,9 @@ namespace Faml.CodeGeneration {
 
         private ExpressionCode CreateFunctionInvocationCode(FunctionInvocationSyntax functionInvocation) {
             if (functionInvocation.LiteralConstructorValue != null)
+            {
                 return this.CreateExpressionCode(functionInvocation.LiteralConstructorValue);
+            }
 
             FunctionBinding functionBinding = functionInvocation.FunctionBinding;
             Name? contentParameter = functionBinding.GetContentProperty();
@@ -295,7 +310,9 @@ namespace Faml.CodeGeneration {
                 QualifiableName argumentName = argumentNameValuePair.ArgumentName;
 
                 if (argumentNameValuePair.ArgumentName.IsQualified())
+                {
                     continue;
+                }
 
                 var propertyValue = new PropertyValue<string, ExpressionCode>(argumentName.ToString(), this.CreateExpressionCode(argumentNameValuePair.Value));
                 propertyValues.Add(propertyValue);
@@ -320,7 +337,10 @@ namespace Faml.CodeGeneration {
             foreach (Name parameterName in parameters) {
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName.ToQualifiableName());
                 if (argumentValue == null)
+                {
                     throw new Exception($"Argument '{parameterName}' isn't specified for function '{functionInvocation.FunctionBinding.FunctionName}'");
+                }
+
                 argumentsCodeBuilder.Add(this.CreateExpressionCode(argumentValue));
             }
 
@@ -337,7 +357,10 @@ namespace Faml.CodeGeneration {
                 QualifiableName parameterName = parameters[i];
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName);
                 if (argumentValue == null)
+                {
                     throw new Exception($"Required parameter '{parameterName}' doesn't exist for function '{functionInvocation.FunctionBinding.FunctionName}'");
+                }
+
                 argumentsCodeBuilder.Add(this.CreateExpressionCode(argumentValue));
             }
 
@@ -471,29 +494,53 @@ namespace Faml.CodeGeneration {
 
             BinaryOperator codeOperator;
             if (infixOperator == Operator.And)
+            {
                 codeOperator = BinaryOperator.And;
+            }
             else if (infixOperator == Operator.Or)
+            {
                 codeOperator = BinaryOperator.Or;
+            }
             else if (infixOperator == Operator.Less)
+            {
                 codeOperator = BinaryOperator.LessThan;
+            }
             else if (infixOperator == Operator.LessEquals)
+            {
                 codeOperator = BinaryOperator.LessThanOrEqual;
+            }
             else if (infixOperator == Operator.Greater)
+            {
                 codeOperator = BinaryOperator.GreaterThan;
+            }
             else if (infixOperator == Operator.GreaterEquals)
+            {
                 codeOperator = BinaryOperator.GreaterThanOrEqual;
+            }
             else if (infixOperator == Operator.Plus)
+            {
                 codeOperator = BinaryOperator.Add;
+            }
             else if (infixOperator == Operator.Minus)
+            {
                 codeOperator = BinaryOperator.Subtract;
+            }
             else if (infixOperator == Operator.Times)
+            {
                 codeOperator = BinaryOperator.Multiply;
+            }
             else if (infixOperator == Operator.Equals)
+            {
                 codeOperator = BinaryOperator.Equals;
+            }
             else if (infixOperator == Operator.NotEquals)
+            {
                 codeOperator = BinaryOperator.NotEquals;
+            }
             else
+            {
                 throw new Exception("Unknown infix operator: " + infixOperator.GetSourceRepresentation());
+            }
 
             ExpressionCode leftOperandCode = this.CreateExpressionCode(expression.LeftOperand);
             ExpressionCode rightOperandCode = this.CreateExpressionCode(expression.RightOperand);
@@ -506,8 +553,13 @@ namespace Faml.CodeGeneration {
 
             UnaryOperator codeOperator;
             if (prefixOperator == Operator.Not)
+            {
                 codeOperator = UnaryOperator.Not;
-            else throw new Exception("Unknown prefix operator: " + prefixOperator.GetSourceRepresentation());
+            }
+            else
+            {
+                throw new Exception("Unknown prefix operator: " + prefixOperator.GetSourceRepresentation());
+            }
 
             ExpressionCode operandCode = this.CreateExpressionCode(expression.Operand);
 

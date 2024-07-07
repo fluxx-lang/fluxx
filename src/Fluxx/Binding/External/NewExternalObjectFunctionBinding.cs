@@ -41,7 +41,9 @@ namespace Faml.Binding.External {
 
                 PropertyBinding? propertyBinding = this._objectTypeBinding.GetPropertyBinding(unqualifiableArgumentName);
                 if (propertyBinding != null)
+                {
                     return propertyBinding.GetTypeBinding();
+                }
 
                 argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
                     $"No '{argumentName}' property exists for class '{this.TypeToolingType.FullName}'");
@@ -78,10 +80,14 @@ namespace Faml.Binding.External {
 
             PropertyBinding? propertyBinding = this._objectTypeBinding.GetPropertyBinding(contentProperty.Value);
             if (propertyBinding != null)
+            {
                 return propertyBinding.GetTypeBinding();
+            }
 
             if (propertyBinding == null)
+            {
                 throw new InvalidOperationException($"Binding for content property '{contentProperty}' unexpectedly not found");
+            }
 
             return propertyBinding.GetTypeBinding();
         }
@@ -89,7 +95,10 @@ namespace Faml.Binding.External {
         public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName, CancellationToken cancellationToken) {
             PropertyBinding? propertyBinding = this._objectTypeBinding.GetPropertyBinding(parameterName);
             if (propertyBinding == null)
+            {
                 return Task.FromResult((ClassifiedTextMarkup?) null);
+            }
+
             return propertyBinding.GetDescriptionAsync(cancellationToken);
         }
 
@@ -116,7 +125,9 @@ namespace Faml.Binding.External {
 
             foreach (AttachedProperty attachedProperty in externalAttachedTypeBinding.AttachedType.AttachedProperties) {
                 if (attachedProperty.Name == unqualifiedPropertyName)
+                {
                     return ExternalBindingUtil.TypeToolingTypeToTypeBinding(this._objectTypeBinding.Project, attachedProperty.Type);
+                }
             }
 
             // If no TypeInfo provider could provide the attached property here, indicate that in the error

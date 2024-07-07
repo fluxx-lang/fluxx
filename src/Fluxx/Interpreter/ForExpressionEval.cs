@@ -24,18 +24,26 @@ namespace Faml.Interpreter {
             object sequence = this._inExpressionEval.Eval();
 
             if (! (sequence is IEnumerable enumerable))
+            {
                 throw new UserViewableException($"For-in expression sequence is unexpectedly type {sequence.GetType()}, not an IEnumerable");
+            }
 
             var list = new List<object>();
 
             int variableStackOffset = Context.StackIndex++;
             foreach (object variableValue in enumerable) {
                 if (this._variableTypeBinding == BuiltInTypeBinding.Int)
+                {
                     Context.IntStack[variableStackOffset] = (int) variableValue;
+                }
                 else if (this._variableTypeBinding == BuiltInTypeBinding.Double)
+                {
                     Context.DoubleStack[variableStackOffset] = (double)variableValue;
+                }
                 else if (this._variableTypeBinding is ObjectTypeBinding)
+                {
                     Context.ObjectStack[variableStackOffset] = variableValue;
+                }
                 else
                     throw new System.Exception(
                         $"Variable type {this._variableTypeBinding} currently not supported for 'for' expressions");

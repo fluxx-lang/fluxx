@@ -27,34 +27,48 @@ namespace Faml.Syntax {
 
             this._parameters = parameters;
             foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._parameters)
+            {
                 propertyNameTypePair.SetParent(this);
+            }
 
             this._returnType = returnType;
             if (returnType != null)
+            {
                 returnType.SetParent(this);
+            }
 
             this._expression = expression;
             expression.SetParent(this);
 
             this._whereDefinitions = whereDefinitions;
             foreach (DefinitionSyntax whereDefinition in whereDefinitions)
+            {
                 whereDefinition.SetParent(this);
+            }
         }
 
         public override void VisitChildren(SyntaxVisitor visitor) {
             visitor(this._functionNameSyntax);
 
             foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._parameters)
+            {
                 visitor(propertyNameTypePair);
+            }
 
             if (this._returnType != null)
+            {
                 visitor(this._returnType);
+            }
 
             if (this._expression != null)
+            {
                 visitor(this._expression);
+            }
 
             foreach (DefinitionSyntax whereDefinition in this._whereDefinitions)
+            {
                 visitor(whereDefinition);
+            }
         }
 
         public override bool IsTerminalNode() {
@@ -65,15 +79,21 @@ namespace Faml.Syntax {
 
         protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver) {
             if (this._returnType != null)
+            {
                 this._returnTypeBinding = this._returnType.GetTypeBinding();
+            }
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
             if (this._expression is TextualLiteralSyntax markupValue) {
                 if (this._returnTypeBinding != null)
+                {
                     this._expression = markupValue.ResolveMarkup(this._returnTypeBinding, bindingResolver);
+                }
                 else
+                {
                     this.AddError("Must specify explicit return type; it can't be inferred");
+                }
             }
 
             this._expression.SetParent(this);
@@ -82,8 +102,13 @@ namespace Faml.Syntax {
             this._expression.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
 
             if (this._returnType == null)
+            {
                 this._returnTypeBinding = this._expression.GetTypeBinding();
-            else Debug.Assert(this._returnTypeBinding != null);
+            }
+            else
+            {
+                Debug.Assert(this._returnTypeBinding != null);
+            }
         }
 
         public NameSyntax FunctionNameSyntax => this._functionNameSyntax;
@@ -129,7 +154,9 @@ namespace Faml.Syntax {
                 sourceWriter.Write("{");
                 for (int i = 0; i < parameterCount; i++) {
                     if (i > 0)
+                    {
                         sourceWriter.Write(" ");
+                    }
 
                     this._parameters[i].WriteSource(sourceWriter);
                 }

@@ -13,7 +13,9 @@ namespace Faml.DotNet {
 
             // TODO: Hack this for now
             if (dotNetAssembly.Name == "Windows")
+            {
                 return new LoadedAssembly(null, "Windows, ContentType = WindowsRuntime");
+            }
 
             var assemblyName = new AssemblyName(dotNetAssembly.Name);
 

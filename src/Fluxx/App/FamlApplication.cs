@@ -29,7 +29,9 @@ namespace Faml.App {
             //project.LoadMainModule(new ModuleName(resourceFileName));
             string? mainSource = sourceProvider.GetTextResource(resourceFileName);
             if (mainSource == null)
+            {
                 throw new InvalidOperationException($"Source file {resourceFileName} not found");
+            }
 
             project.UpdateSource(resourceFileName, mainSource);
 
@@ -40,7 +42,10 @@ namespace Faml.App {
         public AppToDevEnvConnection AppToDevEnvConnection {
             get {
                 if (this._appToDevEnvConnection == null)
+                {
                     throw new InvalidOperationException("AppToDevEnvConnection never got initialized");
+                }
+
                 return this._appToDevEnvConnection;
             }
         }
@@ -48,7 +53,10 @@ namespace Faml.App {
         public ReactiveVar<Program> Program {
             get {
                 if (this._program == null)
+                {
                     throw new InvalidOperationException("Program never got initialized");
+                }
+
                 return this._program;
             }
         }
