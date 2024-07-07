@@ -7,14 +7,14 @@ using TypeTooling.Types;
 
 namespace Fluxx.Syntax
 {
-    public class ExternalTypeCustomLiteralSytax : ExpressionSyntax
+    public class ExternalTypeCustomLiteralSyntax : ExpressionSyntax
     {
         private readonly ExternalObjectTypeBinding propertyTypeBinding;
         private readonly TypeToolingType externalType;
         private readonly string literalSource;
         private readonly CustomLiteral customLiteral;
 
-        public ExternalTypeCustomLiteralSytax(TextSpan span, ExternalObjectTypeBinding propertyTypeBinding, TypeToolingType externalType, string literalSource, CustomLiteral customLiteral) : base(span)
+        public ExternalTypeCustomLiteralSyntax(TextSpan span, ExternalObjectTypeBinding propertyTypeBinding, TypeToolingType externalType, string literalSource, CustomLiteral customLiteral) : base(span)
         {
             this.propertyTypeBinding = propertyTypeBinding;
             this.externalType = externalType;

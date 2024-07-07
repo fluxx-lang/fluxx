@@ -680,7 +680,7 @@ namespace Fluxx.Interpreter
             {
                 return this.CreateEnumValueLiteralEval(enumValueLiteralSyntax);
             }
-            else if (expression is ExternalTypeCustomLiteralSytax externalTypeCustomLiteralSytax)
+            else if (expression is ExternalTypeCustomLiteralSyntax externalTypeCustomLiteralSytax)
             {
                 return this.CreateExternalCustomLiteralEval(externalTypeCustomLiteralSytax);
             }
@@ -705,7 +705,7 @@ namespace Fluxx.Interpreter
             }
         }
 
-        private Eval CreateExternalCustomLiteralEval(ExternalTypeCustomLiteralSytax externalTypeCustomLiteralSytax)
+        private Eval CreateExternalCustomLiteralEval(ExternalTypeCustomLiteralSyntax externalTypeCustomLiteralSytax)
         {
             CustomLiteralParser? customLiteralParser = externalTypeCustomLiteralSytax.ExternalType.GetCustomLiteralParser();
             if (customLiteralParser == null)

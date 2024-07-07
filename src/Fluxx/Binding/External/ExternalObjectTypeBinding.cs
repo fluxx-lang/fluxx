@@ -220,7 +220,7 @@ namespace Fluxx.Binding.External
                         }
                     }
 
-                    return new ExternalTypeCustomLiteralSytax(span, this, this.typeToolingType, literalSource, customLiteral);
+                    return new ExternalTypeCustomLiteralSyntax(span, this, this.typeToolingType, literalSource, customLiteral);
                 }
                 catch (Exception e)
                 {
