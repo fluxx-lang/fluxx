@@ -97,6 +97,7 @@ namespace Faml.Syntax.Expression
                 this._qualifier.WriteSource(sourceWriter);
                 sourceWriter.Write(".");
             }
+
             sourceWriter.Write(this._symbol);
         }
     }

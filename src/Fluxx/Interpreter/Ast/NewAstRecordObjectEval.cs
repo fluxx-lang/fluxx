@@ -35,6 +35,7 @@ namespace Faml.Interpreter.record
                 {
                     astRecordPropertySetter = new AstRecordPropertyObjectSetter(propertyNameString, (ObjectEval) propertyValue);
                 }
+
                 /*
                 else if (propertyValue is ListEval) {
                     recordPropertySetter = new RecordPropertyIntSetter(propertyName, (ListEval)propertyValue);

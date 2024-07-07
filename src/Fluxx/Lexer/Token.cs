@@ -355,6 +355,7 @@ namespace Faml.Lexer
                     this.AdvanceChar();
                     currChar = this.GetCurrChar();
                 }
+
                 if (currChar == '\n')
                 {
                     this.AdvanceChar();
@@ -391,6 +392,7 @@ namespace Faml.Lexer
                     break;
                 }
             }
+
             return indentAmount;
         }
 
@@ -747,6 +749,7 @@ namespace Faml.Lexer
                         this.AdvanceChar();
                         this._type = TokenType.Period;
                     }
+
                     break;
 
                 case '-':
@@ -765,6 +768,7 @@ namespace Faml.Lexer
                     {
                         this._type = TokenType.Not;
                     }
+
                     break;
 
                 case '*':
@@ -798,6 +802,7 @@ namespace Faml.Lexer
                     {
                         this._type = TokenType.Less;
                     }
+
                     break;
 
                 case '>':
@@ -811,6 +816,7 @@ namespace Faml.Lexer
                     {
                         this._type = TokenType.Greater;
                     }
+
                     break;
 
                 case '=':
@@ -825,6 +831,7 @@ namespace Faml.Lexer
                     {
                         this._type = TokenType.Assign;
                     }
+
                     break;
 
                 case '&':
@@ -839,6 +846,7 @@ namespace Faml.Lexer
                         this.AdvanceChar();
                         this._type = TokenType.And;
                     }
+
                     break;
 
                 case '|':
@@ -853,6 +861,7 @@ namespace Faml.Lexer
                         this.AdvanceChar();
                         this._type = TokenType.Or;
                     }
+
                     break;
 
                 case '\0':
@@ -873,6 +882,7 @@ namespace Faml.Lexer
                         this.AdvanceChar();
                         this._type = TokenType.Invalid;
                     }
+
                     break;
             }
         }
@@ -1126,6 +1136,7 @@ namespace Faml.Lexer
                             this.SetPosition(peekPosition + 1);
                             break;
                         }
+
                         if (!IsPropertyIdentifierCharacter(peekCharacter))
                         {
                             break;

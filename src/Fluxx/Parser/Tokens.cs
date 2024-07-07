@@ -44,6 +44,7 @@ namespace Faml.Parser
                 newTokens = newTokens.Add(remainingTokens._tokenType, remainingTokens._maxColumn);
                 remainingTokens = remainingTokens._restTokens;
             }
+
             return newTokens;
         }
 

@@ -142,6 +142,7 @@ namespace Faml.Syntax
                     return i;
                 }
             }
+
             return -1;
         }
         

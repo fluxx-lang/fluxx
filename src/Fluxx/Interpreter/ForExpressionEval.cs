@@ -56,6 +56,7 @@ namespace Faml.Interpreter
                 object expressionValue = this._expressionEval.Eval();
                 list.Add(expressionValue);
             }
+
             Context.StackIndex--;
 
             return list;

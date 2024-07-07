@@ -45,6 +45,7 @@ namespace Faml.Syntax.Expression
                 visitor(this._stringFragments[i]);
                 visitor(this._expressions[i]);
             }
+
             visitor(this._stringFragments[length - 1]);
         }
 
@@ -61,6 +62,7 @@ namespace Faml.Syntax.Expression
                 this._expressions[i].WriteSource(sourceWriter);
                 sourceWriter.Write("}");
             }
+
             this._stringFragments[length - 1].WriteSource(sourceWriter);
         }
 

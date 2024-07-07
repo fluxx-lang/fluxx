@@ -281,6 +281,7 @@ namespace Faml.Interpreter
                 evalStringFragments[i] = stringFragments[i].Value;
                 evalExpressions[i] = BoxIfPrimitiveType(this.CreateExpressionEval(expressions[i]));
             }
+
             evalStringFragments[length] = stringFragments[length].Value;
 
             return new InterpolatedStringEval(evalStringFragments, evalExpressions);
@@ -397,6 +398,7 @@ namespace Faml.Interpreter
 
                 argumentEvals[i] = this.CreateExpressionEval(argumentValue);
             }
+
             return argumentEvals;
         }
 
@@ -420,6 +422,7 @@ namespace Faml.Interpreter
 
                 argumentEvals[i] = this.CreateExpressionEval(argumentValue);
             }
+
             return argumentEvals;
         }
 
@@ -457,6 +460,7 @@ namespace Faml.Interpreter
 
                 argumentEvals[i] = new ObjectConstantEval(argumentValue);
             }
+
             return argumentEvals;
         }
 
@@ -502,6 +506,7 @@ namespace Faml.Interpreter
             {
                 return new CastObjectDoubleEval(objectEval);
             }
+
             // Strings are an object type
             else if (primitveTypeBinding == BuiltInTypeBinding.String)
             {
@@ -652,6 +657,7 @@ namespace Faml.Interpreter
             {
                 return this.CreatePropertyAccessEval(propertyAccess);
             }
+
             /*
            else if (expression is ParamFunctionInvocation)
                return createParamFunctionInvocationEval((ParamFunctionInvocation) expression);

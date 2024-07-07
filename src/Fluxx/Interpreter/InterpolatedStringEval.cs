@@ -27,6 +27,7 @@ namespace Faml.Interpreter
                 buffer.Append(this.StringFragments[i]);
                 buffer.Append(this.Expressions[i].Eval());
             }
+
             buffer.Append(this.StringFragments[length]);
 
             return buffer.ToString();

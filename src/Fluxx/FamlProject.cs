@@ -473,6 +473,7 @@ namespace Faml
                 diagnostics = new List<CodeAnalysis.Diagnostic>();
                 this._modulesDiagnostics.Add(moduleName, diagnostics);
             }
+
             diagnostics.Add(diagnostic);
         }
 

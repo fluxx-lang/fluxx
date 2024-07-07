@@ -199,6 +199,7 @@ namespace Faml.Parser
 
                         literalValueCharIterator.Position = rightBracePosition + 1;
                     }
+
                     break;
                 }
                 else if (curr == '\0')

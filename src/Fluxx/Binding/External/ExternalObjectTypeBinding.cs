@@ -56,6 +56,7 @@ namespace Faml.Binding.External
                     this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
                     this._gotAttachedType = true;
                 }
+
                 return this._attachedType;
             }
         }

@@ -120,6 +120,7 @@ namespace Faml
                             tags.Add(new SyntaxHighlightTag(terminalSnapshotSpan, syntaxHighlightTagType));
                         break;
                     }
+
                     case SyntaxNodeType.PredefinedTypeReference:
                         tags.Add(new SyntaxHighlightTag(terminalSnapshotSpan, SyntaxHighlightTagType.TypeReference));
                         break;

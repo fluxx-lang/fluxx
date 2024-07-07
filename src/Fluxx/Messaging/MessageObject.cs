@@ -179,6 +179,7 @@ namespace Faml.Messaging
                     int length = binaryReader.ReadInt32();
                     return binaryReader.ReadBytes(length);
                 }
+
                 case PropertyType.MessageObjectArray:
                 {
                     int length = binaryReader.ReadInt32();
@@ -190,6 +191,7 @@ namespace Faml.Messaging
 
                         return list.ToArray();
                 }
+
                 default:
                     throw new NotSupportedException($"Unknown property type: {type}");
             }

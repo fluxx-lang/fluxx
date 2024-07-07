@@ -21,6 +21,7 @@ namespace Faml.DotNet
 
                 typeInfo = typeInfo.BaseType?.GetTypeInfo();
             }
+
             return null;
         }
 
@@ -38,6 +39,7 @@ namespace Faml.DotNet
 
                 typeInfo = typeInfo.BaseType?.GetTypeInfo();
             }
+
             return null;
         }
 
@@ -55,6 +57,7 @@ namespace Faml.DotNet
 
                 typeInfo = typeInfo.BaseType?.GetTypeInfo();
             }
+
             return null;
         }
         
