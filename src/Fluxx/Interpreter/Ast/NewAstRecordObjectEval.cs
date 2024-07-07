@@ -20,15 +20,15 @@ namespace Faml.Interpreter.record
                 AstRecordPropertySetter astRecordPropertySetter;
                 if (propertyValue is IntEval)
                 {
-                    astRecordPropertySetter = new AstRecordPropertyIntSetter(propertyNameString, (IntEval) propertyValue);
+                    astRecordPropertySetter = new AstRecordPropertyIntSetter(propertyNameString, (IntEval)propertyValue);
                 }
                 else if (propertyValue is BooleanEval)
                 {
-                    astRecordPropertySetter = new AstRecordPropertyBooleanSetter(propertyNameString, (BooleanEval) propertyValue);
+                    astRecordPropertySetter = new AstRecordPropertyBooleanSetter(propertyNameString, (BooleanEval)propertyValue);
                 }
                 else if (propertyValue is ObjectEval)
                 {
-                    astRecordPropertySetter = new AstRecordPropertyObjectSetter(propertyNameString, (ObjectEval) propertyValue);
+                    astRecordPropertySetter = new AstRecordPropertyObjectSetter(propertyNameString, (ObjectEval)propertyValue);
                 }
 
                 /*

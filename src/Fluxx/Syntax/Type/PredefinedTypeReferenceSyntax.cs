@@ -13,8 +13,7 @@ namespace Faml.Syntax.Type
     {
         private readonly BuiltInTypeBinding _predefinedTypeBinding;
 
-        public PredefinedTypeReferenceSyntax(TextSpan span, BuiltInTypeBinding predefinedTypeBinding) :
-            base(span)
+        public PredefinedTypeReferenceSyntax(TextSpan span, BuiltInTypeBinding predefinedTypeBinding) : base(span)
             {
             this._predefinedTypeBinding = predefinedTypeBinding;
         }

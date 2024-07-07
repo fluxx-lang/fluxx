@@ -30,7 +30,7 @@ namespace Faml.Binding.External
             this._project = project;
             this._rawType = rawType;
 
-            this._typeToolingType = (ObjectType) this._project.GetTypeToolingType(this._rawType);
+            this._typeToolingType = (ObjectType)this._project.GetTypeToolingType(this._rawType);
             this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
         }
 
@@ -39,7 +39,7 @@ namespace Faml.Binding.External
             this._project = project;
             this._typeToolingType = typeToolingType;
 
-            this._rawType = (DotNetRawType) typeToolingType.UnderlyingType;
+            this._rawType = (DotNetRawType)typeToolingType.UnderlyingType;
         }
 
         public FamlProject Project => this._project;
@@ -95,7 +95,7 @@ namespace Faml.Binding.External
             {
                 foreach (ObjectProperty property in type.Properties)
                 {
-                    if (! this._objectProperties.ContainsKey(property.Name))
+                    if (!this._objectProperties.ContainsKey(property.Name))
                     {
                         this._objectProperties.Add(property.Name, property);
                     }
@@ -140,7 +140,7 @@ namespace Faml.Binding.External
                 return false;
             }
 
-            return this.Equals((ExternalObjectTypeBinding) obj);
+            return this.Equals((ExternalObjectTypeBinding)obj);
         }
 
         public override int GetHashCode()
@@ -175,7 +175,7 @@ namespace Faml.Binding.External
 
         public override PropertyBinding? GetPropertyBinding(Name propertyName)
         {
-            if (! this.ObjectProperties.TryGetValue(propertyName.ToString(), out ObjectProperty property))
+            if (!this.ObjectProperties.TryGetValue(propertyName.ToString(), out ObjectProperty property))
             {
                 return null;
             }

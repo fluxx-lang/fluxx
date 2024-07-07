@@ -32,7 +32,7 @@ namespace Faml.Lexer
 
             this._prevTokenEndPosition = -1;
 
-            if (! noInitialAdvance)
+            if (!noInitialAdvance)
             {
                 this.Advance();
             }
@@ -1195,7 +1195,7 @@ namespace Faml.Lexer
 
             long value = long.Parse(tokenString);
 
-            this.IntValue = (int) value;
+            this.IntValue = (int)value;
             this._type = TokenType.Int32;
         }
     }

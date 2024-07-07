@@ -15,8 +15,7 @@ namespace Faml.Binding.External
 
 
         // TODO: This name is fully qualified.   Do we want that?
-        public ExternalEnumTypeBinding(FamlProject project, EnumType typeToolingType) :
-            base(new QualifiableName(typeToolingType.FullName))
+        public ExternalEnumTypeBinding(FamlProject project, EnumType typeToolingType) : base(new QualifiableName(typeToolingType.FullName))
             {
             this._project = project;
             this._typeToolingType = typeToolingType;
@@ -67,7 +66,7 @@ namespace Faml.Binding.External
                 return false;
             }
 
-            return this.Equals((ExternalEnumTypeBinding) obj);
+            return this.Equals((ExternalEnumTypeBinding)obj);
         }
 
         public override int GetHashCode()

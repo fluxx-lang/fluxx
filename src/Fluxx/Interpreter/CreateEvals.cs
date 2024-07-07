@@ -209,7 +209,7 @@ namespace Faml.Interpreter
             PropertyBinding propertyBinding = propertyAccess.PropertyBinding;
 
             ExpressionSyntax expression = propertyAccess.Expression;
-            var expressionEval = (ObjectEval) this.CreateExpressionEval(expression);
+            var expressionEval = (ObjectEval)this.CreateExpressionEval(expression);
 
             if (propertyBinding is RecordPropertyBinding)
             {
@@ -327,7 +327,7 @@ namespace Faml.Interpreter
             }
             else if (functionBinding is NewRecordFunctionBinding)
             {
-                var newAstRecordFunctionBinding = (NewRecordFunctionBinding) functionBinding;
+                var newAstRecordFunctionBinding = (NewRecordFunctionBinding)functionBinding;
 
                 Name[] propertyNames = newAstRecordFunctionBinding.RecordTypeDefinition.GetProperties();
                 Eval[] propertyEvals = this.CreateArgumentEvals(functionInvocation, propertyNames);
@@ -335,7 +335,7 @@ namespace Faml.Interpreter
             }
             else if (functionBinding is NewExternalObjectFunctionBinding)
             {
-                var newCSharpObjectFunctionBinding = (NewExternalObjectFunctionBinding) functionBinding;
+                var newCSharpObjectFunctionBinding = (NewExternalObjectFunctionBinding)functionBinding;
 
                 Name[] argumentNames = new Name[0]; // functionInvocation.GetArgumentNames();
                 Eval[] argumentEvals = this.CreateArgumentEvals(functionInvocation, argumentNames);
@@ -632,7 +632,7 @@ namespace Faml.Interpreter
             }
             else if (expression is BooleanLiteralSyntax booleanLiteral)
             {
-                return (booleanLiteral.Value? (Eval) new TrueEval() : new FalseEval());
+                return (booleanLiteral.Value ? (Eval)new TrueEval() : new FalseEval());
             }
             else if (expression is IntLiteralSyntax intLiteral)
             {
@@ -735,50 +735,50 @@ namespace Faml.Interpreter
             */
             if (infixOperator == Operator.And)
             {
-                return new AndEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+                return new AndEval((BooleanEval)leftEval, (BooleanEval)rightEval);
             }
             else if (infixOperator == Operator.Or)
             {
-                return new OrEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+                return new OrEval((BooleanEval)leftEval, (BooleanEval)rightEval);
             }
             else if (infixOperator == Operator.Less)
             {
-                return new LessEval((IntEval) leftEval, (IntEval) rightEval);
+                return new LessEval((IntEval)leftEval, (IntEval)rightEval);
             }
             else if (infixOperator == Operator.LessEquals)
             {
-                return new LessEqualsEval((IntEval) leftEval, (IntEval) rightEval);
+                return new LessEqualsEval((IntEval)leftEval, (IntEval)rightEval);
             }
             else if (infixOperator == Operator.Greater)
             {
-                return new GreaterEval((IntEval) leftEval, (IntEval) rightEval);
+                return new GreaterEval((IntEval)leftEval, (IntEval)rightEval);
             }
             else if (infixOperator == Operator.GreaterEquals)
             {
-                return new GreaterEqualsEval((IntEval) leftEval, (IntEval) rightEval);
+                return new GreaterEqualsEval((IntEval)leftEval, (IntEval)rightEval);
             }
             else if (infixOperator == Operator.Plus)
             {
-                return new PlusEval((IntEval) leftEval, (IntEval) rightEval);
+                return new PlusEval((IntEval)leftEval, (IntEval)rightEval);
             }
             else if (infixOperator == Operator.Minus)
             {
-                return new MinusEval((IntEval) leftEval, (IntEval) rightEval);
+                return new MinusEval((IntEval)leftEval, (IntEval)rightEval);
             }
             else if (infixOperator == Operator.Times)
             {
-                return new TimesEval((IntEval) leftEval, (IntEval) rightEval);
+                return new TimesEval((IntEval)leftEval, (IntEval)rightEval);
             }
             else if (infixOperator == Operator.Equals)
             {
                 if (leftTypeBinding == BuiltInTypeBinding.Int && rightTypeBiding == BuiltInTypeBinding.Int)
                 {
-                    return new EqualsIntEval((IntEval) leftEval, (IntEval) rightEval);
+                    return new EqualsIntEval((IntEval)leftEval, (IntEval)rightEval);
                 }
                 else if (leftTypeBinding == BuiltInTypeBinding.Bool &&
                          rightTypeBiding == BuiltInTypeBinding.Bool)
                 {
-                    return new EqualsBooleanEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+                    return new EqualsBooleanEval((BooleanEval)leftEval, (BooleanEval)rightEval);
                 }
                 else
                     throw new Exception("Cannot compare these two types with == :" + leftTypeBinding + " and " +
@@ -788,12 +788,12 @@ namespace Faml.Interpreter
             {
                 if (leftTypeBinding == BuiltInTypeBinding.Int && rightTypeBiding == BuiltInTypeBinding.Int)
                 {
-                    return new NotEqualsIntEval((IntEval) leftEval, (IntEval) rightEval);
+                    return new NotEqualsIntEval((IntEval)leftEval, (IntEval)rightEval);
                 }
                 else if (leftTypeBinding == BuiltInTypeBinding.Bool &&
                          rightTypeBiding == BuiltInTypeBinding.Bool)
                 {
-                    return new NotEqualsBooleanEval((BooleanEval) leftEval, (BooleanEval) rightEval);
+                    return new NotEqualsBooleanEval((BooleanEval)leftEval, (BooleanEval)rightEval);
                 }
                 else
                     throw new Exception("Cannot compare these two types with == :" + leftTypeBinding + " and " +
@@ -813,7 +813,7 @@ namespace Faml.Interpreter
 
             if (prefixOperator == Operator.Not)
             {
-                return new NotEval((BooleanEval) operandEval);
+                return new NotEval((BooleanEval)operandEval);
             }
             else
             {
@@ -840,8 +840,8 @@ namespace Faml.Interpreter
 
             foreach (ConditionValuePairSyntax conditionValuePair in ifExpression.ConditionValuePairs)
             {
-                conditionEvals.Add((BooleanEval) this.CreateExpressionEval(conditionValuePair.Condition));
-                valueEvals.Add((ObjectEval) this.CreateExpressionEval(conditionValuePair.Value));
+                conditionEvals.Add((BooleanEval)this.CreateExpressionEval(conditionValuePair.Condition));
+                valueEvals.Add((ObjectEval)this.CreateExpressionEval(conditionValuePair.Value));
             }
 
             ExpressionSyntax elseValue = ifExpression.ElseValue;
@@ -852,7 +852,7 @@ namespace Faml.Interpreter
             }
             else
             {
-                elseValueEval = (ObjectEval) this.CreateExpressionEval(elseValue);
+                elseValueEval = (ObjectEval)this.CreateExpressionEval(elseValue);
             }
 
             return new IfObjectEval(conditionEvals.ToArray(), valueEvals.ToArray(), elseValueEval);
@@ -872,8 +872,8 @@ namespace Faml.Interpreter
                 throw new Exception("'for' expressions are just supported for object types currently");
             }
 
-            var expressionEval = (ObjectEval) this.CreateExpressionEval(forExpression.Expression);
-            var inExpressionEval = (ObjectEval) this.CreateExpressionEval(forExpression.ForVariableDefinition.InExpression);
+            var expressionEval = (ObjectEval)this.CreateExpressionEval(forExpression.Expression);
+            var inExpressionEval = (ObjectEval)this.CreateExpressionEval(forExpression.ForVariableDefinition.InExpression);
 
             return new ForExpressionEval(expressionEval, forExpression.ForVariableDefinition.GetVariableTypeBinding(), inExpressionEval);
         }

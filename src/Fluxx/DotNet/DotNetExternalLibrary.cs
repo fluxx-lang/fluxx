@@ -45,7 +45,7 @@ namespace Faml.DotNet
             }
 
             // TODO: Handle non-object types here too
-            return new ExternalObjectTypeBinding(this._project, (ObjectType) typeToolingType);
+            return new ExternalObjectTypeBinding(this._project, (ObjectType)typeToolingType);
         }
 
         public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName className)

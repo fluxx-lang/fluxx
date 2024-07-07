@@ -116,7 +116,7 @@ namespace Faml
             TypeBindingResult typeBindingResult = this.ResolveTypeBinding(new QualifiableName(type.FullName));
             if (typeBindingResult is TypeBindingResult.Success success)
             {
-                return (ExternalObjectTypeBinding) success.TypeBinding;
+                return (ExternalObjectTypeBinding)success.TypeBinding;
             }
             else
             {
@@ -368,10 +368,10 @@ namespace Faml
                 return;
             }
 
-            var projectFunctionEval = (ObjectEval) new CreateEvals(this.TypeToolingEnvironment).CreateExpressionEval(projectDefinition);
+            var projectFunctionEval = (ObjectEval)new CreateEvals(this.TypeToolingEnvironment).CreateExpressionEval(projectDefinition);
 
             Context.Reset();
-            var projectObject = (ProjectTypes.Project) projectFunctionEval.Eval();
+            var projectObject = (ProjectTypes.Project)projectFunctionEval.Eval();
 
             if (projectObject is ProjectTypes.App app)
             {
@@ -431,7 +431,7 @@ namespace Faml
 
         public IEnumerable<Diagnostic> GetModuleDiagnostics(QualifiableName moduleName)
         {
-            if (! this._modulesDiagnostics.TryGetValue(moduleName, out List<CodeAnalysis.Diagnostic> moduleDiagnostics))
+            if (!this._modulesDiagnostics.TryGetValue(moduleName, out List<CodeAnalysis.Diagnostic> moduleDiagnostics))
             {
                 return Enumerable.Empty<CodeAnalysis.Diagnostic>();
             }
@@ -489,7 +489,7 @@ namespace Faml
 
         public FunctionDefinitionSyntax? GetFunctionWithName(QualifiableName name)
         {
-            if (! name.IsQualified())
+            if (!name.IsQualified())
             {
                 throw new UserViewableException($"The function name '{name}' should be fully qualified (contain at least one period)");
             }

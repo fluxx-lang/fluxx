@@ -27,11 +27,11 @@ namespace Faml.Api
 
         public bool Equals(Name other) => string.Equals(this._name, other._name);
 
-        public override bool Equals(object obj) => obj is Name && this.Equals((Name) obj);
+        public override bool Equals(object obj) => obj is Name && this.Equals((Name)obj);
 
         public static bool operator ==(Name val1, Name val2) => val1.Equals(val2);
 
-        public static bool operator !=(Name val1, Name val2) => ! val1.Equals(val2);
+        public static bool operator !=(Name val1, Name val2) => !val1.Equals(val2);
 
         public override int GetHashCode() => this._name.GetHashCode();
     }

@@ -58,7 +58,7 @@ namespace Faml.Binding
 
         public virtual Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken)
         {
-            return Task.FromResult((ClassifiedTextMarkup?) null);
+            return Task.FromResult((ClassifiedTextMarkup?)null);
         }
 
         public override string ToString()

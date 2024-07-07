@@ -31,6 +31,6 @@ namespace Faml.Binding.Internal
         public override TypeBinding ObjectTypeBinding => this._recordTypeDefinition.TypeBinding;
 
         public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken) =>
-            Task.FromResult((ClassifiedTextMarkup?) null);
+            Task.FromResult((ClassifiedTextMarkup?)null);
     }
 }

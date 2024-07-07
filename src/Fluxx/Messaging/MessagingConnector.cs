@@ -80,7 +80,7 @@ namespace Faml.Messaging
                 throw new InvalidOperationException($"{responseMessage.MessageType} response message does not contain a responseId");
             }
 
-            if (! this._neededResponses.TryGetValue(responseId, out ResponseHandler responseHandler))
+            if (!this._neededResponses.TryGetValue(responseId, out ResponseHandler responseHandler))
             {
                 throw new InvalidOperationException($"{responseMessage.MessageType} response message does not have a registered response handler for responseId {responseId}");
             }

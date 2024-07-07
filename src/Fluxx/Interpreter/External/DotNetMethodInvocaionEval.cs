@@ -28,7 +28,7 @@ namespace Faml.Interpreter.External
                 arguments[i] = this._argumentEvals[i].Eval();
             }
 
-            MethodInfo methodInfo = ((ReflectionDotNetRawMethod) this._method).MethodInfo;
+            MethodInfo methodInfo = ((ReflectionDotNetRawMethod)this._method).MethodInfo;
             return methodInfo.Invoke(thisArgument, arguments);
         }
     }

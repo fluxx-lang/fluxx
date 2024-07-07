@@ -13,8 +13,8 @@ namespace Faml.Interpreter.Ast
 
         public override double Eval()
         {
-            var astRecord = (AstRecord) this._astRecordObjectEval.Eval();
-            return (double) astRecord.GetProperty(this._propertyName);
+            var astRecord = (AstRecord)this._astRecordObjectEval.Eval();
+            return (double)astRecord.GetProperty(this._propertyName);
         }
     }
 }

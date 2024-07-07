@@ -111,7 +111,7 @@ namespace Faml.IntelliSense
         public static Task<ClassifiedTextMarkup?> GetDescriptionAsync(object completionItemData, CultureInfo preferredCulture,
             CancellationToken cancellationToken)
             {
-            GetDescriptionAsyncDelegate getDescriptionDelegate = (GetDescriptionAsyncDelegate) completionItemData;
+            GetDescriptionAsyncDelegate getDescriptionDelegate = (GetDescriptionAsyncDelegate)completionItemData;
             return getDescriptionDelegate.Invoke(preferredCulture, cancellationToken);
         }
     }

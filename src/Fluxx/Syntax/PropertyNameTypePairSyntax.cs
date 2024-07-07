@@ -17,8 +17,7 @@ namespace Faml.Syntax
         // TODO: Handle inferred types here
 
         // AST structure properties
-        public PropertyNameTypePairSyntax(TextSpan span, NameSyntax propertyNameSyntax, TypeReferenceSyntax typeReferenceSyntax, ExpressionSyntax? defaultValue) :
-            base(span)
+        public PropertyNameTypePairSyntax(TextSpan span, NameSyntax propertyNameSyntax, TypeReferenceSyntax typeReferenceSyntax, ExpressionSyntax? defaultValue) : base(span)
             {
             this._propertyNameSyntax = propertyNameSyntax;
             this._propertyNameSyntax.SetParent(this);

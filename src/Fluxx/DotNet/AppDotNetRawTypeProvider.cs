@@ -125,7 +125,7 @@ namespace Faml.DotNet
 
         public override object Instantiate(DotNetRawType type, params object[] args)
         {
-            Type reflectionType = ((ReflectionDotNetRawType) type).Type;
+            Type reflectionType = ((ReflectionDotNetRawType)type).Type;
             return Activator.CreateInstance(reflectionType, args);
         }
     }

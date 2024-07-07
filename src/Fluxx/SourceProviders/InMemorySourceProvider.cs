@@ -18,7 +18,7 @@ namespace Faml.SourceProviders
         }
 
         public override string? GetTextResource(string path) =>
-            this._resources.TryGetValue(path, out object contents) ? (string) contents : null;
+            this._resources.TryGetValue(path, out object contents) ? (string)contents : null;
 
         public override ImmutableArray<byte>? GetBinaryResource(string path) =>
             this._resources.TryGetValue(path, out object contents) ? (ImmutableArray<byte>?)contents : null;

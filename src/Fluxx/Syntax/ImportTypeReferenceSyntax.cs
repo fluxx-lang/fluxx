@@ -29,7 +29,7 @@ namespace Faml.Syntax
 
         public Name Name => this._nameSyntax.Name;
 
-        public QualifiableName QualifiedName => new QualifiableName(((ImportSyntax) this.Parent).Qualifier, this.Name);
+        public QualifiableName QualifiedName => new QualifiableName(((ImportSyntax)this.Parent).Qualifier, this.Name);
 
         public TypeBinding GetTypeBinding()
         {

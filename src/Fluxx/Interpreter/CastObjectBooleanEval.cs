@@ -11,7 +11,7 @@ namespace Faml.Interpreter
 
         public override bool Eval()
         {
-            return (bool) this._objectEval.Eval();
+            return (bool)this._objectEval.Eval();
         }
     }
 }

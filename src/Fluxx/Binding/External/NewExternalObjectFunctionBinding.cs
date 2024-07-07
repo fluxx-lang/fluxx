@@ -105,7 +105,7 @@ namespace Faml.Binding.External
             PropertyBinding? propertyBinding = this._objectTypeBinding.GetPropertyBinding(parameterName);
             if (propertyBinding == null)
             {
-                return Task.FromResult((ClassifiedTextMarkup?) null);
+                return Task.FromResult((ClassifiedTextMarkup?)null);
             }
 
             return propertyBinding.GetDescriptionAsync(cancellationToken);
@@ -114,7 +114,7 @@ namespace Faml.Binding.External
         public TypeBinding ResolveAttachedPropertyArgumentTypeBinding(QualifiableName argumentName, 
             ArgumentNameValuePairSyntax argumentNameValuePair, BindingResolver bindingResolver)
             {
-            SyntaxNode nodeForErrors = argumentNameValuePair.PropertySpecifier ?? (SyntaxNode) argumentNameValuePair;
+            SyntaxNode nodeForErrors = argumentNameValuePair.PropertySpecifier ?? (SyntaxNode)argumentNameValuePair;
 
             // Get the attached type, failing if it doesn't exist
             QualifiableName attachedTypeName = argumentName.GetQualifier();

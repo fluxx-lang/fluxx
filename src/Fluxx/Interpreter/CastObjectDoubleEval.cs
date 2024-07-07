@@ -11,7 +11,7 @@ namespace Faml.Interpreter
 
         public override double Eval()
         {
-            return (double) this._objectEval.Eval();
+            return (double)this._objectEval.Eval();
         }
     }
 }

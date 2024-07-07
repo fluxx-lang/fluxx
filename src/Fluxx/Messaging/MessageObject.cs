@@ -136,7 +136,7 @@ namespace Faml.Messaging
 
         private void WritePropertyType(BinaryWriter binaryWriter, PropertyType propertyType)
         {
-            binaryWriter.Write((byte) propertyType);
+            binaryWriter.Write((byte)propertyType);
         }
 
         public static MessageObject Read(BinaryReader binaryReader)
@@ -160,7 +160,7 @@ namespace Faml.Messaging
         private static object ReadPropertyValue(BinaryReader binaryReader)
         {
             byte type = binaryReader.ReadByte();
-            switch ((PropertyType) type)
+            switch ((PropertyType)type)
             {
                 case PropertyType.Int32:
                     return binaryReader.ReadInt32();

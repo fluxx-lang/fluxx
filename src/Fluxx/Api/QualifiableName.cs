@@ -106,7 +106,7 @@ namespace Faml.Api
 
         public override bool Equals(object obj)
         {
-            return obj is Name && this.Equals((Name) obj);
+            return obj is Name && this.Equals((Name)obj);
         }
 
         public static bool operator ==(QualifiableName val1, QualifiableName val2)

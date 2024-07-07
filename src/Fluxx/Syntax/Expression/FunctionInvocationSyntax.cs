@@ -199,7 +199,7 @@ namespace Faml.Syntax.Expression
             foreach (ArgumentNameValuePairSyntax argumentNameValuePair in this._namedArguments)
             {
                 QualifiableName argumentName = argumentNameValuePair.ArgumentName;
-                if (! argumentName.IsQualified())
+                if (!argumentName.IsQualified())
                 {
                     argumentSet.Add(argumentName.ToUnqualifiableName());
                 }
@@ -243,7 +243,7 @@ namespace Faml.Syntax.Expression
             List<Name> missingArguments = new List<Name>();
             foreach (Name parameterName in this._functionBinding.GetParameters())
             {
-                if (! argumentSet.Contains(parameterName))
+                if (!argumentSet.Contains(parameterName))
                 {
                     missingArguments.Add(parameterName);
                 }

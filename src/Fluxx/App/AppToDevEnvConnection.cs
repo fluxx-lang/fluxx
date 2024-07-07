@@ -57,7 +57,7 @@ namespace Faml.App
                 Transaction.End();
             }
 
-            return Task.FromResult((MessageObject?) null);
+            return Task.FromResult((MessageObject?)null);
         }
 
         private async Task<MessageObject?> VisualizeExampleHandler(MessageObject request)

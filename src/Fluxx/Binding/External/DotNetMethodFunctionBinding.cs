@@ -76,7 +76,7 @@ namespace Faml.Binding.External
         public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName,
             CancellationToken cancellationToken)
             {
-            return Task.FromResult((ClassifiedTextMarkup?) null);
+            return Task.FromResult((ClassifiedTextMarkup?)null);
         }
 
         public override string GetNoContentPropertyExistsError()

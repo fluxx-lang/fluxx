@@ -34,7 +34,7 @@ namespace Faml.Interpreter
             {
                 if (this._variableTypeBinding == BuiltInTypeBinding.Int)
                 {
-                    Context.IntStack[variableStackOffset] = (int) variableValue;
+                    Context.IntStack[variableStackOffset] = (int)variableValue;
                 }
                 else if (this._variableTypeBinding == BuiltInTypeBinding.Double)
                 {

@@ -4,7 +4,6 @@ namespace Faml.Syntax.Literal
 {
     public abstract class TextualLiteralItemSyntax : SyntaxNode
     {
-        protected TextualLiteralItemSyntax(TextSpan span) : 
-            base(span) { }
+        protected TextualLiteralItemSyntax(TextSpan span) : base(span) { }
     }
 }

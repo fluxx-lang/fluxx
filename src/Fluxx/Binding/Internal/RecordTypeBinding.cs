@@ -28,7 +28,7 @@ namespace Faml.Binding.Internal
                 return false;
             }
 
-            return this.Equals((RecordTypeBinding) obj);
+            return this.Equals((RecordTypeBinding)obj);
         }
 
         public override int GetHashCode()

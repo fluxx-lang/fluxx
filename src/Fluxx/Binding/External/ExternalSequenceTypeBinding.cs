@@ -15,7 +15,7 @@ namespace Faml.Binding.External
             this._project = project;
             this._typeToolingType = typeToolingType;
 
-            this._dotNetType = (DotNetRawType) typeToolingType.UnderlyingType;
+            this._dotNetType = (DotNetRawType)typeToolingType.UnderlyingType;
         }
 
         public FamlProject Project => this._project;
@@ -34,7 +34,7 @@ namespace Faml.Binding.External
                 return false;
             }
 
-            return this.Equals((ExternalSequenceTypeBinding) obj);
+            return this.Equals((ExternalSequenceTypeBinding)obj);
         }
 
         public override int GetHashCode()

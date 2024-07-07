@@ -113,7 +113,7 @@ namespace Faml.Syntax
             {
                 if (currentNode is FunctionDefinitionSyntax)
                 {
-                    return (FunctionDefinitionSyntax) currentNode;
+                    return (FunctionDefinitionSyntax)currentNode;
                 }
 
                 currentNode = currentNode.Parent;
@@ -155,7 +155,7 @@ namespace Faml.Syntax
 
         public SyntaxNode[] GetChildren()
         {
-            int childCount= 0;
+            int childCount = 0;
             this.VisitChildren((child) => ++childCount);
 
             SyntaxNode[] children = new SyntaxNode[childCount];
@@ -252,7 +252,7 @@ namespace Faml.Syntax
         /// <returns>most specific descendent SyntaxNode containing the position</returns>
         public SyntaxNode GetNodeAtPosition(int position)
         {
-            if (! this.Span.ContainsInclusiveEnd(position))
+            if (!this.Span.ContainsInclusiveEnd(position))
                 throw new ArgumentOutOfRangeException(nameof(position), position,
                     $"position {position} is outside the node's range of {this.Span.Start} - {this.Span.End}");
 

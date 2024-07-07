@@ -101,7 +101,7 @@ namespace Faml.CodeGeneration
         {
             if (typeBinding is BuiltInTypeBinding predefinedTypeBinding)
             {
-                return ReflectionDotNetRawType.ForPredefinedType((PredefinedType) predefinedTypeBinding.TypeToolingType);
+                return ReflectionDotNetRawType.ForPredefinedType((PredefinedType)predefinedTypeBinding.TypeToolingType);
             }
             else if (typeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)
             {
@@ -198,7 +198,7 @@ namespace Faml.CodeGeneration
                 itemsBuilder.Add(expressionCode);
             }
 
-            SequenceTypeBinding sequenceTypeBinding = (SequenceTypeBinding) sequenceLiteral.GetTypeBinding();
+            SequenceTypeBinding sequenceTypeBinding = (SequenceTypeBinding)sequenceLiteral.GetTypeBinding();
             TypeBinding elementType = sequenceTypeBinding.ElementType;
             RawType elementRawType = this.GetRawType(elementType);
 
