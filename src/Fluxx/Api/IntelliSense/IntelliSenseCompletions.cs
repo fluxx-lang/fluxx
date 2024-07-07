@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Faml.Api.IntelliSense
+namespace Fluxx.Api.IntelliSense
 {
     [Serializable]
     public class IntelliSenseCompletions

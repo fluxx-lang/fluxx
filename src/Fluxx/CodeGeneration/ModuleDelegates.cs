@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Faml.Api;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Syntax;
 using TypeTooling;
 using TypeTooling.DotNet.CodeGeneration;
 
-namespace Faml.CodeGeneration
+namespace Fluxx.CodeGeneration
 {
     public class ModuleDelegates
     {

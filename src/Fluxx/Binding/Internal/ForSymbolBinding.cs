@@ -1,6 +1,6 @@
-using Faml.Syntax.Expression;
+using Fluxx.Syntax.Expression;
 
-namespace Faml.Binding.Internal
+namespace Fluxx.Binding.Internal
 {
     public class ForSymbolBinding : SymbolBinding
     {

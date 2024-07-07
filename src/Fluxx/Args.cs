@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Faml
+namespace Fluxx
 {
     public class Args : Dictionary<string, object>
     {

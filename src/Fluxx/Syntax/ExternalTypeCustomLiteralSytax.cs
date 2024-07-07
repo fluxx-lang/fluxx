@@ -1,11 +1,11 @@
-using Faml.Binding;
-using Faml.Binding.External;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 using TypeTooling.Types;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public class ExternalTypeCustomLiteralSytax : ExpressionSyntax
     {

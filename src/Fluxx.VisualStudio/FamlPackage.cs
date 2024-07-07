@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Task = System.Threading.Tasks.Task;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// </summary>

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Faml.SourceProviders;
+using Fluxx.SourceProviders;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public class AssemblySourceProvider : SourceProvider
     {

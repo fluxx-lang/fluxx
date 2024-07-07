@@ -4,7 +4,7 @@
  * @author Bret Johnson
  * @since 4/4/2015
  */
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public sealed class EqualsIntEval : BooleanEval
     {

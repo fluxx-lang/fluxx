@@ -1,7 +1,7 @@
 using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Faml.VisualStudio.Taggers {
+namespace Fluxx.VisualStudio.Taggers {
     internal static class FileAndContentTypeDefinitions {
         [Export]
         [Name("faml")]

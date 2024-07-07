@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 
-namespace Faml.DevEnv
+namespace Fluxx.DevEnv
 {
     public enum Style {
         BraceStyle, IndentStyle

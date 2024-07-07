@@ -3,7 +3,7 @@ using TypeTooling;
 using TypeTooling.RawTypes;
 using TypeTooling.Types;
 
-namespace Faml
+namespace Fluxx
 {
     public class FamlTypeToolingEnvironment : TypeToolingEnvironment
     {

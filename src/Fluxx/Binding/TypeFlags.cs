@@ -1,6 +1,6 @@
 using System;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     [Flags]
     public enum TypeFlags

@@ -1,14 +1,14 @@
 using System.Diagnostics;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
-using Faml.Syntax.Literal;
-using Faml.Syntax.Type;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
+using Fluxx.Syntax.Literal;
+using Fluxx.Syntax.Type;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class FunctionDefinitionSyntax : DefinitionSyntax
     {

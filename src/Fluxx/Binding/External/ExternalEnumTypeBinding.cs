@@ -1,11 +1,11 @@
-using Faml.Api;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+using Fluxx.Api;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis.Text;
 using TypeTooling.Types;
 
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public class ExternalEnumTypeBinding : EnumTypeBinding
     {

@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Api.IntelliSense;
-using Faml.DotNet;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Api.IntelliSense;
+using Fluxx.DotNet;
+using Fluxx.Syntax;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Images;
 using TypeTooling.Types;
 
-namespace Faml.IntelliSense
+namespace Fluxx.IntelliSense
 {
     public class FunctionInvocationIntelliSense : IntelliSense
     {

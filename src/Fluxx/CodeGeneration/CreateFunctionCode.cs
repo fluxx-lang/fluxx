@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.External;
-using Faml.Binding.Internal;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
-using Faml.Syntax.Literal;
-using Faml.Syntax.Operator;
-using Faml.Util;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
+using Fluxx.Binding.Internal;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
+using Fluxx.Syntax.Literal;
+using Fluxx.Syntax.Operator;
+using Fluxx.Util;
 using TypeTooling;
 using TypeTooling.CodeGeneration;
 using TypeTooling.CodeGeneration.Expressions;
@@ -21,9 +21,9 @@ using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.RawTypes;
 using TypeTooling.Types;
 using TypeTooling.Types.PredefinedTypes;
-using Operator = Faml.Syntax.Operator.Operator;
+using Operator = Fluxx.Syntax.Operator.Operator;
 
-namespace Faml.CodeGeneration
+namespace Fluxx.CodeGeneration
 {
     public class CreateFunctionCode
     {

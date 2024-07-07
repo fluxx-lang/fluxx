@@ -1,4 +1,4 @@
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public enum SyntaxNodeType
     {

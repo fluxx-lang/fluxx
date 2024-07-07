@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Faml.Api;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml
+namespace Fluxx
 {
     internal class GetIconTags
     {

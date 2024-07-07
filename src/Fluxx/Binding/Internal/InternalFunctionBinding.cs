@@ -2,16 +2,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Binding.Resolver;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Binding.Resolver;
+using Fluxx.Syntax;
 using TypeTooling.ClassifiedText;
 
 /**
  * @author Bret Johnson
  * @since 4/15/2015
  */
-namespace Faml.Binding.Internal
+namespace Fluxx.Binding.Internal
 {
     public class InternalFunctionBinding : FunctionBinding
     {

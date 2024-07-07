@@ -1,4 +1,4 @@
-namespace Faml.Tests.TestTypes
+namespace Fluxx.Tests.TestTypes
 {
     public enum SimpleEnum
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Faml.Interpreter.External
+namespace Fluxx.Interpreter.External
 {
     public sealed class ObjectConstantDelegateEval : ObjectEval
     {

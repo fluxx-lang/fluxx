@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Faml.Api;
-using Faml.VisualStudio.VsUtil;
+using Fluxx.Api;
+using Fluxx.VisualStudio.VsUtil;
 using Microsoft.CodeAnalysis;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.LanguageServices;
@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Constants = EnvDTE.Constants;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public class FamlVisualStudioProject {
         private readonly FamlVisualStudioWorkspace _famlVisualStudioWorkspace;
         private readonly FamlProject _famlProject;

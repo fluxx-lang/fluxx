@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public sealed class LoadedAssembly
     {

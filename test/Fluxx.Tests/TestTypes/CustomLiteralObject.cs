@@ -4,7 +4,7 @@ using TypeTooling.DotNet.CodeGeneration;
 using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.Types;
 
-namespace Faml.Tests.TestTypes
+namespace Fluxx.Tests.TestTypes
 {
     public class CustomLiteralObject
     {

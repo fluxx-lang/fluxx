@@ -1,8 +1,8 @@
-using Faml.Api;
-using Faml.Syntax;
-using Faml.Syntax.Type;
+using Fluxx.Api;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Type;
 
-namespace Faml.Binding.Resolver
+namespace Fluxx.Binding.Resolver
 {
     public abstract class BindingResolver
     {

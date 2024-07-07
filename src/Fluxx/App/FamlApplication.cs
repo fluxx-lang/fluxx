@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Faml.DotNet;
+using Fluxx.DotNet;
 using ReactiveData;
 
-namespace Faml.App
+namespace Fluxx.App
 {
     public abstract class FamlApplication
     {

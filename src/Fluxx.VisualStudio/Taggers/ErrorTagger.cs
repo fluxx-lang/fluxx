@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysisP.Text;
-using Faml.CodeAnalysis;
+using Fluxx.CodeAnalysis;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Faml.VisualStudio.Taggers
+namespace Fluxx.VisualStudio.Taggers
 {
 
     /// <summary>

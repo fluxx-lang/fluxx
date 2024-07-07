@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using TokenType = Faml.Lexer.TokenType;
+using TokenType = Fluxx.Lexer.TokenType;
 
 /**
  * @author Bret Johnson
  * @since 6/28/2014 11:21 PM
  */
-namespace Faml.Syntax.Operator
+namespace Fluxx.Syntax.Operator
 {
     public class Operator
     {

@@ -1,7 +1,7 @@
-using Faml.Tests.Shared;
+using Fluxx.Tests.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Faml.Tests.CodeGeneration
+namespace Fluxx.Tests.CodeGeneration
 {
     [TestClass]
     public class ExpressionTests : TestBase

@@ -2,7 +2,7 @@ using System.Reflection;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.DotNet.RawTypes.Reflection;
 
-namespace Faml.Interpreter.External
+namespace Fluxx.Interpreter.External
 {
     public sealed class DotNetMethodInvocaionEval : ObjectEval
     {

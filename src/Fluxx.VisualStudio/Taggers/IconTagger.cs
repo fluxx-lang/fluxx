@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Faml.Api;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Syntax;
 using Microsoft.CodeAnalysisP.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Faml.VisualStudio.Taggers {
+namespace Fluxx.VisualStudio.Taggers {
     /// <summary>
     /// Classifier that classifies all text as an instance of the "FamlClassifier" classification type.
     /// </summary>

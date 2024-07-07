@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.CodeAnalysis.Text
+namespace Fluxx.CodeAnalysis.Text
 {
     public class ParseableSource
     {

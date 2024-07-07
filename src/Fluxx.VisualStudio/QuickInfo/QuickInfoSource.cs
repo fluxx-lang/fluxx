@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Api.QuickInfo;
+using Fluxx.Api;
+using Fluxx.Api.QuickInfo;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Adornments;
 
-namespace Faml.VisualStudio.QuickInfo {
+namespace Fluxx.VisualStudio.QuickInfo {
     internal class QuickInfoSource : IAsyncQuickInfoSource {
         private readonly FamlModuleBuffer _famlModuleBuffer;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace Faml.VisualStudio.IconAdornments {
+namespace Fluxx.VisualStudio.IconAdornments {
     internal sealed class IconCache {
         private static readonly Lazy<IconCache> LazyInstance = new Lazy<IconCache>(() => new IconCache());
 

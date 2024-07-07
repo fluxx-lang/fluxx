@@ -1,12 +1,12 @@
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
-using Faml.Syntax.Literal;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
+using Fluxx.Syntax.Literal;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class ArgumentNameValuePairSyntax : SyntaxNode
     {

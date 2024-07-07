@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.Composition;
-using Faml.VisualStudio.Example;
-using Faml.VisualStudio.IconAdornments;
+using Fluxx.VisualStudio.Example;
+using Fluxx.VisualStudio.IconAdornments;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     /// <summary>
     /// Establishes an <see cref="IAdornmentLayer"/> to place the adornment on and exports the <see cref="IWpfTextViewCreationListener"/>
     /// that instantiates the adornment on the event of a <see cref="IWpfTextView"/>'s creation

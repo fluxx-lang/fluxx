@@ -1,8 +1,8 @@
-using Faml.Lexer;
+using Fluxx.Lexer;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Faml.Tests.Lexer
+namespace Fluxx.Tests.Lexer
 {
     [TestClass]
     public sealed class TokenTest

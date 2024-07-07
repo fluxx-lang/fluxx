@@ -1,15 +1,15 @@
 using System;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
 /**
  * @author Bret Johnson
  * @since 6/6/2015
  */
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class ImportTypeReferenceSyntax : SyntaxNode
     {

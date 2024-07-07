@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
-using Faml.Api;
-using Faml.Binding;
-using Faml.CodeAnalysis;
-using Faml.CodeAnalysis.Text;
-using Faml.Lexer;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
-using Faml.Syntax.Literal;
-using Faml.Syntax.Operator;
-using Faml.Syntax.Type;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Lexer;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
+using Fluxx.Syntax.Literal;
+using Fluxx.Syntax.Operator;
+using Fluxx.Syntax.Type;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Parser
+namespace Fluxx.Parser
 {
     public sealed class SourceParser
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows;
-using Faml.App;
+using Fluxx.App;
 using ReactiveData;
 using TypeTooling;
 using TypeTooling.Xaml.Wpf;
@@ -9,7 +9,7 @@ using TypeTooling.Xaml.Wpf;
 
 [assembly: TypeToolingProvider(typeof(WpfXamlTypeToolingProvider))]
 
-namespace Faml.Wpf {
+namespace Fluxx.Wpf {
     public class FamlWpfApplication : FamlApplication {
         public static FamlWpfApplication Instance;
         

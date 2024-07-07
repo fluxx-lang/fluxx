@@ -1,4 +1,4 @@
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public abstract class SymbolBinding
     {

@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics;
 using System.Text;
-using Faml.CodeAnalysis.Text;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Lexer
+namespace Fluxx.Lexer
 {
     public sealed class Token
     {

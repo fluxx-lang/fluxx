@@ -1,12 +1,12 @@
 using System;
 using System.Reflection;
-using Faml.ProjectTypes;
+using Fluxx.ProjectTypes;
 
 /**
  * @author Bret Johnson
  * @since 3/28/2015
  */
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public class DirectDotNetAssemblyLoader : AssemblyLoader
     {

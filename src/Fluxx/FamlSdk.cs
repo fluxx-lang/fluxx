@@ -1,4 +1,4 @@
-namespace Faml
+namespace Fluxx
 {
     public abstract class FamlSdk
     {

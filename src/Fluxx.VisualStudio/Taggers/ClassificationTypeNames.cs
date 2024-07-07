@@ -1,4 +1,4 @@
-namespace Faml.VisualStudio.Taggers {
+namespace Fluxx.VisualStudio.Taggers {
 	public static class ClassificationTypeNames
     {
         public const string FamlDeemphasizedPunctuation = "faml - deemphasized punctuation";

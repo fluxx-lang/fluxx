@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReactiveData;
 
-namespace Faml.Messaging
+namespace Fluxx.Messaging
 {
     public delegate Task<MessageObject?> MessageHandler(MessageObject request);
     public delegate TResponse ResponseConverter<out TResponse>(MessageObject response);

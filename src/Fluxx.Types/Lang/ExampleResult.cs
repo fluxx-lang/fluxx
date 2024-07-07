@@ -1,7 +1,7 @@
 ﻿using System;
 using TypeTooling.CompanionType;
 
-namespace Faml.Lang
+namespace Fluxx.Lang
 {
     [Serializable]
     public sealed class ExampleResult

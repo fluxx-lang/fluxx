@@ -1,12 +1,12 @@
 using System;
 using System.Runtime.CompilerServices;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public abstract class SyntaxNode
     {

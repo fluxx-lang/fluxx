@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Faml.SourceProviders
+namespace Fluxx.SourceProviders
 {
     public class NullSourceProvider : SourceProvider
     {

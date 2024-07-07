@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public class PasteCleaner {
         private bool _hasExtraLineBreaks, _hasLineNumbers, _hasOrphanedLineNumbers;
         private const string Regex = @"^([\d]+|\+|\-)(\s|\.)?";

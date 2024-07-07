@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+using Fluxx.Api;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 using TypeTooling.ClassifiedText;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;
 
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public class ExternalObjectTypeBinding : ObjectTypeBinding
     {

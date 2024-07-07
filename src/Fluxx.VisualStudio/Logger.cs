@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public class Logger {
         private static IVsOutputWindowPane? _pane;
 

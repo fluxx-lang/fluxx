@@ -1,10 +1,10 @@
-using Faml.Api;
-using Faml.Binding.Resolver;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Binding.Resolver;
+using Fluxx.Syntax;
 using TypeTooling.ClassifiedText;
 using TypeTooling.DotNet.RawTypes;
 
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public sealed class DotNetMethodFunctionBinding : FunctionBinding
     {

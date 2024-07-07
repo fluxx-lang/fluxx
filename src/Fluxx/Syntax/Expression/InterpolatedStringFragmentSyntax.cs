@@ -1,7 +1,7 @@
-using Faml.CodeAnalysis.Text;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public sealed class InterpolatedStringFragmentSyntax : SyntaxNode
     {

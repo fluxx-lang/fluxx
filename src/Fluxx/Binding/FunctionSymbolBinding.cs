@@ -2,7 +2,7 @@
  * @author Bret Johnson
  * @since 4/15/2015
  */
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public class FunctionSymbolBinding : SymbolBinding
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Faml.Api;
-using Faml.CodeAnalysis.Text;
-using Faml.Lexer;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Lexer;
+using Fluxx.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml
+namespace Fluxx
 {
     internal class GetSyntaxHighlightTags
     {

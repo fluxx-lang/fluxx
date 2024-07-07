@@ -1,4 +1,4 @@
-namespace Faml.Interpreter.External.PropertyInitializer
+namespace Fluxx.Interpreter.External.PropertyInitializer
 {
 #if false
     public class DataEventHandlerInitializer : PropertyInitializer {

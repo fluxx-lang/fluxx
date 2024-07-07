@@ -1,6 +1,6 @@
-using Faml.SourceProviders;
+using Fluxx.SourceProviders;
 
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public class 
         ProgramEval

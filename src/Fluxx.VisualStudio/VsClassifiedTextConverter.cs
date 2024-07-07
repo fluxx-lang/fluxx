@@ -2,7 +2,7 @@
 using TypeTooling.ClassifiedText;
 using VSAdornments = Microsoft.VisualStudio.Text.Adornments;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public static class VsClassifiedTextConverter {
         public static object ToVsContent(ClassifiedTextMarkup classifiedTextMarkup) {
             return ToVs(classifiedTextMarkup.ContainerElement);

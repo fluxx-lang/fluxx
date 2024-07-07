@@ -1,6 +1,6 @@
-using Faml.Syntax;
+using Fluxx.Syntax;
 
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public sealed class FunctionInvocationIntEval : IntEval
     {

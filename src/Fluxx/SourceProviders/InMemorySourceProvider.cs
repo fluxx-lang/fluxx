@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Faml.SourceProviders
+namespace Fluxx.SourceProviders
 {
     public class InMemorySourceProvider : SourceProvider
     {

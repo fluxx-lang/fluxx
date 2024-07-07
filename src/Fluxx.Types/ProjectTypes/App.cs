@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Faml.ProjectTypes
+namespace Fluxx.ProjectTypes
 {
     public class App : Project
     {

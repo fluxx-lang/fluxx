@@ -1,16 +1,16 @@
 ﻿using System;
-using Faml.Api;
+using Fluxx.Api;
 using Microsoft.CodeAnalysisP;
 using Microsoft.CodeAnalysisP.Text;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
-using Diagnostic = Faml.CodeAnalysis.Diagnostic;
-using DiagnosticSeverity = Faml.Api.DiagnosticSeverity;
+using Diagnostic = Fluxx.CodeAnalysis.Diagnostic;
+using DiagnosticSeverity = Fluxx.Api.DiagnosticSeverity;
 using TextSpan = Microsoft.CodeAnalysisP.Text.TextSpan;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public sealed class TaskManager {
         private readonly ErrorListProvider _errorListProvider;
 

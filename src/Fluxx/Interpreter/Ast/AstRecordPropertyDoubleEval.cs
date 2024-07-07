@@ -1,4 +1,4 @@
-namespace Faml.Interpreter.Ast
+namespace Fluxx.Interpreter.Ast
 {
     public class AstRecordPropertyDoubleEval : DoubleEval
     {

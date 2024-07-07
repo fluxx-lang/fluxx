@@ -1,11 +1,11 @@
-using Faml.Api;
+using Fluxx.Api;
 using TypeTooling.Types;
 
 /**
  * @author Bret Johnson
  * @since 4/15/2015
  */
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public class ExternalAttachedTypeBinding : AttachedTypeBinding
     {

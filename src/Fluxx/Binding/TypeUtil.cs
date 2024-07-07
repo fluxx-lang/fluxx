@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public class TypeUtil
     {

@@ -1,10 +1,10 @@
-using Faml.Api;
-using Faml.Syntax;
-using Faml.Tests.Shared;
+using Fluxx.Api;
+using Fluxx.Syntax;
+using Fluxx.Tests.Shared;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Faml.Tests.Tagger
+namespace Fluxx.Tests.Tagger
 {
     public sealed class SyntaxHighlightTagTests : TestBase
     {

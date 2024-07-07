@@ -1,8 +1,8 @@
-using Faml.Binding;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Literal
+namespace Fluxx.Syntax.Literal
 {
     public sealed class DoubleLiteralSyntax : Expression.ExpressionSyntax
     {

@@ -1,12 +1,12 @@
 using System.Reflection;
-using Faml.Binding;
-using Faml.Binding.External;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public class DotNetEnumValue : ExpressionSyntax
     {

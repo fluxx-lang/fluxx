@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Faml.Syntax;
+using Fluxx.Syntax;
 
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public class ModuleEvals
     {

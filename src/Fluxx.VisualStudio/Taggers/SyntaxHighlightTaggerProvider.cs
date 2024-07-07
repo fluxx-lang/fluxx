@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Faml.VisualStudio.Taggers {
+namespace Fluxx.VisualStudio.Taggers {
     [Export(typeof(ITaggerProvider))]
     [ContentType(FamlPackage.FamlContentType)]
     [TagType(typeof(ClassificationTag))]

@@ -1,8 +1,8 @@
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class UseSyntax : SyntaxNode
     {

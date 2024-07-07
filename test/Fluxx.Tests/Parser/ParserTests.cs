@@ -1,15 +1,15 @@
 using System.Text;
-using Faml.Api;
-using Faml.CodeAnalysis.Text;
-using Faml.Parser;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
-using Faml.Tests.Shared;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Parser;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
+using Fluxx.Tests.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #pragma warning disable SA1118 // Parameter should not span multiple lines
 
-namespace Faml.Tests.Parser
+namespace Fluxx.Tests.Parser
 {
     [TestClass]
     public sealed class ParserTests : TestBase

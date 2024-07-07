@@ -1,6 +1,6 @@
 using TypeTooling.CompanionType;
 
-namespace Faml.Tests.TestTypes
+namespace Fluxx.Tests.TestTypes
 {
     public sealed class TestObject
     {

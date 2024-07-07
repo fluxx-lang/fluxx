@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.External;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
+using Fluxx.Syntax;
 using TypeTooling;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.RawTypes;
 using TypeTooling.Types;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public class DotNetProjectInfo
     {

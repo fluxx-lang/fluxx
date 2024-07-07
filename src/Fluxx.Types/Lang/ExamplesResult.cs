@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TypeTooling.CompanionType;
 
-namespace Faml.Lang
+namespace Fluxx.Lang
 {
     public sealed class ExamplesResult
     {

@@ -2,10 +2,10 @@
  * @author Bret Johnson
  * @since 4/5/2015
  */
-using Faml.Binding;
+using Fluxx.Binding;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Type
+namespace Fluxx.Syntax.Type
 {
     public abstract class TypeReferenceSyntax : SyntaxNode
     {

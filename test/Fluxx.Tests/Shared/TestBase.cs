@@ -1,16 +1,16 @@
 using System;
 using System.Linq;
-using Faml.Api;
-using Faml.DotNet;
-using Faml.Interpreter;
-using Faml.Parser;
-using Faml.SourceProviders;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+using Fluxx.Api;
+using Fluxx.DotNet;
+using Fluxx.Interpreter;
+using Fluxx.Parser;
+using Fluxx.SourceProviders;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeTooling.DotNet.CodeGeneration;
 
-namespace Faml.Tests.Shared
+namespace Fluxx.Tests.Shared
 {
     [TestClass]
     public class TestBase

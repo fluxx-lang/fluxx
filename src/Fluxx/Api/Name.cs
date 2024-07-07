@@ -4,7 +4,7 @@ using System;
  * @author Bret Johnson
  * @since 6/6/2015
  */
-namespace Faml.Api
+namespace Fluxx.Api
 {
     [Serializable]
     public struct Name : IEquatable<Name>

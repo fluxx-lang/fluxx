@@ -6,7 +6,7 @@
  */
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public abstract class DefinitionSyntax : SyntaxNode
     {

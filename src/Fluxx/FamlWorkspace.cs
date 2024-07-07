@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using Faml.SourceProviders;
+using Fluxx.SourceProviders;
 
-namespace Faml
+namespace Fluxx
 {
     /// <summary>
     /// A Workspace manages a collection of projects, which may reference each other and are normally built together.

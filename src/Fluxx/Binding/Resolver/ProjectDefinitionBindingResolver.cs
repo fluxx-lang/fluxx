@@ -1,10 +1,10 @@
 using System;
-using Faml.Api;
-using Faml.Binding.External;
-using Faml.Syntax;
-using Faml.Syntax.Type;
+using Fluxx.Api;
+using Fluxx.Binding.External;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Type;
 
-namespace Faml.Binding.Resolver
+namespace Fluxx.Binding.Resolver
 {
     public class ProjectDefinitionBindingResolver : BindingResolver
     {
@@ -46,7 +46,7 @@ namespace Faml.Binding.Resolver
 
             Name unqualifiableName = functionName.ToUnqualifiableName();
 
-            // TODO: Fix this up; should Faml prefix always be here?
+            // TODO: Fix this up; should Fluxx prefix always be here?
             // Convert function name to a type name, as it may be a constructor function; then see if it matches any
             // imports
             string potentialTypeName = unqualifiableName.GetPascalCase();

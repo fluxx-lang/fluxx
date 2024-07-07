@@ -1,10 +1,10 @@
-using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
+using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class ForVariableDefinitionSyntax : SyntaxNode
     {

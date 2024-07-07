@@ -1,4 +1,4 @@
-﻿namespace Faml.ProjectTypes
+﻿namespace Fluxx.ProjectTypes
 {
     public class DotNetAssembly : ExternalPackage
     {

@@ -4,13 +4,13 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Faml.Api;
-using Faml.VisualStudio.Taggers;
+using Fluxx.Api;
+using Fluxx.VisualStudio.Taggers;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 
-namespace Faml.VisualStudio.IconAdornments {
+namespace Fluxx.VisualStudio.IconAdornments {
     internal sealed class IconAdornmentRenderer {
         private readonly IAdornmentLayer _adornmentLayer;
         private readonly IWpfTextView _textView;

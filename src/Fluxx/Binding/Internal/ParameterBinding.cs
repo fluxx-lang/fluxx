@@ -1,6 +1,6 @@
-using Faml.Syntax;
+using Fluxx.Syntax;
 
-namespace Faml.Binding.Internal
+namespace Fluxx.Binding.Internal
 {
     public class ParameterBinding : SymbolBinding
     {

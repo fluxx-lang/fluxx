@@ -1,10 +1,10 @@
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
-using Faml.Parser;
-using Faml.Syntax.Expression;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Parser;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class ConditionValuePairSyntax : SyntaxNode
     {

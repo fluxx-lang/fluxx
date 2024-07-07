@@ -1,11 +1,11 @@
 using System.Collections.Immutable;
-using Faml.Api;
-using Faml.Binding.External;
-using Faml.Binding.Internal;
-using Faml.Syntax;
-using Faml.Syntax.Type;
+using Fluxx.Api;
+using Fluxx.Binding.External;
+using Fluxx.Binding.Internal;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Type;
 
-namespace Faml.Binding.Resolver
+namespace Fluxx.Binding.Resolver
 {
     public class ModuleBindingResolver : BindingResolver
     {

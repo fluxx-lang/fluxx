@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Faml.Api;
-using Faml.Binding.External;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Binding.External;
+using Fluxx.Syntax;
 using TypeTooling.Types;
 
-namespace Faml.Interpreter.External
+namespace Fluxx.Interpreter.External
 {
     public sealed class NewExternalObjectEval : ObjectEval
     {

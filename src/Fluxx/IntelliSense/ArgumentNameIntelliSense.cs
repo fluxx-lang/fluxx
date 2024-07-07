@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Api.IntelliSense;
-using Faml.Binding;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Api.IntelliSense;
+using Fluxx.Binding;
+using Fluxx.Syntax;
 
-namespace Faml.IntelliSense
+namespace Fluxx.IntelliSense
 {
     public class ArgumentNameIntelliSense : IntelliSense
     {

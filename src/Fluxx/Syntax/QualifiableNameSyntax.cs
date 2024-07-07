@@ -1,12 +1,12 @@
-using Faml.Api;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
 /**
  * @author Bret Johnson
  * @since 6/6/2015
  */
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public class QualifiableNameSyntax : SyntaxNode
     {

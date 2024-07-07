@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
+using Fluxx.Api;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public abstract class TypeBinding
     {

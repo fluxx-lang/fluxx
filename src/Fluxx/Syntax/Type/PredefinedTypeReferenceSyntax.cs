@@ -1,8 +1,8 @@
-using Faml.Binding;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Type
+namespace Fluxx.Syntax.Type
 {
     public class PredefinedTypeReferenceSyntax : TypeReferenceSyntax
     {

@@ -1,10 +1,10 @@
-using Faml.Api;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
-using Faml.Syntax.Type;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
+using Fluxx.Syntax.Type;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class PropertyNameTypePairSyntax : SyntaxNode
     {

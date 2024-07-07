@@ -1,4 +1,4 @@
-﻿namespace Faml.Binding
+﻿namespace Fluxx.Binding
 {
     public class FunctionBindingFunctionTypeBinding : FunctionTypeBinding
     {

@@ -1,6 +1,6 @@
-﻿using Faml.Messaging;
+﻿using Fluxx.Messaging;
 
-namespace Faml.DevEnv {
+namespace Fluxx.DevEnv {
     public class DevEnvMessagingConnector : WebSocketServerMessagingConnector {
         public DevEnvMessagingConnector() : base(5311)
         {

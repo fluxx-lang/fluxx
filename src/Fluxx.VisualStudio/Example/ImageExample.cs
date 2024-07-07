@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Faml.VisualStudio.Example
+namespace Fluxx.VisualStudio.Example
 {
     public class ImageExample {
         private readonly StackPanel _stackPanel;

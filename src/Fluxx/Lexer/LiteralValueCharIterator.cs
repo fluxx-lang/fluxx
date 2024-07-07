@@ -2,10 +2,10 @@
  * @author Bret Johnson
  * @since 4/7/2014 6:17 PM
  */
-using Faml.CodeAnalysis.Text;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Lexer
+namespace Fluxx.Lexer
 {
     public sealed class LiteralValueCharIterator
     {

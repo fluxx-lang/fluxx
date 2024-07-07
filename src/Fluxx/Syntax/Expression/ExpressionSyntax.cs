@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public abstract class ExpressionSyntax : SyntaxNode
     {

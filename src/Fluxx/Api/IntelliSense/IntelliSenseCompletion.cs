@@ -1,7 +1,7 @@
 using System;
 using TypeTooling.Images;
 
-namespace Faml.Api.IntelliSense
+namespace Fluxx.Api.IntelliSense
 {
     [Serializable]
     public class IntelliSenseCompletion

@@ -9,8 +9,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using Faml.DotNet;
-using Faml.VisualStudio.VsUtil;
+using Fluxx.DotNet;
+using Fluxx.VisualStudio.VsUtil;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.FindSymbols;
@@ -21,7 +21,7 @@ using TypeTooling.DotNet.RawTypes;
 using TypeTooling.DotNet.RawTypes.Roslyn;
 using Timer = System.Timers.Timer;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public class RoslynDotNetRawTypeProvider : DotNetRawTypeProvider, IDisposable {
         private static readonly TimeSpan UpdateCompletionDelay = TimeSpan.FromSeconds(1);
 

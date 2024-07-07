@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Faml
+namespace Fluxx
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class FamlSdkAttribute : Attribute

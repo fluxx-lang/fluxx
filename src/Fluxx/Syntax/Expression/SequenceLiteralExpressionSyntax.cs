@@ -3,12 +3,12 @@
  * @since 6/29/2014 2:15 AM
  */
 using System.Linq;
-using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public sealed class SequenceLiteralExpressionSyntax : ExpressionSyntax
     {

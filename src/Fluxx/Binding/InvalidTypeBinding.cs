@@ -1,6 +1,6 @@
-﻿using Faml.Api;
+﻿using Fluxx.Api;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public class InvalidTypeBinding(QualifiableName typeName) : TypeBinding(typeName, TypeFlags.None)
     {

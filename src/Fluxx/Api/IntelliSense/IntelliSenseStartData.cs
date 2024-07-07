@@ -1,7 +1,7 @@
 using System;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Api.IntelliSense
+namespace Fluxx.Api.IntelliSense
 {
     [Serializable]
     public class IntelliSenseStartData

@@ -1,12 +1,12 @@
 ﻿using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Binding.Resolver;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Binding.Resolver;
+using Fluxx.Syntax;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public class InvalidFunctionBinding : FunctionBinding
     {

@@ -1,7 +1,7 @@
-﻿using Faml.Api;
-using Faml.Binding;
+﻿using Fluxx.Api;
+using Fluxx.Binding;
 
-namespace Faml
+namespace Fluxx
 {
     public abstract class ExternalLibrary
     {

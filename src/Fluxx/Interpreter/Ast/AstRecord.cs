@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Faml.Interpreter.Ast
+namespace Fluxx.Interpreter.Ast
 {
     public class AstRecord
     {

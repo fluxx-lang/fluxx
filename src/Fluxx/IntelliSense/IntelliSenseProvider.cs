@@ -1,14 +1,14 @@
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Binding;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.IntelliSense
+namespace Fluxx.IntelliSense
 {
     public class IntelliSenseProvider
     {

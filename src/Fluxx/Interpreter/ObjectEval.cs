@@ -1,6 +1,6 @@
 using System;
 
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public abstract class ObjectEval : Eval
     {

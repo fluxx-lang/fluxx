@@ -1,9 +1,9 @@
-using Faml.Binding;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Literal
+namespace Fluxx.Syntax.Literal
 {
     public class StringLiteralSyntax : ExpressionSyntax
     {

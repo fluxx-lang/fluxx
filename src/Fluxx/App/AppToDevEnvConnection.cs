@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Lang;
-using Faml.Messaging;
+using Fluxx.Api;
+using Fluxx.Lang;
+using Fluxx.Messaging;
 using ReactiveData;
 using TypeTooling;
 
-namespace Faml.App
+namespace Fluxx.App
 {
     public class AppToDevEnvConnection
     {

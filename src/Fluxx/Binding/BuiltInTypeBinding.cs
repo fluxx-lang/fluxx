@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Faml.Api;
+using Fluxx.Api;
 using TypeTooling.Types;
 using TypeTooling.Types.PredefinedTypes;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public class BuiltInTypeBinding : TypeBinding
     {

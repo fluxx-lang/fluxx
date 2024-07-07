@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Faml.VisualStudio.Taggers {
+namespace Fluxx.VisualStudio.Taggers {
     // NOTE: The standard is to define the Blue theme here and then override it using a theme pkgdef file,
     // but currently we only support dark theme, so it's defined here.
     // TODO: Define other themes

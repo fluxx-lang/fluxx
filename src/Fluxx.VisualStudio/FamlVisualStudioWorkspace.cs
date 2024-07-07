@@ -1,10 +1,10 @@
 ﻿using System;
-using Faml.DevEnv;
-using Faml.VisualStudio.VsUtil;
+using Fluxx.DevEnv;
+using Fluxx.VisualStudio.VsUtil;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public class FamlVisualStudioWorkspace {
         /* private Dictionary<ITextBuffer, SourceBuffer> _sourceFileBuffers = new Dictionary<ITextBuffer, SourceBuffer>(); */
         private readonly DevEnvMessagingConnector _messagingConnector;

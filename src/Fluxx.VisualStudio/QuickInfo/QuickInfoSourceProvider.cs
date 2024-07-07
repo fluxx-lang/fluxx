@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Faml.VisualStudio.QuickInfo {
+namespace Fluxx.VisualStudio.QuickInfo {
 	[Export (typeof (IAsyncQuickInfoSourceProvider))]
     [Name("FAML FamlQuickInfoItem Provider")]
 	[ContentType(FamlPackage.FamlContentType)]

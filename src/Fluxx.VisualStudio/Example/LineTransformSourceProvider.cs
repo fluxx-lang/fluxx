@@ -15,9 +15,9 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Faml.VisualStudio.Example {
+namespace Fluxx.VisualStudio.Example {
     /// <summary>
-    /// This class implements a connector that produces the Faml LineTransformSourceProvider, used to make
+    /// This class implements a connector that produces the Fluxx LineTransformSourceProvider, used to make
     /// source lines taller if needed to render examples.
     /// </summary>
     [Export(typeof(ILineTransformSourceProvider))]

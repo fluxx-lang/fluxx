@@ -1,8 +1,8 @@
-using Faml.Api;
+using Fluxx.Api;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Faml.VisualStudio.Taggers {
+namespace Fluxx.VisualStudio.Taggers {
     public class IconSpaceNegotiatingTag : SpaceNegotiatingAdornmentTag {
         public static string IconProviderTag = "IconProviderTag";
 

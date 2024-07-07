@@ -146,10 +146,6 @@
       <Project>{91c2eaa4-25f2-418c-896d-bb51ddb1ac22}</Project>
       <Name>ReactiveData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\external\roslynp\src\CodeAnalysisP\Microsoft.CodeAnalysisP.csproj">
-      <Project>{e4cdd003-1268-42b2-a5a6-ac868d7bd497}</Project>
-      <Name>Microsoft.CodeAnalysisP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Faml.DevEnv\Faml.DevEnv.csproj">
       <Project>{5dba2012-8ead-4db7-9832-f3f961566697}</Project>
       <Name>Faml.DevEnv</Name>

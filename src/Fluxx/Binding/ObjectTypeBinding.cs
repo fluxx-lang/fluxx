@@ -1,9 +1,9 @@
-﻿using Faml.Api;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+﻿using Fluxx.Api;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public abstract class ObjectTypeBinding : TypeBinding
     {

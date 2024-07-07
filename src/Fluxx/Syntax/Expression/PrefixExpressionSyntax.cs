@@ -2,12 +2,12 @@
  * @author Bret Johnson
  * @since 6/29/2014 2:16 AM
  */
-using Faml.Binding;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Operator;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Operator;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public sealed class PrefixExpressionSyntax : ExpressionSyntax
     {

@@ -2,11 +2,11 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using Faml.Api;
-using Faml.CodeAnalysis;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis;
 using ReactiveData;
 
-namespace Faml.Wpf {
+namespace Fluxx.Wpf {
     public static class UIElementFunction {
         public static IReactive<UIElement> Invoke(IReactive<Program> program, string functionName, Args args) {
             return new ReactiveExpression<UIElement>(() => DoInvoke(program, new QualifiableName(functionName), args));

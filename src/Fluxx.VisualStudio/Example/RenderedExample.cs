@@ -6,11 +6,11 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Faml.Lang;
+using Fluxx.Lang;
 using ReactiveData;
 using TypeTooling.Visualize;
 
-namespace Faml.VisualStudio.Example
+namespace Fluxx.VisualStudio.Example
 {
     public delegate void PresentationAvailableEventHandler();
 

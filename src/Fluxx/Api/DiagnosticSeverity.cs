@@ -1,4 +1,4 @@
-﻿namespace Faml.Api
+﻿namespace Fluxx.Api
 {
     /// <summary>
     /// Describes how severe a diagnostic is.

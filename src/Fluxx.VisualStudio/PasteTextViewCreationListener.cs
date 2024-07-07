@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     [Export(typeof(IVsTextViewCreationListener))]
     [ContentType(FamlPackage.FamlContentType)]
     [TextViewRole(PredefinedTextViewRoles.Document)]

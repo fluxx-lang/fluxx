@@ -6,7 +6,7 @@
  * @author Bret Johnson
  * @since 4/4/2015
  */
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public class StackBooleanEval : BooleanEval
     {

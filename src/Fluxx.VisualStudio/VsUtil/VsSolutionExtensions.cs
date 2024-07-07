@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Faml.VisualStudio.VsUtil {
+namespace Fluxx.VisualStudio.VsUtil {
     public static class VsSolutionExtensions {
         public static Guid GetProjectGuidInSolution(this IVsHierarchy hierarchy) {
             var vsSolution = FamlPackage.Instance.VsSolution;

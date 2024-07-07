@@ -1,4 +1,4 @@
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public sealed class OrEval : BooleanEval
     {

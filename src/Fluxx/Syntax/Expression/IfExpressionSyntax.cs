@@ -1,10 +1,10 @@
-﻿using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
-using Faml.Parser;
+﻿using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Parser;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public class IfExpressionSyntax : ExpressionSyntax
     {

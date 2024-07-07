@@ -1,10 +1,10 @@
-using Faml.Api;
-using Faml.Api.QuickInfo;
-using Faml.Binding;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+using Fluxx.Api;
+using Fluxx.Api.QuickInfo;
+using Fluxx.Binding;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 
-namespace Faml.QuickInfo
+namespace Fluxx.QuickInfo
 {
     public class QuickInfoProvider
     {

@@ -1,11 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Messaging;
-using Faml.Tests.Shared;
+using Fluxx.Messaging;
+using Fluxx.Tests.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReactiveData;
 
-namespace Faml.Tests.Messaging
+namespace Fluxx.Tests.Messaging
 {
     [TestClass]
     public sealed class WebSocketTests : TestBase

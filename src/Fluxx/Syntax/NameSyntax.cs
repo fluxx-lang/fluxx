@@ -2,11 +2,11 @@
  * @author Bret Johnson
  * @since 6/6/2015
  */
-using Faml.Api;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public class NameSyntax : SyntaxNode
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Faml.Lexer
+namespace Fluxx.Lexer
 {
     public sealed class DelimiterStack
     {

@@ -1,10 +1,10 @@
 ﻿using System;
-using Faml.Api;
-using Faml.Lang;
-using Faml.Messaging;
+using Fluxx.Api;
+using Fluxx.Lang;
+using Fluxx.Messaging;
 using ReactiveData;
 
-namespace Faml.DevEnv {
+namespace Fluxx.DevEnv {
     public class DevEnvToAppConnection {
         private readonly MessagingConnector? _messagingConnector;
 

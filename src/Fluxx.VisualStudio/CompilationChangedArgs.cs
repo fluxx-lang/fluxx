@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public class CompilationChangedArgs : EventArgs {
         public bool IsEntireProjectAffected { get; }
 

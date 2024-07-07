@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Api
+namespace Fluxx.Api
 {
     [Serializable]
     public struct SyntaxHighlightTag

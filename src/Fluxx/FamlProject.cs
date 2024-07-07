@@ -4,18 +4,18 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.External;
-using Faml.Binding.Resolver;
-using Faml.CodeGeneration;
-using Faml.DotNet;
-using Faml.Interpreter;
-using Faml.Lang;
-using Faml.Parser;
-using Faml.SourceProviders;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeGeneration;
+using Fluxx.DotNet;
+using Fluxx.Interpreter;
+using Fluxx.Lang;
+using Fluxx.Parser;
+using Fluxx.SourceProviders;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 using TypeTooling;
 using TypeTooling.DotNet;
@@ -25,9 +25,9 @@ using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.RawTypes;
 using TypeTooling.Types;
 using TypeTooling.Visualize;
-using Diagnostic = Faml.CodeAnalysis.Diagnostic;
+using Diagnostic = Fluxx.CodeAnalysis.Diagnostic;
 
-namespace Faml
+namespace Fluxx
 {
     public class FamlProject
     {

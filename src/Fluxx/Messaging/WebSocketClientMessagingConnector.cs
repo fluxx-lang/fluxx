@@ -2,7 +2,7 @@
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
-namespace Faml.Messaging
+namespace Fluxx.Messaging
 {
     public class WebSocketClientMessagingConnector : WebSocketMessagingConnector
     {

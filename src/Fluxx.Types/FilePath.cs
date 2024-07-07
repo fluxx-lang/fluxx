@@ -6,7 +6,7 @@ using TypeTooling.DotNet.RawTypes;
 using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.Types;
 
-namespace Faml
+namespace Fluxx
 {
     public sealed class FilePath
     {

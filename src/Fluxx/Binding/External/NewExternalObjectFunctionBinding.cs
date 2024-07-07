@@ -5,13 +5,13 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Binding.Resolver;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Binding.Resolver;
+using Fluxx.Syntax;
 using TypeTooling.ClassifiedText;
 using TypeTooling.Types;
 
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public sealed class NewExternalObjectFunctionBinding : FunctionBinding
     {

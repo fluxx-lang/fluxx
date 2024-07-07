@@ -1,6 +1,6 @@
 using TypeTooling.Types;
 
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public class ExternalEnumValueBinding : EnumValueBinding
     {

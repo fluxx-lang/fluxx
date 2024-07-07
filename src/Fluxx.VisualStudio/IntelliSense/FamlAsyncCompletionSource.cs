@@ -3,8 +3,8 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api.IntelliSense;
-using Faml.Syntax;
+using Fluxx.Api.IntelliSense;
+using Fluxx.Syntax;
 using Microsoft.CodeAnalysisP.Text;
 using Microsoft.VisualStudio.Core.Imaging;
 using Microsoft.VisualStudio.Imaging;
@@ -15,7 +15,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Adornments;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.VisualStudio.IntelliSense {
+namespace Fluxx.VisualStudio.IntelliSense {
     public class FamlAsyncCompletionSource : IAsyncCompletionSource {
         private readonly FamlModuleBuffer _famlModuleBuffer;
 

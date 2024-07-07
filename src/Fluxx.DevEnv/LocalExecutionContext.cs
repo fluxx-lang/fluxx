@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Faml.Api;
-using Faml.Lang;
+using Fluxx.Api;
+using Fluxx.Lang;
 using ReactiveData;
 
-namespace Faml.DevEnv
+namespace Fluxx.DevEnv
 {
     public class LocalExecutionContext : FamlExecutionContext {
         private readonly FamlProject _project;

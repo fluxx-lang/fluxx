@@ -1,9 +1,9 @@
-using Faml.Api;
-using Faml.Binding;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public class EnumValueLiteralSyntax : ExpressionSyntax
     {

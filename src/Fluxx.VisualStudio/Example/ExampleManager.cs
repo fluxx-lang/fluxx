@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using Faml.Lang;
-using Faml.Syntax;
+using Fluxx.Lang;
+using Fluxx.Syntax;
 using Microsoft.VisualStudio.Text.Editor;
 using ReactiveData;
 
-namespace Faml.VisualStudio.Example
+namespace Fluxx.VisualStudio.Example
 {
     public class ExampleManager {
         private readonly FamlModuleBuffer _famlModuleBuffer;

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.RawTypes;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public abstract class DotNetRawTypeProvider
     {

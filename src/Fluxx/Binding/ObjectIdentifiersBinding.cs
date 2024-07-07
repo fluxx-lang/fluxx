@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Faml.Api;
+using Fluxx.Api;
 
-namespace Faml.Binding
+namespace Fluxx.Binding
 {
     public class ObjectIdentifiersBinding
     {

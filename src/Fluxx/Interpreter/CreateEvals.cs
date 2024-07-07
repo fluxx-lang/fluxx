@@ -3,18 +3,18 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.External;
-using Faml.Binding.Internal;
-using Faml.Interpreter.Ast;
-using Faml.Interpreter.External;
-using Faml.Interpreter.record;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
-using Faml.Syntax.Literal;
-using Faml.Syntax.Operator;
-using Faml.Util;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
+using Fluxx.Binding.Internal;
+using Fluxx.Interpreter.Ast;
+using Fluxx.Interpreter.External;
+using Fluxx.Interpreter.record;
+using Fluxx.Syntax;
+using Fluxx.Syntax.Expression;
+using Fluxx.Syntax.Literal;
+using Fluxx.Syntax.Operator;
+using Fluxx.Util;
 using TypeTooling;
 using TypeTooling.CodeGeneration;
 using TypeTooling.DotNet.CodeGeneration;
@@ -24,7 +24,7 @@ using TypeTooling.Types;
  * @author Bret Johnson
  * @since 4/4/2015
  */
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public class CreateEvals
     {

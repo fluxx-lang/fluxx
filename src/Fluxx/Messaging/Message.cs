@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Faml.Messaging
+namespace Fluxx.Messaging
 {
     public class Message
     {

@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Faml.Binding;
+using Fluxx.Binding;
 using TypeTooling;
 
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public sealed class ForExpressionEval : ObjectEval
     {

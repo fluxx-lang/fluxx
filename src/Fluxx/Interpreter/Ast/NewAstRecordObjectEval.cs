@@ -1,8 +1,8 @@
 using System;
-using Faml.Api;
-using Faml.Interpreter.Ast;
+using Fluxx.Api;
+using Fluxx.Interpreter.Ast;
 
-namespace Faml.Interpreter.record
+namespace Fluxx.Interpreter.record
 {
     public sealed class NewAstRecordObjectEval : ObjectEval
     {

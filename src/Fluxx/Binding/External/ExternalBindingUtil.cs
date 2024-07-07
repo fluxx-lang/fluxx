@@ -3,7 +3,7 @@ using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;
 using TypeTooling.Types.PredefinedTypes;
 
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public class ExternalBindingUtil
     {

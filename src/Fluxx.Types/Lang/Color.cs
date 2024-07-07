@@ -3,7 +3,7 @@ using TypeTooling;
 using TypeTooling.CompanionType;
 using TypeTooling.Types;
 
-namespace Faml.Lang
+namespace Fluxx.Lang
 {
     public sealed class Color(byte red, byte green, byte blue, byte alpha)
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.DotNet.RawTypes.Reflection;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     /// <summary>
     /// This TypeProvider is used when running in the app, as opposed to at compile time. It searches

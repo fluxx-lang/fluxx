@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text;
-using Faml.Api;
-using Faml.CodeAnalysis;
-using Faml.Lang;
-using Faml.Syntax;
-using Faml.VisualStudio.Example;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis;
+using Fluxx.Lang;
+using Fluxx.Syntax;
+using Fluxx.VisualStudio.Example;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.Text;
 using ReactiveData;
 using InvalidOperationException = System.InvalidOperationException;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public class FamlModuleBuffer {
         private readonly ITextBuffer _textBuffer;
         private readonly ITextDocument _textDocument;

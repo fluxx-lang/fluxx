@@ -3,11 +3,11 @@ using System.ComponentModel.Design;
 using System.IO;
 using EnvDTE;
 using EnvDTE80;
-using Faml.DevEnv;
+using Fluxx.DevEnv;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     /// <summary>
     /// Command handler
     /// </summary>

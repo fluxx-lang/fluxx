@@ -1,11 +1,11 @@
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Syntax;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.Binding.Internal
+namespace Fluxx.Binding.Internal
 {
     public class RecordPropertyBinding : PropertyBinding
     {

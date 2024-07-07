@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     using System;
     
     

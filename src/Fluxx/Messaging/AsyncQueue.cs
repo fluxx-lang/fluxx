@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Faml.Messaging
+namespace Fluxx.Messaging
 {
 
     public class AsyncQueue<T>

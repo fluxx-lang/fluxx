@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Faml.Tests.TestTypes
+namespace Fluxx.Tests.TestTypes
 {
     [ContentProperty("Children")]
     public sealed class TestContainer()

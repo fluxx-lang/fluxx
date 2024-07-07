@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Faml.DevEnv
+namespace Fluxx.DevEnv
 {
     public class DevEnvUtil {
         /// <summary>

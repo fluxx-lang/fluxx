@@ -3,10 +3,10 @@
  * @since 6/29/2014 5:02 PM
  */
 using System.Text;
-using Faml.Api;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Syntax;
 
-namespace Faml.CodeAnalysis.Text
+namespace Fluxx.CodeAnalysis.Text
 {
     public sealed class SourceWriter
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 
-namespace Faml.SourceProviders
+namespace Fluxx.SourceProviders
 {
     public class FileSourceProvider : SourceProvider
     {

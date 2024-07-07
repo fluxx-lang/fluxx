@@ -1,7 +1,7 @@
-using Faml.CodeAnalysis.Text;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Literal
+namespace Fluxx.Syntax.Literal
 {
     public sealed class TextualLiteralTextItemSyntax : TextualLiteralItemSyntax
     {

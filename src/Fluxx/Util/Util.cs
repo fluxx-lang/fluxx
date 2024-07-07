@@ -1,4 +1,4 @@
-namespace Faml.Util
+namespace Fluxx.Util
 {
     public class Util
     {

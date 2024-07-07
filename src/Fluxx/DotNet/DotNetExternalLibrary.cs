@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Reflection;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.External;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
 using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.Types;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public sealed class DotNetExternalLibrary : ExternalLibrary
     {

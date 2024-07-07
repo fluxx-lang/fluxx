@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Faml.DevEnv
+namespace Fluxx.DevEnv
 {
     public class XamlToFaml : XmlToFaml {
         protected override List<string> GetImports(XElement rootElement) {

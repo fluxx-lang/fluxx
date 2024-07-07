@@ -1,6 +1,6 @@
-﻿using Faml.Lexer;
+﻿using Fluxx.Lexer;
 
-namespace Faml.Parser
+namespace Fluxx.Parser
 {
     public class Tokens
     {

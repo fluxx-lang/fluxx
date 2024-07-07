@@ -1,6 +1,6 @@
 using System;
 
-namespace Faml.Api.IntelliSense
+namespace Fluxx.Api.IntelliSense
 {
     [Serializable]
     public enum CompletionType

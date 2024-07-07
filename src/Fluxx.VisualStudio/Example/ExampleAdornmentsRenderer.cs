@@ -3,14 +3,14 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Faml.DevEnv;
-using Faml.Lang;
-using Faml.Syntax;
+using Fluxx.DevEnv;
+using Fluxx.Lang;
+using Fluxx.Syntax;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using ReactiveData;
 
-namespace Faml.VisualStudio.Example {
+namespace Fluxx.VisualStudio.Example {
     internal sealed class ExampleAdornmentsRenderer {
         /// <summary>
         /// The layer of the adornment

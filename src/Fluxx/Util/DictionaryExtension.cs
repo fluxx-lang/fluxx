@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Faml.Util
+namespace Fluxx.Util
 {
     public static class DictionaryExtension
     {

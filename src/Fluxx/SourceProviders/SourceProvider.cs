@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Faml.SourceProviders
+namespace Fluxx.SourceProviders
 {
     /// <summary>
     /// A SourceProvider provides FAML source code and resource files, in a hierarchical namespace.  It's an

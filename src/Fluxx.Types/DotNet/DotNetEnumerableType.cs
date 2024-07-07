@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public abstract class DotNetEnumerableType
     {

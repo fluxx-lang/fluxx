@@ -1,8 +1,8 @@
-﻿using Faml.Api;
-using Faml.Lang;
+﻿using Fluxx.Api;
+using Fluxx.Lang;
 using ReactiveData;
 
-namespace Faml.DevEnv
+namespace Fluxx.DevEnv
 {
     public class AppExecutionContext : FamlExecutionContext {
         private readonly DevEnvToAppConnection _devEnvToAppConnection;

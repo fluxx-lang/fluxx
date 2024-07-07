@@ -1,11 +1,11 @@
 ﻿using System;
-using Faml.Api;
-using Faml.Syntax;
+using Fluxx.Api;
+using Fluxx.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using DiagnosticSeverity = Faml.Api.DiagnosticSeverity;
-using SyntaxNode = Faml.Syntax.SyntaxNode;
+using DiagnosticSeverity = Fluxx.Api.DiagnosticSeverity;
+using SyntaxNode = Fluxx.Syntax.SyntaxNode;
 
-namespace Faml.CodeAnalysis
+namespace Fluxx.CodeAnalysis
 {
     public class Diagnostic
     {

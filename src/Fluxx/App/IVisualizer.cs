@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Lang;
+using Fluxx.Api;
+using Fluxx.Lang;
 
-namespace Faml.App
+namespace Fluxx.App
 {
     public interface IVisualizer
     {

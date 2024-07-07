@@ -5,7 +5,7 @@ using System.IO;
  * @author Bret Johnson
  * @since 6/6/2015
  */
-namespace Faml.Api
+namespace Fluxx.Api
 {
     [Serializable]
     public struct QualifiableName : IEquatable<QualifiableName>

@@ -1,7 +1,7 @@
 using System;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Api.QuickInfo
+namespace Fluxx.Api.QuickInfo
 {
     [Serializable]
     public abstract class QuickInfo

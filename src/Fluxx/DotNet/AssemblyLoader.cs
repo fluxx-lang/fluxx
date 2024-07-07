@@ -1,6 +1,6 @@
-﻿using Faml.ProjectTypes;
+﻿using Fluxx.ProjectTypes;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public abstract class AssemblyLoader
     {

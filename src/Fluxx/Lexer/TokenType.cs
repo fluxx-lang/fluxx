@@ -1,4 +1,4 @@
-namespace Faml.Lexer
+namespace Fluxx.Lexer
 {
     public enum TokenType
     {

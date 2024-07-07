@@ -1,11 +1,11 @@
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
+using Fluxx.Api;
 using TypeTooling.ClassifiedText;
 using TypeTooling.Types;
 
-namespace Faml.Binding.External
+namespace Fluxx.Binding.External
 {
     public class ExternalPropertyBinding : PropertyBinding
     {

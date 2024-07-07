@@ -1,9 +1,9 @@
 ﻿using System;
-using Faml.Api;
-using Faml.Lang;
+using Fluxx.Api;
+using Fluxx.Lang;
 using TypeTooling.Visualize;
 
-namespace Faml
+namespace Fluxx
 {
     public class Program
     {

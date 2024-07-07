@@ -7,10 +7,10 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.IO;
 using System.Windows;
-using Faml.DevEnv;
+using Fluxx.DevEnv;
 
 // This code is based on https://github.com/madskristensen/PrettyPaste/blob/master/PrettyPaste/PasteCommandHandler.cs
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     internal class PasteCommandHandler : IOleCommandTarget {
         private readonly Guid _standardCommandSetGuid = VSConstants.GUID_VSStandardCommandSet97; // The VSConstants.VSStd97CmdID enumeration
         private readonly uint _pasteCommandId = (uint) VSConstants.VSStd97CmdID.Paste; // The paste command in the above enumeration

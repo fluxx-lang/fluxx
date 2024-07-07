@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 using TypeTooling;
 
@@ -11,7 +11,7 @@ using TypeTooling;
  * @author Bret Johnson
  * @since 4/13/2015
  */
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class ModuleSyntax : SyntaxNode
     {

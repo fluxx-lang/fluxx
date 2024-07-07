@@ -1,12 +1,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api.IntelliSense;
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax;
+using Fluxx.Api.IntelliSense;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.IntelliSense
+namespace Fluxx.IntelliSense
 {
     public abstract class IntelliSense
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Faml
+namespace Fluxx
 {
     public class DotNetDataEventHandler : DataEventHandler
     {

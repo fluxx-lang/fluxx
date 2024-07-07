@@ -4,14 +4,14 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Windows.Media.Imaging;
-using Faml.VisualStudio.IconAdornments;
+using Fluxx.VisualStudio.IconAdornments;
 using Microsoft.VisualStudio.Core.Imaging;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Shell;
 using TypeTooling.Images;
 using VSAdornments = Microsoft.VisualStudio.Text.Adornments;
 
-namespace Faml.VisualStudio {
+namespace Fluxx.VisualStudio {
     public static class VsImageElementConverter {
         private static Dictionary<byte[], IImageHandle> _iconCache = new Dictionary<byte[], IImageHandle>();
 

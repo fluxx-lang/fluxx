@@ -1,4 +1,4 @@
-namespace Faml.Util
+namespace Fluxx.Util
 {
     // This was copied from Roslyn's Roslyn.Utilities.Hash
     public class Hash

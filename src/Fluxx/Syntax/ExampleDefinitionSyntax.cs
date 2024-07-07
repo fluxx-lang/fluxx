@@ -1,12 +1,12 @@
-using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Expression;
+using Fluxx.CodeAnalysis.Text;
+using Fluxx.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
 /**
  * @author Bret Johnson
  * @since 4/12/2015
  */
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public class ExampleDefinitionSyntax : SyntaxNode
     {

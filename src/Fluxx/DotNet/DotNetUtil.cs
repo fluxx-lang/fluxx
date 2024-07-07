@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Faml.Api;
+using Fluxx.Api;
 
-namespace Faml.DotNet
+namespace Fluxx.DotNet
 {
     public class DotNetUtil
     {

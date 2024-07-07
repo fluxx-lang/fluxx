@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.External;
-using Faml.Binding.Resolver;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.External;
+using Fluxx.Binding.Resolver;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public class FunctionInvocationSyntax : ExpressionSyntax
     {

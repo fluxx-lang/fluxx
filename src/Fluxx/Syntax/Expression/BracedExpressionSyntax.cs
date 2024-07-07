@@ -3,11 +3,11 @@
  * @author Bret Johnson
  * @since 6/29/2014 5:18 PM
  */
-using Faml.Binding;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Binding;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression
+namespace Fluxx.Syntax.Expression
 {
     public sealed class BracedExpressionSyntax : ExpressionSyntax
     {

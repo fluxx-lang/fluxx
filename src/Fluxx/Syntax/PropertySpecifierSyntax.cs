@@ -1,8 +1,8 @@
-using Faml.Api;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     /// <summary>
     /// A PropertySpecifier is a property name followed by a colon. It's typically followed by

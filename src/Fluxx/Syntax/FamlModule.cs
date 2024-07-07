@@ -2,18 +2,18 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Faml.Api;
-using Faml.Api.IntelliSense;
-using Faml.CodeGeneration;
-using Faml.IntelliSense;
-using Faml.QuickInfo;
+using Fluxx.Api;
+using Fluxx.Api.IntelliSense;
+using Fluxx.CodeGeneration;
+using Fluxx.IntelliSense;
+using Fluxx.QuickInfo;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis;
 using TypeTooling.ClassifiedText;
-using Diagnostic = Faml.CodeAnalysis.Diagnostic;
-using DiagnosticSeverity = Faml.Api.DiagnosticSeverity;
+using Diagnostic = Fluxx.CodeAnalysis.Diagnostic;
+using DiagnosticSeverity = Fluxx.Api.DiagnosticSeverity;
 
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public sealed class FamlModule
     {

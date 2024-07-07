@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Faml.VisualStudio.Taggers {
+namespace Fluxx.VisualStudio.Taggers {
     public static class ClassificationTypeDefinitions {
         [Export(typeof(ClassificationTypeDefinition))]
         [Name(ClassificationTypeNames.FamlDeemphasizedPunctuation)]

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public class SequenceLiteralEval : ObjectEval
     {

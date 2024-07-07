@@ -1,14 +1,14 @@
-using Faml.Api;
-using Faml.Binding;
-using Faml.Binding.Internal;
-using Faml.CodeAnalysis.Text;
+using Fluxx.Api;
+using Fluxx.Binding;
+using Fluxx.Binding.Internal;
+using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
 /**
  * @author Bret Johnson
  * @since 6/5/2015
  */
-namespace Faml.Syntax
+namespace Fluxx.Syntax
 {
     public class RecordTypeDefinitionSyntax : DefinitionSyntax
     {

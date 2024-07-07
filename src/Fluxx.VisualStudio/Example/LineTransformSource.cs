@@ -9,11 +9,11 @@
 //
 //***************************************************************************
 
-using Faml.Syntax;
+using Fluxx.Syntax;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 
-namespace Faml.VisualStudio.Example {
+namespace Fluxx.VisualStudio.Example {
     public class LineTransformSource : ILineTransformSource {
         private readonly FamlModuleBuffer _famlBuffer;
 

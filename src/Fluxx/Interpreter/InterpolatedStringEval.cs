@@ -1,5 +1,5 @@
 using System.Text;
-namespace Faml.Interpreter
+namespace Fluxx.Interpreter
 {
     public sealed class InterpolatedStringEval : ObjectEval
     {
