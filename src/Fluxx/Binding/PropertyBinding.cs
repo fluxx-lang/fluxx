@@ -12,7 +12,8 @@ using TypeTooling.ClassifiedText;
 
 namespace Faml.Binding
 {
-    public abstract class PropertyBinding : SymbolBinding {
+    public abstract class PropertyBinding : SymbolBinding
+    {
         public abstract Name PropertyName { get; }
 
         public abstract TypeBinding ObjectTypeBinding { get; }

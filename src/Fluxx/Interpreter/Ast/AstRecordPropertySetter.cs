@@ -3,11 +3,14 @@
  * @since 7/27/2015
  */
 
-namespace Faml.Interpreter.Ast {
-    public abstract class AstRecordPropertySetter {
+namespace Faml.Interpreter.Ast
+{
+    public abstract class AstRecordPropertySetter
+    {
         protected internal readonly string PropertyName;
 
-        protected AstRecordPropertySetter(string propertyName) {
+        protected AstRecordPropertySetter(string propertyName)
+        {
             this.PropertyName = propertyName;
         }
 

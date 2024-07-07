@@ -3,8 +3,10 @@
  * @since 4/4/2015
  */
 
-namespace Faml.Interpreter {
-    public abstract class Eval {
+namespace Faml.Interpreter
+{
+    public abstract class Eval
+    {
         public abstract void Push();
     }
 }

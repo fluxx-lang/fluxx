@@ -8,13 +8,16 @@ using Faml.Binding;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression {
-    public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Expression
+{
+    public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
+    {
         private readonly ExpressionSyntax _expression;
         //private @Nullable Type type;
 
         // AST structure properties
-        public ParenthesizedExpressionSyntax(TextSpan span, ExpressionSyntax expression) : base(span) {
+        public ParenthesizedExpressionSyntax(TextSpan span, ExpressionSyntax expression) : base(span)
+        {
             this._expression = expression;
             expression.SetParent(this);
         }
@@ -26,15 +29,18 @@ namespace Faml.Syntax.Expression {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ParenthesizedExpression;
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             visitor(this._expression);
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._expression.GetTypeBinding();
         }
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write("(");
             this._expression.WriteSource(sourceWriter);
             sourceWriter.Write(")");

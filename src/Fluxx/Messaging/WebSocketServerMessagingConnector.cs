@@ -5,23 +5,28 @@ using System.Threading.Tasks;
 
 namespace Faml.Messaging
 {
-    public class WebSocketServerMessagingConnector : WebSocketMessagingConnector {
+    public class WebSocketServerMessagingConnector : WebSocketMessagingConnector
+    {
         private readonly HttpListener _httpListener;
 
 
-        public WebSocketServerMessagingConnector(int port) {
+        public WebSocketServerMessagingConnector(int port)
+        {
             this._httpListener = new HttpListener();
             this._httpListener.Prefixes.Add($"http://localhost:{port}/");
         }
 
-        public async Task Start() {
+        public async Task Start()
+        {
             this._httpListener.Start();
 
-            while (true) {
+            while (true)
+            {
                 HttpListenerContext listenerContext = await this._httpListener.GetContextAsync();
                 if (listenerContext.Request.IsWebSocketRequest)
                     this.HandleWebSocketRequest(listenerContext).ConfigureAwait(false);
-                else {
+                else
+                {
                     listenerContext.Response.StatusCode = 400;
                     listenerContext.Response.Close();
                 }
@@ -33,12 +38,15 @@ namespace Faml.Messaging
         // and return an instance of `WebSocketContext`. This class captures relevant information available at the time of the request and is a read-only 
         // type - you cannot perform any actual IO operations such as sending or receiving using the `WebSocketContext`. These operations can be 
         // performed by accessing the `System.Net.WebSocket` instance via the `WebSocketContext.WebSocket` property.        
-        private async Task HandleWebSocketRequest(HttpListenerContext listenerContext) {
+        private async Task HandleWebSocketRequest(HttpListenerContext listenerContext)
+        {
             WebSocketContext webSocketContext;
-            try {
+            try
+            {
                 webSocketContext = await listenerContext.AcceptWebSocketAsync(subProtocol: null);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 // The upgrade process failed somehow. For simplicity lets assume it was a failure on the part of the server and indicate this using 500.
                 listenerContext.Response.StatusCode = 500;
                 listenerContext.Response.Close();
@@ -48,10 +56,12 @@ namespace Faml.Messaging
 
             using WebSocket webSocket = webSocketContext.WebSocket;
 
-            try {
+            try
+            {
                 await this.ProcessMessages(webSocket);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 // Just log any exceptions to the console. Pretty much any exception that occurs when calling `SendAsync`/`ReceiveAsync`/`CloseAsync` is unrecoverable in that it will abort the connection and leave the `WebSocket` instance in an unusable state.
                 Console.WriteLine("Exception: {0}", e);
             }

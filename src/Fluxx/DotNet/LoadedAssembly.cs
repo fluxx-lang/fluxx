@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Faml.DotNet {
-    public sealed class LoadedAssembly {
+namespace Faml.DotNet
+{
+    public sealed class LoadedAssembly
+    {
         private readonly Assembly _assembly;
         private readonly string? _assemblyQualifier;
 
 
-        public LoadedAssembly(Assembly assembly) : this(assembly, null) {
+        public LoadedAssembly(Assembly assembly) : this(assembly, null)
+        {
         }
 
-        public LoadedAssembly(Assembly assembly, string? assemblyQualifier) {
+        public LoadedAssembly(Assembly assembly, string? assemblyQualifier)
+        {
             this._assembly = assembly;
             this._assemblyQualifier = assemblyQualifier;
         }
 
         public Assembly Assembly => this._assembly;
 
-        public override string ToString() {
+        public override string ToString()
+        {
             if (this._assemblyQualifier != null)
             {
                 return this._assemblyQualifier;
@@ -28,7 +33,8 @@ namespace Faml.DotNet {
             }
         }
 
-        public Type? GetType(string typeName) {
+        public Type? GetType(string typeName)
+        {
             if (this._assemblyQualifier != null)
             {
                 return Type.GetType(typeName + ", " + this._assemblyQualifier);

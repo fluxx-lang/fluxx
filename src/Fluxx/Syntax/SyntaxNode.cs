@@ -7,13 +7,16 @@ using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
 
-namespace Faml.Syntax {
-    public abstract class SyntaxNode {
+namespace Faml.Syntax
+{
+    public abstract class SyntaxNode
+    {
         private SyntaxNode _parent;
         private readonly TextSpan _span;
 
 
-        protected SyntaxNode(TextSpan span) {
+        protected SyntaxNode(TextSpan span)
+        {
             this._span = span;
         }
 
@@ -29,7 +32,8 @@ namespace Faml.Syntax {
         /// </summary>
         public TextSpan Span => this.FullSpan;
 
-        public bool OverlapsWith(TextSpan span) {
+        public bool OverlapsWith(TextSpan span)
+        {
             return this.FullSpan.OverlapsWith(span);
         }
 
@@ -38,19 +42,23 @@ namespace Faml.Syntax {
         /// called from the SyntaxNode's constructor, as the parent hasn't been set yet in order to get the module.
         /// </summary>
         /// <param name="message">diagnostic message, for the user</param>
-        public void AddError(string message) {
+        public void AddError(string message)
+        {
             this.GetModule().AddError(this, message);
         }
 
-        public virtual void SetParent(SyntaxNode parent) {
+        public virtual void SetParent(SyntaxNode parent)
+        {
             this._parent = parent;
         }
 
-        public virtual object GetPropertyValue(AstProperty property) {
+        public virtual object GetPropertyValue(AstProperty property)
+        {
             throw new Exception("Invalid property " + property.Name + " for object " + this.ToString());
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             var sourceWriter = new SourceWriter();
             this.WriteSource(sourceWriter);
             return sourceWriter.ToString();
@@ -61,7 +69,8 @@ namespace Faml.Syntax {
         /// </summary>
         /// <param name="other">object to compare against</param>
         /// <returns>true if both objects are equal</returns>
-        public override bool Equals(object other) {
+        public override bool Equals(object other)
+        {
             return ReferenceEquals(this, other);
         }
 
@@ -69,13 +78,16 @@ namespace Faml.Syntax {
         /// Since AST nodes are considered equal only if they are the same object, GetHashCode uses object identity.
         /// </summary>
         /// <returns>hash code for AST node</returns>
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return RuntimeHelpers.GetHashCode(this);
         }
 
-        public ModuleSyntax GetModuleSyntax() {
+        public ModuleSyntax GetModuleSyntax()
+        {
             SyntaxNode currentNode = this;
-            while (currentNode != null) {
+            while (currentNode != null)
+            {
                 if (currentNode is ModuleSyntax moduleSyntax)
                 {
                     return moduleSyntax;
@@ -89,13 +101,16 @@ namespace Faml.Syntax {
 
         public FamlModule GetModule() => this.GetModuleSyntax().Module;
 
-        public FamlProject GetProject() {
+        public FamlProject GetProject()
+        {
             return this.GetModuleSyntax().Project;
         }
 
-        public FunctionDefinitionSyntax GetEnclosingFunctionDefinition() {
+        public FunctionDefinitionSyntax GetEnclosingFunctionDefinition()
+        {
             SyntaxNode currentNode = this;
-            while (currentNode != null) {
+            while (currentNode != null)
+            {
                 if (currentNode is FunctionDefinitionSyntax)
                 {
                     return (FunctionDefinitionSyntax) currentNode;
@@ -122,7 +137,8 @@ namespace Faml.Syntax {
         /// Get the object identiers for this node and its descendents, adding them to objectIdentifiersBinding.
         /// </summary>
         /// <param name="objectIdentifiersBinding">Collection of object identifiers and their types</param>
-        protected internal virtual void GetObjectIdentifiersBinding(ObjectIdentifiersBinding objectIdentifiersBinding) {
+        protected internal virtual void GetObjectIdentifiersBinding(ObjectIdentifiersBinding objectIdentifiersBinding)
+        {
             this.VisitChildren((astNode) => { astNode.GetObjectIdentifiersBinding(objectIdentifiersBinding); });
         }
 
@@ -132,23 +148,27 @@ namespace Faml.Syntax {
 
         public virtual bool IsTerminalNode() => true;
 
-        public abstract SyntaxNodeType NodeType {
+        public abstract SyntaxNodeType NodeType
+        {
             get;
         }
 
-        public SyntaxNode[] GetChildren() {
+        public SyntaxNode[] GetChildren()
+        {
             int childCount= 0;
             this.VisitChildren((child) => ++childCount);
 
             SyntaxNode[] children = new SyntaxNode[childCount];
             int index = 0;
-            this.VisitChildren((child) => {
+            this.VisitChildren((child) =>
+            {
                 children[index++] = child;
             });
             return children;
         }
 
-        public SyntaxNode? GetNextTerminalNodeFromPosition(int position) {
+        public SyntaxNode? GetNextTerminalNodeFromPosition(int position)
+        {
             if (position >= this.Span.End)
             {
                 throw new ArgumentOutOfRangeException(nameof(position), position, "position is past the end of the node");
@@ -156,9 +176,11 @@ namespace Faml.Syntax {
 
             if (this.IsTerminalNode())
                 return this;
-            else {
+            else
+            {
                 SyntaxNode? terminalNodeAtPosition = null;
-                this.VisitChildren((child) => {
+                this.VisitChildren((child) =>
+                {
                     if (terminalNodeAtPosition == null && position < child.Span.End)
                     {
                         terminalNodeAtPosition = child.GetNextTerminalNodeFromPosition(position);
@@ -168,7 +190,8 @@ namespace Faml.Syntax {
             }
         }
 
-        public SyntaxNode? GetPreviousTerminalNodeFromPosition(int position) {
+        public SyntaxNode? GetPreviousTerminalNodeFromPosition(int position)
+        {
             // The invariant here is that the position is always contained by the span or after it
 
             if (position < this.Span.Start)
@@ -178,11 +201,14 @@ namespace Faml.Syntax {
 
             if (this.IsTerminalNode())
                 return this;
-            else {
+            else
+            {
                 SyntaxNode? terminalNodeAtPosition = null;
                 SyntaxNode? previousChildToCheck = null;
-                this.VisitChildren((child) => {
-                    if (terminalNodeAtPosition == null && position >= child.Span.Start) {
+                this.VisitChildren((child) =>
+                {
+                    if (terminalNodeAtPosition == null && position >= child.Span.Start)
+                    {
                         if (child.Span.Contains(position))
                         {
                             terminalNodeAtPosition = child.GetPreviousTerminalNodeFromPosition(position);
@@ -220,16 +246,19 @@ namespace Faml.Syntax {
         /// </summary>
         /// <param name="position">position in question</param>
         /// <returns>most specific descendent SyntaxNode containing the position</returns>
-        public SyntaxNode GetNodeAtPosition(int position) {
+        public SyntaxNode GetNodeAtPosition(int position)
+        {
             if (! this.Span.ContainsInclusiveEnd(position))
                 throw new ArgumentOutOfRangeException(nameof(position), position,
                     $"position {position} is outside the node's range of {this.Span.Start} - {this.Span.End}");
 
             if (this.IsTerminalNode())
                 return this;
-            else {
+            else
+            {
                 SyntaxNode? descendentNodeAtPosition = null;
-                this.VisitChildren((child) => {
+                this.VisitChildren((child) =>
+                {
                     if (descendentNodeAtPosition == null && child.Span.ContainsInclusiveEnd(position))
                     {
                         descendentNodeAtPosition = child.GetNodeAtPosition(position);
@@ -240,12 +269,14 @@ namespace Faml.Syntax {
             }
         }
 
-        public void VisitNodeAndDescendentsPreorder(SyntaxVisitor visitor) {
+        public void VisitNodeAndDescendentsPreorder(SyntaxVisitor visitor)
+        {
             visitor(this);
             this.VisitChildren((childNode) => childNode.VisitNodeAndDescendentsPreorder(visitor));
         }
 
-        public void VisitNodeAndDescendentsPostorder(SyntaxVisitor visitor) {
+        public void VisitNodeAndDescendentsPostorder(SyntaxVisitor visitor)
+        {
             this.VisitChildren((childNode) => childNode.VisitNodeAndDescendentsPostorder(visitor));
             visitor(this);
         }

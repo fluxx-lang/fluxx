@@ -5,8 +5,10 @@
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression {
-    public sealed class InterpolatedStringFragmentSyntax : SyntaxNode {
+namespace Faml.Syntax.Expression
+{
+    public sealed class InterpolatedStringFragmentSyntax : SyntaxNode
+    {
         private readonly string _value;
 
         public InterpolatedStringFragmentSyntax(TextSpan span, string value) : base(span) { this._value = value; }

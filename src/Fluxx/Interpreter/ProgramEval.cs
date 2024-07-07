@@ -5,13 +5,16 @@
 
 using Faml.SourceProviders;
 
-namespace Faml.Interpreter {
+namespace Faml.Interpreter
+{
     public class 
-        ProgramEval {
+        ProgramEval
+        {
         private readonly FamlProject _program;
         private readonly SourceProvider _sourceProvider;
 
-        public ProgramEval(SourceProvider sourceProvider) {
+        public ProgramEval(SourceProvider sourceProvider)
+        {
             this._sourceProvider = sourceProvider;
         }
     }

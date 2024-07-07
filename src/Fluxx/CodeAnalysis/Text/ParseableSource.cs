@@ -1,8 +1,10 @@
 ﻿using System;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.CodeAnalysis.Text {
-    public class ParseableSource {
+namespace Faml.CodeAnalysis.Text
+{
+    public class ParseableSource
+    {
         private readonly SourceText _sourceText;
         private readonly int _startPosition;
         private readonly int _endPosition;
@@ -19,7 +21,8 @@ namespace Faml.CodeAnalysis.Text {
 
         public static bool IsDigit(char character) => character >= '0' && character <= '9';
 
-        public ParseableSource(SourceText sourceText, int startPosition, int endPosition) {
+        public ParseableSource(SourceText sourceText, int startPosition, int endPosition)
+        {
             this._sourceText = sourceText;
             this._startPosition = startPosition;
             this._endPosition = endPosition;
@@ -35,9 +38,11 @@ namespace Faml.CodeAnalysis.Text {
 
         public int EndPosition => this._endPosition;
 
-        public int GetPrevNonSpace(int position) {
+        public int GetPrevNonSpace(int position)
+        {
             int testPosition = position;
-            while (true) {
+            while (true)
+            {
                 --testPosition;
                 if (testPosition < this._startPosition)
                 {
@@ -52,9 +57,11 @@ namespace Faml.CodeAnalysis.Text {
             }
         }
 
-        public int GetNextNonSpace(int position) {
+        public int GetNextNonSpace(int position)
+        {
             int testPosition = position;
-            while (true) {
+            while (true)
+            {
                 ++testPosition;
                 if (testPosition >= this._endPosition)
                 {
@@ -71,7 +78,8 @@ namespace Faml.CodeAnalysis.Text {
 
         public char GetCharAt(int position) => position < this._startPosition || position >= this._endPosition ? '\0' : this._sourceText[position];
 
-        public string Substring(int position, int length) {
+        public string Substring(int position, int length)
+        {
             if (position < this._startPosition)
             {
                 throw new ArgumentException("Substring position is before start of ParseableSource");
@@ -85,7 +93,8 @@ namespace Faml.CodeAnalysis.Text {
             return this._sourceText.ToString(new TextSpan(position, length));
         }
 
-        public bool IsSpanSoleItemOnLine(TextSpan span) {
+        public bool IsSpanSoleItemOnLine(TextSpan span)
+        {
             if (!this.IsAtStartOfLine(span.Start))
             {
                 return false;
@@ -106,7 +115,8 @@ namespace Faml.CodeAnalysis.Text {
         /// </summary>
         /// <param name="position">position in question</param>
         /// <returns>true if the position only has whitespace before it on the line</returns>
-        public bool IsAtStartOfLine(int position) {
+        public bool IsAtStartOfLine(int position)
+        {
             int prevPosition = this.GetPrevNonSpace(position);
             char prevChar = this.GetCharAt(prevPosition);
 
@@ -119,7 +129,8 @@ namespace Faml.CodeAnalysis.Text {
         /// <param name="basePosition">starting position</param>
         /// <param name="position">position to check</param>
         /// <returns>true iff position is on line and column that come after basePosition</returns>
-        public bool IsIndentedOnSubsequentLine(int basePosition, int position) {
+        public bool IsIndentedOnSubsequentLine(int basePosition, int position)
+        {
             if (position <= basePosition)
             {
                 return false;
@@ -149,8 +160,10 @@ namespace Faml.CodeAnalysis.Text {
         /// </summary>
         /// <param name="position"></param>
         /// <returns>position of the end of the line</returns>
-        public int GetEndOfLine(int position) {
-            for (int currPosition = position; true; ++currPosition) {
+        public int GetEndOfLine(int position)
+        {
+            for (int currPosition = position; true; ++currPosition)
+            {
                 char currChar = this.GetCharAt(currPosition);
                 if (currChar == '\n' || currChar == '\0')
                 {

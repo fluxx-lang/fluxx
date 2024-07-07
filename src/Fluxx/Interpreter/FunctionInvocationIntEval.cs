@@ -5,19 +5,23 @@
 
 using Faml.Syntax;
 
-namespace Faml.Interpreter {
-    public sealed class FunctionInvocationIntEval : IntEval {
+namespace Faml.Interpreter
+{
+    public sealed class FunctionInvocationIntEval : IntEval
+    {
         internal readonly Eval[] Arguments;
         internal IntEval Expression;
 
-        public FunctionInvocationIntEval(Eval[] arguments, CreateEvals createEvals, FunctionDefinitionSyntax functionDefinition) {
+        public FunctionInvocationIntEval(Eval[] arguments, CreateEvals createEvals, FunctionDefinitionSyntax functionDefinition)
+        {
             this.Arguments = arguments;
 
             createEvals.DelayResolveFunctionEval(functionDefinition,
                 (functionEval) => this.Expression = (IntEval)functionEval);
         }
 
-        public override int Eval() {
+        public override int Eval()
+        {
             int argumentsLength = this.Arguments.Length;
             for (int i = 0; i < argumentsLength; i++)
             {

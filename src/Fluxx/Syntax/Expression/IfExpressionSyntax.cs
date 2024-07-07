@@ -4,14 +4,17 @@ using Faml.CodeAnalysis.Text;
 using Faml.Parser;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression {
-    public class IfExpressionSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Expression
+{
+    public class IfExpressionSyntax : ExpressionSyntax
+    {
         private readonly ConditionValuePairSyntax[] _conditionValuePairs;
         private readonly TextSpan? _elseSpan;
         private ExpressionSyntax? _elseValue;
         private TypeBinding? _typeBinding;
 
-        public IfExpressionSyntax(TextSpan span, ConditionValuePairSyntax[] conditionValuePairs, TextSpan? elseSpan) : base(span) {
+        public IfExpressionSyntax(TextSpan span, ConditionValuePairSyntax[] conditionValuePairs, TextSpan? elseSpan) : base(span)
+        {
             this._conditionValuePairs = conditionValuePairs;
             foreach (ConditionValuePairSyntax conditionValuePair in conditionValuePairs)
             {
@@ -25,12 +28,15 @@ namespace Faml.Syntax.Expression {
 
         public ExpressionSyntax? ElseValue => this._elseValue;
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
-            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
+            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
+            {
                 visitor(conditionValuePair);
             }
 
@@ -40,26 +46,32 @@ namespace Faml.Syntax.Expression {
             }
         }
 
-        protected internal override void ResolveBindings(BindingResolver bindingResolver) {
+        protected internal override void ResolveBindings(BindingResolver bindingResolver)
+        {
             TypeBinding? typeBinding = null;
 
-            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs) {
+            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
+            {
                 conditionValuePair.ParseValueSource(bindingResolver);
 
                 TypeBinding currentTypeBinding = conditionValuePair.Value.GetTypeBinding();
 
                 if (typeBinding == null)
                     typeBinding = currentTypeBinding;
-                else {
-                    if (!currentTypeBinding.IsSameAs(typeBinding)) {
+                else
+                {
+                    if (!currentTypeBinding.IsSameAs(typeBinding))
+                    {
                         this.AddError($"Different conditions of 'if' don't all evaluate to the same type");
                         return;
                     }
                 }
             }
 
-            if (this._elseSpan.HasValue) {
-                if (this._elseValue == null) {
+            if (this._elseSpan.HasValue)
+            {
+                if (this._elseValue == null)
+                {
                     this._elseValue = SourceParser.ParseTextBlockExpression(this.GetModule(), this._elseSpan.Value);
                     this._elseValue.SetParent(this);
 
@@ -71,8 +83,10 @@ namespace Faml.Syntax.Expression {
 
                 if (typeBinding == null)
                     typeBinding = currentTypeBinding;
-                else {
-                    if (!currentTypeBinding.IsSameAs(typeBinding)) {
+                else
+                {
+                    if (!currentTypeBinding.IsSameAs(typeBinding))
+                    {
                         this.AddError($"Different conditions of 'if' don't all evaluate to the same type");
                         return;
                     }
@@ -82,13 +96,15 @@ namespace Faml.Syntax.Expression {
             this._typeBinding = typeBinding;
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._typeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.IfExpression;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Writeln("if");
 
             foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
@@ -96,7 +112,8 @@ namespace Faml.Syntax.Expression {
                 sourceWriter.Writeln(conditionValuePair);
             }
 
-            if (this._elseValue != null) {
+            if (this._elseValue != null)
+            {
                 sourceWriter.Write("|: ");
                 sourceWriter.Writeln(this._elseValue);
             }

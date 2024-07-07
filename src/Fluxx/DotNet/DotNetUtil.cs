@@ -3,12 +3,16 @@ using System.Linq;
 using System.Reflection;
 using Faml.Api;
 
-namespace Faml.DotNet {
-    public class DotNetUtil {
-        public static PropertyInfo? GetPropertyInfo(TypeInfo typeInfo, Name propertyName) {
+namespace Faml.DotNet
+{
+    public class DotNetUtil
+    {
+        public static PropertyInfo? GetPropertyInfo(TypeInfo typeInfo, Name propertyName)
+        {
             string propertyNameString = propertyName.ToString();
 
-            while (typeInfo != null) {
+            while (typeInfo != null)
+            {
                 PropertyInfo propertyInfo = typeInfo.GetDeclaredProperty(propertyNameString);
                 if (propertyInfo != null)
                 {
@@ -20,10 +24,12 @@ namespace Faml.DotNet {
             return null;
         }
 
-        public static EventInfo? GetEventInfo(TypeInfo typeInfo, Name eventName) {
+        public static EventInfo? GetEventInfo(TypeInfo typeInfo, Name eventName)
+        {
             string eventNameString = eventName.ToString();
 
-            while (typeInfo != null) {
+            while (typeInfo != null)
+            {
                 EventInfo eventInfo = typeInfo.GetDeclaredEvent(eventNameString);
                 if (eventInfo != null)
                 {
@@ -35,10 +41,12 @@ namespace Faml.DotNet {
             return null;
         }
 
-        public static MethodInfo? GetMethodInfo(TypeInfo typeInfo, Name methodName) {
+        public static MethodInfo? GetMethodInfo(TypeInfo typeInfo, Name methodName)
+        {
             string methodNameString = methodName.ToString();
 
-            while (typeInfo != null) {
+            while (typeInfo != null)
+            {
                 MethodInfo methodInfo = typeInfo.GetDeclaredMethod(methodNameString);
                 if (methodInfo != null)
                 {
@@ -50,7 +58,8 @@ namespace Faml.DotNet {
             return null;
         }
         
-        public static bool ImplementsIList(Type type) {
+        public static bool ImplementsIList(Type type)
+        {
             if (IsIList(type))
             {
                 return true;
@@ -59,14 +68,17 @@ namespace Faml.DotNet {
             return type.GetTypeInfo().ImplementedInterfaces.Any(IsIList);
         }
 
-        private static bool IsIList(Type type) {
+        private static bool IsIList(Type type)
+        {
             string interfaceTypeName = type.FullName;
             return interfaceTypeName.Equals("System.Collections.IList") || interfaceTypeName.StartsWith("System.Collections.Generic.IList");
         }
 
-        public static Attribute? GetSingleCustomAttribute(TypeInfo typeInfo, Type attributeType) {
+        public static Attribute? GetSingleCustomAttribute(TypeInfo typeInfo, Type attributeType)
+        {
             Attribute? singleAttribute = null;
-            foreach (Attribute attribute in typeInfo.GetCustomAttributes(attributeType, true)) {
+            foreach (Attribute attribute in typeInfo.GetCustomAttributes(attributeType, true))
+            {
                 if (singleAttribute != null)
                 {
                     throw new Exception($"Multiple {attributeType.Name} attributes defined when only one is allowed");

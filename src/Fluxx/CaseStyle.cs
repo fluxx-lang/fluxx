@@ -1,5 +1,7 @@
-﻿namespace Faml {
-    public enum CaseStyle {
+﻿namespace Faml
+{
+    public enum CaseStyle
+    {
         /// <summary>
         /// Example: myFunction
         /// </summary>

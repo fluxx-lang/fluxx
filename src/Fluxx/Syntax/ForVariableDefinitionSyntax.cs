@@ -7,13 +7,16 @@ using Microsoft.CodeAnalysis.Text;
 /**
  * Created by Bret on 6/28/2014.
  */
-namespace Faml.Syntax {
-    public sealed class ForVariableDefinitionSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public sealed class ForVariableDefinitionSyntax : SyntaxNode
+    {
         private readonly NameSyntax _variableNameSyntax;
         private TypeBinding _variableTypeBinding = null;
         private readonly ExpressionSyntax _inExpression;
 
-        public ForVariableDefinitionSyntax(TextSpan span, NameSyntax variableNameSyntax, ExpressionSyntax inExpression) : base(span) {
+        public ForVariableDefinitionSyntax(TextSpan span, NameSyntax variableNameSyntax, ExpressionSyntax inExpression) : base(span)
+        {
             this._variableNameSyntax = variableNameSyntax;
             variableNameSyntax.SetParent(this);
 
@@ -25,12 +28,14 @@ namespace Faml.Syntax {
 
         public ExpressionSyntax InExpression => this._inExpression;
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             visitor(this._inExpression);
             visitor(this._variableNameSyntax);
         }
 
-        protected internal override void ResolveBindings(BindingResolver bindingResolver) {
+        protected internal override void ResolveBindings(BindingResolver bindingResolver)
+        {
             TypeBinding inExpressionTypeBinding = this._inExpression.GetTypeBinding();
             if (inExpressionTypeBinding == null)
             {
@@ -50,13 +55,15 @@ namespace Faml.Syntax {
 
         public TypeBinding GetVariableTypeBinding () => this._variableTypeBinding;
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ForVariableDefinition;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._variableNameSyntax);
             sourceWriter.Write(" in ");
             sourceWriter.Write(this._inExpression);

@@ -6,14 +6,17 @@ using System.IO;
  * @since 6/6/2015
  */
 
-namespace Faml.Api {
+namespace Faml.Api
+{
     [Serializable]
-    public struct QualifiableName : IEquatable<QualifiableName> {
+    public struct QualifiableName : IEquatable<QualifiableName>
+    {
         private readonly string _name;
 
         public static readonly QualifiableName EmptyName = new QualifiableName("");
 
-        public static QualifiableName ModuleNameFromRelativePath(string path) {
+        public static QualifiableName ModuleNameFromRelativePath(string path)
+        {
             string extension = Path.GetExtension(path);
 
             string pathNoExtension = extension.Length > 0 ? path.Substring(0, path.Length - extension.Length) : path;
@@ -21,11 +24,13 @@ namespace Faml.Api {
             return new QualifiableName(moduleNameString);
         }
 
-        public QualifiableName(string name) {
+        public QualifiableName(string name)
+        {
             this._name = name;
         }
 
-        public QualifiableName(QualifiableName qualifier, Name lastComponent) {
+        public QualifiableName(QualifiableName qualifier, Name lastComponent)
+        {
             this._name = qualifier + "." + lastComponent;
         }
 
@@ -33,7 +38,8 @@ namespace Faml.Api {
 
         public bool IsEmpty() => this._name.Length == 0;
 
-        public Name ToUnqualifiableName() {
+        public Name ToUnqualifiableName()
+        {
             if (this.IsQualified())
             {
                 throw new Exception($"Can't convert qualified name '{this}' to unqualified name");
@@ -42,11 +48,13 @@ namespace Faml.Api {
             return new Name(this._name);
         }
 
-        public string ToRelativePath() {
+        public string ToRelativePath()
+        {
             return this._name.Replace('.', Path.PathSeparator) + ".faml";
         }
 
-        public Name GetLastComponent() {
+        public Name GetLastComponent()
+        {
             int lastPeriod = this._name.LastIndexOf('.');
             if (lastPeriod == -1)
             {
@@ -64,16 +72,19 @@ namespace Faml.Api {
         /// </summary>
         /// <param name="unqualifiedName">unqualified name to match against</param>
         /// <returns>true if unqualifiedName is the last component of this name or the same as this name</returns>
-        public bool LastComponentMatches(string unqualifiedName) {
+        public bool LastComponentMatches(string unqualifiedName)
+        {
             int lastComponentIndex = this._name.Length - unqualifiedName.Length;
             return this._name.EndsWith(unqualifiedName) && lastComponentIndex == 0 || (lastComponentIndex > 0 && this._name[lastComponentIndex - 1] == '.');
         }
 
-        public bool LastComponentMatches(Name unqualifiedName) {
+        public bool LastComponentMatches(Name unqualifiedName)
+        {
             return this.LastComponentMatches(unqualifiedName.ToString());
         }
 
-        public QualifiableName GetQualifier() {
+        public QualifiableName GetQualifier()
+        {
             int lastPeriodIndex = this._name.LastIndexOf('.');
             if (lastPeriodIndex == -1)
             {
@@ -83,27 +94,33 @@ namespace Faml.Api {
             return new QualifiableName(this._name.Substring(0, lastPeriodIndex));
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return this._name;
         }
 
-        public bool Equals(QualifiableName other) {
+        public bool Equals(QualifiableName other)
+        {
             return string.Equals(this._name, other._name);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             return obj is Name && this.Equals((Name) obj);
         }
 
-        public static bool operator ==(QualifiableName val1, QualifiableName val2) {
+        public static bool operator ==(QualifiableName val1, QualifiableName val2)
+        {
             return val1.Equals(val2);
         }
 
-        public static bool operator !=(QualifiableName val1, QualifiableName val2) {
+        public static bool operator !=(QualifiableName val1, QualifiableName val2)
+        {
             return !val1.Equals(val2);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return this._name.GetHashCode();
         }
     }

@@ -6,16 +6,20 @@ using Faml.Lexer;
 using Faml.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml {
-    internal class GetSyntaxHighlightTags {
+namespace Faml
+{
+    internal class GetSyntaxHighlightTags
+    {
         private readonly ModuleSyntax _module;
         
-        public GetSyntaxHighlightTags(ModuleSyntax module) {
+        public GetSyntaxHighlightTags(ModuleSyntax module)
+        {
             this._module = module;
         }
 
         // TODO: Implement this properly, supporting multiple spans
-        public void GetTags(TextSpan[] textSpans, List<SyntaxHighlightTag> tags) {
+        public void GetTags(TextSpan[] textSpans, List<SyntaxHighlightTag> tags)
+        {
             if (textSpans.Length == 1)
             {
                 this.GetTags(textSpans[0], tags);
@@ -26,7 +30,8 @@ namespace Faml {
             }
         }
 
-        public void GetTags(TextSpan span, List<SyntaxHighlightTag> tags) {
+        public void GetTags(TextSpan span, List<SyntaxHighlightTag> tags)
+        {
             // First return the lexical tokens that occur before the first terminal node. Getting the tags for an AST node
             // returns the lexical tags that come after it, but we need to do this here to get the lexical tags at the beginning
             SyntaxNode? firstTerminalNode = this._module.GetNextTerminalNodeFromPosition(span.Start);
@@ -38,7 +43,8 @@ namespace Faml {
             this.GetSyntaxNodeTags(span, this._module, tags);
         }
 
-        private void GetSyntaxNodeTags(TextSpan span, SyntaxNode syntaxNode, List<SyntaxHighlightTag> tags) {
+        private void GetSyntaxNodeTags(TextSpan span, SyntaxNode syntaxNode, List<SyntaxHighlightTag> tags)
+        {
             if (!syntaxNode.OverlapsWith(span))
             {
                 return;
@@ -50,7 +56,8 @@ namespace Faml {
                 return;
             }
 
-            if (syntaxNode.IsTerminalNode()) {
+            if (syntaxNode.IsTerminalNode())
+            {
                 //                if (currPosition[0] != astNodeProxy.sourceSpan.startPosition) {
                 //                    log("Curr position " + currPosition[0] + " does not match node start position " + astNodeProxy.sourceSpan.startPosition);
                 //                }
@@ -126,9 +133,11 @@ namespace Faml {
                 int nextTerminalNodeStartPosition;
                 if (currNodeEndPosition >= this._module.Span.End)
                     nextTerminalNodeStartPosition = -1;
-                else {
+                else
+                {
                     SyntaxNode? nextTerminalNode = this._module.GetNextTerminalNodeFromPosition(currNodeEndPosition);
-                    if (nextTerminalNode == null) {
+                    if (nextTerminalNode == null)
+                    {
                         // This shouldn't happen, but gracefully fail if it does
                         nextTerminalNodeStartPosition = -1;
                     }
@@ -139,8 +148,10 @@ namespace Faml {
                 var token = new Token(new ParseableSource(this._module.SourceText, currNodeEndPosition, this._module.SourceText.Length));
                 GetLexicalTags(span, token, nextTerminalNodeStartPosition, tags);
             }
-            else {
-                syntaxNode.VisitChildren((child) => {
+            else
+            {
+                syntaxNode.VisitChildren((child) =>
+                {
                     if (child.OverlapsWith(span))
                     {
                         this.GetSyntaxNodeTags(span, child, tags);
@@ -149,10 +160,13 @@ namespace Faml {
             }
         }
 
-        private static void GetLexicalTags(TextSpan span, Token token, int endPosition, List<SyntaxHighlightTag> sourceTags) {
-            while (true) {
+        private static void GetLexicalTags(TextSpan span, Token token, int endPosition, List<SyntaxHighlightTag> sourceTags)
+        {
+            while (true)
+            {
                 // If there's an endPosition specified and we are at or past it, then we're done
-                if (endPosition != -1) {
+                if (endPosition != -1)
+                {
                     if (token.TokenStartPosition >= endPosition)
                     {
                         break;

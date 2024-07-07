@@ -9,14 +9,17 @@ using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression {
-    public sealed class PropertyAccessSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Expression
+{
+    public sealed class PropertyAccessSyntax : ExpressionSyntax
+    {
         private readonly ExpressionSyntax _expression;
         private readonly NameSyntax _propertyNameSyntax;
         private PropertyBinding _propertyBinding = null;
         private TypeBinding _typeBinding = null;
 
-        public PropertyAccessSyntax(TextSpan span, ExpressionSyntax expression, NameSyntax propertyNameSyntax) : base(span) {
+        public PropertyAccessSyntax(TextSpan span, ExpressionSyntax expression, NameSyntax propertyNameSyntax) : base(span)
+        {
             this._expression = expression;
             expression.SetParent(this);
 
@@ -34,29 +37,34 @@ namespace Faml.Syntax.Expression {
 
         public PropertyBinding PropertyBinding => this._propertyBinding;
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.PropertyAccess;
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             visitor(this._expression);
             visitor(this._propertyNameSyntax);
         }
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._expression);
             sourceWriter.Write(".");
             sourceWriter.Write(this._propertyNameSyntax);
         }
 
-        protected internal override void ResolveBindings(BindingResolver bindingResolver) {
+        protected internal override void ResolveBindings(BindingResolver bindingResolver)
+        {
             this._propertyBinding = bindingResolver.ResolvePropertyBinding(this._expression.GetTypeBinding(), this._propertyNameSyntax);
             this._typeBinding = this._propertyBinding.GetTypeBinding();
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._typeBinding;
         }
     }

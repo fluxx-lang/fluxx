@@ -5,12 +5,15 @@ using System;
  * @since 6/6/2015
  */
 
-namespace Faml.Api {
+namespace Faml.Api
+{
     [Serializable]
-    public struct Name : IEquatable<Name> {
+    public struct Name : IEquatable<Name>
+    {
         private readonly string _name;
 
-        public Name(string name) {
+        public Name(string name)
+        {
             this._name = name;
         }
 

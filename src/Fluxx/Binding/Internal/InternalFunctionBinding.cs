@@ -12,12 +12,15 @@ using TypeTooling.ClassifiedText;
  * @since 4/15/2015
  */
 
-namespace Faml.Binding.Internal {
-    public class InternalFunctionBinding : FunctionBinding {
+namespace Faml.Binding.Internal
+{
+    public class InternalFunctionBinding : FunctionBinding
+    {
         public FunctionDefinitionSyntax FunctionDefinition { get; }
         public FamlModule Module { get; }
 
-        public InternalFunctionBinding(FunctionDefinitionSyntax functionDefinition) {
+        public InternalFunctionBinding(FunctionDefinitionSyntax functionDefinition)
+        {
             this.Module = functionDefinition.GetModule();
             this.FunctionDefinition = functionDefinition;
         }
@@ -26,7 +29,8 @@ namespace Faml.Binding.Internal {
 
         public override TypeBinding ReturnTypeBinding => this.FunctionDefinition.ReturnTypeBinding;
 
-        public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
+        public override TypeBinding? GetParameterTypeBinding(Name parameterName)
+        {
             int parameterIndex = this.FunctionDefinition.GetParameterIndex(parameterName);
             if (parameterIndex == -1)
             {
@@ -37,8 +41,10 @@ namespace Faml.Binding.Internal {
         }
 
         public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
-            BindingResolver bindingResolver) {
-            if (argumentName.IsQualified()) {
+            BindingResolver bindingResolver)
+            {
+            if (argumentName.IsQualified())
+            {
                 argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
                     "FAML functions don't support attached properties for parameters");
                 return InvalidTypeBinding.Instance;
@@ -47,7 +53,8 @@ namespace Faml.Binding.Internal {
             Name unqualifiableArgumentName = argumentName.ToUnqualifiableName();
 
             int parameterIndex = this.FunctionDefinition.GetParameterIndex(unqualifiableArgumentName);
-            if (parameterIndex == -1) {
+            if (parameterIndex == -1)
+            {
                 argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
                     $"No '{argumentName}' parameter exists for function '{this.FunctionDefinition.FunctionNameSyntax}'");
                 return InvalidTypeBinding.Instance;
@@ -57,9 +64,11 @@ namespace Faml.Binding.Internal {
             return this.FunctionDefinition.GetParameterTypeBinding(parameterIndex);
         }
 
-        public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver) {
+        public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver)
+        {
             Name? contentProperty = this.GetContentProperty();
-            if (contentProperty == null) {
+            if (contentProperty == null)
+            {
                 contentArgument.AddError($"No content parameter exists for FAML function '{this.FunctionName}'");
                 return InvalidTypeBinding.Instance;
             }
@@ -75,20 +84,24 @@ namespace Faml.Binding.Internal {
         }
 
         public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName,
-            CancellationToken cancellationToken) {
+            CancellationToken cancellationToken)
+            {
             return Task.FromResult((ClassifiedTextMarkup?)null);
         }
 
-        public override string GetNoContentPropertyExistsError() {
+        public override string GetNoContentPropertyExistsError()
+        {
             return $"Use of unnamed parameter not allowed. No content parameter exists for function '{this.FunctionDefinition.FunctionNameSyntax}'";
         }
 
-        public override Name? GetThisParameter() {
+        public override Name? GetThisParameter()
+        {
             // TODO: Support 'object' or maybe 'this' keyword to specify object property
             return null;
         }
 
-        public override Name? GetContentProperty() {
+        public override Name? GetContentProperty()
+        {
             // If there's just a single property, it's the content/default parameter
             PropertyNameTypePairSyntax[] propertyNameTypePairs = this.FunctionDefinition.Parameters;
             if (propertyNameTypePairs.Length == 1)
@@ -97,7 +110,8 @@ namespace Faml.Binding.Internal {
             }
 
             // If there's a property Named "Content" or "content", then it's the content property
-            foreach (PropertyNameTypePairSyntax propertyNameTypePair in propertyNameTypePairs) {
+            foreach (PropertyNameTypePairSyntax propertyNameTypePair in propertyNameTypePairs)
+            {
                 Name propertyName = propertyNameTypePair.PropertyName;
                 if (propertyName.ToString().Equals("Content") || propertyName.ToString().Equals("content"))
                 {
@@ -112,7 +126,8 @@ namespace Faml.Binding.Internal {
         /// Return all the parameter names, in their "natural" order.  More info about parameters (e.g. their types) can be queried by methods above.
         /// </summary>
         /// <returns>parameter names</returns>
-        public override Name[] GetParameters() {
+        public override Name[] GetParameters()
+        {
             PropertyNameTypePairSyntax[] propertyNameTypePairs = this.FunctionDefinition.Parameters;
 
             Name[] parameters = new Name[propertyNameTypePairs.Length];

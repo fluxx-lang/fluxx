@@ -7,12 +7,15 @@ using Faml.Parser;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Literal {
-    public sealed class TextualLiteralSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Literal
+{
+    public sealed class TextualLiteralSyntax : ExpressionSyntax
+    {
         private ImmutableArray<TextualLiteralItemSyntax> _items;
         private TypeBinding? _typeBinding;
 
-        public TextualLiteralSyntax(TextSpan span, ImmutableArray<TextualLiteralItemSyntax> items) : base(span) {
+        public TextualLiteralSyntax(TextSpan span, ImmutableArray<TextualLiteralItemSyntax> items) : base(span)
+        {
             this._items = items;
 
             foreach (TextualLiteralItemSyntax item in this._items)
@@ -25,13 +28,16 @@ namespace Faml.Syntax.Literal {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.TextualLiteral;
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
-            foreach (TextualLiteralItemSyntax item in this._items) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
+            foreach (TextualLiteralItemSyntax item in this._items)
+            {
                 visitor(item);
             }
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             if (this._typeBinding == null)
             {
                 throw new InvalidOperationException("TypeBinding not set");
@@ -40,14 +46,16 @@ namespace Faml.Syntax.Literal {
             return this._typeBinding;
         }
 
-        public ExpressionSyntax ResolveMarkup(TypeBinding typeBinding, BindingResolver bindingResolver) {
+        public ExpressionSyntax ResolveMarkup(TypeBinding typeBinding, BindingResolver bindingResolver)
+        {
             this._typeBinding = typeBinding;
 
             ExpressionSyntax expression;
 
             if (typeBinding == BuiltInTypeBinding.String || typeBinding == BuiltInTypeBinding.UIText)
                 expression = this;
-            else if (typeBinding is ObjectTypeBinding objectTypeBinding && objectTypeBinding.SupportsCreateLiteral()) {
+            else if (typeBinding is ObjectTypeBinding objectTypeBinding && objectTypeBinding.SupportsCreateLiteral())
+            {
                 if (!this.ValidateThatSimpleText(typeBinding))
                 {
                     return this;
@@ -56,7 +64,8 @@ namespace Faml.Syntax.Literal {
                 TextSpan sourceSpan = this.GetSimpleTextSpan();
                 expression = objectTypeBinding.ParseLiteralValueSource(this.GetModule(), sourceSpan);
             }
-            else if (typeBinding is EnumTypeBinding enumTypeBinding) {
+            else if (typeBinding is EnumTypeBinding enumTypeBinding)
+            {
                 if (!this.ValidateThatSimpleText(typeBinding))
                 {
                     return this;
@@ -64,7 +73,8 @@ namespace Faml.Syntax.Literal {
 
                 expression = enumTypeBinding.ParseEnumValue(this.GetModule(), this.Span);
             }
-            else if (typeBinding == BuiltInTypeBinding.Bool) {
+            else if (typeBinding == BuiltInTypeBinding.Bool)
+            {
                 if (!this.ValidateThatSimpleText(typeBinding))
                 {
                     return this;
@@ -72,7 +82,8 @@ namespace Faml.Syntax.Literal {
 
                 expression = SourceParser.ParseSingleBooleanLiteral(this.GetModule(), this.Span);
             }
-            else if (typeBinding == BuiltInTypeBinding.Int) {
+            else if (typeBinding == BuiltInTypeBinding.Int)
+            {
                 if (!this.ValidateThatSimpleText(typeBinding))
                 {
                     return this;
@@ -80,7 +91,8 @@ namespace Faml.Syntax.Literal {
 
                 expression = SourceParser.ParseSingleIntLiteral(this.GetModule(), this.Span);
             }
-            else {
+            else
+            {
                 this.AddError($"Invalid value for type {typeBinding.TypeName}");
 
                 string sourceString = this.GetModule().ModuleSyntax.SourceText.ToString(this.Span);
@@ -99,8 +111,10 @@ namespace Faml.Syntax.Literal {
             return expression;
         }
 
-        private bool ValidateThatSimpleText(TypeBinding typeBinding) {
-            if (!this.IsSimpleText) {
+        private bool ValidateThatSimpleText(TypeBinding typeBinding)
+        {
+            if (!this.IsSimpleText)
+            {
                 this.AddError(
                     $"Invalid {typeBinding.TypeName} literal. Enclose the entire value in braces to specify an expression.");
                 return false;
@@ -111,7 +125,8 @@ namespace Faml.Syntax.Literal {
 
         public bool IsSimpleText => this._items.Length == 1 && this._items[0] is TextualLiteralTextItemSyntax;
 
-        public TextSpan GetSimpleTextSpan() {
+        public TextSpan GetSimpleTextSpan()
+        {
             if (!this.IsSimpleText)
             {
                 throw new InvalidOperationException("Markup isn't simple text");
@@ -120,7 +135,8 @@ namespace Faml.Syntax.Literal {
             return this._items[0].Span;
         }
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             foreach (TextualLiteralItemSyntax item in this._items)
             {
                 sourceWriter.Write(item);

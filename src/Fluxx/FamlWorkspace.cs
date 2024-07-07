@@ -2,26 +2,31 @@
 using System.Globalization;
 using Faml.SourceProviders;
 
-namespace Faml {
+namespace Faml
+{
     /// <summary>
     /// A Workspace manages a collection of projects, which may reference each other and are normally built together.
     /// It corresponds to a solution in Visual Studio.
     /// </summary>
-    public class FamlWorkspace {
+    public class FamlWorkspace
+    {
         private readonly List<FamlProject> _projects = new List<FamlProject>();
 
-        public FamlProject CreateProject(SourceProvider sourceProvider) {
+        public FamlProject CreateProject(SourceProvider sourceProvider)
+        {
             var project = new FamlProject(this, sourceProvider);
             this._projects.Add(project);
 
             return project;
         }
 
-        public FamlProject CreateProject() {
+        public FamlProject CreateProject()
+        {
             return this.CreateProject(new NullSourceProvider());
         }
 
-        public FamlProject CreateProject(string projectDirectory) {
+        public FamlProject CreateProject(string projectDirectory)
+        {
             return this.CreateProject(new FileSourceProvider(projectDirectory));
         }
 

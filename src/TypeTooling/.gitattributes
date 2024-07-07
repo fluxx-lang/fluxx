@@ -1,7 +1,0 @@
-*.cs text
-*.md text
-*.proj text
-*.props text
-*.sh text eol=lf
-*.sln text eol=crlf
-*.targets text

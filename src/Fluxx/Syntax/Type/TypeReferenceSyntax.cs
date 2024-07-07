@@ -6,8 +6,10 @@
 using Faml.Binding;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Type {
-    public abstract class TypeReferenceSyntax : SyntaxNode {
+namespace Faml.Syntax.Type
+{
+    public abstract class TypeReferenceSyntax : SyntaxNode
+    {
         protected TypeReferenceSyntax(TextSpan span) : base(span) {}
 
         public abstract TypeBinding GetTypeBinding();

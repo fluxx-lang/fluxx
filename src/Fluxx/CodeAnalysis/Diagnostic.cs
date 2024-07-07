@@ -5,8 +5,10 @@ using Microsoft.CodeAnalysis.Text;
 using DiagnosticSeverity = Faml.Api.DiagnosticSeverity;
 using SyntaxNode = Faml.Syntax.SyntaxNode;
 
-namespace Faml.CodeAnalysis {
-    public class Diagnostic {
+namespace Faml.CodeAnalysis
+{
+    public class Diagnostic
+    {
         private readonly FamlModule? _module;
         //private readonly Location? _location;
         private readonly LinePosition? _startLinePosition;
@@ -16,10 +18,12 @@ namespace Faml.CodeAnalysis {
 
 
         public static Diagnostic FromTypeToolingDiagnostic(FamlModule module, TextSpan sourceSpan,
-            TypeTooling.Diagnostic typeToolingDiagnostic) {
+            TypeTooling.Diagnostic typeToolingDiagnostic)
+            {
             DiagnosticSeverity severity;
 
-            switch (typeToolingDiagnostic.Severity) {
+            switch (typeToolingDiagnostic.Severity)
+            {
                 case TypeTooling.DiagnosticSeverity.Error:
                     severity = DiagnosticSeverity.Error;
                     break;
@@ -37,7 +41,8 @@ namespace Faml.CodeAnalysis {
             return new Diagnostic(module, sourceSpan, severity, typeToolingDiagnostic.Message);
         }
 
-        public Diagnostic(FamlModule module, TextSpan sourceSpan, DiagnosticSeverity severity, string message) {
+        public Diagnostic(FamlModule module, TextSpan sourceSpan, DiagnosticSeverity severity, string message)
+        {
             this._module = module;
 
             this._sourceSpan = sourceSpan;
@@ -47,7 +52,8 @@ namespace Faml.CodeAnalysis {
             this._message = message;
         }
 
-        public Diagnostic(DiagnosticSeverity severity, string message) {
+        public Diagnostic(DiagnosticSeverity severity, string message)
+        {
             this._module = null;
             this._sourceSpan = TextSpanExtensions.NullTextSpan;
             this._startLinePosition = null;

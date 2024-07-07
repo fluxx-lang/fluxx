@@ -9,20 +9,25 @@ using Faml.Binding.External;
 using Faml.Syntax;
 using Faml.Syntax.Type;
 
-namespace Faml.Binding.Resolver {
-    public class ProjectDefinitionBindingResolver : BindingResolver {
+namespace Faml.Binding.Resolver
+{
+    public class ProjectDefinitionBindingResolver : BindingResolver
+    {
         private readonly FamlProject _project;
 
-        public ProjectDefinitionBindingResolver(FamlProject project) {
+        public ProjectDefinitionBindingResolver(FamlProject project)
+        {
             this._project = project;
         }
 
-        public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName) {
+        public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName)
+        {
             return TypeBindingResult.NotFoundResult;
         }
 
         public override FunctionBinding ResolveFunctionBinding(TypeBinding? thisArgumentTypeBinding,
-            QualifiableName functionName, SyntaxNode nameSyntaxForErrors) {
+            QualifiableName functionName, SyntaxNode nameSyntaxForErrors)
+            {
             // TODO: Handle "this" (differently than here, treating it as a function reference property)
 #if LATER
             if (thisArgumentTypeBinding != null) {
@@ -38,7 +43,8 @@ namespace Faml.Binding.Resolver {
             }
 #endif
 
-            if (functionName.IsQualified()) {
+            if (functionName.IsQualified())
+            {
                 nameSyntaxForErrors.AddError("Qualified names are not currently supported in project definitions");
                 return new InvalidFunctionBinding(functionName);
             }
@@ -52,7 +58,8 @@ namespace Faml.Binding.Resolver {
             var className = new QualifiableName("Faml.ProjectTypes." + potentialTypeName);
             TypeBindingResult typeBindingResult = this._project.ResolveTypeBinding(className);
 
-            if (typeBindingResult is TypeBindingResult.Success success) {
+            if (typeBindingResult is TypeBindingResult.Success success)
+            {
                 if (success.TypeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)
                 {
                     return new NewExternalObjectFunctionBinding(externalObjectTypeBinding);
@@ -62,7 +69,8 @@ namespace Faml.Binding.Resolver {
                     return new InvalidFunctionBinding(functionName);
                 }
             }
-            else {
+            else
+            {
                 string message =
                     typeBindingResult.GetNotFoundOrOtherErrorMessage($"Function '{functionName}' not found");
                 nameSyntaxForErrors.AddError(message);
@@ -71,13 +79,15 @@ namespace Faml.Binding.Resolver {
         }
 
         // TODO: Implement this
-        public override TypeBinding ResolveObjectTypeBinding(ObjectTypeReferenceSyntax objectTypeReferenceSyntax) {
+        public override TypeBinding ResolveObjectTypeBinding(ObjectTypeReferenceSyntax objectTypeReferenceSyntax)
+        {
             QualifiableName typeName = objectTypeReferenceSyntax.TypeName;
             objectTypeReferenceSyntax.AddError($"Type '{typeName}' not found");
             return new InvalidTypeBinding(typeName);
         }
 
-        public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName) {
+        public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName)
+        {
             throw new Exception("Attached types aren't supported in the Project definition");
         }
     }

@@ -8,8 +8,10 @@ using Faml.Syntax.Literal;
 using Faml.Syntax.Type;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax {
-    public sealed class FunctionDefinitionSyntax : DefinitionSyntax {
+namespace Faml.Syntax
+{
+    public sealed class FunctionDefinitionSyntax : DefinitionSyntax
+    {
         private readonly NameSyntax _functionNameSyntax;
         private readonly PropertyNameTypePairSyntax[] _parameters;
         private readonly TypeReferenceSyntax? _returnType;
@@ -21,7 +23,8 @@ namespace Faml.Syntax {
 
 
         public FunctionDefinitionSyntax(TextSpan span, NameSyntax functionNameSyntax, PropertyNameTypePairSyntax[] parameters,
-                                        TypeReferenceSyntax? returnType, ExpressionSyntax expression, DefinitionSyntax[] whereDefinitions) : base(span) {
+                                        TypeReferenceSyntax? returnType, ExpressionSyntax expression, DefinitionSyntax[] whereDefinitions) : base(span)
+                                        {
             this._functionNameSyntax = functionNameSyntax;
             functionNameSyntax.SetParent(this);
 
@@ -47,7 +50,8 @@ namespace Faml.Syntax {
             }
         }
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             visitor(this._functionNameSyntax);
 
             foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._parameters)
@@ -71,21 +75,25 @@ namespace Faml.Syntax {
             }
         }
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.FunctionDefinition;
 
-        protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver) {
+        protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver)
+        {
             if (this._returnType != null)
             {
                 this._returnTypeBinding = this._returnType.GetTypeBinding();
             }
         }
 
-        protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            if (this._expression is TextualLiteralSyntax markupValue) {
+        protected internal override void ResolveBindings(BindingResolver bindingResolver)
+        {
+            if (this._expression is TextualLiteralSyntax markupValue)
+            {
                 if (this._returnTypeBinding != null)
                 {
                     this._expression = markupValue.ResolveMarkup(this._returnTypeBinding, bindingResolver);
@@ -124,17 +132,21 @@ namespace Faml.Syntax {
         /// <param name="parameterName">parameter name in question</param>
         /// <remarks> index of parameter or -1 if the function doesn't have a parameter of that name</remarks>
 
-        public int GetParameterIndex(Name parameterName) {
+        public int GetParameterIndex(Name parameterName)
+        {
             int length = this._parameters.Length;
-            for (int i = 0; i < length; i++) {
-                if (this._parameters[i].PropertyName == parameterName) {
+            for (int i = 0; i < length; i++)
+            {
+                if (this._parameters[i].PropertyName == parameterName)
+                {
                     return i;
                 }
             }
             return -1;
         }
         
-        public TypeBinding GetParameterTypeBinding(int parameterIndex) {
+        public TypeBinding GetParameterTypeBinding(int parameterIndex)
+        {
             return this._parameters[parameterIndex].TypeReferenceSyntax.GetTypeBinding();
         }
 
@@ -146,13 +158,16 @@ namespace Faml.Syntax {
 
         public DefinitionSyntax[] WhereDefinitions => this._whereDefinitions;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._functionNameSyntax);
             
             int parameterCount = this._parameters.Length;
-            if (parameterCount > 0) {
+            if (parameterCount > 0)
+            {
                 sourceWriter.Write("{");
-                for (int i = 0; i < parameterCount; i++) {
+                for (int i = 0; i < parameterCount; i++)
+                {
                     if (i > 0)
                     {
                         sourceWriter.Write(" ");
@@ -164,7 +179,8 @@ namespace Faml.Syntax {
                 sourceWriter.Write("}");
             }
 
-            if (this._returnType != null) {
+            if (this._returnType != null)
+            {
                 sourceWriter.Write(":");
                 this._returnType.WriteSource(sourceWriter);
             }

@@ -5,7 +5,8 @@
     ///
     /// This was copied from Roslyn's Microsoft.CodeAnalysis.DiagnosticSeverity
     /// </summary>
-    public enum DiagnosticSeverity {
+    public enum DiagnosticSeverity
+    {
         /// <summary>
         /// Something that is an issue, as determined by some authority,
         /// but is not surfaced through normal means.

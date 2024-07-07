@@ -6,18 +6,22 @@ using Faml.Messaging;
 using ReactiveData;
 using TypeTooling;
 
-namespace Faml.App {
-    public class AppToDevEnvConnection {
+namespace Faml.App
+{
+    public class AppToDevEnvConnection
+    {
         private MessagingConnector? _connector;
         private readonly ReactiveVar<Program> _program;
         private IVisualizer? _visualizer;
 
 
-        public AppToDevEnvConnection(ReactiveVar<Program> program) {
+        public AppToDevEnvConnection(ReactiveVar<Program> program)
+        {
             this._program = program;
         }
 
-        public void Start() {
+        public void Start()
+        {
             AppProjectInfo? appProjectInfo = this._program.Value.RootProject.AppProjectInfo;
             string? developmentMachine = appProjectInfo?.DevelopmentMachine;
             if (developmentMachine == null)
@@ -34,16 +38,19 @@ namespace Faml.App {
             webSocketConnector.Start().ConfigureAwait(false);
         }
 
-        public void SetVisualizer(IVisualizer visualizer) {
+        public void SetVisualizer(IVisualizer visualizer)
+        {
             this._visualizer = visualizer;
         }
 
-        private Task<MessageObject?> UpdateSourceHandler(MessageObject request) {
+        private Task<MessageObject?> UpdateSourceHandler(MessageObject request)
+        {
             string sourcePath = request.GetProperty<string>("sourcePath");
             string source = request.GetProperty<string>("source");
 
             // Lock to avoid multiple updates happening at the same time
-            lock (this._program) {
+            lock (this._program)
+            {
                 Transaction.Start();
                 this._program.Value.RootProject.UpdateSource(sourcePath, source);
                 this._program.NotifyChanged();
@@ -53,7 +60,8 @@ namespace Faml.App {
             return Task.FromResult((MessageObject?) null);
         }
 
-        private async Task<MessageObject?> VisualizeExampleHandler(MessageObject request) {
+        private async Task<MessageObject?> VisualizeExampleHandler(MessageObject request)
+        {
             string moduleNameString = request.GetProperty<string>("moduleName");
             int exampleIndex = request.GetProperty<int>("exampleIndex");
 

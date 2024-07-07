@@ -1,12 +1,15 @@
 using System;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Api.IntelliSense {
+namespace Faml.Api.IntelliSense
+{
     [Serializable]
-    public class IntelliSenseStartData {
+    public class IntelliSenseStartData
+    {
         public TextSpan ApplicableToSpan { get; }
 
-        public IntelliSenseStartData(TextSpan applicableToSpan) {
+        public IntelliSenseStartData(TextSpan applicableToSpan)
+        {
             this.ApplicableToSpan = applicableToSpan;
         }
     }

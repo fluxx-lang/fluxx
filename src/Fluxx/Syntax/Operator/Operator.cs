@@ -6,8 +6,10 @@ using TokenType = Faml.Lexer.TokenType;
  * @author Bret Johnson
  * @since 6/28/2014 11:21 PM
  */
-namespace Faml.Syntax.Operator {
-    public class Operator {
+namespace Faml.Syntax.Operator
+{
+    public class Operator
+    {
         private readonly string _sourceRepresentation;
         private readonly int _precedence;
 
@@ -43,11 +45,13 @@ namespace Faml.Syntax.Operator {
             return PrefixOperators.TryGetValue(tokenType, out PrefixOperator prefixOperator) ? prefixOperator : null;
         }
 
-        public static InfixOperator GetInfixOperator(Lexer.TokenType tokenType) {
+        public static InfixOperator GetInfixOperator(Lexer.TokenType tokenType)
+        {
             return InfixOperators.TryGetValue(tokenType, out InfixOperator infixOperator) ? infixOperator : null;
         }
 
-        public Operator(string sourceRepresentation, int precedence) {
+        public Operator(string sourceRepresentation, int precedence)
+        {
             this._sourceRepresentation = sourceRepresentation;
             this._precedence = precedence;
         }

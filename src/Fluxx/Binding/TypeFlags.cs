@@ -5,9 +5,11 @@
 
 using System;
 
-namespace Faml.Binding {
+namespace Faml.Binding
+{
     [Flags]
-    public enum TypeFlags {
+    public enum TypeFlags
+    {
         None = 0x0,
         IsReactive = 0x1
     }

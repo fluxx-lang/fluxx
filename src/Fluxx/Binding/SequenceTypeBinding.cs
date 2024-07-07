@@ -8,12 +8,15 @@ using Faml.Syntax;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Binding {
-    public class SequenceTypeBinding : ObjectTypeBinding {
+namespace Faml.Binding
+{
+    public class SequenceTypeBinding : ObjectTypeBinding
+    {
         private readonly TypeBinding _elementType;
 
 
-        public SequenceTypeBinding(TypeBinding elementType) : base(new QualifiableName("List<" + elementType.TypeName+ ">")) {
+        public SequenceTypeBinding(TypeBinding elementType) : base(new QualifiableName("List<" + elementType.TypeName+ ">"))
+        {
             this._elementType = elementType;
         }
 
@@ -21,7 +24,8 @@ namespace Faml.Binding {
 
         public override bool SupportsCreateLiteral() => false;
 
-        public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan sourceText) {
+        public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan sourceText)
+        {
             throw new System.NotImplementedException();
         }
     }

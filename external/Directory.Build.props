@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Disable using root Directory.Build.props for external projects -->
+<Project>
+</Project>

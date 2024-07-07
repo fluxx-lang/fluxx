@@ -5,18 +5,22 @@ using Faml.Syntax.Expression;
 using Faml.Syntax.Literal;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax {
-    public sealed class ContentArgumentSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public sealed class ContentArgumentSyntax : SyntaxNode
+    {
         private ExpressionSyntax _value;
         private TypeBinding? _parameterTypeBinding;
 
 
-        public ContentArgumentSyntax(TextSpan span, ExpressionSyntax value) : base(span) {
+        public ContentArgumentSyntax(TextSpan span, ExpressionSyntax value) : base(span)
+        {
             this._value = value;
             value.SetParent(this);
         }
 
-        public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver) {
+        public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver)
+        {
             // If we've already resolved, do nothing
             if (this._parameterTypeBinding != null)
             {
@@ -35,7 +39,8 @@ namespace Faml.Syntax {
 
         public TypeBinding ParameterTypeBinding => this._parameterTypeBinding;
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             if (this._value != null)
             {
                 visitor(this._value);
@@ -46,7 +51,8 @@ namespace Faml.Syntax {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ArgumentNameValuePair;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._value);
         }
     }

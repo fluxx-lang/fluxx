@@ -6,14 +6,17 @@
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Lexer {
-    public sealed class LiteralValueCharIterator {
+namespace Faml.Lexer
+{
+    public sealed class LiteralValueCharIterator
+    {
         private readonly ParseableSource _parseableSource;
         private readonly SourceText _sourceText;
         private readonly int _sourceEnd;
         private int _position;
 
-        public LiteralValueCharIterator(SourceText sourceText, TextSpan sourceSpan) {
+        public LiteralValueCharIterator(SourceText sourceText, TextSpan sourceSpan)
+        {
             this._sourceText = sourceText;
 
             this._position = sourceSpan.Start;
@@ -22,42 +25,52 @@ namespace Faml.Lexer {
 
         public char GetLookahead() => this._position < this._sourceEnd ? this._sourceText[this._position] : '\0';
 
-        public char GetLookaheadPlusOne() {
+        public char GetLookaheadPlusOne()
+        {
             int positionPlusOne = this._position + 1;
             return positionPlusOne < this._sourceEnd ? this._sourceText[positionPlusOne] : '\0';
         }
 
-        public char GetLookaheadAt(int index) {
+        public char GetLookaheadAt(int index)
+        {
             int lookaheadPosition = this._position + index;
             return lookaheadPosition < this._sourceEnd ? this._sourceText[lookaheadPosition] : '\0';
         }
 
-        public int Position {
+        public int Position
+        {
             get => this._position;
             set => this._position = value;
         }
         
-        public char ReadChar() {
+        public char ReadChar()
+        {
             return this._position >= this._sourceEnd ? '\0' : this._sourceText[this._position++];
         }
 
-        public int GetMatchingRightBrace() {
+        public int GetMatchingRightBrace()
+        {
             int nestedBraces = 0;
             int position = this._position;
-            while (position < this._sourceEnd) {
+            while (position < this._sourceEnd)
+            {
                 char currChar = this._sourceText[position];
 
-                if (currChar == '\\') {
+                if (currChar == '\\')
+                {
                     position += 2;
                 }
-                else if (currChar == '{') {
+                else if (currChar == '{')
+                {
                     ++position;
                     ++nestedBraces;
                 }
-                else if (currChar == '}') {
+                else if (currChar == '}')
+                {
                     if (nestedBraces == 0)
                         return position;
-                    else {
+                    else
+                    {
                         --nestedBraces;
                         ++position;
                     }

@@ -8,7 +8,6 @@ namespace TypeTooling.CodeGeneration
         private readonly ExpressionCode functionDelegate;
         private readonly ImmutableArray<ExpressionCode> arguments;
 
-
         public FunctionDelegateInvokeCode(ExpressionCode functionDelegate, ImmutableArray<ExpressionCode> arguments)
         {
             this.functionDelegate = functionDelegate;

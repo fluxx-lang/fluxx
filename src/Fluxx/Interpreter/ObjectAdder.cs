@@ -5,11 +5,14 @@
  * @author Bret Johnson
  * @since 4/4/2015
  */
-namespace Faml.Interpreter {
-    public abstract class ObjectAdder : Adder {
+namespace Faml.Interpreter
+{
+    public abstract class ObjectAdder : Adder
+    {
         private ObjectEval _objectEval;
 
-        public ObjectAdder(ObjectEval objectEval) {
+        public ObjectAdder(ObjectEval objectEval)
+        {
             this._objectEval = objectEval;
         }
 

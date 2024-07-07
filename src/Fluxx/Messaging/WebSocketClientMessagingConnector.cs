@@ -2,24 +2,30 @@
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
-namespace Faml.Messaging {
-    public class WebSocketClientMessagingConnector : WebSocketMessagingConnector {
+namespace Faml.Messaging
+{
+    public class WebSocketClientMessagingConnector : WebSocketMessagingConnector
+    {
         private readonly string _developmentMachine;
 
 
-        public WebSocketClientMessagingConnector(string developmentMachine) {
+        public WebSocketClientMessagingConnector(string developmentMachine)
+        {
             this._developmentMachine = developmentMachine;
         }
 
-        public async Task Start() {
+        public async Task Start()
+        {
 
-            try {
+            try
+            {
                 var clientWebSocket = new ClientWebSocket();
                 await clientWebSocket.ConnectAsync(new Uri("ws://" + this._developmentMachine), this.StopCts.Token);
 
                 await this.ProcessMessages(clientWebSocket);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
                 // TODO: Add reconnect logic
             }

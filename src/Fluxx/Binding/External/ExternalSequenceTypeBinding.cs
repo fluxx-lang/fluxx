@@ -5,14 +5,17 @@ using TypeTooling.Types;
  * @author Bret Johnson
  * @since 4/15/2015
  */
-namespace Faml.Binding.External {
-    public class ExternalSequenceTypeBinding : SequenceTypeBinding {
+namespace Faml.Binding.External
+{
+    public class ExternalSequenceTypeBinding : SequenceTypeBinding
+    {
         private readonly FamlProject _project;
         private readonly SequenceType _typeToolingType;
         public readonly DotNetRawType _dotNetType;
 
 
-        public ExternalSequenceTypeBinding(FamlProject project, SequenceType typeToolingType, TypeBinding elementTypeBinding) : base(elementTypeBinding) {
+        public ExternalSequenceTypeBinding(FamlProject project, SequenceType typeToolingType, TypeBinding elementTypeBinding) : base(elementTypeBinding)
+        {
             this._project = project;
             this._typeToolingType = typeToolingType;
 
@@ -23,11 +26,13 @@ namespace Faml.Binding.External {
 
         public SequenceType TypeToolingType => this._typeToolingType;
 
-        protected bool Equals(ExternalSequenceTypeBinding other) {
+        protected bool Equals(ExternalSequenceTypeBinding other)
+        {
             return this._dotNetType.Equals(other._dotNetType);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             if (!(obj is ExternalSequenceTypeBinding))
             {
                 return false;
@@ -36,11 +41,13 @@ namespace Faml.Binding.External {
             return this.Equals((ExternalSequenceTypeBinding) obj);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return this._dotNetType.GetHashCode();
         }
 
-        public override bool IsAssignableFrom(TypeBinding other) {
+        public override bool IsAssignableFrom(TypeBinding other)
+        {
             if (other is ExternalSequenceTypeBinding otherSequenceTypeBinding)
             {
                 return this._dotNetType.IsAssignableFrom(otherSequenceTypeBinding._dotNetType);

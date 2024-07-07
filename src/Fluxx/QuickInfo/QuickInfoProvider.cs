@@ -4,9 +4,12 @@ using Faml.Binding;
 using Faml.Syntax;
 using Faml.Syntax.Expression;
 
-namespace Faml.QuickInfo {
-    public class QuickInfoProvider {
-        public static Api.QuickInfo.QuickInfo? GetQuickInfo(SyntaxNode syntaxNode) {
+namespace Faml.QuickInfo
+{
+    public class QuickInfoProvider
+    {
+        public static Api.QuickInfo.QuickInfo? GetQuickInfo(SyntaxNode syntaxNode)
+        {
             if (syntaxNode.Parent is SymbolReferenceSyntax parentSymbolReferenceSyntax)
             {
                 syntaxNode = parentSymbolReferenceSyntax;
@@ -14,7 +17,8 @@ namespace Faml.QuickInfo {
 
             SyntaxNode parentNode = syntaxNode.Parent;
 
-            if (parentNode is FunctionInvocationSyntax functionInvocationSyntax && ReferenceEquals(functionInvocationSyntax.FunctionReference, syntaxNode)) {
+            if (parentNode is FunctionInvocationSyntax functionInvocationSyntax && ReferenceEquals(functionInvocationSyntax.FunctionReference, syntaxNode))
+            {
                 FunctionBinding functionBinding = functionInvocationSyntax.FunctionBinding;
                 if (functionBinding == null)
                 {

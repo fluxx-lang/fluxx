@@ -8,21 +8,26 @@ using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Literal {
-    public class StringLiteralSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Literal
+{
+    public class StringLiteralSyntax : ExpressionSyntax
+    {
         private readonly string _value;
 
-        public StringLiteralSyntax(TextSpan span, string value) : base(span) {
+        public StringLiteralSyntax(TextSpan span, string value) : base(span)
+        {
             this._value = value;
         }
 
-        public override Binding.TypeBinding GetTypeBinding() {
+        public override Binding.TypeBinding GetTypeBinding()
+        {
             return BuiltInTypeBinding.String;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.StringLiteral;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._value);
         }
 

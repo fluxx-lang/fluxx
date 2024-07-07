@@ -7,19 +7,23 @@ using TypeTooling.DotNet.RawTypes.Reflection;
  * @author Bret Johnson
  * @since 4/4/2015
  */
-namespace Faml.Interpreter.External {
-    public sealed class DotNetMethodInvocaionEval : ObjectEval {
+namespace Faml.Interpreter.External
+{
+    public sealed class DotNetMethodInvocaionEval : ObjectEval
+    {
         private readonly ObjectEval _thisArgumentEval;
         private readonly ObjectEval[] _argumentEvals;
         private readonly DotNetRawMethod _method;
 
-        public DotNetMethodInvocaionEval(ObjectEval thisArgumentEval, ObjectEval[] argumentEvals, DotNetRawMethod method) {
+        public DotNetMethodInvocaionEval(ObjectEval thisArgumentEval, ObjectEval[] argumentEvals, DotNetRawMethod method)
+        {
             this._thisArgumentEval = thisArgumentEval;
             this._argumentEvals = argumentEvals;
             this._method = method;
         }
 
-        public override object Eval() {
+        public override object Eval()
+        {
             object thisArgument = this._thisArgumentEval.Eval();
 
             int argumentsLength = this._argumentEvals.Length;

@@ -1,9 +1,11 @@
 using System;
 using TypeTooling.Images;
 
-namespace Faml.Api.IntelliSense {
+namespace Faml.Api.IntelliSense
+{
     [Serializable]
-    public class IntelliSenseCompletion {
+    public class IntelliSenseCompletion
+    {
         public CompletionType Type { get; }
         public string DisplayText { get; }
         public string? InsertText { get; }
@@ -14,7 +16,8 @@ namespace Faml.Api.IntelliSense {
         /// </summary>
         public object? Data { get; }
 
-        public IntelliSenseCompletion(CompletionType type, string displayText, string? insertText = null, Image? icon = null, object? data = null) {
+        public IntelliSenseCompletion(CompletionType type, string displayText, string? insertText = null, Image? icon = null, object? data = null)
+        {
             this.Type = type;
             this.DisplayText = displayText;
 

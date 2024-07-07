@@ -6,14 +6,17 @@ using Faml.Syntax.Expression;
 using Faml.Syntax.Literal;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax {
-    public sealed class ArgumentNameValuePairSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public sealed class ArgumentNameValuePairSyntax : SyntaxNode
+    {
         private readonly PropertySpecifierSyntax _propertySpecifier;
         private ExpressionSyntax _value;
         private TypeBinding? _parameterTypeBinding;
 
 
-        public ArgumentNameValuePairSyntax(TextSpan span, PropertySpecifierSyntax propertySpecifier, ExpressionSyntax value) : base(span) {
+        public ArgumentNameValuePairSyntax(TextSpan span, PropertySpecifierSyntax propertySpecifier, ExpressionSyntax value) : base(span)
+        {
             this._propertySpecifier = propertySpecifier;
             this._propertySpecifier.SetParent(this);
 
@@ -21,7 +24,8 @@ namespace Faml.Syntax {
             value.SetParent(this);
         }
 
-        public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver) {
+        public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver)
+        {
             // If we've already resolved, do nothing
             if (this._parameterTypeBinding != null)
             {
@@ -44,7 +48,8 @@ namespace Faml.Syntax {
 
         public TypeBinding ParameterTypeBinding => this._parameterTypeBinding;
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             visitor(this._propertySpecifier);
 
             if (this._value != null)
@@ -57,7 +62,8 @@ namespace Faml.Syntax {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ArgumentNameValuePair;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._propertySpecifier);
             sourceWriter.Write(this._value);
         }

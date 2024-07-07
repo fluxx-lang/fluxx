@@ -1,5 +1,7 @@
-namespace Faml.Syntax {
-    public enum SyntaxNodeType {
+namespace Faml.Syntax
+{
+    public enum SyntaxNodeType
+    {
         BracedExpression,
         FunctionInvocation,
         IfExpression,

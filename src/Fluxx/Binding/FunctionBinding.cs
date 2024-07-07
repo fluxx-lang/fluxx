@@ -6,8 +6,10 @@ using Faml.Binding.Resolver;
 using Faml.Syntax;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.Binding {
-    public abstract class FunctionBinding {
+namespace Faml.Binding
+{
+    public abstract class FunctionBinding
+    {
         public abstract QualifiableName FunctionName { get; }
 
         public abstract TypeBinding ReturnTypeBinding { get; }

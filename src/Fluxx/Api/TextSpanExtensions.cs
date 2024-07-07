@@ -1,7 +1,9 @@
 ﻿using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Api {
-    public static class TextSpanExtensions  {
+namespace Faml.Api
+{
+    public static class TextSpanExtensions
+    {
         public static TextSpan NullTextSpan = new TextSpan(0, 0);
 
         public static bool IsNull(this TextSpan textSpan) => textSpan.Start == 0 && textSpan.Length == 0;
@@ -16,7 +18,8 @@ namespace Faml.Api {
         /// <returns>
         /// <c>true</c> if the position is greater than or equal to Start and strictly less than or equal to End, otherwise <c>false</c>.
         /// </returns>
-        public static bool ContainsInclusiveEnd(this TextSpan textSpan, int position) {
+        public static bool ContainsInclusiveEnd(this TextSpan textSpan, int position)
+        {
             return unchecked((uint)(position - textSpan.Start) <= (uint)textSpan.Length);
         }
 

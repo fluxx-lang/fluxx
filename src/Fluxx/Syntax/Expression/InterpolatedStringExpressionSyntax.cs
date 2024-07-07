@@ -6,8 +6,10 @@ using Microsoft.CodeAnalysis.Text;
  * Created by Bret on 6/28/2014.
  */
 
-namespace Faml.Syntax.Expression {
-    public sealed class InterpolatedStringExpressionSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Expression
+{
+    public sealed class InterpolatedStringExpressionSyntax : ExpressionSyntax
+    {
         private readonly InterpolatedStringFragmentSyntax[] _stringFragments;
         private readonly ExpressionSyntax[] _expressions;
 
@@ -28,7 +30,8 @@ namespace Faml.Syntax.Expression {
             }
         }
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
@@ -37,7 +40,8 @@ namespace Faml.Syntax.Expression {
         public override void VisitChildren(SyntaxVisitor visitor)
         {
             int length = this._expressions.Length;
-            for (int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++)
+            {
                 visitor(this._stringFragments[i]);
                 visitor(this._expressions[i]);
             }
@@ -49,7 +53,8 @@ namespace Faml.Syntax.Expression {
         public override void WriteSource(SourceWriter sourceWriter)
         {
             int length = this._expressions.Length;
-            for (int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++)
+            {
                 this._stringFragments[i].WriteSource(sourceWriter);
 
                 sourceWriter.Write("{");

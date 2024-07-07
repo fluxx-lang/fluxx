@@ -7,22 +7,27 @@ using Faml.Binding;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Type {
-    public class PredefinedTypeReferenceSyntax : TypeReferenceSyntax {
+namespace Faml.Syntax.Type
+{
+    public class PredefinedTypeReferenceSyntax : TypeReferenceSyntax
+    {
         private readonly BuiltInTypeBinding _predefinedTypeBinding;
 
         public PredefinedTypeReferenceSyntax(TextSpan span, BuiltInTypeBinding predefinedTypeBinding) :
-            base(span) {
+            base(span)
+            {
             this._predefinedTypeBinding = predefinedTypeBinding;
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._predefinedTypeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.PredefinedTypeReference;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._predefinedTypeBinding.TypeName);
         }
     }

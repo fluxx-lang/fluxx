@@ -7,21 +7,26 @@ using Microsoft.CodeAnalysis.Text;
  * @author Bret Johnson
  * @since 4/15/2015
  */
-namespace Faml.Binding.Internal {
-    public class RecordTypeBinding : ObjectTypeBinding {
+namespace Faml.Binding.Internal
+{
+    public class RecordTypeBinding : ObjectTypeBinding
+    {
         private readonly RecordTypeDefinitionSyntax _recordTypeDefinition;
 
-        public RecordTypeBinding(RecordTypeDefinitionSyntax recordTypeDefinition) : base(recordTypeDefinition.TypeNameSyntax.Name.ToQualifiableName()) {
+        public RecordTypeBinding(RecordTypeDefinitionSyntax recordTypeDefinition) : base(recordTypeDefinition.TypeNameSyntax.Name.ToQualifiableName())
+        {
             this._recordTypeDefinition = recordTypeDefinition;
         }
 
         public RecordTypeDefinitionSyntax RecordTypeDefinition => this._recordTypeDefinition;
 
-        protected bool Equals(RecordTypeBinding other) {
+        protected bool Equals(RecordTypeBinding other)
+        {
             return this._recordTypeDefinition.Equals(other._recordTypeDefinition);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             if (! (obj is RecordTypeBinding))
             {
                 return false;
@@ -30,11 +35,13 @@ namespace Faml.Binding.Internal {
             return this.Equals((RecordTypeBinding) obj);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return this._recordTypeDefinition.GetHashCode();
         }
 
-        public override PropertyBinding? GetPropertyBinding(Name propertyName) {
+        public override PropertyBinding? GetPropertyBinding(Name propertyName)
+        {
             if (!this._recordTypeDefinition.HasProperty(propertyName))
             {
                 return null;
@@ -43,11 +50,13 @@ namespace Faml.Binding.Internal {
             return new RecordPropertyBinding(this._recordTypeDefinition, propertyName);
         }
 
-        public override bool SupportsCreateLiteral() {
+        public override bool SupportsCreateLiteral()
+        {
             return false;
         }
 
-        public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan sourceSpan) {
+        public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan sourceSpan)
+        {
             string literalSource = module.SourceText.ToString(sourceSpan);
 
             var invalidExpression = new InvalidExpressionSyntax(sourceSpan, literalSource, this);

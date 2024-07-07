@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Faml.SourceProviders {
-    public class InMemorySourceProvider : SourceProvider {
+namespace Faml.SourceProviders
+{
+    public class InMemorySourceProvider : SourceProvider
+    {
         private readonly Dictionary<string, object> _resources = new Dictionary<string, object>();
 
 
-        public void AddTextResource(string path, string contents) {
+        public void AddTextResource(string path, string contents)
+        {
             this._resources.Add(path, contents);
         }
 
-        public void AddBinaryResource(string path, byte[] contents) {
+        public void AddBinaryResource(string path, byte[] contents)
+        {
             this._resources.Add(path, contents);
         }
 
@@ -20,7 +24,8 @@ namespace Faml.SourceProviders {
         public override ImmutableArray<byte>? GetBinaryResource(string path) =>
             this._resources.TryGetValue(path, out object contents) ? (ImmutableArray<byte>?)contents : null;
 
-        public override IEnumerable<string> GetResources() {
+        public override IEnumerable<string> GetResources()
+        {
             return this._resources.Keys;
         }
 

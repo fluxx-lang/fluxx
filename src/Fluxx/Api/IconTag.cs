@@ -1,12 +1,15 @@
 ﻿using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Api {
+namespace Faml.Api
+{
     [Serializable]
-    public struct IconTag {
+    public struct IconTag
+    {
         private readonly TextSpan _sourceSpan;
         private readonly IconTagType _iconTagType;
 
-        public IconTag(TextSpan sourceSpan, IconTagType iconTagType) {
+        public IconTag(TextSpan sourceSpan, IconTagType iconTagType)
+        {
             this._sourceSpan = sourceSpan;
             this._iconTagType = iconTagType;
         }

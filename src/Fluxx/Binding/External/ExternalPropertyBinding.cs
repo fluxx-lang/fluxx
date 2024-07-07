@@ -10,21 +10,25 @@ using Faml.Api;
 using TypeTooling.ClassifiedText;
 using TypeTooling.Types;
 
-namespace Faml.Binding.External {
-    public class ExternalPropertyBinding : PropertyBinding {
+namespace Faml.Binding.External
+{
+    public class ExternalPropertyBinding : PropertyBinding
+    {
         private readonly ExternalObjectTypeBinding _objectTypeBinding;
         private readonly ObjectProperty _objectProperty;
         private readonly TypeBinding _propertyTypeBinding;
 
 
-        public ExternalPropertyBinding(ExternalObjectTypeBinding objectTypeBinding, ObjectProperty objectProperty) {
+        public ExternalPropertyBinding(ExternalObjectTypeBinding objectTypeBinding, ObjectProperty objectProperty)
+        {
             this._objectTypeBinding = objectTypeBinding;
             this._objectProperty = objectProperty;
 
             this._propertyTypeBinding = ExternalBindingUtil.TypeToolingTypeToTypeBinding(objectTypeBinding.Project, objectProperty.Type);
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._propertyTypeBinding;
         }
 

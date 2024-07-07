@@ -3,19 +3,24 @@ using TypeTooling;
 using TypeTooling.RawTypes;
 using TypeTooling.Types;
 
-namespace Faml {
-    public class FamlTypeToolingEnvironment : TypeToolingEnvironment {
+namespace Faml
+{
+    public class FamlTypeToolingEnvironment : TypeToolingEnvironment
+    {
         private readonly FamlProject _project;
 
-        public FamlTypeToolingEnvironment(FamlProject project) {
+        public FamlTypeToolingEnvironment(FamlProject project)
+        {
             this._project = project;
         }
 
-        public override TypeToolingType? GetType(RawType rawType) {
+        public override TypeToolingType? GetType(RawType rawType)
+        {
             return this._project.GetTypeToolingType(rawType);
         }
 
-        public override TypeToolingType GetRequiredType(RawType rawType) {
+        public override TypeToolingType GetRequiredType(RawType rawType)
+        {
             TypeToolingType typeToolingType = this.GetType(rawType);
             if (typeToolingType == null)
             {
@@ -25,11 +30,13 @@ namespace Faml {
             return typeToolingType;
         }
 
-        public override RawType? GetRawType(string rawTypeName) {
+        public override RawType? GetRawType(string rawTypeName)
+        {
             return this._project.GetTypeToolingRawType(rawTypeName);
         }
 
-        public override RawType GetRequiredRawType(string rawTypeName) {
+        public override RawType GetRequiredRawType(string rawTypeName)
+        {
             RawType rawType = this.GetRawType(rawTypeName);
             if (rawType == null)
             {
@@ -39,7 +46,8 @@ namespace Faml {
             return rawType;
         }
 
-        public override object Instantiate(RawType rawType, params object[] args) {
+        public override object Instantiate(RawType rawType, params object[] args)
+        {
             return this._project.Instantiate(rawType, args);
         }
 

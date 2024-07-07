@@ -8,14 +8,17 @@ using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression {
-    public sealed class ForExpressionSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Expression
+{
+    public sealed class ForExpressionSyntax : ExpressionSyntax
+    {
         private TypeBinding _typeBinding = null;
         private readonly ExpressionSyntax _expression;
         private readonly ForVariableDefinitionSyntax _forVariableDefinition;
 
 
-        public ForExpressionSyntax(TextSpan span, ExpressionSyntax expression, ForVariableDefinitionSyntax forVariableDefinition) : base(span) {
+        public ForExpressionSyntax(TextSpan span, ExpressionSyntax expression, ForVariableDefinitionSyntax forVariableDefinition) : base(span)
+        {
             this._expression = expression;
             expression.SetParent(this);
 
@@ -23,13 +26,15 @@ namespace Faml.Syntax.Expression {
             this._forVariableDefinition.SetParent(this);
         }
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ForExpression;
 
-        public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
+        {
             // Visit in this order so that the variable type binding is resolved before the expression
             // type binding is resolved
 
@@ -37,14 +42,16 @@ namespace Faml.Syntax.Expression {
             visitor(this._expression);
         }
 
-        protected internal override void ResolveBindings(BindingResolver bindingResolver) {
+        protected internal override void ResolveBindings(BindingResolver bindingResolver)
+        {
             TypeBinding expressionTypeBinding = this._expression.GetTypeBinding();
             this._typeBinding = new SequenceTypeBinding(expressionTypeBinding);
         }
 
         public override TypeBinding GetTypeBinding() => this._typeBinding;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             this._expression.WriteSource(sourceWriter);
             sourceWriter.Write("for ");
             sourceWriter.Write(this._forVariableDefinition);

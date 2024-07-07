@@ -6,15 +6,19 @@
  * @author Bret Johnson
  * @since 4/4/2015
  */
-namespace Faml.Interpreter {
-    public class StackBooleanEval : BooleanEval {
+namespace Faml.Interpreter
+{
+    public class StackBooleanEval : BooleanEval
+    {
         private readonly int _stackOffset;
 
-        internal StackBooleanEval(int stackOffset) {
+        internal StackBooleanEval(int stackOffset)
+        {
             this._stackOffset = stackOffset;
         }
 
-        public override bool Eval() {
+        public override bool Eval()
+        {
             return Context.BooleanStack[Context.BaseIndex + this._stackOffset];
         }
     }

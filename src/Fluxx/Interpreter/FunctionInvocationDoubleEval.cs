@@ -5,19 +5,23 @@
 
 using Faml.Syntax;
 
-namespace Faml.Interpreter {
-    public sealed class FunctionInvocationDoubleEval : DoubleEval {
+namespace Faml.Interpreter
+{
+    public sealed class FunctionInvocationDoubleEval : DoubleEval
+    {
         internal readonly Eval[] Arguments;
         internal DoubleEval Expression;
 
-        public FunctionInvocationDoubleEval(Eval[] arguments, CreateEvals createEvals, FunctionDefinitionSyntax functionDefinition) {
+        public FunctionInvocationDoubleEval(Eval[] arguments, CreateEvals createEvals, FunctionDefinitionSyntax functionDefinition)
+        {
             this.Arguments = arguments;
 
             createEvals.DelayResolveFunctionEval(functionDefinition,
                 (functionEval) => this.Expression = (DoubleEval)functionEval);
         }
 
-        public override double Eval() {
+        public override double Eval()
+        {
             int argumentsLength = this.Arguments.Length;
             for (int i = 0; i < argumentsLength; i++)
             {

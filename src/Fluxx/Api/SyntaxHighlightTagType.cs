@@ -1,5 +1,7 @@
-﻿namespace Faml.Api {
-    public enum SyntaxHighlightTagType {
+﻿namespace Faml.Api
+{
+    public enum SyntaxHighlightTagType
+    {
         Keyword,
         ControlKeyword,
         Comment,

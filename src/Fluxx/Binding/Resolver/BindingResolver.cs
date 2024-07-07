@@ -7,8 +7,10 @@ using Faml.Api;
 using Faml.Syntax;
 using Faml.Syntax.Type;
 
-namespace Faml.Binding.Resolver {
-    public abstract class BindingResolver {
+namespace Faml.Binding.Resolver
+{
+    public abstract class BindingResolver
+    {
         public abstract TypeBindingResult FindTypeBindingForType(QualifiableName typeName);
 
         public abstract FunctionBinding ResolveFunctionBinding(TypeBinding? thisArgumentTypeBinding,
@@ -18,17 +20,20 @@ namespace Faml.Binding.Resolver {
 
         public abstract AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName);
 
-        public PropertyBinding ResolvePropertyBinding(TypeBinding expressionTypeBinding, NameSyntax propertyNameSyntax) {
+        public PropertyBinding ResolvePropertyBinding(TypeBinding expressionTypeBinding, NameSyntax propertyNameSyntax)
+        {
             Name propertyName = propertyNameSyntax.Name;
 
-            if (!(expressionTypeBinding is ObjectTypeBinding objectTypeBinding)) {
+            if (!(expressionTypeBinding is ObjectTypeBinding objectTypeBinding))
+            {
                 propertyNameSyntax.AddError(
                     $"Type {expressionTypeBinding.TypeName} isn't an object type, so reference to {propertyName} property is invalid");
                 return new InvalidPropertyBinding(propertyName);
             }
 
             PropertyBinding propertyBinding = objectTypeBinding.GetPropertyBinding(propertyName);
-            if (propertyBinding == null) {
+            if (propertyBinding == null)
+            {
                 propertyNameSyntax.AddError(
                     $"Type {expressionTypeBinding.TypeName} doesn't have property {propertyName}");
                 return new InvalidPropertyBinding(propertyName);

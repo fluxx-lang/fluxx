@@ -4,7 +4,8 @@
  * @author Bret Johnson
  * @since 7/27/2015
  */
-namespace Faml.Interpreter.External.PropertyInitializer {
+namespace Faml.Interpreter.External.PropertyInitializer
+{
 #if false
     public class DataEventHandlerInitializer : PropertyInitializer {
         private readonly ListEval _listEval;

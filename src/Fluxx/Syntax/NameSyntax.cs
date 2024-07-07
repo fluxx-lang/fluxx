@@ -7,11 +7,14 @@ using Faml.Api;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax {
-    public class NameSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public class NameSyntax : SyntaxNode
+    {
         private readonly Name _name;
 
-        public NameSyntax(TextSpan span, Name name) : base(span) {
+        public NameSyntax(TextSpan span, Name name) : base(span)
+        {
             this._name = name;
         }
 
@@ -19,7 +22,8 @@ namespace Faml.Syntax {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.NameIdentifier;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._name);
         }
     }

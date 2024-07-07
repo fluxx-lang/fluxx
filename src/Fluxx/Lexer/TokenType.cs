@@ -1,5 +1,7 @@
-namespace Faml.Lexer {
-    public enum TokenType {
+namespace Faml.Lexer
+{
+    public enum TokenType
+    {
         LeftBrace,
         RightBrace,
 

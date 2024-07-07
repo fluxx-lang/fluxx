@@ -3,9 +3,12 @@ using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;
 using TypeTooling.Types.PredefinedTypes;
 
-namespace Faml.Binding.External {
-    public class ExternalBindingUtil {
-        public static TypeBinding DotNetTypeToTypeBinding(FamlProject project, DotNetRawType type) {
+namespace Faml.Binding.External
+{
+    public class ExternalBindingUtil
+    {
+        public static TypeBinding DotNetTypeToTypeBinding(FamlProject project, DotNetRawType type)
+        {
             string typeFullName = type.FullName;
 
             if (typeFullName.Equals("System.Int32"))
@@ -34,7 +37,8 @@ namespace Faml.Binding.External {
             }
         }
 
-        public static TypeBinding TypeToolingTypeToTypeBinding(FamlProject project, TypeToolingType typeToolingType) {
+        public static TypeBinding TypeToolingTypeToTypeBinding(FamlProject project, TypeToolingType typeToolingType)
+        {
             if (typeToolingType is BooleanType)
             {
                 return BuiltInTypeBinding.Bool;

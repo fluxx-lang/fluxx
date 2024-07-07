@@ -1,11 +1,14 @@
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
 
-namespace Faml.Syntax.Literal {
-    public sealed class TextualLiteralExpressionItemSyntax : TextualLiteralItemSyntax {
+namespace Faml.Syntax.Literal
+{
+    public sealed class TextualLiteralExpressionItemSyntax : TextualLiteralItemSyntax
+    {
         private readonly ExpressionSyntax _expression;
 
-        public TextualLiteralExpressionItemSyntax(ExpressionSyntax expression) : base(expression.Span) {
+        public TextualLiteralExpressionItemSyntax(ExpressionSyntax expression) : base(expression.Span)
+        {
             this._expression = expression;
         }
 
@@ -13,11 +16,13 @@ namespace Faml.Syntax.Literal {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.TextualLiteralExpressionItem;
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             visitor(this._expression);
         }
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._expression);
         }
     }

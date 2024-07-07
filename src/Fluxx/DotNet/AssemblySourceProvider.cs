@@ -5,16 +5,21 @@ using System.Linq;
 using System.Reflection;
 using Faml.SourceProviders;
 
-namespace Faml.DotNet {
-    public class AssemblySourceProvider : SourceProvider {
+namespace Faml.DotNet
+{
+    public class AssemblySourceProvider : SourceProvider
+    {
         private readonly List<Assembly> _assemblies;
 
-        public AssemblySourceProvider(Assembly assembly) {
+        public AssemblySourceProvider(Assembly assembly)
+        {
             this._assemblies = new List<Assembly> {assembly};
         }
 
-        public override string? GetTextResource(string path) {
-            foreach (Assembly assembly in this._assemblies) {
+        public override string? GetTextResource(string path)
+        {
+            foreach (Assembly assembly in this._assemblies)
+            {
                 string[] resourceNames = assembly.GetManifestResourceNames();
 
                 string pathWithLeadingPeriod = "." + path;
@@ -37,7 +42,8 @@ namespace Faml.DotNet {
                     return null;
                 }
 
-                using (var streamReader = new StreamReader(stream)) {
+                using (var streamReader = new StreamReader(stream))
+                {
                     return streamReader.ReadToEnd();
                 }
             }
@@ -45,7 +51,8 @@ namespace Faml.DotNet {
             return null;
         }
 
-        public override IEnumerable<string> GetResources() {
+        public override IEnumerable<string> GetResources()
+        {
             throw new NotImplementedException();
         }
 

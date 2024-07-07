@@ -7,8 +7,10 @@
 
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax {
-    public abstract class DefinitionSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public abstract class DefinitionSyntax : SyntaxNode
+    {
         protected DefinitionSyntax(TextSpan span) : base(span) {}
     }
 }

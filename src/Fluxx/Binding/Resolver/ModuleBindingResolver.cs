@@ -5,18 +5,22 @@ using Faml.Binding.Internal;
 using Faml.Syntax;
 using Faml.Syntax.Type;
 
-namespace Faml.Binding.Resolver {
-    public class ModuleBindingResolver : BindingResolver {
+namespace Faml.Binding.Resolver
+{
+    public class ModuleBindingResolver : BindingResolver
+    {
         private readonly ModuleSyntax _module;
         private readonly FamlProject _project;
 
-        public ModuleBindingResolver(ModuleSyntax module) {
+        public ModuleBindingResolver(ModuleSyntax module)
+        {
             this._module = module;
             this._project = module.Project;
         }
 
         public override FunctionBinding ResolveFunctionBinding(TypeBinding? thisArgumentTypeBinding,
-            QualifiableName functionName, SyntaxNode nameSyntaxForErrors) {
+            QualifiableName functionName, SyntaxNode nameSyntaxForErrors)
+            {
             // TODO: Handle "this" (differently than here, treating it as a function reference property)
 #if LATER
             if (thisArgumentTypeBinding != null) {
@@ -32,7 +36,8 @@ namespace Faml.Binding.Resolver {
             }
 #endif
 
-            if (!functionName.IsQualified()) {
+            if (!functionName.IsQualified())
+            {
                 Name unqualifiableName = functionName.ToUnqualifiableName();
 
                 FunctionDefinitionSyntax? functionDefinition = this._module.GetFunctionDefinition(unqualifiableName);
@@ -63,7 +68,8 @@ namespace Faml.Binding.Resolver {
             // constructor function
             TypeBindingResult typeBindingResult = this.FindTypeBindingForType(functionName);
 
-            if (typeBindingResult is TypeBindingResult.Success success) {
+            if (typeBindingResult is TypeBindingResult.Success success)
+            {
                 if (success.TypeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)
                 {
                     return new NewExternalObjectFunctionBinding(externalObjectTypeBinding);
@@ -77,26 +83,30 @@ namespace Faml.Binding.Resolver {
                     return new InvalidFunctionBinding(functionName);
                 }
             }
-            else {
+            else
+            {
                 nameSyntaxForErrors.AddError(typeBindingResult.GetNotFoundOrOtherErrorMessage($"Function '{functionName}' not found"));
                 return new InvalidFunctionBinding(functionName);
             }
         }
 
-        public override TypeBinding ResolveObjectTypeBinding(ObjectTypeReferenceSyntax objectTypeReferenceSyntax) {
+        public override TypeBinding ResolveObjectTypeBinding(ObjectTypeReferenceSyntax objectTypeReferenceSyntax)
+        {
             QualifiableName typeName = objectTypeReferenceSyntax.TypeName;
             TypeBindingResult typeBindingResult = this.FindTypeBindingForType(typeName);
 
             if (typeBindingResult is TypeBindingResult.Success success)
                 return success.TypeBinding;
-            else {
+            else
+            {
                 objectTypeReferenceSyntax.AddError(
                     typeBindingResult.GetNotFoundOrOtherErrorMessage($"Type '{typeName}' not found"));
                 return new InvalidTypeBinding(typeName);
             }
         }
 
-        public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName) {
+        public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName)
+        {
             if (typeName.IsQualified())
             {
                 return this._project.ResolveTypeBinding(typeName);
@@ -116,10 +126,12 @@ namespace Faml.Binding.Resolver {
                 return new TypeBindingResult.Success(recordTypeDefinition.TypeBinding);
             }
 
-            foreach (ImportSyntax import in this._module.Imports) {
+            foreach (ImportSyntax import in this._module.Imports)
+            {
                 ImmutableArray<ImportTypeReferenceSyntax>? importImportTypeReferences = import.ImportTypeReferences;
 
-                if (importImportTypeReferences == null) {
+                if (importImportTypeReferences == null)
+                {
                     // If importing all types, combine the namespace qualifier with this name and see if that's a valid
                     // type. If so, match on it.
 
@@ -132,10 +144,12 @@ namespace Faml.Binding.Resolver {
                         return typeBindingResult;
                     }
                 }
-                else {
+                else
+                {
                     // If just importing specified types, see if any of them match this name
 
-                    foreach (ImportTypeReferenceSyntax importReference in importImportTypeReferences) {
+                    foreach (ImportTypeReferenceSyntax importReference in importImportTypeReferences)
+                    {
                         if (importReference.Name == unqualifiableTypeName)
                         {
                             return new TypeBindingResult.Success(importReference.GetTypeBinding());
@@ -147,7 +161,8 @@ namespace Faml.Binding.Resolver {
             return TypeBindingResult.NotFoundResult;
         }
 
-        public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName) {
+        public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName)
+        {
             if (typeName.IsQualified())
             {
                 return this._project.ResolveAttachedTypeBinding(typeName);
@@ -155,10 +170,12 @@ namespace Faml.Binding.Resolver {
 
             Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
-            foreach (ImportSyntax import in this._module.Imports) {
+            foreach (ImportSyntax import in this._module.Imports)
+            {
                 ImmutableArray<ImportTypeReferenceSyntax>? importImportTypeReferences = import.ImportTypeReferences;
 
-                if (importImportTypeReferences == null) {
+                if (importImportTypeReferences == null)
+                {
                     // If importing all types, combine the namespace qualifier with this name and see if that's a valid
                     // type. If so, match on it.
 
@@ -170,10 +187,12 @@ namespace Faml.Binding.Resolver {
                         return typeBinding;
                     }
                 }
-                else {
+                else
+                {
                     // If just importing specified types, see if any of them match this name
 
-                    foreach (ImportTypeReferenceSyntax importReference in importImportTypeReferences) {
+                    foreach (ImportTypeReferenceSyntax importReference in importImportTypeReferences)
+                    {
                         if (importReference.Name == unqualifiableTypeName)
                         {
                             return importReference.GetAttachedTypeBinding();

@@ -4,12 +4,15 @@ using System.Reflection;
 using Faml.DotNet;
 using ReactiveData;
 
-namespace Faml.App {
-    public abstract class FamlApplication {
+namespace Faml.App
+{
+    public abstract class FamlApplication
+    {
         private ReactiveVar<Program>? _program;
         private AppToDevEnvConnection? _appToDevEnvConnection;
 
-        protected void Initialize(Assembly assembly, string resourceFileName) {
+        protected void Initialize(Assembly assembly, string resourceFileName)
+        {
             var workspace = new FamlWorkspace();
 
             var sourceProvider = new AssemblySourceProvider(assembly);
@@ -17,7 +20,8 @@ namespace Faml.App {
 
             project.DotNetProjectInfo.RawTypeProvider = new AppDotNetRawTypeProvider(assembly);
 
-            var program = new Program(project) {
+            var program = new Program(project)
+            {
                 DataEventHandler = new DotNetDataEventHandler(this.dataEventHandler)
             };
 
@@ -39,8 +43,10 @@ namespace Faml.App {
             this._appToDevEnvConnection = new AppToDevEnvConnection(this._program);
         }
 
-        public AppToDevEnvConnection AppToDevEnvConnection {
-            get {
+        public AppToDevEnvConnection AppToDevEnvConnection
+        {
+            get
+            {
                 if (this._appToDevEnvConnection == null)
                 {
                     throw new InvalidOperationException("AppToDevEnvConnection never got initialized");
@@ -50,8 +56,10 @@ namespace Faml.App {
             }
         }
 
-        public ReactiveVar<Program> Program {
-            get {
+        public ReactiveVar<Program> Program
+        {
+            get
+            {
                 if (this._program == null)
                 {
                     throw new InvalidOperationException("Program never got initialized");
@@ -63,7 +71,8 @@ namespace Faml.App {
 
         protected abstract void AddTypeToolingProviders(Program program, FamlProject project);
 
-        public async void dataEventHandler(object sender, EventArgs e, IList<object> data) {
+        public async void dataEventHandler(object sender, EventArgs e, IList<object> data)
+        {
             /*^
              foreach (object dataItem in data) {
                  if (dataItem is Navigate) {
@@ -81,7 +90,8 @@ namespace Faml.App {
              */
         }
 
-        public ReactiveVar<Program> GetProgram() {
+        public ReactiveVar<Program> GetProgram()
+        {
             return this._program;
         }
 

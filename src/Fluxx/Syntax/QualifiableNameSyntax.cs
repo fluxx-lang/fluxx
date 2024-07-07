@@ -7,11 +7,14 @@ using Microsoft.CodeAnalysis.Text;
  * @since 6/6/2015
  */
 
-namespace Faml.Syntax {
-    public class QualifiableNameSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public class QualifiableNameSyntax : SyntaxNode
+    {
         private readonly QualifiableName _name;
 
-        public QualifiableNameSyntax(TextSpan span, QualifiableName name) : base(span) {
+        public QualifiableNameSyntax(TextSpan span, QualifiableName name) : base(span)
+        {
             this._name = name;
         }
 
@@ -19,7 +22,8 @@ namespace Faml.Syntax {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.QualifiableName;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._name);
         }
     }

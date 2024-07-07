@@ -8,13 +8,16 @@ using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Operator;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression {
-    public sealed class PrefixExpressionSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Expression
+{
+    public sealed class PrefixExpressionSyntax : ExpressionSyntax
+    {
         private readonly PrefixOperator _prefixOperator;
         private readonly ExpressionSyntax _operand;
 
         // AST structure properties
-        public PrefixExpressionSyntax(TextSpan span, PrefixOperator prefixOperator, ExpressionSyntax operand) : base(span) {
+        public PrefixExpressionSyntax(TextSpan span, PrefixOperator prefixOperator, ExpressionSyntax operand) : base(span)
+        {
             this._prefixOperator = prefixOperator;
 
             this._operand = operand;
@@ -25,21 +28,25 @@ namespace Faml.Syntax.Expression {
 
         public ExpressionSyntax Operand => this._operand;
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.PrefixExpression;
 
-        public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
+        {
             visitor(this._operand);
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._operand.GetTypeBinding();
         }
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._prefixOperator.GetSourceRepresentation());
             this._operand.WriteSource(sourceWriter);
         }

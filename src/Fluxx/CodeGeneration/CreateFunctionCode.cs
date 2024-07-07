@@ -23,8 +23,10 @@ using TypeTooling.Types;
 using TypeTooling.Types.PredefinedTypes;
 using Operator = Faml.Syntax.Operator.Operator;
 
-namespace Faml.CodeGeneration {
-    public class CreateFunctionCode {
+namespace Faml.CodeGeneration
+{
+    public class CreateFunctionCode
+    {
         private readonly FamlProject _famlProject;
         private readonly Dictionary<string, ParameterExpressionCode> _parametersCodeDictionary;
         public LambdaCode Result { get; }
@@ -47,7 +49,8 @@ namespace Faml.CodeGeneration {
         }
 #endif
 
-        public CreateFunctionCode(FunctionDefinitionSyntax function) {
+        public CreateFunctionCode(FunctionDefinitionSyntax function)
+        {
             this._famlProject = function.GetProject();
 
             ImmutableArray<ParameterExpressionCode> parametersCode = function.Parameters.Select(
@@ -94,7 +97,8 @@ namespace Faml.CodeGeneration {
         }
 #endif
 
-        public RawType GetRawType(TypeBinding typeBinding) {
+        public RawType GetRawType(TypeBinding typeBinding)
+        {
             if (typeBinding is BuiltInTypeBinding predefinedTypeBinding)
             {
                 return ReflectionDotNetRawType.ForPredefinedType((PredefinedType) predefinedTypeBinding.TypeToolingType);
@@ -113,14 +117,17 @@ namespace Faml.CodeGeneration {
             }
         }
 
-        private ExpressionCode CreateSymbolReferenceCode(SymbolReferenceSyntax symbolReference) {
+        private ExpressionCode CreateSymbolReferenceCode(SymbolReferenceSyntax symbolReference)
+        {
             SymbolBinding symbolBinding = symbolReference.GetVariableBinding();
 
-            if (symbolBinding is ParameterBinding parameterBinding) {
+            if (symbolBinding is ParameterBinding parameterBinding)
+            {
                 string parameterName = symbolReference.VariableName.ToString();
                 return this._parametersCodeDictionary[parameterName];
             }
-            else if (symbolBinding is FunctionSymbolBinding functionSymbolBinding) {
+            else if (symbolBinding is FunctionSymbolBinding functionSymbolBinding)
+            {
                 FunctionBinding functionBinding = functionSymbolBinding.FunctionBinding;
                 if (functionBinding is InternalFunctionBinding internalFunctionBinding)
                 {
@@ -148,7 +155,8 @@ namespace Faml.CodeGeneration {
                     $"Unexpected variable binding type '{symbolBinding}' for variable reference {symbolReference}");
         }
 
-        private ExpressionCode CreatePropertyAccessCode(PropertyAccessSyntax propertyAccess) {
+        private ExpressionCode CreatePropertyAccessCode(PropertyAccessSyntax propertyAccess)
+        {
             PropertyBinding propertyBinding = propertyAccess.PropertyBinding;
 
             ExpressionSyntax expression = propertyAccess.Expression;
@@ -180,10 +188,12 @@ namespace Faml.CodeGeneration {
             }
         }
 
-        private ExpressionCode CreateSequenceLiteralCode(SequenceLiteralExpressionSyntax sequenceLiteral) {
+        private ExpressionCode CreateSequenceLiteralCode(SequenceLiteralExpressionSyntax sequenceLiteral)
+        {
             ImmutableArray<ExpressionCode>.Builder itemsBuilder = ImmutableArray.CreateBuilder<ExpressionCode>();
 
-            foreach (ExpressionSyntax expression in sequenceLiteral.Expressions) {
+            foreach (ExpressionSyntax expression in sequenceLiteral.Expressions)
+            {
                 ExpressionCode expressionCode = this.CreateExpressionCode(expression);
                 itemsBuilder.Add(expressionCode);
             }
@@ -264,7 +274,8 @@ namespace Faml.CodeGeneration {
         */
 #endif
 
-        private ExpressionCode CreateFunctionInvocationCode(FunctionInvocationSyntax functionInvocation) {
+        private ExpressionCode CreateFunctionInvocationCode(FunctionInvocationSyntax functionInvocation)
+        {
             if (functionInvocation.LiteralConstructorValue != null)
             {
                 return this.CreateExpressionCode(functionInvocation.LiteralConstructorValue);
@@ -273,7 +284,8 @@ namespace Faml.CodeGeneration {
             FunctionBinding functionBinding = functionInvocation.FunctionBinding;
             Name? contentParameter = functionBinding.GetContentProperty();
 
-            if (functionBinding is InternalFunctionBinding internalFunctionBinding) {
+            if (functionBinding is InternalFunctionBinding internalFunctionBinding)
+            {
                 ImmutableArray<ExpressionCode> argumentsCode = this.CreateArgumentsCode(functionInvocation, functionBinding.GetParameters());
                 return this.CreateInternalFunctionInvocationCode(internalFunctionBinding, argumentsCode);
             }
@@ -286,7 +298,8 @@ namespace Faml.CodeGeneration {
                 return new NewAstRecordObjectEval(propertyNames, propertyEvals);
             }
 #endif
-            if (functionBinding is NewExternalObjectFunctionBinding newExternalObjectFunctionBinding) {
+            if (functionBinding is NewExternalObjectFunctionBinding newExternalObjectFunctionBinding)
+            {
                 return this.CreateNewExternalObjectCode(functionInvocation, newExternalObjectFunctionBinding);
             }
 #if false
@@ -304,9 +317,11 @@ namespace Faml.CodeGeneration {
                 throw new Exception($"Unexpected function binding type {functionBinding} for function {functionInvocation.FunctionReference}");
         }
 
-        private ExpressionCode CreateNewExternalObjectCode(FunctionInvocationSyntax functionInvocation, NewExternalObjectFunctionBinding functionBinding) {
+        private ExpressionCode CreateNewExternalObjectCode(FunctionInvocationSyntax functionInvocation, NewExternalObjectFunctionBinding functionBinding)
+        {
             var propertyValues = new List<PropertyValue<string, ExpressionCode>>();
-            foreach (ArgumentNameValuePairSyntax argumentNameValuePair in functionInvocation.NamedArguments) {
+            foreach (ArgumentNameValuePairSyntax argumentNameValuePair in functionInvocation.NamedArguments)
+            {
                 QualifiableName argumentName = argumentNameValuePair.ArgumentName;
 
                 if (argumentNameValuePair.ArgumentName.IsQualified())
@@ -319,7 +334,8 @@ namespace Faml.CodeGeneration {
             }
 
             ContentArgumentSyntax? contentArgument = functionInvocation.ContentArgument;
-            if (contentArgument != null) {
+            if (contentArgument != null)
+            {
                 Name? contentProperty = functionBinding.GetContentProperty();
 
                 var propertyValue = new PropertyValue<string, ExpressionCode>(contentProperty.ToString(), this.CreateExpressionCode(contentArgument.Value));
@@ -330,11 +346,13 @@ namespace Faml.CodeGeneration {
             return functionBinding.ReturnExternalObjectTypeBinding.TypeToolingType.GetCreateObjectCode(propertyValues.ToArray(), new PropertyValue<AttachedProperty, ExpressionCode>[0]);
         }
 
-        private ImmutableArray<ExpressionCode> CreateArgumentsCode(FunctionInvocationSyntax functionInvocation, Name[] parameters) {
+        private ImmutableArray<ExpressionCode> CreateArgumentsCode(FunctionInvocationSyntax functionInvocation, Name[] parameters)
+        {
             Dictionary<QualifiableName, ExpressionSyntax> argumentsDictionary = functionInvocation.CreateArgumentsDictionary();
 
             ImmutableArray<ExpressionCode>.Builder argumentsCodeBuilder = ImmutableArray.CreateBuilder<ExpressionCode>(parameters.Length);
-            foreach (Name parameterName in parameters) {
+            foreach (Name parameterName in parameters)
+            {
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName.ToQualifiableName());
                 if (argumentValue == null)
                 {
@@ -349,11 +367,13 @@ namespace Faml.CodeGeneration {
 
         // TODO: Simplify to not use parameters passed in, just getting from functionInvocation since qualified arguments are always treated like properties -
         // there's no required set of parameters & as the order doesn't matter
-        private ImmutableArray<ExpressionCode> CreateQualifiedArgumentsCode(FunctionInvocationSyntax functionInvocation, QualifiableName[] parameters) {
+        private ImmutableArray<ExpressionCode> CreateQualifiedArgumentsCode(FunctionInvocationSyntax functionInvocation, QualifiableName[] parameters)
+        {
             Dictionary<QualifiableName, ExpressionSyntax> argumentsDictionary = functionInvocation.CreateArgumentsDictionary();
 
             ImmutableArray<ExpressionCode>.Builder argumentsCodeBuilder = ImmutableArray.CreateBuilder<ExpressionCode>(parameters.Length);
-            for (int i = 0; i < parameters.Length; i++) {
+            for (int i = 0; i < parameters.Length; i++)
+            {
                 QualifiableName parameterName = parameters[i];
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName);
                 if (argumentValue == null)
@@ -432,13 +452,15 @@ namespace Faml.CodeGeneration {
         }
 #endif
 
-        private ExpressionCode CreateInternalFunctionInvocationCode(InternalFunctionBinding internalFunctionBinding, ImmutableArray<ExpressionCode> argumentsCode) {
+        private ExpressionCode CreateInternalFunctionInvocationCode(InternalFunctionBinding internalFunctionBinding, ImmutableArray<ExpressionCode> argumentsCode)
+        {
             FunctionDelegateHolder delegateHolder = internalFunctionBinding.Module.ModuleDelegates.
                 GetOrCreateFunctionDelegate(internalFunctionBinding.FunctionDefinition);
             return DotNetCode.Invoke(delegateHolder, argumentsCode);
         }
 
-        public ExpressionCode CreateExpressionCode(ExpressionSyntax expression) {
+        public ExpressionCode CreateExpressionCode(ExpressionSyntax expression)
+        {
             if (expression is InfixExpressionSyntax infixExpressionSyntax)
                 return this.CreateInfixExpressionCode(infixExpressionSyntax);
             else if (expression is PrefixExpressionSyntax prefixExpressionSyntax)
@@ -461,7 +483,8 @@ namespace Faml.CodeGeneration {
                 return new IntLiteralCode(intLiteral.Value);
             else if (expression is StringLiteralSyntax stringLiteral)
                 return Code.StringLiteral(stringLiteral.Value);
-            else if (expression is SymbolReferenceSyntax variableReferenceSyntax) {
+            else if (expression is SymbolReferenceSyntax variableReferenceSyntax)
+            {
 #if false
                 if (variableReferenceSyntax.GetVariableBinding() is ZeroArgumentFunctionBinding zeroArgumentFunctionBinding)
                     return CreateZeroArgumentFunctionInvocationEval(zeroArgumentFunctionBinding);
@@ -489,7 +512,8 @@ namespace Faml.CodeGeneration {
                 throw new Exception("Unexpected expression type for code creation: " + expression);
         }
 
-        private ExpressionCode CreateInfixExpressionCode(InfixExpressionSyntax expression) {
+        private ExpressionCode CreateInfixExpressionCode(InfixExpressionSyntax expression)
+        {
             InfixOperator infixOperator = expression.Operator;
 
             BinaryOperator codeOperator;
@@ -548,7 +572,8 @@ namespace Faml.CodeGeneration {
             return Code.BinaryExpression(codeOperator, leftOperandCode, rightOperandCode);
         }
 
-        private ExpressionCode CreatePrefixExpressionCode(PrefixExpressionSyntax expression) {
+        private ExpressionCode CreatePrefixExpressionCode(PrefixExpressionSyntax expression)
+        {
             PrefixOperator prefixOperator = expression.Operator;
 
             UnaryOperator codeOperator;

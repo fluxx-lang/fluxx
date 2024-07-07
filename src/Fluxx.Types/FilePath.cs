@@ -27,8 +27,7 @@ namespace Faml
             DotNetRawType filePathType = new ReflectionDotNetRawType(typeof(FilePath));
 
             NewObjectCode newFilePath =
-                DotNetCode.New(filePathType, new[] { "System.String" },
-                Code.StringLiteral(value));
+                DotNetCode.New(filePathType, new[] { "System.String" }, Code.StringLiteral(value));
             //new FilePath(value);
 
             return new CustomLiteral(newFilePath);

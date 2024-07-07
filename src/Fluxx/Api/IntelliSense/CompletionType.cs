@@ -1,8 +1,10 @@
 using System;
 
-namespace Faml.Api.IntelliSense {
+namespace Faml.Api.IntelliSense
+{
     [Serializable]
-    public enum CompletionType {
+    public enum CompletionType
+    {
         Function,
         Property,
         Value

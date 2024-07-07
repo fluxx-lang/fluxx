@@ -7,19 +7,23 @@
 
 using Faml.Syntax;
 
-namespace Faml.Interpreter {
-    public sealed class FunctionInvocationObjectEval : ObjectEval {
+namespace Faml.Interpreter
+{
+    public sealed class FunctionInvocationObjectEval : ObjectEval
+    {
         internal Eval[] Arguments;
         internal ObjectEval Expression;
 
-        public FunctionInvocationObjectEval(Eval[] arguments, CreateEvals createEvals, FunctionDefinitionSyntax functionDefinition) {
+        public FunctionInvocationObjectEval(Eval[] arguments, CreateEvals createEvals, FunctionDefinitionSyntax functionDefinition)
+        {
             this.Arguments = arguments;
 
             createEvals.DelayResolveFunctionEval(functionDefinition,
                 (functionEval) => this.Expression = (ObjectEval)functionEval);
         }
 
-        public override object Eval() {
+        public override object Eval()
+        {
             int argumentsLength = this.Arguments.Length;
             for (int i = 0; i < argumentsLength; i++)
             {

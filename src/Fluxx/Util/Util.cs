@@ -3,8 +3,10 @@
  * @since 7/27/2015
  */
 
-namespace Faml.Util {
-    public class Util {
+namespace Faml.Util
+{
+    public class Util
+    {
         /// <summary>
         /// Return the input string except with the first character in the string made upper case.
         /// </summary>

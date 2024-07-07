@@ -4,15 +4,19 @@ using System.Threading.Tasks;
 using Faml.Api;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.Binding {
-    public class InvalidPropertyBinding : PropertyBinding {
+namespace Faml.Binding
+{
+    public class InvalidPropertyBinding : PropertyBinding
+    {
         private readonly Name _propertyName;
 
-        public InvalidPropertyBinding(Name propertyName) {
+        public InvalidPropertyBinding(Name propertyName)
+        {
             this._propertyName = propertyName;
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return InvalidTypeBinding.Instance;
         }
 

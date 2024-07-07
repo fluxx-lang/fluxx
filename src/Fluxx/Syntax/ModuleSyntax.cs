@@ -11,8 +11,10 @@ using TypeTooling;
  * @author Bret Johnson
  * @since 4/13/2015
  */
-namespace Faml.Syntax {
-    public sealed class ModuleSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public sealed class ModuleSyntax : SyntaxNode
+    {
         private readonly FamlModule _module;
         //private readonly Use[] _uses;
         private readonly FunctionInvocationSyntax? _projectDefinition;
@@ -23,7 +25,8 @@ namespace Faml.Syntax {
         private readonly ExampleDefinitionSyntax[] _exampleDefinitions;
 
 
-        public ModuleSyntax(FamlModule module, TextSpan span, FunctionInvocationSyntax? projectDefinition, UseSyntax[] uses, ImportSyntax[] imports, SyntaxNode[] moduleItems) : base(span) {
+        public ModuleSyntax(FamlModule module, TextSpan span, FunctionInvocationSyntax? projectDefinition, UseSyntax[] uses, ImportSyntax[] imports, SyntaxNode[] moduleItems) : base(span)
+        {
             this._module = module;
             this._projectDefinition = projectDefinition;
 
@@ -46,8 +49,10 @@ namespace Faml.Syntax {
             }
 
             var exampleDefinitions = new List<ExampleDefinitionSyntax>();
-            foreach (SyntaxNode moduleItem in this.ModuleItems) {
-                if (moduleItem is FunctionDefinitionSyntax functionDefinition) {
+            foreach (SyntaxNode moduleItem in this.ModuleItems)
+            {
+                if (moduleItem is FunctionDefinitionSyntax functionDefinition)
+                {
                     Name functionName = functionDefinition.FunctionName;
 
                     if (this._functionDefinitions.ContainsKey(functionName))
@@ -63,7 +68,8 @@ namespace Faml.Syntax {
                         this._functionDefinitions.Add(functionName, functionDefinition);
                     }
                 }
-                else if (moduleItem is RecordTypeDefinitionSyntax recordTypeDefinition) {
+                else if (moduleItem is RecordTypeDefinitionSyntax recordTypeDefinition)
+                {
                     Name typeName = recordTypeDefinition.TypeNameSyntax.Name;
 
                     if (this._recordTypeDefinitions.ContainsKey(typeName))
@@ -79,7 +85,8 @@ namespace Faml.Syntax {
                         this._recordTypeDefinitions.Add(typeName, recordTypeDefinition);
                     }
                 }
-                else if (moduleItem is ExampleDefinitionSyntax exampleDefinition) {
+                else if (moduleItem is ExampleDefinitionSyntax exampleDefinition)
+                {
                     int index = exampleDefinitions.Count;
                     exampleDefinitions.Add(exampleDefinition);
                     exampleDefinition.SetExampleIndex(index);
@@ -101,17 +108,20 @@ namespace Faml.Syntax {
 
         public ExampleDefinitionSyntax[] ExampleDefinitions => this._exampleDefinitions;
 
-        public FunctionDefinitionSyntax? GetFunctionDefinition(Name name) {
+        public FunctionDefinitionSyntax? GetFunctionDefinition(Name name)
+        {
             this._functionDefinitions.TryGetValue(name, out FunctionDefinitionSyntax functionDefinition);
             return functionDefinition;
         }
 
-        public RecordTypeDefinitionSyntax? GetRecordTypeDefinition(Name name) {
+        public RecordTypeDefinitionSyntax? GetRecordTypeDefinition(Name name)
+        {
             this._recordTypeDefinitions.TryGetValue(name, out RecordTypeDefinitionSyntax recordTypeDefinition);
             return recordTypeDefinition;
         }
 
-        public ExampleDefinitionSyntax GetExampleDefinitionAtIndex(int exampleIndex) {
+        public ExampleDefinitionSyntax GetExampleDefinitionAtIndex(int exampleIndex)
+        {
             if (exampleIndex >= this._exampleDefinitions.Length)
             {
                 throw new UserViewableException($"Example index {exampleIndex} doesn't exist for module {this.ModuleName}; it only has {this._exampleDefinitions.Length} examples");
@@ -120,7 +130,8 @@ namespace Faml.Syntax {
             return this._exampleDefinitions[exampleIndex];
         }
 
-        public ExampleDefinitionSyntax? GetExampleDefinitionAtSourcePosition(int position) {
+        public ExampleDefinitionSyntax? GetExampleDefinitionAtSourcePosition(int position)
+        {
             foreach (ExampleDefinitionSyntax exampleDefinition in this._exampleDefinitions)
                 if (exampleDefinition.Span.Contains(position))
                 {
@@ -130,7 +141,8 @@ namespace Faml.Syntax {
             return null;
         }
 
-        public void ResolveAllBindings() {
+        public void ResolveAllBindings()
+        {
             var moduleBindingResolver = new ModuleBindingResolver(this);
 
             // First resolve the explicit type bindings, where the types are specified and not inferred
@@ -141,7 +153,8 @@ namespace Faml.Syntax {
             this.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(moduleBindingResolver); });
         }
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             foreach (ImportSyntax import in this._imports)
             {
                 visitor(import);
@@ -153,22 +166,27 @@ namespace Faml.Syntax {
             }
         }
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.Module;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
-            foreach (SyntaxNode syntaxNode in this.ModuleItems) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
+            foreach (SyntaxNode syntaxNode in this.ModuleItems)
+            {
                 syntaxNode.WriteSource(sourceWriter);
             }
         }
 
-        public TypeBinding? GetObjectTypeBinding(QualifiableName typeName) {
+        public TypeBinding? GetObjectTypeBinding(QualifiableName typeName)
+        {
             ModuleSyntax module = this.GetModuleSyntax();
 
-            if (!typeName.IsQualified()) {
+            if (!typeName.IsQualified())
+            {
                 Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
                 RecordTypeDefinitionSyntax recordTypeDefinition;
@@ -178,8 +196,10 @@ namespace Faml.Syntax {
                 }
 
                 // See if it matches any imports
-                foreach (ImportSyntax import in module.Imports) {
-                    foreach (ImportTypeReferenceSyntax importReference in import.ImportTypeReferences) {
+                foreach (ImportSyntax import in module.Imports)
+                {
+                    foreach (ImportTypeReferenceSyntax importReference in import.ImportTypeReferences)
+                    {
                         if (importReference.Name == unqualifiableTypeName)
                         {
                             return importReference.GetTypeBinding();
@@ -191,15 +211,19 @@ namespace Faml.Syntax {
             return null;
         }
 
-        public AttachedTypeBinding? GetAttachedTypeBinding(QualifiableName typeName) {
+        public AttachedTypeBinding? GetAttachedTypeBinding(QualifiableName typeName)
+        {
             ModuleSyntax module = this.GetModuleSyntax();
 
-            if (!typeName.IsQualified()) {
+            if (!typeName.IsQualified())
+            {
                 Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
                 // See if it matches any imports
-                foreach (ImportSyntax import in module.Imports) {
-                    foreach (ImportTypeReferenceSyntax importReference in import.ImportTypeReferences) {
+                foreach (ImportSyntax import in module.Imports)
+                {
+                    foreach (ImportTypeReferenceSyntax importReference in import.ImportTypeReferences)
+                    {
                         if (importReference.Name == unqualifiableTypeName)
                         {
                             return importReference.GetAttachedTypeBinding();

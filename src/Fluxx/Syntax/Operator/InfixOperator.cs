@@ -6,10 +6,13 @@ using System.Collections.Generic;
  * @since 6/28/2014 11:10 PM
  */
 
-namespace Faml.Syntax.Operator {
-    public class InfixOperator : Operator {
+namespace Faml.Syntax.Operator
+{
+    public class InfixOperator : Operator
+    {
         public InfixOperator(Dictionary<Lexer.TokenType, InfixOperator> infixOperators, Lexer.TokenType tokenType,
-            string textRepresentation, int precedence) : base(textRepresentation, precedence) {
+            string textRepresentation, int precedence) : base(textRepresentation, precedence)
+            {
             infixOperators.Add(tokenType, this);
         }
     }

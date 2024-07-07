@@ -1,5 +1,7 @@
-﻿namespace Faml {
-    public class DataEventHandler {
+﻿namespace Faml
+{
+    public class DataEventHandler
+    {
          
     }
 }

@@ -11,11 +11,14 @@ using TypeTooling.ClassifiedText;
  * @author Bret Johnson
  * @since 4/15/2015
  */
-namespace Faml.Binding.Internal {
-    public sealed class NewRecordFunctionBinding : FunctionBinding {
+namespace Faml.Binding.Internal
+{
+    public sealed class NewRecordFunctionBinding : FunctionBinding
+    {
         private readonly RecordTypeDefinitionSyntax _recordTypeDefinition;
 
-        public NewRecordFunctionBinding(RecordTypeDefinitionSyntax recordTypeDefinition) {
+        public NewRecordFunctionBinding(RecordTypeDefinitionSyntax recordTypeDefinition)
+        {
             this._recordTypeDefinition = recordTypeDefinition;
         }
 
@@ -25,13 +28,16 @@ namespace Faml.Binding.Internal {
 
         public override TypeBinding ReturnTypeBinding => this._recordTypeDefinition.TypeBinding;
 
-        public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
+        public override TypeBinding? GetParameterTypeBinding(Name parameterName)
+        {
             return this._recordTypeDefinition.GetPropertyTypeBinding(parameterName);
         }
 
         public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
-            BindingResolver bindingResolver) {
-            if (argumentName.IsQualified()) {
+            BindingResolver bindingResolver)
+            {
+            if (argumentName.IsQualified())
+            {
                 argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
                     "Record types don't support attached properties");
                 return InvalidTypeBinding.Instance;
@@ -40,7 +46,8 @@ namespace Faml.Binding.Internal {
             Name unqualifiableArgumentName = argumentName.ToUnqualifiableName();
 
             TypeBinding typeBinding = this._recordTypeDefinition.GetPropertyTypeBinding(unqualifiableArgumentName);
-            if (typeBinding == null) {
+            if (typeBinding == null)
+            {
                 argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
                     $"No '{argumentName}' property exists for '{this._recordTypeDefinition.TypeName}'");
                 return InvalidTypeBinding.Instance;
@@ -49,25 +56,30 @@ namespace Faml.Binding.Internal {
             return typeBinding;;
         }
 
-        public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver) {
+        public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver)
+        {
             contentArgument.AddError("Record types don't support content properties");
             return InvalidTypeBinding.Instance;
         }
 
         public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName,
-            CancellationToken cancellationToken) {
+            CancellationToken cancellationToken)
+            {
             return Task.FromResult((ClassifiedTextMarkup?)null);
         }
 
-        public override string GetNoContentPropertyExistsError() {
+        public override string GetNoContentPropertyExistsError()
+        {
             return $"Use of unnamed parameter not allowed. Data can't have content properties.";
         }
 
-        public override Name? GetThisParameter() {
+        public override Name? GetThisParameter()
+        {
             return null;
         }
 
-        public override Name? GetContentProperty() {
+        public override Name? GetContentProperty()
+        {
             return null;
         }
 
@@ -75,7 +87,8 @@ namespace Faml.Binding.Internal {
         /// Return all the parameter names, in their "natural" order.  More info about parameters (e.g. their types) can be queried by methods above.
         /// </summary>
         /// <returns>parameter names</returns>
-        public override Name[] GetParameters() {
+        public override Name[] GetParameters()
+        {
             return this._recordTypeDefinition.GetProperties();
         }
     }

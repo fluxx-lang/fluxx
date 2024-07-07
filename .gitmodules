@@ -1,0 +1,6 @@
+[submodule "external/roslynp"]
+	path = external/roslynp
+	url = https://github.com/BretJohnson/roslynp.git
+[submodule "external/ReactiveData"]
+	path = external/ReactiveData
+	url = https://github.com/reactive-data/ReactiveData.git

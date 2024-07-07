@@ -1,21 +1,26 @@
-﻿namespace Faml.Lexer {
-    public enum ArgumentLookaheadType {
+﻿namespace Faml.Lexer
+{
+    public enum ArgumentLookaheadType
+    {
         DoubleColon,
         PropertyIdentifier,
         IndentedContent,
         None
     }
 
-    public class ArgumentLookahead {
+    public class ArgumentLookahead
+    {
         private readonly ArgumentLookaheadType _type;
         private readonly int _indent;
 
-        public ArgumentLookahead(ArgumentLookaheadType type) {
+        public ArgumentLookahead(ArgumentLookaheadType type)
+        {
              this._type = type;
             this._indent = -1;
         }
 
-        public ArgumentLookahead(int indent) {
+        public ArgumentLookahead(int indent)
+        {
             this._type = ArgumentLookaheadType.IndentedContent;
             this._indent = indent;
         }

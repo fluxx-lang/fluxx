@@ -10,8 +10,10 @@ using TypeTooling.ClassifiedText;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;
 
-namespace Faml.Binding.External {
-    public class ExternalObjectTypeBinding : ObjectTypeBinding {
+namespace Faml.Binding.External
+{
+    public class ExternalObjectTypeBinding : ObjectTypeBinding
+    {
         private readonly FamlProject _project;
         private readonly ObjectType _typeToolingType;
         private bool _gotAttachedType;
@@ -23,7 +25,8 @@ namespace Faml.Binding.External {
 
 
         // TODO: This name is fully qualified.   Do we want that?
-        public ExternalObjectTypeBinding(FamlProject project, DotNetRawType rawType) : base(new QualifiableName(rawType.FullName)) {
+        public ExternalObjectTypeBinding(FamlProject project, DotNetRawType rawType) : base(new QualifiableName(rawType.FullName))
+        {
             this._project = project;
             this._rawType = rawType;
 
@@ -31,7 +34,8 @@ namespace Faml.Binding.External {
             this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
         }
 
-        public ExternalObjectTypeBinding(FamlProject project, ObjectType typeToolingType) : base(new QualifiableName(typeToolingType.FullName)) {
+        public ExternalObjectTypeBinding(FamlProject project, ObjectType typeToolingType) : base(new QualifiableName(typeToolingType.FullName))
+        {
             this._project = project;
             this._typeToolingType = typeToolingType;
 
@@ -42,10 +46,13 @@ namespace Faml.Binding.External {
 
         public ObjectType TypeToolingType => this._typeToolingType;
 
-        public AttachedType? AttachedType {
-            get {
+        public AttachedType? AttachedType
+        {
+            get
+            {
                 // Only lookup the attached type if someone actually needs it
-                if (!this._gotAttachedType) {
+                if (!this._gotAttachedType)
+                {
                     this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
                     this._gotAttachedType = true;
                 }
@@ -53,8 +60,10 @@ namespace Faml.Binding.External {
             }
         }
 
-        public Dictionary<string, ObjectProperty> ObjectProperties {
-            get {
+        public Dictionary<string, ObjectProperty> ObjectProperties
+        {
+            get
+            {
                 this.GetPropertiesIfNeeded();
                 return this._objectProperties;
             }
@@ -62,14 +71,17 @@ namespace Faml.Binding.External {
 
         public ObjectProperty GetObjectProperty(QualifiableName name) => this._objectProperties[name.ToString()];
 
-        public Name? ContentProperty {
-            get {
+        public Name? ContentProperty
+        {
+            get
+            {
                 this.GetPropertiesIfNeeded();
                 return this._contentProperty;
             }
         }
 
-        public void GetPropertiesIfNeeded() {
+        public void GetPropertiesIfNeeded()
+        {
             if (this._gotProperties)
             {
                 return;
@@ -78,8 +90,10 @@ namespace Faml.Binding.External {
             this._objectProperties = new Dictionary<string, ObjectProperty>();
 
             // Add all properties - for the type itself and its ancestors
-            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType)) {
-                foreach (ObjectProperty property in type.Properties) {
+            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType))
+            {
+                foreach (ObjectProperty property in type.Properties)
+                {
                     if (! this._objectProperties.ContainsKey(property.Name))
                     {
                         this._objectProperties.Add(property.Name, property);
@@ -89,9 +103,11 @@ namespace Faml.Binding.External {
 
             // Looks first in the type itself to see if it has a content property, then search its ancestors
             this._contentProperty = null;
-            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType)) {
+            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType))
+            {
                 ObjectProperty? contentProperty = type.ContentProperty;
-                if (contentProperty != null) {
+                if (contentProperty != null)
+                {
                     this._contentProperty = new Name(contentProperty.Name);
                     break;
                 }
@@ -100,7 +116,8 @@ namespace Faml.Binding.External {
             this._gotProperties = true;
         }
 
-        public static IEnumerable<ObjectType> GetTypeAndAncestors(ObjectType objectType) {
+        public static IEnumerable<ObjectType> GetTypeAndAncestors(ObjectType objectType)
+        {
             yield return objectType;
 
             foreach (ObjectType baseType in objectType.GetBaseTypes())
@@ -110,11 +127,13 @@ namespace Faml.Binding.External {
                 }
         }
 
-        protected bool Equals(ExternalObjectTypeBinding other) {
+        protected bool Equals(ExternalObjectTypeBinding other)
+        {
             return this._rawType.Equals(other._rawType);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             if (!(obj is ExternalObjectTypeBinding))
             {
                 return false;
@@ -123,11 +142,13 @@ namespace Faml.Binding.External {
             return this.Equals((ExternalObjectTypeBinding) obj);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return this._rawType.GetHashCode();
         }
 
-        public override bool IsAssignableFrom(TypeBinding other) {
+        public override bool IsAssignableFrom(TypeBinding other)
+        {
             if (other is ExternalObjectTypeBinding otherDotNetObjectTypeBinding)
             {
                 return this._rawType.IsAssignableFrom(otherDotNetObjectTypeBinding._rawType);
@@ -138,7 +159,8 @@ namespace Faml.Binding.External {
             }
         }
 
-        public override FunctionBinding? GetMethodBinding(Name methodName) {
+        public override FunctionBinding? GetMethodBinding(Name methodName)
+        {
             throw new NotImplementedException();
 #if false
             // TODO: Support method overloading
@@ -150,7 +172,8 @@ namespace Faml.Binding.External {
 #endif
         }
 
-        public override PropertyBinding? GetPropertyBinding(Name propertyName) {
+        public override PropertyBinding? GetPropertyBinding(Name propertyName)
+        {
             if (! this.ObjectProperties.TryGetValue(propertyName.ToString(), out ObjectProperty property))
             {
                 return null;
@@ -159,23 +182,29 @@ namespace Faml.Binding.External {
             return new ExternalPropertyBinding(this, property);
         }
 
-        public override bool SupportsCreateLiteral() {
+        public override bool SupportsCreateLiteral()
+        {
             return this._typeToolingType?.GetCustomLiteralParser() != null;
         }
 
-        public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan span) {
+        public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan span)
+        {
             SourceText sourceText = module.SourceText;
             string literalSource = sourceText.ToString(span);
 
             // Now see if there's a custom literal manager for the type
             CustomLiteralParser customLiteralParser = this._typeToolingType?.GetCustomLiteralParser();
-            if (customLiteralParser != null) {
-                try {
+            if (customLiteralParser != null)
+            {
+                try
+                {
                     CustomLiteral customLiteral = customLiteralParser.Parse(literalSource);
 
                     bool anyErrors = false;
-                    if (customLiteral.Diagnostics != null) {
-                        foreach (TypeTooling.Diagnostic diagnostic in customLiteral.Diagnostics) {
+                    if (customLiteral.Diagnostics != null)
+                    {
+                        foreach (TypeTooling.Diagnostic diagnostic in customLiteral.Diagnostics)
+                        {
                             module.AddError(span, diagnostic.Message);
                             if (diagnostic.Severity == TypeTooling.DiagnosticSeverity.Error)
                             {
@@ -191,7 +220,8 @@ namespace Faml.Binding.External {
 
                     return new ExternalTypeCustomLiteralSytax(span, this, this._typeToolingType, literalSource, customLiteral);
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     module.AddError(span, e.Message);
                     return new InvalidExpressionSyntax(span, literalSource, this);
                 }
@@ -202,7 +232,8 @@ namespace Faml.Binding.External {
             return new InvalidExpressionSyntax(span, literalSource, this);
         }
 
-        public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken) {
+        public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken)
+        {
             return Task.FromResult((ClassifiedTextMarkup?)null);
         }
     }

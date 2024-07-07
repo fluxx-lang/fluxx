@@ -9,7 +9,6 @@ namespace TypeTooling.CodeGeneration
         private readonly RawMethod rawMethod;
         private readonly ExpressionCode[] arguments;
 
-
         public MethodCallCode(ExpressionCode? objectCode, RawMethod rawMethod, params ExpressionCode[] arguments)
         {
             this.@object = objectCode;

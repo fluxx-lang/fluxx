@@ -5,13 +5,16 @@ using TypeTooling.Types;
  * @author Bret Johnson
  * @since 4/15/2015
  */
-namespace Faml.Binding.External {
-    public class ExternalAttachedTypeBinding : AttachedTypeBinding {
+namespace Faml.Binding.External
+{
+    public class ExternalAttachedTypeBinding : AttachedTypeBinding
+    {
         private readonly FamlProject _project;
         private readonly AttachedType _attachedType;
 
 
-        public ExternalAttachedTypeBinding(FamlProject project, AttachedType attachedType) : base(new QualifiableName(attachedType.FullName)) {
+        public ExternalAttachedTypeBinding(FamlProject project, AttachedType attachedType) : base(new QualifiableName(attachedType.FullName))
+        {
             this._project = project;
             this._attachedType = attachedType;
         }

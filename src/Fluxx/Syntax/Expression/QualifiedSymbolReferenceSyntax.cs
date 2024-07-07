@@ -5,8 +5,10 @@ using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Expression {
-    public sealed class QualifiedSymbolReferenceSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Expression
+{
+    public sealed class QualifiedSymbolReferenceSyntax : ExpressionSyntax
+    {
         private readonly QualifiedSymbolReferenceSyntax? _qualifier;
         private readonly NameSyntax _symbol;
         private readonly QualifiableName _qualifiableName;
@@ -14,7 +16,8 @@ namespace Faml.Syntax.Expression {
         private PropertyBinding? _propertyBinding;
 
 
-        public QualifiedSymbolReferenceSyntax(TextSpan span, QualifiedSymbolReferenceSyntax? qualifier, NameSyntax symbol) : base(span) {
+        public QualifiedSymbolReferenceSyntax(TextSpan span, QualifiedSymbolReferenceSyntax? qualifier, NameSyntax symbol) : base(span)
+        {
             this._qualifier = qualifier;
             this._qualifier?.SetParent(this);
 
@@ -29,28 +32,34 @@ namespace Faml.Syntax.Expression {
 
         public bool IsType => this._typeBinding != null;
 
-        protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            if (this._qualifier != null && this._qualifier.IsType) {
+        protected internal override void ResolveBindings(BindingResolver bindingResolver)
+        {
+            if (this._qualifier != null && this._qualifier.IsType)
+            {
                 TypeBinding typeBinding = this._qualifier.GetTypeBinding();
                 this._propertyBinding = bindingResolver.ResolvePropertyBinding(typeBinding, this._symbol);
             }
-            else {
+            else
+            {
                 QualifiableName qualifiableName = this.QualifiableName;
                 TypeBindingResult typeBindingResult = bindingResolver.FindTypeBindingForType(qualifiableName);
 
                 if (typeBindingResult is TypeBindingResult.Success successResult)
                     this._typeBinding = successResult.TypeBinding;
-                else if (typeBindingResult is TypeBindingResult.Error errorResult) {
+                else if (typeBindingResult is TypeBindingResult.Error errorResult)
+                {
                     this.AddError(errorResult.Message);
                     this._typeBinding = new InvalidTypeBinding(qualifiableName);
                 }
-                else {
+                else
+                {
                     // If the type wasn't found, then don't set any binding
                 }
             }
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             if (this.IsType)
             {
                 return this._typeBinding;
@@ -69,7 +78,8 @@ namespace Faml.Syntax.Expression {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.SymbolReference;
 
-        public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor)
+        {
             if (this._qualifier != null)
             {
                 visitor(this._qualifier);
@@ -78,8 +88,10 @@ namespace Faml.Syntax.Expression {
             visitor(this._symbol);
         }
 
-        public override void WriteSource(SourceWriter sourceWriter) {
-            if (this._qualifier != null) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
+            if (this._qualifier != null)
+            {
                 this._qualifier.WriteSource(sourceWriter);
                 sourceWriter.Write(".");
             }

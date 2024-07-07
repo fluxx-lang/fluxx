@@ -4,7 +4,7 @@
     public sealed class ThisPropertyAttribute(string name) : Attribute
     {
         /// <summary>Gets the name of the this property</summary>
-        /// <value>A string representing the name of the this property.</value> 
+        /// <value>A string representing the name of the this property.</value>
         /// <remarks>
         /// For example, if function Foo has this property Bar and
         /// regular property Baz, then Foo can be invoked with the normal function syntax, Foo{Bar:value1 Baz:value2}, or with 

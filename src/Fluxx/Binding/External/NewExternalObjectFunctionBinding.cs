@@ -11,11 +11,14 @@ using Faml.Syntax;
 using TypeTooling.ClassifiedText;
 using TypeTooling.Types;
 
-namespace Faml.Binding.External {
-    public sealed class NewExternalObjectFunctionBinding : FunctionBinding {
+namespace Faml.Binding.External
+{
+    public sealed class NewExternalObjectFunctionBinding : FunctionBinding
+    {
         private readonly ExternalObjectTypeBinding _objectTypeBinding;
 
-        public NewExternalObjectFunctionBinding(ExternalObjectTypeBinding objectTypeBinding) {
+        public NewExternalObjectFunctionBinding(ExternalObjectTypeBinding objectTypeBinding)
+        {
             this._objectTypeBinding = objectTypeBinding;
         }
 
@@ -27,16 +30,19 @@ namespace Faml.Binding.External {
 
         public ExternalObjectTypeBinding ReturnExternalObjectTypeBinding => this._objectTypeBinding;
 
-        public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
+        public override TypeBinding? GetParameterTypeBinding(Name parameterName)
+        {
             PropertyBinding? propertyBinding = this._objectTypeBinding.GetPropertyBinding(parameterName);
             return propertyBinding?.GetTypeBinding();
         }
 
         public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
-            BindingResolver bindingResolver) {
+            BindingResolver bindingResolver)
+            {
             if (argumentName.IsQualified())
                 return this.ResolveAttachedPropertyArgumentTypeBinding(argumentName, argumentNameValuePair, bindingResolver);
-            else {
+            else
+            {
                 Name unqualifiableArgumentName = argumentName.ToUnqualifiableName();
 
                 PropertyBinding? propertyBinding = this._objectTypeBinding.GetPropertyBinding(unqualifiableArgumentName);
@@ -71,9 +77,11 @@ namespace Faml.Binding.External {
             }
         }
 
-        public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver) {
+        public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver)
+        {
             Name? contentProperty = this.GetContentProperty();
-            if (contentProperty == null) {
+            if (contentProperty == null)
+            {
                 contentArgument.AddError($"No content property exists for class '{this.TypeToolingType.FullName}'");
                 return InvalidTypeBinding.Instance;
             }
@@ -92,7 +100,8 @@ namespace Faml.Binding.External {
             return propertyBinding.GetTypeBinding();
         }
 
-        public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName, CancellationToken cancellationToken) {
+        public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName, CancellationToken cancellationToken)
+        {
             PropertyBinding? propertyBinding = this._objectTypeBinding.GetPropertyBinding(parameterName);
             if (propertyBinding == null)
             {
@@ -103,27 +112,31 @@ namespace Faml.Binding.External {
         }
 
         public TypeBinding ResolveAttachedPropertyArgumentTypeBinding(QualifiableName argumentName, 
-            ArgumentNameValuePairSyntax argumentNameValuePair, BindingResolver bindingResolver) {
+            ArgumentNameValuePairSyntax argumentNameValuePair, BindingResolver bindingResolver)
+            {
             SyntaxNode nodeForErrors = argumentNameValuePair.PropertySpecifier ?? (SyntaxNode) argumentNameValuePair;
 
             // Get the attached type, failing if it doesn't exist
             QualifiableName attachedTypeName = argumentName.GetQualifier();
             AttachedTypeBinding? attachedTypeBinding = bindingResolver.ResolveAttachedTypeBinding(attachedTypeName);
-            if (attachedTypeBinding == null) {
+            if (attachedTypeBinding == null)
+            {
                 nodeForErrors.AddError($"Attached type not found: {attachedTypeName}");
                 return InvalidTypeBinding.Instance;
             }
 
             // Ensure the attaching type is an external type
             // TODO: Check that attaching type is compatible
-            if (! (attachedTypeBinding is ExternalAttachedTypeBinding externalAttachedTypeBinding)) {
+            if (! (attachedTypeBinding is ExternalAttachedTypeBinding externalAttachedTypeBinding))
+            {
                 nodeForErrors.AddError($"Type {attachedTypeName} isn't an external type; only external (e.g. C#) types can be used as attached properties for external objects");
                 return InvalidTypeBinding.Instance;
             }
 
             string unqualifiedPropertyName = argumentName.GetLastComponent().ToString();
 
-            foreach (AttachedProperty attachedProperty in externalAttachedTypeBinding.AttachedType.AttachedProperties) {
+            foreach (AttachedProperty attachedProperty in externalAttachedTypeBinding.AttachedType.AttachedProperties)
+            {
                 if (attachedProperty.Name == unqualifiedPropertyName)
                 {
                     return ExternalBindingUtil.TypeToolingTypeToTypeBinding(this._objectTypeBinding.Project, attachedProperty.Type);
@@ -178,11 +191,13 @@ namespace Faml.Binding.External {
 #endif
         }
 
-        public override string GetNoContentPropertyExistsError() {
+        public override string GetNoContentPropertyExistsError()
+        {
             return $"Use of unnamed parameter not allowed. No content property exists for class '{this.TypeToolingType.FullName}'";
         }
 
-        public override Name? GetThisParameter() {
+        public override Name? GetThisParameter()
+        {
 #if false
             // TODO: For now, hardcode these properties as potential defaults, but should switch to use annotations
             TypeInfo typeInfo = GetDotNetTypeInfo();
@@ -200,7 +215,8 @@ namespace Faml.Binding.External {
             //return null;
         }
 
-        public override Name? GetContentProperty() {
+        public override Name? GetContentProperty()
+        {
             return this._objectTypeBinding.ContentProperty;
 #if false
             // TODO: For now, hardcode these properties as potential defaults, but should switch to use annotations
@@ -222,7 +238,8 @@ namespace Faml.Binding.External {
 #endif
         }
 
-        public override Name[] GetParameters() {
+        public override Name[] GetParameters()
+        {
             return this._objectTypeBinding.ObjectProperties.Values
                 .Where(property => property.CanWrite)
                 .Select(property => new Name(property.Name))

@@ -10,13 +10,16 @@ using Faml.Parser;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax {
-    public sealed class ConditionValuePairSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public sealed class ConditionValuePairSyntax : SyntaxNode
+    {
         private readonly ExpressionSyntax _condition;
         private readonly TextSpan _valueSpan;
         private ExpressionSyntax _value;
 
-        public ConditionValuePairSyntax(TextSpan span, Expression.ExpressionSyntax condition, TextSpan valueSpan) : base(span) {
+        public ConditionValuePairSyntax(TextSpan span, Expression.ExpressionSyntax condition, TextSpan valueSpan) : base(span)
+        {
             this._condition = condition;
             this._condition.SetParent(this);
 
@@ -27,7 +30,8 @@ namespace Faml.Syntax {
 
         public ExpressionSyntax Value => this._value;
 
-        public void ParseValueSource(BindingResolver bindingResolver) {
+        public void ParseValueSource(BindingResolver bindingResolver)
+        {
             if (this._value != null)
             {
                 return;
@@ -40,7 +44,8 @@ namespace Faml.Syntax {
             this._value.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
         }
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             visitor(this._condition);
 
             if (this._value != null)
@@ -53,7 +58,8 @@ namespace Faml.Syntax {
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ArgumentNameValuePair;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write("|");
             sourceWriter.Write(this.Condition);
             sourceWriter.Write(": ");

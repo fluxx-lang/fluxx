@@ -7,21 +7,26 @@ using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Syntax.Literal {
-    public class BooleanLiteralSyntax : ExpressionSyntax {
+namespace Faml.Syntax.Literal
+{
+    public class BooleanLiteralSyntax : ExpressionSyntax
+    {
         private readonly bool _value;
 
-        public  BooleanLiteralSyntax(TextSpan span, bool value) : base(span) {
+        public  BooleanLiteralSyntax(TextSpan span, bool value) : base(span)
+        {
             this._value = value;
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return BuiltInTypeBinding.Bool;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.BooleanLiteral;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write(this._value ? "true" : "false");
         }
 

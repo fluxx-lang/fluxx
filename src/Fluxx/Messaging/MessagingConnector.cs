@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReactiveData;
 
-namespace Faml.Messaging {
+namespace Faml.Messaging
+{
     public delegate Task<MessageObject?> MessageHandler(MessageObject request);
     public delegate TResponse ResponseConverter<out TResponse>(MessageObject response);
 
-    public abstract class MessagingConnector {
+    public abstract class MessagingConnector
+    {
         private long _responseIdCounter = 1;
         private readonly Dictionary<string, MessageHandler> _messageHandlers = new Dictionary<string, MessageHandler>();
         private readonly Dictionary<long, ResponseHandler> _neededResponses = new Dictionary<long, ResponseHandler>();
 
-        public void AddMessageHandler(string messageType, MessageHandler handler) {
+        public void AddMessageHandler(string messageType, MessageHandler handler)
+        {
             this._messageHandlers.Add(messageType, handler);
         }
 
-        protected async Task HandleMessage(Message message) {
+        protected async Task HandleMessage(Message message)
+        {
             string messageType = message.MessageType;
 
             if (!this._messageHandlers.TryGetValue(messageType, out MessageHandler handler))
@@ -49,12 +53,14 @@ namespace Faml.Messaging {
 
         protected abstract void SendMessage(Message message);
 
-        public void SendRequest(MessageObject request) {
+        public void SendRequest(MessageObject request)
+        {
             Message requestMessage = new Message(request);
             this.SendMessage(requestMessage);
         }
 
-        public IReactive<TResponse> SendRequestNeedingResponse<TResponse>(MessageObject request, ResponseConverter<TResponse> responseConverter) where TResponse : class? {
+        public IReactive<TResponse> SendRequestNeedingResponse<TResponse>(MessageObject request, ResponseConverter<TResponse> responseConverter) where TResponse : class?
+        {
             long responseId = this._responseIdCounter++;
             Message requestMessage = new Message(request, responseId);
 
@@ -66,7 +72,8 @@ namespace Faml.Messaging {
             return responseHandler.ReactiveResponse;
         }
 
-        protected void HandleResponse(Message responseMessage) {
+        protected void HandleResponse(Message responseMessage)
+        {
             long responseId = responseMessage.ResponseId;
             if (responseId == 0)
             {
@@ -82,19 +89,23 @@ namespace Faml.Messaging {
             responseHandler.ResponseReceived(responseMessage);
         }
 
-        private abstract class ResponseHandler {
+        private abstract class ResponseHandler
+        {
             public abstract void ResponseReceived(Message responseMessage);
         }
 
-        private class ResponseHandler<TResponse> : ResponseHandler where TResponse : class? {
+        private class ResponseHandler<TResponse> : ResponseHandler where TResponse : class?
+        {
             private readonly ResponseConverter<TResponse> _responseConverter;
             public ReactiveVar<TResponse> ReactiveResponse { get; } = new ReactiveVar<TResponse>(null);
 
-            public ResponseHandler(ResponseConverter<TResponse> responseConverter) {
+            public ResponseHandler(ResponseConverter<TResponse> responseConverter)
+            {
                 this._responseConverter = responseConverter;
             }
 
-            public override void ResponseReceived(Message responseMessage) {
+            public override void ResponseReceived(Message responseMessage)
+            {
                 TResponse response = this._responseConverter(responseMessage.MessageObject);
                 this.ReactiveResponse.Set(response);
             }

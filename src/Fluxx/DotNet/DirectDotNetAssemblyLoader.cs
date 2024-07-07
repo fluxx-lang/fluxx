@@ -6,9 +6,12 @@ using Faml.ProjectTypes;
  * @author Bret Johnson
  * @since 3/28/2015
  */
-namespace Faml.DotNet {
-    public class DirectDotNetAssemblyLoader : AssemblyLoader {
-        public override LoadedAssembly? Load(DotNetAssembly dotNetAssembly, out string? errorMessage) {
+namespace Faml.DotNet
+{
+    public class DirectDotNetAssemblyLoader : AssemblyLoader
+    {
+        public override LoadedAssembly? Load(DotNetAssembly dotNetAssembly, out string? errorMessage)
+        {
             errorMessage = null;
 
             // TODO: Hack this for now
@@ -19,11 +22,13 @@ namespace Faml.DotNet {
 
             var assemblyName = new AssemblyName(dotNetAssembly.Name);
 
-            try {
+            try
+            {
                 Assembly assembly = Assembly.Load(assemblyName);
                 return new LoadedAssembly(assembly);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 errorMessage = $"Error occurred loading library {dotNetAssembly.Name}: {e.Message}";
                 return null;
             }

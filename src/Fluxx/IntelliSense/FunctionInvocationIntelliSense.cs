@@ -9,13 +9,17 @@ using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Images;
 using TypeTooling.Types;
 
-namespace Faml.IntelliSense {
-    public class FunctionInvocationIntelliSense : IntelliSense {
+namespace Faml.IntelliSense
+{
+    public class FunctionInvocationIntelliSense : IntelliSense
+    {
         public FunctionInvocationIntelliSense(FamlModule module, int position)
-            : base(module, position, null) {
+            : base(module, position, null)
+            {
         }
 
-        public override async Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken) {
+        public override async Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken)
+        {
             DotNetRawTypeProvider dotNetRawTypeProvider = this.Module.Project.DotNetProjectInfo.RawTypeProvider;
 
             DotNetRawType? viewType = dotNetRawTypeProvider.GetType("Xamarin.Forms.View");
@@ -27,7 +31,8 @@ namespace Faml.IntelliSense {
             IEnumerable<DotNetRawType> types = await dotNetRawTypeProvider.FindTypesAssignableToAsync(viewType, cancellationToken);
 
             List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>();
-            foreach (DotNetRawType rawType in types) {
+            foreach (DotNetRawType rawType in types)
+            {
                 TypeToolingType? type = this.Module.Project.GetTypeToolingType(rawType);
                 if (type == null)
                 {
@@ -41,7 +46,8 @@ namespace Faml.IntelliSense {
                 string? insertText = name + " ";
 
                 Image? icon = null;
-                if (type is ObjectType objectType) {
+                if (type is ObjectType objectType)
+                {
                     icon = objectType.GetIcon();
                 }
 

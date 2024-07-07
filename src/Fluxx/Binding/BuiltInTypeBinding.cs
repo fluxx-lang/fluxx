@@ -3,8 +3,10 @@ using Faml.Api;
 using TypeTooling.Types;
 using TypeTooling.Types.PredefinedTypes;
 
-namespace Faml.Binding {
-    public class BuiltInTypeBinding : TypeBinding {
+namespace Faml.Binding
+{
+    public class BuiltInTypeBinding : TypeBinding
+    {
         public TypeToolingType TypeToolingType { get; }
 
         private static readonly Dictionary<string, BuiltInTypeBinding> _bindings = new Dictionary<string, BuiltInTypeBinding>();
@@ -16,7 +18,8 @@ namespace Faml.Binding {
         public static readonly BuiltInTypeBinding UIText = new BuiltInTypeBinding("uitext", UITextType.Instance);
         public static readonly BuiltInTypeBinding Null = new BuiltInTypeBinding("null", null);
 
-        public static BuiltInTypeBinding? GetBindingForTypeName(string typeName) {
+        public static BuiltInTypeBinding? GetBindingForTypeName(string typeName)
+        {
             if (!_bindings.TryGetValue(typeName, out BuiltInTypeBinding binding))
             {
                 return null;
@@ -28,7 +31,8 @@ namespace Faml.Binding {
         // TODO: This is a hack--replace it eventually
         public static readonly BuiltInTypeBinding Event = new BuiltInTypeBinding("Event", null);
 
-        public BuiltInTypeBinding(string typeName, TypeToolingType typeToolingType) : base(new QualifiableName(typeName), TypeFlags.None) {
+        public BuiltInTypeBinding(string typeName, TypeToolingType typeToolingType) : base(new QualifiableName(typeName), TypeFlags.None)
+        {
             this.TypeToolingType = typeToolingType;
 
             _bindings.Add(typeName, this);

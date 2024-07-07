@@ -5,13 +5,16 @@
 
 using Faml.Syntax.Expression;
 
-namespace Faml.Binding.Internal {
-    public class ForSymbolBinding : SymbolBinding {
+namespace Faml.Binding.Internal
+{
+    public class ForSymbolBinding : SymbolBinding
+    {
         private readonly ForExpressionSyntax _forExpression;
         private readonly int _variableIndex;
         private readonly TypeBinding _typeBinding;
 
-        public ForSymbolBinding(ForExpressionSyntax forExpression, int variableIndex) {
+        public ForSymbolBinding(ForExpressionSyntax forExpression, int variableIndex)
+        {
             this._forExpression = forExpression;
             this._variableIndex = variableIndex;
             this._typeBinding = forExpression.ForVariableDefinition.GetVariableTypeBinding();
@@ -21,7 +24,8 @@ namespace Faml.Binding.Internal {
 
         public int VariableIndex => this._variableIndex;
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._typeBinding;
         }
     }

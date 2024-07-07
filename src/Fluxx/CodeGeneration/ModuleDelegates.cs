@@ -6,14 +6,17 @@ using Faml.Syntax;
 using TypeTooling;
 using TypeTooling.DotNet.CodeGeneration;
 
-namespace Faml.CodeGeneration {
-    public class ModuleDelegates {
+namespace Faml.CodeGeneration
+{
+    public class ModuleDelegates
+    {
         private readonly TypeToolingEnvironment _typeToolingEnvironment;
         private readonly Dictionary<Name, FunctionDelegateHolder> _functionDelegateHolders = new Dictionary<Name, FunctionDelegateHolder>();
         private readonly Dictionary<ExampleDefinitionSyntax, Delegate> _exampleDelegates = new Dictionary<ExampleDefinitionSyntax, Delegate>();
         
 
-        public ModuleDelegates(TypeToolingEnvironment typeToolingEnvironment) {
+        public ModuleDelegates(TypeToolingEnvironment typeToolingEnvironment)
+        {
             this._typeToolingEnvironment = typeToolingEnvironment;
         }
 
@@ -24,7 +27,8 @@ namespace Faml.CodeGeneration {
         /// </summary>
         /// <param name="functionDefinition">function definition</param>
         /// <returns>delegate holder</returns>
-        public FunctionDelegateHolder GetOrCreateFunctionDelegate(FunctionDefinitionSyntax functionDefinition) {
+        public FunctionDelegateHolder GetOrCreateFunctionDelegate(FunctionDefinitionSyntax functionDefinition)
+        {
             Name functionName = functionDefinition.FunctionName;
             if (this._functionDelegateHolders.TryGetValue(functionName, out FunctionDelegateHolder existingDelegateHolder))
             {
@@ -46,11 +50,13 @@ namespace Faml.CodeGeneration {
             return delegateHolder;
         }
 
-        public void AddExampleDelegate(ExampleDefinitionSyntax exampleDefinition, Delegate expressionDelegate) {
+        public void AddExampleDelegate(ExampleDefinitionSyntax exampleDefinition, Delegate expressionDelegate)
+        {
             this._exampleDelegates.Add(exampleDefinition, expressionDelegate);
         }
 
-        public Delegate? GetExampleDelegate(ExampleDefinitionSyntax exampleDefinition) {
+        public Delegate? GetExampleDelegate(ExampleDefinitionSyntax exampleDefinition)
+        {
             if (!this._exampleDelegates.TryGetValue(exampleDefinition, out Delegate exampleDelegate))
             {
                 return null;

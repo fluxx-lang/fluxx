@@ -10,20 +10,24 @@ using Faml.Api;
 using Faml.Syntax;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.Binding.Internal {
-    public class RecordPropertyBinding : PropertyBinding {
+namespace Faml.Binding.Internal
+{
+    public class RecordPropertyBinding : PropertyBinding
+    {
         private readonly RecordTypeDefinitionSyntax _recordTypeDefinition;
         private readonly Name _propertyName;
         private readonly TypeBinding _propertyTypeBinding;
 
-        public RecordPropertyBinding(RecordTypeDefinitionSyntax recordTypeDefinition, Name propertyName) {
+        public RecordPropertyBinding(RecordTypeDefinitionSyntax recordTypeDefinition, Name propertyName)
+        {
             this._recordTypeDefinition = recordTypeDefinition;
             this._propertyName = propertyName;
 
             this._propertyTypeBinding = this._recordTypeDefinition.GetPropertyTypeBinding(propertyName);
         }
 
-        public override TypeBinding GetTypeBinding() {
+        public override TypeBinding GetTypeBinding()
+        {
             return this._propertyTypeBinding;
         }
 

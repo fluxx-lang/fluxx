@@ -1,8 +1,11 @@
-﻿namespace Faml.Binding {
-    public abstract class EnumValueBinding {
+﻿namespace Faml.Binding
+{
+    public abstract class EnumValueBinding
+    {
         private readonly EnumTypeBinding _enumTypeBinding;
 
-        protected EnumValueBinding(EnumTypeBinding enumTypeBinding) {
+        protected EnumValueBinding(EnumTypeBinding enumTypeBinding)
+        {
             this._enumTypeBinding = enumTypeBinding;
         }
 

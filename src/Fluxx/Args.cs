@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Faml {
-    public class Args : Dictionary<string, object> {
+namespace Faml
+{
+    public class Args : Dictionary<string, object>
+    {
     }
 }

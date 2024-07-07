@@ -6,18 +6,22 @@ using Faml.Binding.External;
 using TypeTooling.DotNet.RawTypes.Reflection;
 using TypeTooling.Types;
 
-namespace Faml.DotNet {
-    public sealed class DotNetExternalLibrary : ExternalLibrary {
+namespace Faml.DotNet
+{
+    public sealed class DotNetExternalLibrary : ExternalLibrary
+    {
         private readonly FamlProject _project;
         private readonly Assembly _assembly;
 
 
-        public DotNetExternalLibrary(FamlProject project, Assembly assembly) {
+        public DotNetExternalLibrary(FamlProject project, Assembly assembly)
+        {
             this._project = project;
             this._assembly = assembly;
         }
 
-        public DotNetExternalLibrary(FamlProject project, string name) {
+        public DotNetExternalLibrary(FamlProject project, string name)
+        {
             this._project = project;
 
             var assemblyName = new AssemblyName(name);
@@ -26,7 +30,8 @@ namespace Faml.DotNet {
 
         public Assembly Assembly => this._assembly;
 
-        public override TypeBinding? ResolveTypeBinding(QualifiableName className) {
+        public override TypeBinding? ResolveTypeBinding(QualifiableName className)
+        {
             Type classType = this._assembly.GetType(className.ToString());
             if (classType == null)
             {
@@ -43,7 +48,8 @@ namespace Faml.DotNet {
             return new ExternalObjectTypeBinding(this._project, (ObjectType) typeToolingType);
         }
 
-        public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName className) {
+        public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName className)
+        {
             Type classType = this._assembly.GetType(className.ToString());
             if (classType == null)
             {

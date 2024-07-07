@@ -6,30 +6,37 @@ using Faml.Api.IntelliSense;
 using Faml.Binding;
 using Faml.Syntax;
 
-namespace Faml.IntelliSense {
-    public class ArgumentNameIntelliSense : IntelliSense {
+namespace Faml.IntelliSense
+{
+    public class ArgumentNameIntelliSense : IntelliSense
+    {
         private readonly FunctionBinding _functionBinding;
         private readonly QualifiableNameSyntax? _argumentName;
 
 
         public ArgumentNameIntelliSense(FamlModule module, int position, FunctionBinding functionBinding)
-            : base(module, position, null) {
+            : base(module, position, null)
+            {
             this._functionBinding = functionBinding;
             this._argumentName = null;
         }
 
         public ArgumentNameIntelliSense(FamlModule module, int position, FunctionBinding functionBinding, QualifiableNameSyntax argumentName)
-            : base(module, position, argumentName) {
+            : base(module, position, argumentName)
+            {
             this._functionBinding = functionBinding;
             this._argumentName = argumentName;
         }
 
-        public override Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken) {
+        public override Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken)
+        {
             string prefix = "";
             string suffix = "";
-            if (this._argumentName == null) {
+            if (this._argumentName == null)
+            {
                 int spacesBefore = 0;
-                if (this.ParseableSource.IsSpaceAt(this.Position - 1)) {
+                if (this.ParseableSource.IsSpaceAt(this.Position - 1))
+                {
                     ++spacesBefore;
                     if (this.ParseableSource.IsSpaceAt(this.Position - 2))
                     {
@@ -52,7 +59,8 @@ namespace Faml.IntelliSense {
             Name[] properties = this._functionBinding.GetParameters();
 
             List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>();
-            foreach (Name propertyName in properties) {
+            foreach (Name propertyName in properties)
+            {
                 string displayText = propertyName.AsString();
 
                 string? insertText = null;

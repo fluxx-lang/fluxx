@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.RawTypes;
 
-namespace Faml.DotNet {
-    public abstract class DotNetRawTypeProvider {
+namespace Faml.DotNet
+{
+    public abstract class DotNetRawTypeProvider
+    {
         /// <summary>
         /// The provider should return false here to indicate that it's not yet ready to supply type info
         /// (e.g. Roslyn is still reading in project info), in which case the FAML tooling won't call

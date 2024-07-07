@@ -1,12 +1,15 @@
 using System;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Faml.Api.QuickInfo {
+namespace Faml.Api.QuickInfo
+{
     [Serializable]
-    public abstract class QuickInfo {
+    public abstract class QuickInfo
+    {
         private readonly TextSpan _textSpan;
 
-        protected QuickInfo(TextSpan textSpan) {
+        protected QuickInfo(TextSpan textSpan)
+        {
             this._textSpan = textSpan;
         }
 

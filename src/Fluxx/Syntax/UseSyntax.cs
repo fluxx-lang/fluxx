@@ -7,31 +7,38 @@ using Microsoft.CodeAnalysis.Text;
  * @author Bret Johnson
  * @since 6/6/2015
  */
-namespace Faml.Syntax {
-    public sealed class UseSyntax : SyntaxNode {
+namespace Faml.Syntax
+{
+    public sealed class UseSyntax : SyntaxNode
+    {
         private readonly FunctionInvocationSyntax _functionInvocation;
 
-        public UseSyntax(TextSpan span, FunctionInvocationSyntax functionInvocation) : base(span) {
+        public UseSyntax(TextSpan span, FunctionInvocationSyntax functionInvocation) : base(span)
+        {
             this._functionInvocation = functionInvocation;
             this._functionInvocation.SetParent(this);
         }
 
-        public override void VisitChildren(SyntaxVisitor visitor) {
+        public override void VisitChildren(SyntaxVisitor visitor)
+        {
             this._functionInvocation.VisitChildren(visitor);
         }
 
-        public override bool IsTerminalNode() {
+        public override bool IsTerminalNode()
+        {
             return false;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.Use;
 
-        public override void WriteSource(SourceWriter sourceWriter) {
+        public override void WriteSource(SourceWriter sourceWriter)
+        {
             sourceWriter.Write("use ");
             sourceWriter.Write(this._functionInvocation);
         }
 
-        public void ResolveImportLibrary() {
+        public void ResolveImportLibrary()
+        {
             /*
             if (_functionInvocation.functionName.ToString() != "DotNet") {
                 this.addProblem("'use' currently only supports 'DotNet' packages");

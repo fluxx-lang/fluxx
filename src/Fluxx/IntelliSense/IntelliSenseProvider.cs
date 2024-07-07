@@ -8,16 +8,20 @@ using Faml.Syntax;
 using Faml.Syntax.Expression;
 using TypeTooling.ClassifiedText;
 
-namespace Faml.IntelliSense {
-    public class IntelliSenseProvider {
+namespace Faml.IntelliSense
+{
+    public class IntelliSenseProvider
+    {
         public delegate Task<ClassifiedTextMarkup?> GetDescriptionAsyncDelegate(CultureInfo preferredCulture, CancellationToken cancellationToken);
 
-        public static IntelliSense? GetIntelliSense(FamlModule module, int position) {
+        public static IntelliSense? GetIntelliSense(FamlModule module, int position)
+        {
             ModuleSyntax moduleSyntax = module.ModuleSyntax;
 
             // If the position is out of range (e.g. past the end of the module source) then
             // don't provide IntelliSense
-            if (!moduleSyntax.Span.ContainsInclusiveEnd(position)) {
+            if (!moduleSyntax.Span.ContainsInclusiveEnd(position))
+            {
                 // Hack for now
                 return new FunctionInvocationIntelliSense(module, position);
                 //return null;
@@ -37,7 +41,8 @@ namespace Faml.IntelliSense {
             {
                 if (node is QualifiableNameSyntax name &&
                     name.Parent is PropertySpecifierSyntax propertySpecifier &&
-                    position == node.Span.End) {
+                    position == node.Span.End)
+                    {
                     previousTerminalNode = node;
                     node = propertySpecifier;
                 }
@@ -48,7 +53,8 @@ namespace Faml.IntelliSense {
                 if (node is QualifiableNameSyntax name &&
                     name.Parent is PropertySpecifierSyntax propertySpecifier &&
                     propertySpecifier.Parent is ArgumentNameValuePairSyntax argumentNameValuePair &&
-                    argumentNameValuePair.Parent is FunctionInvocationSyntax functionInvocation) {
+                    argumentNameValuePair.Parent is FunctionInvocationSyntax functionInvocation)
+                    {
 
                     FunctionBinding functionBinding = functionInvocation.FunctionBinding;
                     if (functionBinding is InvalidFunctionBinding)
@@ -70,7 +76,8 @@ namespace Faml.IntelliSense {
 
             // Check if the caret is on a function invocation, but not on any argument nor the function name itself
             {
-                if (node is FunctionInvocationSyntax functionInvocation) {
+                if (node is FunctionInvocationSyntax functionInvocation)
+                {
                     FunctionBinding functionBinding = functionInvocation.FunctionBinding;
                     if (functionBinding is InvalidFunctionBinding)
                     {
@@ -85,7 +92,8 @@ namespace Faml.IntelliSense {
             {
                 if (previousTerminalNode is QualifiableNameSyntax name &&
                     name.Parent is PropertySpecifierSyntax propertySpecifier &&
-                    propertySpecifier.Parent is ArgumentNameValuePairSyntax argumentNameValuePair) {
+                    propertySpecifier.Parent is ArgumentNameValuePairSyntax argumentNameValuePair)
+                    {
 
                     TypeBinding parameterTypeBinding = argumentNameValuePair.ParameterTypeBinding;
                     if (parameterTypeBinding is InvalidTypeBinding)
@@ -101,7 +109,8 @@ namespace Faml.IntelliSense {
         }
 
         public static Task<ClassifiedTextMarkup?> GetDescriptionAsync(object completionItemData, CultureInfo preferredCulture,
-            CancellationToken cancellationToken) {
+            CancellationToken cancellationToken)
+            {
             GetDescriptionAsyncDelegate getDescriptionDelegate = (GetDescriptionAsyncDelegate) completionItemData;
             return getDescriptionDelegate.Invoke(preferredCulture, cancellationToken);
         }
