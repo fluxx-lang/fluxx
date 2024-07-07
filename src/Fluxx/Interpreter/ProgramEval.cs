@@ -1,8 +1,3 @@
-/**
- * @author Bret Johnson
- * @since 4/17/2015
- */
-
 using Faml.SourceProviders;
 
 namespace Faml.Interpreter

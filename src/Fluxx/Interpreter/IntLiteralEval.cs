@@ -1,9 +1,3 @@
-
-
-/**
- * @author Bret Johnson
- * @since 4/4/2015
- */
 namespace Faml.Interpreter
 {
     public class IntLiteralEval : IntEval
@@ -20,5 +14,4 @@ namespace Faml.Interpreter
             return this._value;
         }
     }
-
 }

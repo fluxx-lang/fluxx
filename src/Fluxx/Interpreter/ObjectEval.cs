@@ -1,8 +1,3 @@
-/**
- * @author Bret Johnson
- * @since 4/4/2015
- */
-
 using System;
 
 namespace Faml.Interpreter

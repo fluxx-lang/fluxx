@@ -1,8 +1,3 @@
-/**
- * @author Bret Johnson
- * @since 4/3/2015
- */
-
 namespace Faml.Interpreter
 {
     public class Context

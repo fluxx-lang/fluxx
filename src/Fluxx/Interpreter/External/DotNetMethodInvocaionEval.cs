@@ -2,11 +2,6 @@ using System.Reflection;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.DotNet.RawTypes.Reflection;
 
-
-/**
- * @author Bret Johnson
- * @since 4/4/2015
- */
 namespace Faml.Interpreter.External
 {
     public sealed class DotNetMethodInvocaionEval : ObjectEval

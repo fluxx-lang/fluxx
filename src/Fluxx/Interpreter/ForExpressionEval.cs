@@ -1,8 +1,3 @@
-/**
- * @author Bret Johnson
- * @since 4/4/2015
- */
-
 using System.Collections;
 using System.Collections.Generic;
 using Faml.Binding;

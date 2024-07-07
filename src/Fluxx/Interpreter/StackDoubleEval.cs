@@ -1,9 +1,3 @@
-
-
-/**
- * @author Bret Johnson
- * @since 4/12/2015
- */
 namespace Faml.Interpreter
 {
     public class StackDoubleEval : DoubleEval
