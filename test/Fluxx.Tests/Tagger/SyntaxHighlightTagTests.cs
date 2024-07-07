@@ -1,43 +1,41 @@
 using Faml.Api;
 using Faml.Syntax;
 using Faml.Tests.Shared;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Faml.Tests.Tagger
 {
     public sealed class SyntaxHighlightTagTests : TestBase
     {
-        const SyntaxHighlightTagType LeftBrace = SyntaxHighlightTagType.DeemphasizedPunctuation;
-        const SyntaxHighlightTagType RightBrace = SyntaxHighlightTagType.DeemphasizedPunctuation;
-        const SyntaxHighlightTagType Assign = SyntaxHighlightTagType.Punctuation;
-        const SyntaxHighlightTagType Colon = SyntaxHighlightTagType.DeemphasizedPunctuation;
-        const SyntaxHighlightTagType Semicolon = SyntaxHighlightTagType.DeemphasizedPunctuation;
-        const SyntaxHighlightTagType Times = SyntaxHighlightTagType.Operator;
-        const SyntaxHighlightTagType TypeReference = SyntaxHighlightTagType.TypeReference;
-        const SyntaxHighlightTagType Int = SyntaxHighlightTagType.TypeReference;
-        const SyntaxHighlightTagType FunctionReference = SyntaxHighlightTagType.FunctionReference;
-        const SyntaxHighlightTagType PropertyReference = SyntaxHighlightTagType.PropertyReference;
-        const SyntaxHighlightTagType True = SyntaxHighlightTagType.Keyword;
-        const SyntaxHighlightTagType False = SyntaxHighlightTagType.Keyword;
-        const SyntaxHighlightTagType Type = SyntaxHighlightTagType.ControlKeyword;
-        const SyntaxHighlightTagType SymbolReference = SyntaxHighlightTagType.SymbolReference;
-        const SyntaxHighlightTagType NumberLiteral = SyntaxHighlightTagType.NumberLiteral;
-        const SyntaxHighlightTagType StringLiteral = SyntaxHighlightTagType.StringLiteral;
+        private const SyntaxHighlightTagType LeftBrace = SyntaxHighlightTagType.DeemphasizedPunctuation;
+        private const SyntaxHighlightTagType RightBrace = SyntaxHighlightTagType.DeemphasizedPunctuation;
+        private const SyntaxHighlightTagType Assign = SyntaxHighlightTagType.Punctuation;
+        private const SyntaxHighlightTagType Colon = SyntaxHighlightTagType.DeemphasizedPunctuation;
+        private const SyntaxHighlightTagType Semicolon = SyntaxHighlightTagType.DeemphasizedPunctuation;
+        private const SyntaxHighlightTagType Times = SyntaxHighlightTagType.Operator;
+        private const SyntaxHighlightTagType TypeReference = SyntaxHighlightTagType.TypeReference;
+        private const SyntaxHighlightTagType Int = SyntaxHighlightTagType.TypeReference;
+        private const SyntaxHighlightTagType FunctionReference = SyntaxHighlightTagType.FunctionReference;
+        private const SyntaxHighlightTagType PropertyReference = SyntaxHighlightTagType.PropertyReference;
+        private const SyntaxHighlightTagType True = SyntaxHighlightTagType.Keyword;
+        private const SyntaxHighlightTagType False = SyntaxHighlightTagType.Keyword;
+        private const SyntaxHighlightTagType Type = SyntaxHighlightTagType.ControlKeyword;
+        private const SyntaxHighlightTagType SymbolReference = SyntaxHighlightTagType.SymbolReference;
+        private const SyntaxHighlightTagType NumberLiteral = SyntaxHighlightTagType.NumberLiteral;
+        private const SyntaxHighlightTagType StringLiteral = SyntaxHighlightTagType.StringLiteral;
 
         [TestMethod]
         public void Tag_FunctionWithSimpleBody()
         {
-            this.AssertTaggingMatches("foo:int = 2",
-                FunctionReference, Colon, TypeReference, Assign, NumberLiteral);
+            this.AssertTaggingMatches("foo:int = 2", FunctionReference, Colon, TypeReference, Assign, NumberLiteral);
         }
 
         [TestMethod]
         public void Tag_FunctionWithExprBody()
         {
-            this.AssertTaggingMatches("foo{param: int} = { 2 * param }",
+            this.AssertTaggingMatches(
+                "foo{param: int} = { 2 * param }",
                 FunctionReference, LeftBrace, PropertyReference, Colon, Int, RightBrace, Assign, // foo{param: int} =
                 LeftBrace, NumberLiteral, Times, SymbolReference, RightBrace); // { 2 * param }
         }
@@ -45,14 +43,16 @@ namespace Faml.Tests.Tagger
         [TestMethod]
         public void Tag_FunctionInvocationContentArg()
         {
-            this.AssertTaggingMatches("foo = TestObject{abcdef}",
+            this.AssertTaggingMatches(
+                "foo = TestObject{abcdef}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, StringLiteral, RightBrace);
         }
 
         [TestMethod]
         public void Tag_FunctionInvocationMultipleArgs()
         {
-            this.AssertTaggingMatches("foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}",
+            this.AssertTaggingMatches(
+                "foo = TestObject{IntProp:3; BoolProp:true; TextProp:abc}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, // foo = TestObject{
                 PropertyReference, Colon, NumberLiteral, Semicolon, // IntProp:3;
                 PropertyReference, Colon, True, Semicolon, // BoolProp:true;
@@ -63,7 +63,8 @@ namespace Faml.Tests.Tagger
         [TestMethod]
         public void Tag_KeywordsInPropertyValue()
         {
-            this.AssertTaggingMatches("foo = TestObject{TextProp:abc if is}",
+            this.AssertTaggingMatches(
+                "foo = TestObject{TextProp:abc if is}",
                 FunctionReference, Assign, FunctionReference, LeftBrace, // foo = TestObject{
                 PropertyReference, Colon, StringLiteral, RightBrace); // TextProp:abc if is}
         }
@@ -71,7 +72,8 @@ namespace Faml.Tests.Tagger
         [TestMethod]
         public void Tag_RecordDefinition()
         {
-            this.AssertTaggingMatches("type Foo = {foo:int}",
+            this.AssertTaggingMatches(
+                "type Foo = {foo:int}",
                 Type, TypeReference, Assign, LeftBrace, PropertyReference, Colon, Int, RightBrace);
         }
 

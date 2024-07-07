@@ -1,5 +1,5 @@
 using Faml.Lexer;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Faml.Tests.Lexer
@@ -22,7 +22,6 @@ namespace Faml.Tests.Lexer
             this.AssertTokenTypeIs("true", TokenType.True);
             this.AssertTokenTypeIs("false", TokenType.False);
             this.AssertTokenTypeIs("null", TokenType.Null);
-            //assertTokenTypeIs("function", TokenType.FUNCTION);
         }
 
         [TestMethod]
@@ -72,14 +71,14 @@ namespace Faml.Tests.Lexer
         private void AssertTokenTypeIs(string source, TokenType expectedTokenType)
         {
             var token = new Token(SourceText.From(source));
-            Assert.AreEqual(expectedTokenType, (object) token.TypeAllowPropertyIdentifier);
+            Assert.AreEqual(expectedTokenType, (object)token.TypeAllowPropertyIdentifier);
         }
 
         private void AssertTokenTypeAndValueIs(string source, TokenType expectedTokenType, string expectedTokenValue)
         {
             var token = new Token(SourceText.From(source));
-            Assert.AreEqual(expectedTokenType, (object) token.Type);
-            Assert.AreEqual(expectedTokenValue, (object) token.StringValue);
+            Assert.AreEqual(expectedTokenType, (object)token.Type);
+            Assert.AreEqual(expectedTokenValue, (object)token.StringValue);
         }
     }
 }

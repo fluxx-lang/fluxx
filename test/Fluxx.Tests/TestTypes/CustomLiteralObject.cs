@@ -20,7 +20,10 @@ namespace Faml.Tests.TestTypes
                 ExpressionCode newCode = DotNetCode.New(myType, new string[] { });
                 return new CustomLiteral(null, newCode);
             }
-            else return CustomLiteral.SingleError("Invalid value");
+            else
+            {
+                return CustomLiteral.SingleError("Invalid value");
+            }
         }
     }
 }

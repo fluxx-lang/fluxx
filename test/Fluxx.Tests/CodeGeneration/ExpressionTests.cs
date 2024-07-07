@@ -1,12 +1,6 @@
 using Faml.Tests.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-
-/**
- * @author Bret Johnson
- * @since 3/28/2015
- */
-
 namespace Faml.Tests.CodeGeneration
 {
     public class ExpressionTests : TestBase
@@ -77,15 +71,16 @@ namespace Faml.Tests.CodeGeneration
         {
             this.AssertMainFunctionValueIs(
                 "bar:bool = true || false\n" +
-                "main:bool = ! bar", false);
+                "main:bool = ! bar",
+                false);
             this.AssertMainFunctionValueIs(
                 "bar{}:int = 3\r\n" +
-                "main{}:int = bar{}", 3);
+                "main{}:int = bar{}",
+                3);
             this.AssertMainFunctionValueIs(
                 "bar{val:int}:int = 3\r\n" +
                 "main{}:int = bar{val:5}",
                 3);
-            //assertBooleanFunctionValueIs("function foo(param1:Boolean):Boolean = false", "foo()", false);
         }
 
         [TestMethod]

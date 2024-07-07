@@ -2,29 +2,41 @@ namespace Faml.Tests.TestTypes
 {
     public class YesNo
     {
-        private readonly bool _isYes;
+        private readonly bool isYes;
 
         public YesNo(bool isYes)
         {
-            this._isYes = isYes;
+            this.isYes = isYes;
         }
 
-        protected bool Equals(YesNo other)
+        public bool Equals(YesNo other)
         {
-            return this._isYes == other._isYes;
+            return this.isYes == other.isYes;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return this.Equals((YesNo) obj);
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            return this.Equals((YesNo)obj);
         }
 
         public override int GetHashCode()
         {
-            return this._isYes.GetHashCode();
+            return this.isYes.GetHashCode();
         }
     }
 }

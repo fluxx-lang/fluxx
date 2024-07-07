@@ -4,95 +4,107 @@ namespace Faml.Tests.TestTypes
 {
     public sealed class TestObject
     {
-        private bool _boolProp;
-        private int _intProp;
-        private string? _textProp;
-        private SimpleEnum _enumProp;
-        private YesNo? _yesNo;
-        private string? _content;
+        private bool boolProp;
+        private int intProp;
+        private string? textProp;
+        private SimpleEnum enumProp;
+        private YesNo? yesNo;
+        private string? content;
 
         public TestObject(int intProp, bool boolProp, string textProp)
         {
-            this._intProp = intProp;
-            this._boolProp = boolProp;
-            this._textProp = textProp;
+            this.intProp = intProp;
+            this.boolProp = boolProp;
+            this.textProp = textProp;
         }
 
         public bool BoolProp
         {
-            get => this._boolProp;
-            set => this._boolProp = value;
+            get => this.boolProp;
+            set => this.boolProp = value;
         }
 
         public int IntProp
         {
-            get => this._intProp;
-            set => this._intProp = value;
+            get => this.intProp;
+            set => this.intProp = value;
         }
 
         public string? TextProp
         {
-            get => this._textProp;
-            set => this._textProp = value;
+            get => this.textProp;
+            set => this.textProp = value;
         }
 
         public SimpleEnum EnumProp
         {
-            get => this._enumProp;
-            set => this._enumProp = value;
+            get => this.enumProp;
+            set => this.enumProp = value;
         }
 
         public YesNo? YesNoProp
         {
-            get => this._yesNo;
-            set => this._yesNo = value;
+            get => this.yesNo;
+            set => this.yesNo = value;
         }
 
         public string? ContentProp
         {
-            get => this._content;
-            set => this._content = value;
+            get => this.content;
+            set => this.content = value;
         }
 
         public override string ToString()
         {
             return "TestSimpleObj{" +
-                   "intProp=" + this._intProp +
-                   ", boolProp=" + this._boolProp +
-                   ", textProp='" + this._textProp + '\'' +
+                   "intProp=" + this.intProp +
+                   ", boolProp=" + this.boolProp +
+                   ", textProp='" + this.textProp + '\'' +
                    '}';
         }
 
         public int AddValue(int toAdd)
         {
-            return this._intProp + toAdd;
+            return this.intProp + toAdd;
         }
 
         public bool IsIntEven()
         {
-            return this._intProp % 2 == 0;
+            return this.intProp % 2 == 0;
         }
 
-        public override bool Equals(object o)
+        public override bool Equals(object? o)
         {
-            if (this == o) return true;
+            if (this == o)
+            {
+                return true;
+            }
+
             // TEST CONV - fix this
             /*
             if (o == null || getClass() != o.getClass()) return false;
             */
 
-            var that = (TestObject) o;
+            var that = (TestObject)o;
 
-            if (this._intProp != that._intProp) return false;
-            if (this._boolProp != that._boolProp) return false;
-            return !(this._textProp != null ? !this._textProp.Equals(that._textProp) : that._textProp != null);
+            if (this.intProp != that.intProp)
+            {
+                return false;
+            }
+
+            if (this.boolProp != that.boolProp)
+            {
+                return false;
+            }
+
+            return !(this.textProp != null ? !this.textProp.Equals(that.textProp) : that.textProp != null);
         }
 
         public override int GetHashCode()
         {
-            int result = this._intProp;
-            result = 31*result + (this._boolProp ? 1 : 0);
-            result = 31*result + (this._textProp != null ? this._textProp.GetHashCode() : 0);
+            int result = this.intProp;
+            result = (31 * result) + (this.boolProp ? 1 : 0);
+            result = (31 * result) + (this.textProp != null ? this.textProp.GetHashCode() : 0);
             return result;
         }
     }
