@@ -574,10 +574,12 @@ namespace Faml
                             exampleResults.Add(exampleResult);
                         }
                         else
+                        {
                             exampleResults.Add(new ExampleResult
                             {
                                 Content = exampleValue
                             });
+                        }
                     }
                 }
                 else if (exampleValue is ExampleResult exampleResult)

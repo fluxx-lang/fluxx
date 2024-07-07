@@ -26,10 +26,12 @@ namespace Faml.Binding.External
         public AttachedProperty GetAttachedProperty(Name propertyName)
         {
             foreach (AttachedProperty attachedProperty in this._attachedType.AttachedProperties)
+            {
                 if (attachedProperty.Name == propertyName.ToString())
                 {
                     return attachedProperty;
                 }
+            }
 
             return null;
         }

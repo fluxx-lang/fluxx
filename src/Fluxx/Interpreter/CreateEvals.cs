@@ -200,8 +200,10 @@ namespace Faml.Interpreter
                 }
             }
             else
+            {
                 throw new Exception(
                     $"Unexpected variable binding type '{symbolBinding}' for variable reference {symbolReference}");
+            }
         }
 
         private Eval CreatePropertyAccessEval(PropertyAccessSyntax propertyAccess)
@@ -233,8 +235,10 @@ namespace Faml.Interpreter
                     return new AstRecordPropertyObjectEval(propertyName, expressionEval);
                 }
                 else
+                {
                     throw new Exception("Unexpected expression type '" + typeBinding + "' for property access " +
                                         propertyAccess.ToString());
+                }
             }
             else if (propertyBinding is ExternalPropertyBinding externalPropertyBinding)
             {
@@ -374,8 +378,10 @@ namespace Faml.Interpreter
                 return new NewAstRecordObjectEval(new Name[0], new Eval[0]);
             }
             else
+            {
                 throw new Exception(
                     $"Unexpected function binding type {functionBinding} for zero argument function {functionSymbolBinding.FunctionBinding.FunctionName}");
+            }
         }
 
         private Eval[] CreateArgumentEvals(FunctionInvocationSyntax functionInvocation, Name[] parameters)
@@ -540,8 +546,10 @@ namespace Faml.Interpreter
                 return new FunctionInvocationObjectEval(parameterEvals, this, functionDefinition);
             }
             else
+            {
                 throw new Exception(
                     $"Unexpected function return type to eval, '{returnTypeBinding}', for function {functionDefinition.FunctionNameSyntax}");
+            }
         }
 
 /*  
@@ -703,8 +711,11 @@ namespace Faml.Interpreter
         {
             CustomLiteralParser? customLiteralParser = externalTypeCustomLiteralSytax.ExternalType.GetCustomLiteralParser();
             if (customLiteralParser == null)
+            {
                 throw new Exception(
                     $"ExternalType {externalTypeCustomLiteralSytax.ExternalType.FullName} unexpectedly doesn't have a CustomerLiteralManager");
+            }
+
             ExpressionAndHelpersCode? literalValueCode = externalTypeCustomLiteralSytax.CustomLiteral.ExpressionAndHelpersCode;
             return this.CreateObjectConstantDelegateEval(literalValueCode);
         }
@@ -781,8 +792,10 @@ namespace Faml.Interpreter
                     return new EqualsBooleanEval((BooleanEval)leftEval, (BooleanEval)rightEval);
                 }
                 else
+                {
                     throw new Exception("Cannot compare these two types with == :" + leftTypeBinding + " and " +
                                         rightTypeBiding);
+                }
             }
             else if (infixOperator == Operator.NotEquals)
             {
@@ -796,8 +809,10 @@ namespace Faml.Interpreter
                     return new NotEqualsBooleanEval((BooleanEval)leftEval, (BooleanEval)rightEval);
                 }
                 else
+                {
                     throw new Exception("Cannot compare these two types with == :" + leftTypeBinding + " and " +
                                         rightTypeBiding);
+                }
             }
             else
             {

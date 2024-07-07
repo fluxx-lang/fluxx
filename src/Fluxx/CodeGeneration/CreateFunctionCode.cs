@@ -134,8 +134,10 @@ namespace Faml.CodeGeneration
                     return this.CreateInternalFunctionInvocationCode(internalFunctionBinding, ImmutableArray<ExpressionCode>.Empty);
                 }
                 else
+                {
                     throw new InvalidOperationException(
                         $"Unexpected function symbol binding type {functionBinding.GetType().FullName} for symbol reference '{symbolReference.Name}'");
+                }
             }
 #if false
             else if (variableBinding is ForVariableBinding forVariableBinding) {

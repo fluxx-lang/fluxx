@@ -33,8 +33,10 @@ namespace Faml.DotNet
                 }
 
                 if (resourcePaths.Count() > 1)
+                {
                     throw new Exception(
                         $"Multiple resources ending with {path} found: {Environment.NewLine}{string.Join(Environment.NewLine, resourcePaths)}");
+                }
 
                 Stream stream = assembly.GetManifestResourceStream(resourcePaths.Single());
                 if (stream == null)

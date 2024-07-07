@@ -133,10 +133,12 @@ namespace Faml.Syntax
         public ExampleDefinitionSyntax? GetExampleDefinitionAtSourcePosition(int position)
         {
             foreach (ExampleDefinitionSyntax exampleDefinition in this._exampleDefinitions)
+            {
                 if (exampleDefinition.Span.Contains(position))
                 {
                     return exampleDefinition;
                 }
+            }
 
             return null;
         }

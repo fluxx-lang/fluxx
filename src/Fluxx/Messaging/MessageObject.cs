@@ -47,8 +47,10 @@ namespace Faml.Messaging
             }
 
             if (!(value is T typedValue))
+            {
                 throw new InvalidOperationException(
                     $"Property {propertyName} is of type {value.GetType().FullName}, not expected type {typeof(T).FullName}");
+            }
 
             return typedValue;
         }

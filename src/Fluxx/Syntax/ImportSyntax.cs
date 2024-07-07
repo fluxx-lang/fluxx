@@ -48,10 +48,12 @@ namespace Faml.Syntax
         public override void VisitChildren(SyntaxVisitor visitor)
         {
             if (this._importTypeReferences != null)
+            {
                 foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
                 {
                     visitor(importReference);
                 }
+            }
 
             visitor(this._qualifierSyntax);
         }

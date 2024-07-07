@@ -48,8 +48,10 @@ namespace Faml.SourceProviders
             foreach (string filePath in Directory.EnumerateFiles(this._rootDirectory, "*.*", SearchOption.AllDirectories))
             {
                 if (!filePath.StartsWith(this._rootDirectory))
+                {
                     throw new Exception(
                         $"Path {filePath} unexpectedly doesn't start with root directory {this._rootDirectory}");
+                }
 
                 string relativePath = filePath.Substring(rootDirectoryLength);
                 resources.Add(relativePath);

@@ -45,8 +45,10 @@ namespace Faml.Interpreter
                     Context.ObjectStack[variableStackOffset] = variableValue;
                 }
                 else
+                {
                     throw new System.Exception(
                         $"Variable type {this._variableTypeBinding} currently not supported for 'for' expressions");
+                }
 
                 object expressionValue = this._expressionEval.Eval();
                 list.Add(expressionValue);

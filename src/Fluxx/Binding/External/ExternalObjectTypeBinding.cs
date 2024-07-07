@@ -122,10 +122,12 @@ namespace Faml.Binding.External
             yield return objectType;
 
             foreach (ObjectType baseType in objectType.GetBaseTypes())
+            {
                 foreach (ObjectType ancestorType in GetTypeAndAncestors(baseType))
                 {
                     yield return ancestorType;
                 }
+            }
         }
 
         protected bool Equals(ExternalObjectTypeBinding other)

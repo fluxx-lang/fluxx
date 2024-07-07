@@ -253,8 +253,10 @@ namespace Faml.Syntax
         public SyntaxNode GetNodeAtPosition(int position)
         {
             if (!this.Span.ContainsInclusiveEnd(position))
+            {
                 throw new ArgumentOutOfRangeException(nameof(position), position,
                     $"position {position} is outside the node's range of {this.Span.Start} - {this.Span.End}");
+            }
 
             if (this.IsTerminalNode())
             {
