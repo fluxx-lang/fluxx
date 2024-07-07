@@ -4,9 +4,6 @@ using Faml.Syntax.Expression;
 using Faml.Syntax.Type;
 using Microsoft.CodeAnalysis.Text;
 
-/**
- * Created by Bret on 6/28/2014.
- */
 namespace Faml.Syntax
 {
     public sealed class PropertyNameTypePairSyntax : SyntaxNode

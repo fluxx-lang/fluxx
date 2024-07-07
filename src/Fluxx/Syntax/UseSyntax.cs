@@ -2,11 +2,6 @@ using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-
-/**
- * @author Bret Johnson
- * @since 6/6/2015
- */
 namespace Faml.Syntax
 {
     public sealed class UseSyntax : SyntaxNode

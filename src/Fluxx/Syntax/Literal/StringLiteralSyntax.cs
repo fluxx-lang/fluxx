@@ -1,8 +1,3 @@
-
-/**
- * Created by Bret on 6/28/2014.
- */
-
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;

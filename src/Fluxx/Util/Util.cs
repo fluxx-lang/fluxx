@@ -1,8 +1,3 @@
-/**
- * @author Bret Johnson
- * @since 7/27/2015
- */
-
 namespace Faml.Util
 {
     public class Util

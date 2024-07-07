@@ -6,9 +6,6 @@ using Faml.Syntax;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-/**
- * Created by Bret on 6/28/2014.
- */
 namespace Faml.DotNet
 {
     public class DotNetEnumValue : ExpressionSyntax

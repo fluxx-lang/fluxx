@@ -1,7 +1,3 @@
-/**
- * Created by Bret on 6/28/2014.
- */
-
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
