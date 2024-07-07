@@ -1,6 +1,6 @@
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Literal {
     public sealed class IntLiteralSyntax : Expression.ExpressionSyntax {

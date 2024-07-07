@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysisP.Text;
-using Faml.Binding;
+﻿using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Faml.Parser;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Expression {
     public class IfExpressionSyntax : ExpressionSyntax {

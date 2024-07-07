@@ -1,9 +1,9 @@
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.Binding.Internal;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Expression {
     public sealed class SymbolReferenceSyntax : ExpressionSyntax {

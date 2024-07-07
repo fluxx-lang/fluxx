@@ -1,7 +1,7 @@
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Expression {
     public class EnumValueLiteralSyntax : ExpressionSyntax {

@@ -4,7 +4,7 @@ using Faml.Api;
 using Faml.CodeAnalysis.Text;
 using Faml.Lexer;
 using Faml.Syntax;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml {
     internal class GetSyntaxHighlightTags {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Faml.Api;
 using Faml.Syntax;
 using Faml.Syntax.Expression;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 using TypeTooling.ClassifiedText;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;

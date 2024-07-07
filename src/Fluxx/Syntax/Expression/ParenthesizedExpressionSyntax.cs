@@ -4,9 +4,9 @@
  * @since 6/29/2014 5:18 PM
  */
 
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Expression {
     public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax {

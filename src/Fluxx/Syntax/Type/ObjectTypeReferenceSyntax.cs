@@ -4,10 +4,10 @@
  */
 
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Type {
     public sealed class ObjectTypeReferenceSyntax : TypeReferenceSyntax {

@@ -1,8 +1,8 @@
 using System;
-using System.Text;
-using Microsoft.CodeAnalysisP.Text;
-using Faml.CodeAnalysis.Text;
 using System.Diagnostics;
+using System.Text;
+using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Lexer {
     public sealed class Token {

@@ -2,7 +2,7 @@ using System;
 using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.Syntax.Expression;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax {
     public sealed class MarkupOrExpression {

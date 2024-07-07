@@ -3,11 +3,11 @@
  * @since 6/29/2014 2:15 AM
  */
 
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Operator;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Expression {
     public sealed class InfixExpressionSyntax : ExpressionSyntax {

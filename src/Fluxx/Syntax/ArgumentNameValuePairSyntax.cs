@@ -4,7 +4,7 @@ using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
 using Faml.Syntax.Literal;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax {
     public sealed class ArgumentNameValuePairSyntax : SyntaxNode {

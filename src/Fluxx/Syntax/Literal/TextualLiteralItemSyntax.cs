@@ -1,4 +1,4 @@
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Literal {
     public abstract class TextualLiteralItemSyntax : SyntaxNode {

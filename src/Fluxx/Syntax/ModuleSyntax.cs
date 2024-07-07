@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
+using Microsoft.CodeAnalysis.Text;
 using TypeTooling;
-
 
 /**
  * @author Bret Johnson

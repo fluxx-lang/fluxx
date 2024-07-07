@@ -5,7 +5,7 @@ using Faml.Binding;
 using Faml.Binding.External;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Expression {
     public class FunctionInvocationSyntax : ExpressionSyntax {

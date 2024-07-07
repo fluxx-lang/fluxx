@@ -2,7 +2,7 @@
 using Faml.Syntax;
 using Faml.Syntax.Expression;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Binding {
     public abstract class EnumTypeBinding : TypeBinding {

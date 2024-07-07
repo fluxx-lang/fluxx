@@ -2,7 +2,7 @@ using Faml.Api;
 using Faml.Syntax;
 using Faml.Syntax.Expression;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 using TypeTooling.Types;
 
 namespace Faml.Binding.External {

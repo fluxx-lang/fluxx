@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysisP.Text;
+﻿using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Api {
     public static class TextSpanExtensions  {

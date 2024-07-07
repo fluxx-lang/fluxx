@@ -1,5 +1,5 @@
 using System;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Api.IntelliSense {
     [Serializable]

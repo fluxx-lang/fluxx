@@ -1,6 +1,6 @@
 using Faml.Api;
 using Faml.CodeAnalysis.Text;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax {
     /// <summary>

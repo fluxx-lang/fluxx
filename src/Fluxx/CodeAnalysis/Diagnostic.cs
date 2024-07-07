@@ -1,7 +1,7 @@
 ﻿using System;
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Syntax;
+using Microsoft.CodeAnalysis.Text;
 using DiagnosticSeverity = Faml.Api.DiagnosticSeverity;
 using SyntaxNode = Faml.Syntax.SyntaxNode;
 

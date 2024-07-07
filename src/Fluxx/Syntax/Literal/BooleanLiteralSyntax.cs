@@ -2,10 +2,10 @@
  * Created by Bret on 6/28/2014.
  */
 
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Literal {
     public class BooleanLiteralSyntax : ExpressionSyntax {

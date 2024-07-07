@@ -2,9 +2,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Faml.Api.IntelliSense;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.IntelliSense {
     public abstract class IntelliSense {

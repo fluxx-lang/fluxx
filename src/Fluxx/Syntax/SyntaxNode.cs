@@ -4,7 +4,7 @@ using Faml.Api;
 using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 
 namespace Faml.Syntax {

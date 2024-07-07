@@ -4,8 +4,8 @@
  */
 
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax {
     public class NameSyntax : SyntaxNode {

@@ -5,7 +5,7 @@ using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Faml.Parser;
 using Faml.Syntax.Expression;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Literal {
     public sealed class TextualLiteralSyntax : ExpressionSyntax {

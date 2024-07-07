@@ -4,15 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Faml.Api;
 using Faml.Api.IntelliSense;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.CodeGeneration;
 using Faml.IntelliSense;
 using Faml.QuickInfo;
-using Microsoft.CodeAnalysisP;
+using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis;
 using TypeTooling.ClassifiedText;
 using Diagnostic = Faml.CodeAnalysis.Diagnostic;
 using DiagnosticSeverity = Faml.Api.DiagnosticSeverity;
-
 
 namespace Faml.Syntax {
     public sealed class FamlModule {

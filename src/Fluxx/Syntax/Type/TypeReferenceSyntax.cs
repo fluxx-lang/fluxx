@@ -3,8 +3,8 @@
  * @since 4/5/2015
  */
 
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Type {
     public abstract class TypeReferenceSyntax : SyntaxNode {

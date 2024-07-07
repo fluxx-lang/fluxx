@@ -5,7 +5,7 @@
  * @since 4/5/2015
  */
 
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax {
     public abstract class DefinitionSyntax : SyntaxNode {

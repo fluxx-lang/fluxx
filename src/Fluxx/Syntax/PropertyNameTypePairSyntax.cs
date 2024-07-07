@@ -1,8 +1,8 @@
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.CodeAnalysis.Text;
-using Faml.Syntax.Type;
 using Faml.Syntax.Expression;
+using Faml.Syntax.Type;
+using Microsoft.CodeAnalysis.Text;
 
 /**
  * Created by Bret on 6/28/2014.

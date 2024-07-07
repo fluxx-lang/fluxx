@@ -11,8 +11,7 @@ using Faml.Syntax.Expression;
 using Faml.Syntax.Literal;
 using Faml.Syntax.Operator;
 using Faml.Syntax.Type;
-using Microsoft.CodeAnalysisP.Text;
-
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Parser {
     public sealed class SourceParser {

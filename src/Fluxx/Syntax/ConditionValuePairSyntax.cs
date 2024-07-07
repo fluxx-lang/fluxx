@@ -4,11 +4,11 @@
  * Created by Bret on 6/28/2014.
  */
 
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding.Resolver;
+using Faml.CodeAnalysis.Text;
 using Faml.Parser;
 using Faml.Syntax.Expression;
-using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax {
     public sealed class ConditionValuePairSyntax : SyntaxNode {

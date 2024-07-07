@@ -1,11 +1,11 @@
-using Faml.Api;
-using Faml.Binding;
-using Faml.Syntax;
-using Faml.Syntax.Expression;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Faml.Api;
+using Faml.Binding;
 using Faml.CodeAnalysis.Text;
+using Faml.Syntax;
+using Faml.Syntax.Expression;
 using TypeTooling.ClassifiedText;
 
 namespace Faml.IntelliSense {

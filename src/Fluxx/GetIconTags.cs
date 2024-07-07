@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Syntax;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml {
     internal class GetIconTags {

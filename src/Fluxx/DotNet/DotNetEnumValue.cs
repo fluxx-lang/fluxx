@@ -1,11 +1,10 @@
 using System.Reflection;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.Binding.External;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax;
 using Faml.Syntax.Expression;
-
+using Microsoft.CodeAnalysis.Text;
 
 /**
  * Created by Bret on 6/28/2014.

@@ -9,11 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" />
+    <PackageReference Include="Microsoft.CodeAnalysis" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\external\ReactiveData\src\ReactiveData\ReactiveData.csproj" />
-    <ProjectReference Include="..\..\external\roslynp\src\CodeAnalysisP\Microsoft.CodeAnalysisP.csproj" />
     <ProjectReference Include="..\Fluxx.Types\Fluxx.Types.csproj" />
   </ItemGroup>
 

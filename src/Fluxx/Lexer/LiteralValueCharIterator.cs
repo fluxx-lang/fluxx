@@ -3,8 +3,8 @@
  * @since 4/7/2014 6:17 PM
  */
 
-using Microsoft.CodeAnalysisP.Text;
 using Faml.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Lexer {
     public sealed class LiteralValueCharIterator {

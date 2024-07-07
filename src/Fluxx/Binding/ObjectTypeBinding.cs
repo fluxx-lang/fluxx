@@ -1,7 +1,7 @@
 ﻿using Faml.Api;
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Syntax;
 using Faml.Syntax.Expression;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Binding {
     public abstract class ObjectTypeBinding : TypeBinding {

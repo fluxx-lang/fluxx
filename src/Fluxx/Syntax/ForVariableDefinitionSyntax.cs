@@ -1,8 +1,8 @@
-using Microsoft.CodeAnalysisP.Text;
 using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Expression;
+using Microsoft.CodeAnalysis.Text;
 
 /**
  * Created by Bret on 6/28/2014.

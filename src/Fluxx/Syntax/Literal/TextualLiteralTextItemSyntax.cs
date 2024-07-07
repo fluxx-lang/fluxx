@@ -1,5 +1,5 @@
 using Faml.CodeAnalysis.Text;
-using Microsoft.CodeAnalysisP.Text;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Faml.Syntax.Literal {
     public sealed class TextualLiteralTextItemSyntax : TextualLiteralItemSyntax {
