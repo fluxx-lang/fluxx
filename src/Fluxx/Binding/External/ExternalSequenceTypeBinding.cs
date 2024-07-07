@@ -1,10 +1,6 @@
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;
 
-/**
- * @author Bret Johnson
- * @since 4/15/2015
- */
 namespace Faml.Binding.External
 {
     public class ExternalSequenceTypeBinding : SequenceTypeBinding

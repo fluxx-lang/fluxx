@@ -1,8 +1,3 @@
-/**
- * @author Bret Johnson
- * @since 4/15/2015
- */
-
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;

@@ -1,8 +1,3 @@
-/**
- * @author Bret Johnson
- * @since 6/5/2015
- */
-
 using Faml.Api;
 using Faml.Syntax;
 using Faml.Syntax.Type;

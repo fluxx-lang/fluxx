@@ -3,10 +3,6 @@ using Faml.Syntax;
 using Faml.Syntax.Expression;
 using Microsoft.CodeAnalysis.Text;
 
-/**
- * @author Bret Johnson
- * @since 4/15/2015
- */
 namespace Faml.Binding.Internal
 {
     public class RecordTypeBinding : ObjectTypeBinding
