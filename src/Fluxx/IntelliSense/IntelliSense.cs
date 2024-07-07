@@ -15,24 +15,24 @@ namespace Faml.IntelliSense {
 
 
         protected IntelliSense(FamlModule module, int position, SyntaxNode? terminalNode) {
-            Module = module;
-            Position = position;
-            TerminalNode = terminalNode;
+            this.Module = module;
+            this.Position = position;
+            this.TerminalNode = terminalNode;
         }
 
         public IntelliSenseStartData GetStartData() {
-            if (TerminalNode == null)
-                return new IntelliSenseStartData(new TextSpan(Position, 0));
-            else return new IntelliSenseStartData(TerminalNode.Span);
+            if (this.TerminalNode == null)
+                return new IntelliSenseStartData(new TextSpan(this.Position, 0));
+            else return new IntelliSenseStartData(this.TerminalNode.Span);
         }
 
         public abstract Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken);
 
         protected ParseableSource ParseableSource {
             get {
-                if (_parseableSource == null)
-                    _parseableSource = new ParseableSource(Module.SourceText);
-                return _parseableSource;
+                if (this._parseableSource == null)
+                    this._parseableSource = new ParseableSource(this.Module.SourceText);
+                return this._parseableSource;
             }
         }
 

@@ -33,7 +33,7 @@ namespace Faml.Interpreter {
             new ConcurrentDictionary<FunctionDefinitionSyntax, List<FunctionEvalResolved>>();
 
         public CreateEvals(TypeToolingEnvironment typeToolingEnvironment) {
-            _typeToolingEnvironment = typeToolingEnvironment;
+            this._typeToolingEnvironment = typeToolingEnvironment;
         }
 
         public ObjectEval GetOrCreateExampleEval(ExampleDefinitionSyntax example) {
@@ -43,10 +43,10 @@ namespace Faml.Interpreter {
             ObjectEval? exampleEval = moduleEvals.GetExampleEvalIfExists(example);
 
             if (exampleEval == null) {
-                exampleEval = BoxIfPrimitiveType(CreateExpressionEval(example.Expression));
+                exampleEval = BoxIfPrimitiveType(this.CreateExpressionEval(example.Expression));
                 moduleEvals.AddExampleEval(example, exampleEval);
 
-                CompleteDelayedResolves();
+                this.CompleteDelayedResolves();
             }
 
             return exampleEval;
@@ -59,11 +59,11 @@ namespace Faml.Interpreter {
             Eval functionEval = moduleEvals.GetFunctionDefinitionEvalIfExists(function);
 
             if (functionEval == null) {
-                functionEval = CreateExpressionEval(function.Expression);
+                functionEval = this.CreateExpressionEval(function.Expression);
 
                 moduleEvals.AddFunctionDefinitionEval(function, functionEval);
 
-                CompleteDelayedResolves();
+                this.CompleteDelayedResolves();
             }
 
             return functionEval;
@@ -72,9 +72,9 @@ namespace Faml.Interpreter {
         public Eval CreateFunctionInvocationEval(FunctionDefinitionSyntax function, Args args) {
             var functionBinding = new InternalFunctionBinding(function);
 
-            Eval[] argumentEvals = CreateArgumentEvals(functionBinding, args);
-            Eval eval = CreateAstFunctionInvocationEval(function, argumentEvals);
-            CompleteDelayedResolves();
+            Eval[] argumentEvals = this.CreateArgumentEvals(functionBinding, args);
+            Eval eval = this.CreateAstFunctionInvocationEval(function, argumentEvals);
+            this.CompleteDelayedResolves();
 
             return eval;
         }
@@ -91,7 +91,7 @@ namespace Faml.Interpreter {
             if (functionEval != null)
                 functionEvalResolved(functionEval);
             else {
-                List<FunctionEvalResolved> functionEvalResolveds = _functionsNeedingResolving.GetOrAdd(functionDefinition, (_) => new List<FunctionEvalResolved>());
+                List<FunctionEvalResolved> functionEvalResolveds = this._functionsNeedingResolving.GetOrAdd(functionDefinition, (_) => new List<FunctionEvalResolved>());
                 functionEvalResolveds.Add(functionEvalResolved);
             }
         }
@@ -101,11 +101,11 @@ namespace Faml.Interpreter {
         /// </summary>
         private void CompleteDelayedResolves() {
             while (true) {
-                FunctionDefinitionSyntax function = _functionsNeedingResolving.Keys.FirstOrDefault();
+                FunctionDefinitionSyntax function = this._functionsNeedingResolving.Keys.FirstOrDefault();
                 if (function == null)
                     break;
 
-                if (!_functionsNeedingResolving.TryRemove(function, out List<FunctionEvalResolved> functionEvalResolveds))
+                if (!this._functionsNeedingResolving.TryRemove(function, out List<FunctionEvalResolved> functionEvalResolveds))
                     continue;
 
                 ModuleSyntax moduleSyntax = function.GetModuleSyntax();
@@ -113,7 +113,7 @@ namespace Faml.Interpreter {
                 Eval? functionEval = moduleEvals.GetFunctionDefinitionEvalIfExists(function);
 
                 if (functionEval == null) {
-                    functionEval = CreateExpressionEval(function.Expression);
+                    functionEval = this.CreateExpressionEval(function.Expression);
                     moduleEvals.AddFunctionDefinitionEval(function, functionEval);
                 }
 
@@ -166,7 +166,7 @@ namespace Faml.Interpreter {
             PropertyBinding propertyBinding = propertyAccess.PropertyBinding;
 
             ExpressionSyntax expression = propertyAccess.Expression;
-            var expressionEval = (ObjectEval) CreateExpressionEval(expression);
+            var expressionEval = (ObjectEval) this.CreateExpressionEval(expression);
 
             if (propertyBinding is RecordPropertyBinding) {
                 TypeBinding typeBinding = propertyAccess.GetTypeBinding();
@@ -195,7 +195,7 @@ namespace Faml.Interpreter {
             ObjectEval[] expressionEvals = new ObjectEval[length];
 
             for (int i = 0; i < length; i++)
-                expressionEvals[i] = BoxIfPrimitiveType(CreateExpressionEval(expressions[i]));
+                expressionEvals[i] = BoxIfPrimitiveType(this.CreateExpressionEval(expressions[i]));
 
             return new SequenceLiteralEval(expressionEvals);
         }
@@ -216,7 +216,7 @@ namespace Faml.Interpreter {
 
             for (int i = 0; i < length; i++) {
                 evalStringFragments[i] = stringFragments[i].Value;
-                evalExpressions[i] = BoxIfPrimitiveType(CreateExpressionEval(expressions[i]));
+                evalExpressions[i] = BoxIfPrimitiveType(this.CreateExpressionEval(expressions[i]));
             }
             evalStringFragments[length] = stringFragments[length].Value;
 
@@ -242,7 +242,7 @@ namespace Faml.Interpreter {
 
         private Eval CreateFunctionInvocationEval(FunctionInvocationSyntax functionInvocation) {
             if (functionInvocation.LiteralConstructorValue != null)
-                return CreateExpressionEval(functionInvocation.LiteralConstructorValue);
+                return this.CreateExpressionEval(functionInvocation.LiteralConstructorValue);
 
             FunctionBinding functionBinding = functionInvocation.FunctionBinding;
             Name? contentParameter = functionBinding.GetContentProperty();
@@ -254,24 +254,24 @@ namespace Faml.Interpreter {
 #endif
 
             if (functionBinding is InternalFunctionBinding astFunctionBinding) {
-                Eval[] argumentEvals = CreateArgumentEvals(functionInvocation, functionBinding.GetParameters());
-                return CreateAstFunctionInvocationEval(astFunctionBinding.FunctionDefinition, argumentEvals);
+                Eval[] argumentEvals = this.CreateArgumentEvals(functionInvocation, functionBinding.GetParameters());
+                return this.CreateAstFunctionInvocationEval(astFunctionBinding.FunctionDefinition, argumentEvals);
             }
             else if (functionBinding is NewRecordFunctionBinding) {
                 var newAstRecordFunctionBinding = (NewRecordFunctionBinding) functionBinding;
 
                 Name[] propertyNames = newAstRecordFunctionBinding.RecordTypeDefinition.GetProperties();
-                Eval[] propertyEvals = CreateArgumentEvals(functionInvocation, propertyNames);
+                Eval[] propertyEvals = this.CreateArgumentEvals(functionInvocation, propertyNames);
                 return new NewAstRecordObjectEval(propertyNames, propertyEvals);
             }
             else if (functionBinding is NewExternalObjectFunctionBinding) {
                 var newCSharpObjectFunctionBinding = (NewExternalObjectFunctionBinding) functionBinding;
 
                 Name[] argumentNames = new Name[0]; // functionInvocation.GetArgumentNames();
-                Eval[] argumentEvals = CreateArgumentEvals(functionInvocation, argumentNames);
+                Eval[] argumentEvals = this.CreateArgumentEvals(functionInvocation, argumentNames);
 
                 QualifiableName[] qualifiedArgumentNames = functionInvocation.GetQualifiedArgumentNames();
-                Eval[] qualifiedArgumentEvals = CreateQualfiedArgumentEvals(functionInvocation, qualifiedArgumentNames);
+                Eval[] qualifiedArgumentEvals = this.CreateQualfiedArgumentEvals(functionInvocation, qualifiedArgumentNames);
 
                 return new NewExternalObjectEval(functionInvocation.GetModuleSyntax(), newCSharpObjectFunctionBinding,
                     argumentNames, argumentEvals, qualifiedArgumentNames, qualifiedArgumentEvals);
@@ -295,7 +295,7 @@ namespace Faml.Interpreter {
             FunctionBinding functionBinding = functionSymbolBinding.FunctionBinding;
 
             if (functionBinding is InternalFunctionBinding astFunctionBinding)
-                return CreateAstFunctionInvocationEval(astFunctionBinding.FunctionDefinition, new Eval[0]);
+                return this.CreateAstFunctionInvocationEval(astFunctionBinding.FunctionDefinition, new Eval[0]);
             else if (functionBinding is NewRecordFunctionBinding)
                 return new NewAstRecordObjectEval(new Name[0], new Eval[0]);
             else
@@ -316,7 +316,7 @@ namespace Faml.Interpreter {
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName.ToQualifiableName());
                 if (argumentValue == null)
                     throw new Exception($"Argument '{parameterName}' isn't specified for function '{functionBinding.FunctionName}'");
-                argumentEvals[i] = CreateExpressionEval(argumentValue);
+                argumentEvals[i] = this.CreateExpressionEval(argumentValue);
             }
             return argumentEvals;
         }
@@ -334,13 +334,13 @@ namespace Faml.Interpreter {
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName);
                 if (argumentValue == null)
                     throw new Exception($"Parameter '{parameterName}' doesn't exist for function '{functionBinding.FunctionName}'");
-                argumentEvals[i] = CreateExpressionEval(argumentValue);
+                argumentEvals[i] = this.CreateExpressionEval(argumentValue);
             }
             return argumentEvals;
         }
 
         private ObjectEval[] CreateArgumentObjectEvals(FunctionInvocationSyntax functionInvocation, Name[] parameters) {
-            Eval[] argumentEvals = CreateArgumentEvals(functionInvocation, parameters);
+            Eval[] argumentEvals = this.CreateArgumentEvals(functionInvocation, parameters);
             int length = argumentEvals.Length;
 
             ObjectEval[] argumentObjectEvals = new ObjectEval[length];
@@ -473,19 +473,19 @@ namespace Faml.Interpreter {
 
         public Eval CreateExpressionEval(ExpressionSyntax expression) {
             if (expression is InfixExpressionSyntax infixExpressionSyntax)
-                return CreateInfixExpressionEval(infixExpressionSyntax);
+                return this.CreateInfixExpressionEval(infixExpressionSyntax);
             else if (expression is PrefixExpressionSyntax prefixExpressionSyntax)
-                return CreatePrefixExpressionEval(prefixExpressionSyntax);
+                return this.CreatePrefixExpressionEval(prefixExpressionSyntax);
             else if (expression is IfExpressionSyntax ifExpressionSyntax)
-                return CreateIfExpressionEval(ifExpressionSyntax);
+                return this.CreateIfExpressionEval(ifExpressionSyntax);
             else if (expression is ForExpressionSyntax forExpressionSyntax)
-                return CreateForExpressionEval(forExpressionSyntax);
+                return this.CreateForExpressionEval(forExpressionSyntax);
             else if (expression is ParenthesizedExpressionSyntax parenthesizedExpressionSyntax)
-                return CreateExpressionEval(parenthesizedExpressionSyntax.Expression);
+                return this.CreateExpressionEval(parenthesizedExpressionSyntax.Expression);
             else if (expression is BracedExpressionSyntax bracedExpression)
-                return CreateExpressionEval(bracedExpression.Expression);
+                return this.CreateExpressionEval(bracedExpression.Expression);
             else if (expression is SequenceLiteralExpressionSyntax listExpressionSyntax)
-                return CreateListBuilderEval(listExpressionSyntax);
+                return this.CreateListBuilderEval(listExpressionSyntax);
             else if (expression is BooleanLiteralSyntax booleanLiteral)
                 return (booleanLiteral.Value? (Eval) new TrueEval() : new FalseEval());
             else if (expression is IntLiteralSyntax intLiteral)
@@ -494,23 +494,23 @@ namespace Faml.Interpreter {
                 return new StringLiteralEval(stringLiteral.Value);
             else if (expression is SymbolReferenceSyntax variableReferenceSyntax) {
                 if (variableReferenceSyntax.GetVariableBinding() is FunctionSymbolBinding zeroArgumentFunctionBinding)
-                    return CreateZeroArgumentFunctionInvocationEval(zeroArgumentFunctionBinding);
-                else return CreateVariableEval(variableReferenceSyntax);
+                    return this.CreateZeroArgumentFunctionInvocationEval(zeroArgumentFunctionBinding);
+                else return this.CreateVariableEval(variableReferenceSyntax);
             }
             else if (expression is PropertyAccessSyntax propertyAccess)
-                return CreatePropertyAccessEval(propertyAccess);
+                return this.CreatePropertyAccessEval(propertyAccess);
 /*
             else if (expression is ParamFunctionInvocation)
                 return createParamFunctionInvocationEval((ParamFunctionInvocation) expression);
 */
             else if (expression is FunctionInvocationSyntax functionInvocationSyntax)
-                return CreateFunctionInvocationEval(functionInvocationSyntax);
+                return this.CreateFunctionInvocationEval(functionInvocationSyntax);
             else if (expression is InterpolatedStringExpressionSyntax interpolatedStringExpressionSyntax)
-                return CreateInterpolatedStringEval(interpolatedStringExpressionSyntax);
+                return this.CreateInterpolatedStringEval(interpolatedStringExpressionSyntax);
             else if (expression is EnumValueLiteralSyntax enumValueLiteralSyntax)
-                return CreateEnumValueLiteralEval(enumValueLiteralSyntax);
+                return this.CreateEnumValueLiteralEval(enumValueLiteralSyntax);
             else if (expression is ExternalTypeCustomLiteralSytax externalTypeCustomLiteralSytax) {
-                return CreateExternalCustomLiteralEval(externalTypeCustomLiteralSytax);
+                return this.CreateExternalCustomLiteralEval(externalTypeCustomLiteralSytax);
             }
             else
                 throw new Exception("Unexpected expression type to eval: " + expression);
@@ -521,7 +521,7 @@ namespace Faml.Interpreter {
 
             if (enumValueBinding is ExternalEnumValueBinding externalEnumValueBinding) {
                 EnumValue enumValue = externalEnumValueBinding.EnumValue;
-                return CreateObjectConstantDelegateEval(enumValue.ExpressionAndHelpersCode);
+                return this.CreateObjectConstantDelegateEval(enumValue.ExpressionAndHelpersCode);
             }
             else throw new UserViewableException($"Unexpected EnumValueBindingType: {enumValueBinding.GetType().FullName}");
         }
@@ -532,11 +532,11 @@ namespace Faml.Interpreter {
                 throw new Exception(
                     $"ExternalType {externalTypeCustomLiteralSytax.ExternalType.FullName} unexpectedly doesn't have a CustomerLiteralManager");
             ExpressionAndHelpersCode? literalValueCode = externalTypeCustomLiteralSytax.CustomLiteral.ExpressionAndHelpersCode;
-            return CreateObjectConstantDelegateEval(literalValueCode);
+            return this.CreateObjectConstantDelegateEval(literalValueCode);
         }
 
         private ObjectConstantDelegateEval CreateObjectConstantDelegateEval(ExpressionAndHelpersCode literalValueCode) {
-            Expression literalExpression = new ConvertToExpressionTree(_typeToolingEnvironment, literalValueCode.Expression).Result;
+            Expression literalExpression = new ConvertToExpressionTree(this._typeToolingEnvironment, literalValueCode.Expression).Result;
             LambdaExpression literalLambda = Expression.Lambda(literalExpression);
             Delegate literalDelegate = literalLambda.Compile();
 
@@ -546,8 +546,8 @@ namespace Faml.Interpreter {
         private Eval CreateInfixExpressionEval(InfixExpressionSyntax expression) {
             InfixOperator infixOperator = expression.Operator;
 
-            Eval leftEval = CreateExpressionEval(expression.LeftOperand);
-            Eval rightEval = CreateExpressionEval(expression.RightOperand);
+            Eval leftEval = this.CreateExpressionEval(expression.LeftOperand);
+            Eval rightEval = this.CreateExpressionEval(expression.RightOperand);
 
             TypeBinding leftTypeBinding = expression.LeftOperand.GetTypeBinding();
             TypeBinding rightTypeBiding = expression.RightOperand.GetTypeBinding();
@@ -602,7 +602,7 @@ namespace Faml.Interpreter {
         private Eval CreatePrefixExpressionEval(PrefixExpressionSyntax expression) {
             PrefixOperator prefixOperator = expression.Operator;
 
-            Eval operandEval = CreateExpressionEval(expression.Operand);
+            Eval operandEval = this.CreateExpressionEval(expression.Operand);
 
             if (prefixOperator == Operator.Not)
                 return new NotEval((BooleanEval) operandEval);
@@ -622,15 +622,15 @@ namespace Faml.Interpreter {
             var valueEvals = new List<ObjectEval>();
 
             foreach (ConditionValuePairSyntax conditionValuePair in ifExpression.ConditionValuePairs) {
-                conditionEvals.Add((BooleanEval) CreateExpressionEval(conditionValuePair.Condition));
-                valueEvals.Add((ObjectEval) CreateExpressionEval(conditionValuePair.Value));
+                conditionEvals.Add((BooleanEval) this.CreateExpressionEval(conditionValuePair.Condition));
+                valueEvals.Add((ObjectEval) this.CreateExpressionEval(conditionValuePair.Value));
             }
 
             ExpressionSyntax elseValue = ifExpression.ElseValue;
             ObjectEval elseValueEval;
             if (elseValue == null)
-                elseValueEval = CreateEmptySequenceEval();
-            else elseValueEval = (ObjectEval) CreateExpressionEval(elseValue);
+                elseValueEval = this.CreateEmptySequenceEval();
+            else elseValueEval = (ObjectEval) this.CreateExpressionEval(elseValue);
 
             return new IfObjectEval(conditionEvals.ToArray(), valueEvals.ToArray(), elseValueEval);
         }
@@ -644,8 +644,8 @@ namespace Faml.Interpreter {
             if (!(typeBinding is ObjectTypeBinding))
                 throw new Exception("'for' expressions are just supported for object types currently");
 
-            var expressionEval = (ObjectEval) CreateExpressionEval(forExpression.Expression);
-            var inExpressionEval = (ObjectEval) CreateExpressionEval(forExpression.ForVariableDefinition.InExpression);
+            var expressionEval = (ObjectEval) this.CreateExpressionEval(forExpression.Expression);
+            var inExpressionEval = (ObjectEval) this.CreateExpressionEval(forExpression.ForVariableDefinition.InExpression);
 
             return new ForExpressionEval(expressionEval, forExpression.ForVariableDefinition.GetVariableTypeBinding(), inExpressionEval);
         }
@@ -654,7 +654,7 @@ namespace Faml.Interpreter {
             private SyntaxNode _item;
 
             public ItemNeedingEval(SyntaxNode item) {
-                _item = item;
+                this._item = item;
             }
         }
     }

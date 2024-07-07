@@ -15,11 +15,11 @@ namespace Faml.Syntax.Expression {
         public InterpolatedStringExpressionSyntax(TextSpan span, InterpolatedStringFragmentSyntax[] stringFragments,
             ExpressionSyntax[] expressions) : base(span)
         {
-            _stringFragments = stringFragments;
+            this._stringFragments = stringFragments;
             foreach (InterpolatedStringFragmentSyntax stringFragment in stringFragments)
                 stringFragment.SetParent(this);
 
-            _expressions = expressions;
+            this._expressions = expressions;
             foreach (ExpressionSyntax expression in expressions)
                 expression.SetParent(this);
         }
@@ -32,31 +32,31 @@ namespace Faml.Syntax.Expression {
 
         public override void VisitChildren(SyntaxVisitor visitor)
         {
-            int length = _expressions.Length;
+            int length = this._expressions.Length;
             for (int i = 0; i < length; i++) {
-                visitor(_stringFragments[i]);
-                visitor(_expressions[i]);
+                visitor(this._stringFragments[i]);
+                visitor(this._expressions[i]);
             }
-            visitor(_stringFragments[length - 1]);
+            visitor(this._stringFragments[length - 1]);
         }
 
         public override Binding.TypeBinding GetTypeBinding() { return BuiltInTypeBinding.String; }
 
         public override void WriteSource(SourceWriter sourceWriter)
         {
-            int length = _expressions.Length;
+            int length = this._expressions.Length;
             for (int i = 0; i < length; i++) {
-                _stringFragments[i].WriteSource(sourceWriter);
+                this._stringFragments[i].WriteSource(sourceWriter);
 
                 sourceWriter.Write("{");
-                _expressions[i].WriteSource(sourceWriter);
+                this._expressions[i].WriteSource(sourceWriter);
                 sourceWriter.Write("}");
             }
-            _stringFragments[length - 1].WriteSource(sourceWriter);
+            this._stringFragments[length - 1].WriteSource(sourceWriter);
         }
 
-        public InterpolatedStringFragmentSyntax[] StringFragments => _stringFragments;
+        public InterpolatedStringFragmentSyntax[] StringFragments => this._stringFragments;
 
-        public ExpressionSyntax[] Expressions => _expressions;
+        public ExpressionSyntax[] Expressions => this._expressions;
     }
 }

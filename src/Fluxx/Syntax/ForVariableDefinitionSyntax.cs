@@ -14,34 +14,34 @@ namespace Faml.Syntax {
         private readonly ExpressionSyntax _inExpression;
 
         public ForVariableDefinitionSyntax(TextSpan span, NameSyntax variableNameSyntax, ExpressionSyntax inExpression) : base(span) {
-            _variableNameSyntax = variableNameSyntax;
+            this._variableNameSyntax = variableNameSyntax;
             variableNameSyntax.SetParent(this);
 
-            _inExpression = inExpression;
+            this._inExpression = inExpression;
             inExpression.SetParent(this);
         }
 
-        public NameSyntax VariableNameSyntax => _variableNameSyntax;
+        public NameSyntax VariableNameSyntax => this._variableNameSyntax;
 
-        public ExpressionSyntax InExpression => _inExpression;
+        public ExpressionSyntax InExpression => this._inExpression;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_inExpression);
-            visitor(_variableNameSyntax);
+            visitor(this._inExpression);
+            visitor(this._variableNameSyntax);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            TypeBinding inExpressionTypeBinding = _inExpression.GetTypeBinding();
+            TypeBinding inExpressionTypeBinding = this._inExpression.GetTypeBinding();
             if (inExpressionTypeBinding == null)
-                _variableNameSyntax.AddError("Couldn't infer variable type from 'in' expression");
+                this._variableNameSyntax.AddError("Couldn't infer variable type from 'in' expression");
 
             // TODO: Remove this restriction
             if (!(inExpressionTypeBinding is SequenceTypeBinding inExpressionSequenceTypeBinding))
-                _inExpression.AddError("'in' expression isn't a sequence; currently it must have at least two items");
-            else _variableTypeBinding = inExpressionSequenceTypeBinding.ElementType;
+                this._inExpression.AddError("'in' expression isn't a sequence; currently it must have at least two items");
+            else this._variableTypeBinding = inExpressionSequenceTypeBinding.ElementType;
         }
 
-        public TypeBinding GetVariableTypeBinding () => _variableTypeBinding;
+        public TypeBinding GetVariableTypeBinding () => this._variableTypeBinding;
 
         public override bool IsTerminalNode() {
             return false;
@@ -50,9 +50,9 @@ namespace Faml.Syntax {
         public override SyntaxNodeType NodeType => SyntaxNodeType.ForVariableDefinition;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_variableNameSyntax);
+            sourceWriter.Write(this._variableNameSyntax);
             sourceWriter.Write(" in ");
-            sourceWriter.Write(_inExpression);
+            sourceWriter.Write(this._inExpression);
         }
     }
 }

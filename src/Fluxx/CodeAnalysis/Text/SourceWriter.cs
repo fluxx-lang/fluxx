@@ -11,12 +11,12 @@ namespace Faml.CodeAnalysis.Text {
     public sealed class SourceWriter {
         internal StringBuilder Source = new StringBuilder();
 
-        public void Write(string text) { Source.Append(text); }
+        public void Write(string text) { this.Source.Append(text); }
 
         public void Writeln(string text)
         {
-            Source.Append(text);
-            Source.Append("\r\n");
+            this.Source.Append(text);
+            this.Source.Append("\r\n");
         }
 
         public void Write(SyntaxNode syntaxNode) {
@@ -25,21 +25,21 @@ namespace Faml.CodeAnalysis.Text {
 
         public void Writeln(SyntaxNode syntaxNode) {
             syntaxNode.WriteSource(this);
-            Writeln();
+            this.Writeln();
         }
 
         public void Write(Name name) {
-            Write(name.ToString());
+            this.Write(name.ToString());
         }
 
         public void Write(QualifiableName name) {
-            Write(name.ToString());
+            this.Write(name.ToString());
         }
 
-        public void Writeln() { Source.Append("\r\n"); }
+        public void Writeln() { this.Source.Append("\r\n"); }
 
-        public string GetSource() { return Source.ToString(); }
+        public string GetSource() { return this.Source.ToString(); }
 
-        public override string ToString() { return Source.ToString(); }
+        public override string ToString() { return this.Source.ToString(); }
     }
 }

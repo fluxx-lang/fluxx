@@ -11,14 +11,14 @@ namespace Faml {
 
 
         public Program(FamlProject rootProject) {
-            _rootProject = rootProject;
+            this._rootProject = rootProject;
         }
 
-        public FamlProject RootProject => _rootProject;
+        public FamlProject RootProject => this._rootProject;
 
         public ExampleResult[] EvaluateExample(QualifiableName moduleName, int exampleIndex) {
             try {
-                return _rootProject.EvaluateExample(moduleName, exampleIndex);
+                return this._rootProject.EvaluateExample(moduleName, exampleIndex);
             }
             catch (Exception e) {
                 var exampleResult = new ExampleResult() {
@@ -30,8 +30,8 @@ namespace Faml {
         }
 
         public DataEventHandler? DataEventHandler {
-            get => _dataEventHandler;
-            set => _dataEventHandler = value;
+            get => this._dataEventHandler;
+            set => this._dataEventHandler = value;
         }
     }
 }

@@ -11,10 +11,10 @@ namespace Faml.Syntax.Expression {
 
         public InterpolatedStringFragmentSyntax(TextSpan span, string value) : base(span) { this._value = value; }
 
-        public string Value => _value;
+        public string Value => this._value;
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.InterpolatedStringFragment;
 
-        public override void WriteSource(SourceWriter sourceWriter) { sourceWriter.Write(_value); }
+        public override void WriteSource(SourceWriter sourceWriter) { sourceWriter.Write(this._value); }
     }
 }

@@ -10,14 +10,14 @@ namespace Faml.Messaging {
         private readonly ConcurrentQueue<T> _queue = new ConcurrentQueue<T>();
 
         public void Enqueue(T item) {
-            _queue.Enqueue(item);
-            _semaphore.Release();
+            this._queue.Enqueue(item);
+            this._semaphore.Release();
         }
 
         public async Task<T> DequeueAsync(CancellationToken cancellationToken) {
             while (true) {
-                await _semaphore.WaitAsync(cancellationToken);
-                if (_queue.TryDequeue(out T item))
+                await this._semaphore.WaitAsync(cancellationToken);
+                if (this._queue.TryDequeue(out T item))
                     return item;
             }
         }

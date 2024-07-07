@@ -38,35 +38,35 @@ namespace Faml.CodeAnalysis {
         }
 
         public Diagnostic(FamlModule module, TextSpan sourceSpan, DiagnosticSeverity severity, string message) {
-            _module = module;
+            this._module = module;
 
-            _sourceSpan = sourceSpan;
-            _startLinePosition = module.SourceText.Lines.GetLinePosition(_sourceSpan.Start);
+            this._sourceSpan = sourceSpan;
+            this._startLinePosition = module.SourceText.Lines.GetLinePosition(this._sourceSpan.Start);
 
-            _severity = severity;
-            _message = message;
+            this._severity = severity;
+            this._message = message;
         }
 
         public Diagnostic(DiagnosticSeverity severity, string message) {
-            _module = null;
-            _sourceSpan = TextSpanExtensions.NullTextSpan;
-            _startLinePosition = null;
+            this._module = null;
+            this._sourceSpan = TextSpanExtensions.NullTextSpan;
+            this._startLinePosition = null;
 
-            _severity = severity;
-            _message = message;
+            this._severity = severity;
+            this._message = message;
         }
 
         public Diagnostic(SyntaxNode syntaxNode, DiagnosticSeverity severity, string message)
             : this(syntaxNode.GetModule(), syntaxNode.Span, severity, message) { }
 
-        public QualifiableName ModuleName => _module?.ModuleName ?? new QualifiableName("");
+        public QualifiableName ModuleName => this._module?.ModuleName ?? new QualifiableName("");
 
-        public LinePosition? StartLinePosition => _startLinePosition;
+        public LinePosition? StartLinePosition => this._startLinePosition;
 
-        public TextSpan SourceSpan => _sourceSpan;
+        public TextSpan SourceSpan => this._sourceSpan;
 
-        public DiagnosticSeverity Severity => _severity;
+        public DiagnosticSeverity Severity => this._severity;
 
-        public string Message => _message;
+        public string Message => this._message;
     }
 }

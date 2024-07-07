@@ -23,18 +23,18 @@ namespace Faml.Interpreter.External {
 
             var initializationObjectProperties = new List<ObjectProperty>();
 
-            _propertyValueEvals = new ObjectEval[propertiesLength];
+            this._propertyValueEvals = new ObjectEval[propertiesLength];
 
             for (int i = 0; i < propertiesLength; i++) {
                 // TODO: Fix this up to cast primitive types
-                _propertyValueEvals[i] = CreateObjectEval(propertyValues[i], propertyNames[i]);
+                this._propertyValueEvals[i] = CreateObjectEval(propertyValues[i], propertyNames[i]);
 
                 ObjectProperty objectProperty = objectProperties[propertyNames[i].ToString()];
                 initializationObjectProperties.Add(objectProperty);
             }
 
             ObjectType objectType = functionBinding.ReturnExternalObjectTypeBinding.TypeToolingType;
-            _objectCreator = objectType.GetInterpretedObjectCreator(initializationObjectProperties.ToArray(), new AttachedProperty[0]);
+            this._objectCreator = objectType.GetInterpretedObjectCreator(initializationObjectProperties.ToArray(), new AttachedProperty[0]);
         }
 
         private static ObjectEval CreateObjectEval(Eval propertyValue, Name propertyName) {
@@ -57,14 +57,14 @@ namespace Faml.Interpreter.External {
         }
 
         public override object Eval() {
-            int propertiesLength = _propertyValueEvals.Length;
+            int propertiesLength = this._propertyValueEvals.Length;
 
             int startOffset = Context.StackIndex;
 
             for (int i = 0; i < propertiesLength; i++)
-                _propertyValueEvals[i].Push();
+                this._propertyValueEvals[i].Push();
 
-            object returnValue = _objectCreator.Create(Context.ObjectStack, startOffset);
+            object returnValue = this._objectCreator.Create(Context.ObjectStack, startOffset);
 
             Context.StackIndex -= propertiesLength;
 

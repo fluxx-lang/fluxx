@@ -16,7 +16,7 @@ namespace Faml.IntelliSense {
         }
 
         public override async Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken) {
-            DotNetRawTypeProvider dotNetRawTypeProvider = Module.Project.DotNetProjectInfo.RawTypeProvider;
+            DotNetRawTypeProvider dotNetRawTypeProvider = this.Module.Project.DotNetProjectInfo.RawTypeProvider;
 
             DotNetRawType? viewType = dotNetRawTypeProvider.GetType("Xamarin.Forms.View");
             if (viewType == null)
@@ -26,7 +26,7 @@ namespace Faml.IntelliSense {
 
             List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>();
             foreach (DotNetRawType rawType in types) {
-                TypeToolingType? type = Module.Project.GetTypeToolingType(rawType);
+                TypeToolingType? type = this.Module.Project.GetTypeToolingType(rawType);
                 if (type == null)
                     continue;
 

@@ -7,28 +7,28 @@ namespace Faml.Interpreter {
         private readonly Dictionary<ExampleDefinitionSyntax, ObjectEval> _exampleEvals = new Dictionary<ExampleDefinitionSyntax, ObjectEval>();
 
 
-        public Dictionary<FunctionDefinitionSyntax, Eval> FunctionDefinitionEvals => _functionDefinitionEvals;
+        public Dictionary<FunctionDefinitionSyntax, Eval> FunctionDefinitionEvals => this._functionDefinitionEvals;
 
         public void AddFunctionDefinitionEval(FunctionDefinitionSyntax functionDefinition, Eval eval) {
-            _functionDefinitionEvals.Add(functionDefinition, eval);
+            this._functionDefinitionEvals.Add(functionDefinition, eval);
         }
 
         public Eval GetFunctionDefinitionEval(FunctionDefinitionSyntax functionDefinition) {
-            return _functionDefinitionEvals[functionDefinition];
+            return this._functionDefinitionEvals[functionDefinition];
         }
 
         public Eval? GetFunctionDefinitionEvalIfExists(FunctionDefinitionSyntax functionDefinition) {
-            if (!_functionDefinitionEvals.TryGetValue(functionDefinition, out Eval functionDefinitionEval))
+            if (!this._functionDefinitionEvals.TryGetValue(functionDefinition, out Eval functionDefinitionEval))
                 return null;
             return functionDefinitionEval;
         }
 
         public void AddExampleEval(ExampleDefinitionSyntax exampleDefinition, ObjectEval objectEval) {
-            _exampleEvals.Add(exampleDefinition, objectEval);
+            this._exampleEvals.Add(exampleDefinition, objectEval);
         }
 
         public ObjectEval? GetExampleEvalIfExists(ExampleDefinitionSyntax exampleDefinition) {
-            if (!_exampleEvals.TryGetValue(exampleDefinition, out ObjectEval objectEval))
+            if (!this._exampleEvals.TryGetValue(exampleDefinition, out ObjectEval objectEval))
                 return null;
             return objectEval;
         }

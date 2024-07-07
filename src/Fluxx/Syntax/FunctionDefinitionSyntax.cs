@@ -22,38 +22,38 @@ namespace Faml.Syntax {
 
         public FunctionDefinitionSyntax(TextSpan span, NameSyntax functionNameSyntax, PropertyNameTypePairSyntax[] parameters,
                                         TypeReferenceSyntax? returnType, ExpressionSyntax expression, DefinitionSyntax[] whereDefinitions) : base(span) {
-            _functionNameSyntax = functionNameSyntax;
+            this._functionNameSyntax = functionNameSyntax;
             functionNameSyntax.SetParent(this);
 
-            _parameters = parameters;
-            foreach (PropertyNameTypePairSyntax propertyNameTypePair in _parameters)
+            this._parameters = parameters;
+            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._parameters)
                 propertyNameTypePair.SetParent(this);
 
-            _returnType = returnType;
+            this._returnType = returnType;
             if (returnType != null)
                 returnType.SetParent(this);
 
-            _expression = expression;
+            this._expression = expression;
             expression.SetParent(this);
 
-            _whereDefinitions = whereDefinitions;
+            this._whereDefinitions = whereDefinitions;
             foreach (DefinitionSyntax whereDefinition in whereDefinitions)
                 whereDefinition.SetParent(this);
         }
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_functionNameSyntax);
+            visitor(this._functionNameSyntax);
 
-            foreach (PropertyNameTypePairSyntax propertyNameTypePair in _parameters)
+            foreach (PropertyNameTypePairSyntax propertyNameTypePair in this._parameters)
                 visitor(propertyNameTypePair);
 
-            if (_returnType != null)
-                visitor(_returnType);
+            if (this._returnType != null)
+                visitor(this._returnType);
 
-            if (_expression != null)
-                visitor(_expression);
+            if (this._expression != null)
+                visitor(this._expression);
 
-            foreach (DefinitionSyntax whereDefinition in _whereDefinitions)
+            foreach (DefinitionSyntax whereDefinition in this._whereDefinitions)
                 visitor(whereDefinition);
         }
 
@@ -64,33 +64,33 @@ namespace Faml.Syntax {
         public override SyntaxNodeType NodeType => SyntaxNodeType.FunctionDefinition;
 
         protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver) {
-            if (_returnType != null)
-                _returnTypeBinding = _returnType.GetTypeBinding();
+            if (this._returnType != null)
+                this._returnTypeBinding = this._returnType.GetTypeBinding();
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            if (_expression is TextualLiteralSyntax markupValue) {
-                if (_returnTypeBinding != null)
-                    _expression = markupValue.ResolveMarkup(_returnTypeBinding, bindingResolver);
+            if (this._expression is TextualLiteralSyntax markupValue) {
+                if (this._returnTypeBinding != null)
+                    this._expression = markupValue.ResolveMarkup(this._returnTypeBinding, bindingResolver);
                 else
-                    AddError("Must specify explicit return type; it can't be inferred");
+                    this.AddError("Must specify explicit return type; it can't be inferred");
             }
 
-            _expression.SetParent(this);
+            this._expression.SetParent(this);
 
             // Now resolve the bindings on what we just parsed, since the parse was in turn triggered by resolving bindings
-            _expression.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
+            this._expression.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
 
-            if (_returnType == null)
-                _returnTypeBinding = _expression.GetTypeBinding();
-            else Debug.Assert(_returnTypeBinding != null);
+            if (this._returnType == null)
+                this._returnTypeBinding = this._expression.GetTypeBinding();
+            else Debug.Assert(this._returnTypeBinding != null);
         }
 
-        public NameSyntax FunctionNameSyntax => _functionNameSyntax;
+        public NameSyntax FunctionNameSyntax => this._functionNameSyntax;
 
-        public Name FunctionName => _functionNameSyntax.Name;
+        public Name FunctionName => this._functionNameSyntax.Name;
 
-        public PropertyNameTypePairSyntax[] Parameters => _parameters;
+        public PropertyNameTypePairSyntax[] Parameters => this._parameters;
 
         /// <summary>
         /// Return the index of the specified parameter name.   If the parameter name isn't a valid parameter, -1 is
@@ -100,9 +100,9 @@ namespace Faml.Syntax {
         /// <remarks> index of parameter or -1 if the function doesn't have a parameter of that name</remarks>
 
         public int GetParameterIndex(Name parameterName) {
-            int length = _parameters.Length;
+            int length = this._parameters.Length;
             for (int i = 0; i < length; i++) {
-                if (_parameters[i].PropertyName == parameterName) {
+                if (this._parameters[i].PropertyName == parameterName) {
                     return i;
                 }
             }
@@ -110,41 +110,41 @@ namespace Faml.Syntax {
         }
         
         public TypeBinding GetParameterTypeBinding(int parameterIndex) {
-            return _parameters[parameterIndex].TypeReferenceSyntax.GetTypeBinding();
+            return this._parameters[parameterIndex].TypeReferenceSyntax.GetTypeBinding();
         }
 
-        public TypeReferenceSyntax ReturnType => _returnType;
+        public TypeReferenceSyntax ReturnType => this._returnType;
 
-        public TypeBinding ReturnTypeBinding => _returnTypeBinding;
+        public TypeBinding ReturnTypeBinding => this._returnTypeBinding;
 
-        public Expression.ExpressionSyntax Expression => _expression;
+        public Expression.ExpressionSyntax Expression => this._expression;
 
-        public DefinitionSyntax[] WhereDefinitions => _whereDefinitions;
+        public DefinitionSyntax[] WhereDefinitions => this._whereDefinitions;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_functionNameSyntax);
+            sourceWriter.Write(this._functionNameSyntax);
             
-            int parameterCount = _parameters.Length;
+            int parameterCount = this._parameters.Length;
             if (parameterCount > 0) {
                 sourceWriter.Write("{");
                 for (int i = 0; i < parameterCount; i++) {
                     if (i > 0)
                         sourceWriter.Write(" ");
 
-                    _parameters[i].WriteSource(sourceWriter);
+                    this._parameters[i].WriteSource(sourceWriter);
                 }
 
                 sourceWriter.Write("}");
             }
 
-            if (_returnType != null) {
+            if (this._returnType != null) {
                 sourceWriter.Write(":");
-                _returnType.WriteSource(sourceWriter);
+                this._returnType.WriteSource(sourceWriter);
             }
 
             sourceWriter.Write(" = ");
 
-            _expression.WriteSource(sourceWriter);
+            this._expression.WriteSource(sourceWriter);
         }
     }
 }

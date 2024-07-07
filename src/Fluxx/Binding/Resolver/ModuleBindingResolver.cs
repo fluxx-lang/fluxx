@@ -11,8 +11,8 @@ namespace Faml.Binding.Resolver {
         private readonly FamlProject _project;
 
         public ModuleBindingResolver(ModuleSyntax module) {
-            _module = module;
-            _project = module.Project;
+            this._module = module;
+            this._project = module.Project;
         }
 
         public override FunctionBinding ResolveFunctionBinding(TypeBinding? thisArgumentTypeBinding,
@@ -35,24 +35,24 @@ namespace Faml.Binding.Resolver {
             if (!functionName.IsQualified()) {
                 Name unqualifiableName = functionName.ToUnqualifiableName();
 
-                FunctionDefinitionSyntax? functionDefinition = _module.GetFunctionDefinition(unqualifiableName);
+                FunctionDefinitionSyntax? functionDefinition = this._module.GetFunctionDefinition(unqualifiableName);
                 if (functionDefinition != null)
                     return new InternalFunctionBinding(functionDefinition);
 
-                RecordTypeDefinitionSyntax? recordTypeDefinition = _module.GetRecordTypeDefinition(unqualifiableName);
+                RecordTypeDefinitionSyntax? recordTypeDefinition = this._module.GetRecordTypeDefinition(unqualifiableName);
                 if (recordTypeDefinition != null)
                     return new NewRecordFunctionBinding(recordTypeDefinition);
 
                 // These function names are special
                 if (unqualifiableName.ToString() == "example")
-                    return new NewExternalObjectFunctionBinding(_project.ExampleTypeBinding);
+                    return new NewExternalObjectFunctionBinding(this._project.ExampleTypeBinding);
                 if (unqualifiableName.ToString() == "examples")
-                    return new NewExternalObjectFunctionBinding(_project.ExamplesTypeBinding);
+                    return new NewExternalObjectFunctionBinding(this._project.ExamplesTypeBinding);
             }
 
             // Treat function name to a type name and see if that type exists, as it may be a
             // constructor function
-            TypeBindingResult typeBindingResult = FindTypeBindingForType(functionName);
+            TypeBindingResult typeBindingResult = this.FindTypeBindingForType(functionName);
 
             if (typeBindingResult is TypeBindingResult.Success success) {
                 if (success.TypeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)
@@ -69,7 +69,7 @@ namespace Faml.Binding.Resolver {
 
         public override TypeBinding ResolveObjectTypeBinding(ObjectTypeReferenceSyntax objectTypeReferenceSyntax) {
             QualifiableName typeName = objectTypeReferenceSyntax.TypeName;
-            TypeBindingResult typeBindingResult = FindTypeBindingForType(typeName);
+            TypeBindingResult typeBindingResult = this.FindTypeBindingForType(typeName);
 
             if (typeBindingResult is TypeBindingResult.Success success)
                 return success.TypeBinding;
@@ -82,7 +82,7 @@ namespace Faml.Binding.Resolver {
 
         public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName) {
             if (typeName.IsQualified())
-                return _project.ResolveTypeBinding(typeName);
+                return this._project.ResolveTypeBinding(typeName);
 
             Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
@@ -90,11 +90,11 @@ namespace Faml.Binding.Resolver {
             if (predefinedTypeBinding != null)
                 return new TypeBindingResult.Success(predefinedTypeBinding);
 
-            RecordTypeDefinitionSyntax? recordTypeDefinition = _module.GetRecordTypeDefinition(unqualifiableTypeName);
+            RecordTypeDefinitionSyntax? recordTypeDefinition = this._module.GetRecordTypeDefinition(unqualifiableTypeName);
             if (recordTypeDefinition != null)
                 return new TypeBindingResult.Success(recordTypeDefinition.TypeBinding);
 
-            foreach (ImportSyntax import in _module.Imports) {
+            foreach (ImportSyntax import in this._module.Imports) {
                 ImmutableArray<ImportTypeReferenceSyntax>? importImportTypeReferences = import.ImportTypeReferences;
 
                 if (importImportTypeReferences == null) {
@@ -102,7 +102,7 @@ namespace Faml.Binding.Resolver {
                     // type. If so, match on it.
 
                     var potentialQualifiedTypeName = new QualifiableName(import.Qualifier, unqualifiableTypeName);
-                    TypeBindingResult typeBindingResult = _project.ResolveTypeBinding(potentialQualifiedTypeName);
+                    TypeBindingResult typeBindingResult = this._project.ResolveTypeBinding(potentialQualifiedTypeName);
 
                     // If we found something or got an error, return that
                     if (! (typeBindingResult is TypeBindingResult.NotFound))
@@ -123,11 +123,11 @@ namespace Faml.Binding.Resolver {
 
         public override AttachedTypeBinding? ResolveAttachedTypeBinding(QualifiableName typeName) {
             if (typeName.IsQualified())
-                return _project.ResolveAttachedTypeBinding(typeName);
+                return this._project.ResolveAttachedTypeBinding(typeName);
 
             Name unqualifiableTypeName = typeName.ToUnqualifiableName();
 
-            foreach (ImportSyntax import in _module.Imports) {
+            foreach (ImportSyntax import in this._module.Imports) {
                 ImmutableArray<ImportTypeReferenceSyntax>? importImportTypeReferences = import.ImportTypeReferences;
 
                 if (importImportTypeReferences == null) {
@@ -135,7 +135,7 @@ namespace Faml.Binding.Resolver {
                     // type. If so, match on it.
 
                     var potentialQualifiedTypeName = new QualifiableName(import.Qualifier, unqualifiableTypeName);
-                    AttachedTypeBinding? typeBinding = _project.ResolveAttachedTypeBinding(potentialQualifiedTypeName);
+                    AttachedTypeBinding? typeBinding = this._project.ResolveAttachedTypeBinding(potentialQualifiedTypeName);
 
                     if (typeBinding != null)
                         return typeBinding;

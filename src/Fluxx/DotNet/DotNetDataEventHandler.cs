@@ -8,9 +8,9 @@ namespace Faml {
         public delegate void DataEventHandlerDelegate(object sender, EventArgs e, IList<object> data);
 
         public DotNetDataEventHandler(DataEventHandlerDelegate eventHandlerDelegate) {
-            _eventHandlerDelegate = eventHandlerDelegate;
+            this._eventHandlerDelegate = eventHandlerDelegate;
         }
 
-        public DataEventHandlerDelegate EventHandlerDelegate => _eventHandlerDelegate;
+        public DataEventHandlerDelegate EventHandlerDelegate => this._eventHandlerDelegate;
     }
 }

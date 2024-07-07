@@ -13,34 +13,34 @@ namespace Faml.Binding.Internal {
         private readonly BuiltInTypeBinding _predefinedTypeBinding;
 
         public NewPredefinedTypeFunctionBinding(BuiltInTypeBinding predefinedTypeBinding) {
-            _predefinedTypeBinding = predefinedTypeBinding;
+            this._predefinedTypeBinding = predefinedTypeBinding;
         }
 
-        public override QualifiableName FunctionName => _predefinedTypeBinding.TypeName;
+        public override QualifiableName FunctionName => this._predefinedTypeBinding.TypeName;
 
-        public override TypeBinding ReturnTypeBinding => _predefinedTypeBinding;
+        public override TypeBinding ReturnTypeBinding => this._predefinedTypeBinding;
 
         public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
             BindingResolver bindingResolver) {
             if (!argumentName.IsQualified()) {
-                TypeBinding? typeBinding = GetParameterTypeBinding(argumentName.ToUnqualifiableName());
+                TypeBinding? typeBinding = this.GetParameterTypeBinding(argumentName.ToUnqualifiableName());
                 if (typeBinding != null)
                     return typeBinding;
             }
 
             argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
-                $"'{argumentName}' parameter isn't valid for function '{FunctionName}'. ");
+                $"'{argumentName}' parameter isn't valid for function '{this.FunctionName}'. ");
             return InvalidTypeBinding.Instance;
         }
 
         public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver) {
-            return _predefinedTypeBinding;
+            return this._predefinedTypeBinding;
         }
 
         public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
             string parameterNameString = parameterName.ToString();
             if (parameterNameString == "content" || parameterNameString == "Content")
-                return _predefinedTypeBinding;
+                return this._predefinedTypeBinding;
             return null;
         }
 

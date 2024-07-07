@@ -10,17 +10,17 @@ namespace Faml.Messaging
 
 
         public WebSocketServerMessagingConnector(int port) {
-            _httpListener = new HttpListener();
-            _httpListener.Prefixes.Add($"http://localhost:{port}/");
+            this._httpListener = new HttpListener();
+            this._httpListener.Prefixes.Add($"http://localhost:{port}/");
         }
 
         public async Task Start() {
-            _httpListener.Start();
+            this._httpListener.Start();
 
             while (true) {
-                HttpListenerContext listenerContext = await _httpListener.GetContextAsync();
+                HttpListenerContext listenerContext = await this._httpListener.GetContextAsync();
                 if (listenerContext.Request.IsWebSocketRequest)
-                    HandleWebSocketRequest(listenerContext).ConfigureAwait(false);
+                    this.HandleWebSocketRequest(listenerContext).ConfigureAwait(false);
                 else {
                     listenerContext.Response.StatusCode = 400;
                     listenerContext.Response.Close();
@@ -49,7 +49,7 @@ namespace Faml.Messaging
             using WebSocket webSocket = webSocketContext.WebSocket;
 
             try {
-                await ProcessMessages(webSocket);
+                await this.ProcessMessages(webSocket);
             }
             catch (Exception e) {
                 // Just log any exceptions to the console. Pretty much any exception that occurs when calling `SendAsync`/`ReceiveAsync`/`CloseAsync` is unrecoverable in that it will abort the connection and leave the `WebSocket` instance in an unusable state.

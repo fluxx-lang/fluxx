@@ -7,7 +7,7 @@ namespace Faml.Interpreter {
         public abstract double Eval();
 
         public override void Push() {
-            Context.DoubleStack[Context.StackIndex++] = Eval();
+            Context.DoubleStack[Context.StackIndex++] = this.Eval();
         }
     }
 }

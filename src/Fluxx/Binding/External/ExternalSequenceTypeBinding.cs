@@ -13,33 +13,33 @@ namespace Faml.Binding.External {
 
 
         public ExternalSequenceTypeBinding(FamlProject project, SequenceType typeToolingType, TypeBinding elementTypeBinding) : base(elementTypeBinding) {
-            _project = project;
-            _typeToolingType = typeToolingType;
+            this._project = project;
+            this._typeToolingType = typeToolingType;
 
-            _dotNetType = (DotNetRawType) typeToolingType.UnderlyingType;
+            this._dotNetType = (DotNetRawType) typeToolingType.UnderlyingType;
         }
 
-        public FamlProject Project => _project;
+        public FamlProject Project => this._project;
 
-        public SequenceType TypeToolingType => _typeToolingType;
+        public SequenceType TypeToolingType => this._typeToolingType;
 
         protected bool Equals(ExternalSequenceTypeBinding other) {
-            return _dotNetType.Equals(other._dotNetType);
+            return this._dotNetType.Equals(other._dotNetType);
         }
 
         public override bool Equals(object obj) {
             if (!(obj is ExternalSequenceTypeBinding))
                 return false;
-            return Equals((ExternalSequenceTypeBinding) obj);
+            return this.Equals((ExternalSequenceTypeBinding) obj);
         }
 
         public override int GetHashCode() {
-            return _dotNetType.GetHashCode();
+            return this._dotNetType.GetHashCode();
         }
 
         public override bool IsAssignableFrom(TypeBinding other) {
             if (other is ExternalSequenceTypeBinding otherSequenceTypeBinding)
-                return _dotNetType.IsAssignableFrom(otherSequenceTypeBinding._dotNetType);
+                return this._dotNetType.IsAssignableFrom(otherSequenceTypeBinding._dotNetType);
             else return base.IsAssignableFrom(other);
         }
     }

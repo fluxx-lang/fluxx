@@ -16,11 +16,11 @@ namespace Faml.Syntax.Expression {
 
 
         public ForExpressionSyntax(TextSpan span, ExpressionSyntax expression, ForVariableDefinitionSyntax forVariableDefinition) : base(span) {
-            _expression = expression;
+            this._expression = expression;
             expression.SetParent(this);
 
-            _forVariableDefinition = forVariableDefinition;
-            _forVariableDefinition.SetParent(this);
+            this._forVariableDefinition = forVariableDefinition;
+            this._forVariableDefinition.SetParent(this);
         }
 
         public override bool IsTerminalNode() {
@@ -33,25 +33,25 @@ namespace Faml.Syntax.Expression {
             // Visit in this order so that the variable type binding is resolved before the expression
             // type binding is resolved
 
-            visitor(_forVariableDefinition);
-            visitor(_expression);
+            visitor(this._forVariableDefinition);
+            visitor(this._expression);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            TypeBinding expressionTypeBinding = _expression.GetTypeBinding();
-            _typeBinding = new SequenceTypeBinding(expressionTypeBinding);
+            TypeBinding expressionTypeBinding = this._expression.GetTypeBinding();
+            this._typeBinding = new SequenceTypeBinding(expressionTypeBinding);
         }
 
-        public override TypeBinding GetTypeBinding() => _typeBinding;
+        public override TypeBinding GetTypeBinding() => this._typeBinding;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            _expression.WriteSource(sourceWriter);
+            this._expression.WriteSource(sourceWriter);
             sourceWriter.Write("for ");
-            sourceWriter.Write(_forVariableDefinition);
+            sourceWriter.Write(this._forVariableDefinition);
         }
 
-        public ExpressionSyntax Expression => _expression;
+        public ExpressionSyntax Expression => this._expression;
 
-        public ForVariableDefinitionSyntax ForVariableDefinition => _forVariableDefinition;
+        public ForVariableDefinitionSyntax ForVariableDefinition => this._forVariableDefinition;
     }
 }

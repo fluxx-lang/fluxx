@@ -15,7 +15,7 @@ namespace Faml.Interpreter {
         }
 
         public override bool Eval() {
-            return Context.BooleanStack[Context.BaseIndex + _stackOffset];
+            return Context.BooleanStack[Context.BaseIndex + this._stackOffset];
         }
     }
 }

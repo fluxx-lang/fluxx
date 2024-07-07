@@ -23,40 +23,40 @@ namespace Faml.Messaging {
         }
 
         public Message(string type) {
-            _messageObject = new MessageObject(type);
+            this._messageObject = new MessageObject(type);
         }
 
         public Message(MessageObject messageObject) {
-            _messageObject = messageObject;
+            this._messageObject = messageObject;
         }
 
         public Message(MessageObject messageObject, long responseId) {
-            _messageObject = messageObject;
-            ResponseId = responseId;
+            this._messageObject = messageObject;
+            this.ResponseId = responseId;
         }
 
-        public string MessageType => _messageObject.Type;
+        public string MessageType => this._messageObject.Type;
 
-        public MessageObject MessageObject => _messageObject;
+        public MessageObject MessageObject => this._messageObject;
 
-        public bool IsResponse => MessageType.EndsWith("Response");
+        public bool IsResponse => this.MessageType.EndsWith("Response");
 
-        public T GetProperty<T>(string propertyName) where T : class => _messageObject.GetProperty<T>(propertyName);
+        public T GetProperty<T>(string propertyName) where T : class => this._messageObject.GetProperty<T>(propertyName);
 
         public void AddProperty(string propertyName, string value) {
-            _messageObject.AddProperty(propertyName, value);
+            this._messageObject.AddProperty(propertyName, value);
         }
 
         public void AddProperty(string propertyName, int value) {
-            _messageObject.AddProperty(propertyName, value);
+            this._messageObject.AddProperty(propertyName, value);
         }
 
         public void Write(Stream outputStream) {
             using var binaryWriter = new BinaryWriter(outputStream);
 
             binaryWriter.Write(SignatureBytes);
-            binaryWriter.Write(ResponseId);
-            _messageObject.Write(binaryWriter);
+            binaryWriter.Write(this.ResponseId);
+            this._messageObject.Write(binaryWriter);
         }
     }
 }

@@ -9,11 +9,11 @@ namespace Faml.Interpreter {
         private readonly BooleanEval _operand;
 
         public NotEval(BooleanEval operand) {
-            _operand = operand;
+            this._operand = operand;
         }
 
         public override bool Eval() {
-            return !_operand.Eval();
+            return !this._operand.Eval();
         }
     }
 

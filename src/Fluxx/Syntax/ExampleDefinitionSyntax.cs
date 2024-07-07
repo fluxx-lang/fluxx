@@ -13,18 +13,18 @@ namespace Faml.Syntax {
         private int _exampleIndex;
 
         public ExampleDefinitionSyntax(TextSpan span, ExpressionSyntax expression) : base(span) {
-            _expression = expression;
+            this._expression = expression;
 
-            _expression.SetParent(this);
+            this._expression.SetParent(this);
         }
 
-        public ExpressionSyntax Expression => _expression;
+        public ExpressionSyntax Expression => this._expression;
 
         internal void SetExampleIndex(int exampleIndex) {
-            _exampleIndex = exampleIndex;
+            this._exampleIndex = exampleIndex;
         }
 
-        public int ExampleIndex => _exampleIndex;
+        public int ExampleIndex => this._exampleIndex;
 
         public override bool IsTerminalNode() {
             return false;
@@ -33,11 +33,11 @@ namespace Faml.Syntax {
         public override SyntaxNodeType NodeType => SyntaxNodeType.ExampleDefinition;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_expression);
+            visitor(this._expression);
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_expression);
+            sourceWriter.Write(this._expression);
         }
     }
 }

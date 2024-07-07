@@ -17,8 +17,8 @@ namespace Faml.DotNet {
         private string _windowsRuntimeAssemblyQualifier = null;
 
         public AppDotNetRawTypeProvider(Assembly mainAssembly) {
-            _mainAssembly = mainAssembly;
-            _assemblies = new Lazy<List<Assembly>>(LoadAssemblies);
+            this._mainAssembly = mainAssembly;
+            this._assemblies = new Lazy<List<Assembly>>(this.LoadAssemblies);
         }
 
         public override bool IsReady => true;
@@ -38,7 +38,7 @@ namespace Faml.DotNet {
             var assemblies = new List<Assembly>();
             var assemblyNames = new HashSet<string>();
 
-            AddAssemblies(_mainAssembly, assemblies, assemblyNames);
+            this.AddAssemblies(this._mainAssembly, assemblies, assemblyNames);
 
             return assemblies;
         }
@@ -66,26 +66,26 @@ namespace Faml.DotNet {
                 // won't work anyway. Instead save off the assembly qualifier to use, when attempting to load types from the windows runtime
                 // assembly.
                 if (referencedAssemblyName.ContentType == AssemblyContentType.WindowsRuntime) {
-                    _windowsRuntimeAssemblyQualifier = "Windows, ContentType = WindowsRuntime";
+                    this._windowsRuntimeAssemblyQualifier = "Windows, ContentType = WindowsRuntime";
                     continue;
                 }
 
                 if (!assemblyFullNames.Contains(referencedAssemblyName.FullName)) {
                     Assembly referencedAssembly = Assembly.Load(referencedAssemblyName);
-                    AddAssemblies(referencedAssembly, assemblies, assemblyFullNames);
+                    this.AddAssemblies(referencedAssembly, assemblies, assemblyFullNames);
                 }
             }
         }
 
         public override DotNetRawType? GetType(string typeName) {
-            foreach (Assembly referencedAssembly in _assemblies.Value) {
+            foreach (Assembly referencedAssembly in this._assemblies.Value) {
                 Type type = referencedAssembly.GetType(typeName);
                 if (type != null)
                     return new ReflectionDotNetRawType(type);
             }
 
-            if (_windowsRuntimeAssemblyQualifier != null) {
-                Type type = Type.GetType(typeName + ", " + _windowsRuntimeAssemblyQualifier);
+            if (this._windowsRuntimeAssemblyQualifier != null) {
+                Type type = Type.GetType(typeName + ", " + this._windowsRuntimeAssemblyQualifier);
                 if (type != null)
                     return new ReflectionDotNetRawType(type);
 

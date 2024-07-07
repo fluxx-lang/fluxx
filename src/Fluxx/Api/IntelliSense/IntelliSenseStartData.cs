@@ -7,7 +7,7 @@ namespace Faml.Api.IntelliSense {
         public TextSpan ApplicableToSpan { get; }
 
         public IntelliSenseStartData(TextSpan applicableToSpan) {
-            ApplicableToSpan = applicableToSpan;
+            this.ApplicableToSpan = applicableToSpan;
         }
     }
 }

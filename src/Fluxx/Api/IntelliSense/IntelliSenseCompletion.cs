@@ -15,16 +15,16 @@ namespace Faml.Api.IntelliSense {
         public object? Data { get; }
 
         public IntelliSenseCompletion(CompletionType type, string displayText, string? insertText = null, Image? icon = null, object? data = null) {
-            Type = type;
-            DisplayText = displayText;
+            this.Type = type;
+            this.DisplayText = displayText;
 
             if (insertText == null)
                 insertText = displayText;
-            InsertText = insertText;
+            this.InsertText = insertText;
 
-            Icon = icon;
+            this.Icon = icon;
 
-            Data = data;
+            this.Data = data;
         }
     }
 }

@@ -11,14 +11,14 @@ namespace Faml.Interpreter.External {
 
 
         public ExternalPropertyAccessEval(ObjectEval objectEval, ObjectType objectType, ObjectProperty objectProperty) {
-            _objectEval = objectEval;
+            this._objectEval = objectEval;
 
-            _objectPropertyReader = objectType.GetPropertyReader(objectProperty);
+            this._objectPropertyReader = objectType.GetPropertyReader(objectProperty);
         }
 
         public override object Eval() {
-            object obj = _objectEval.Eval();
-            return _objectPropertyReader.Get(obj);
+            object obj = this._objectEval.Eval();
+            return this._objectPropertyReader.Get(obj);
         }
     }
 }

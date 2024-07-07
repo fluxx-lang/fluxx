@@ -191,21 +191,21 @@ namespace Faml.Parser {
         }
 
         private SourceParser(FamlModule module) {
-            _module = module;
-            _token = new Token(module.SourceText);
-            _source = _token.Source;
+            this._module = module;
+            this._token = new Token(module.SourceText);
+            this._source = this._token.Source;
         }
 
         private SourceParser(FamlModule module, TextSpan span) {
-            _module = module;
-            _token = new Token(new ParseableSource(module.SourceText, span));
-            _source = _token.Source;
+            this._module = module;
+            this._token = new Token(new ParseableSource(module.SourceText, span));
+            this._source = this._token.Source;
         }
 
         private SourceParser(FamlModule module, Token token) {
-            _module = module;
-            _token = token;
-            _source = _token.Source;
+            this._module = module;
+            this._token = token;
+            this._source = this._token.Source;
         }
 
         private void ParseModule() {
@@ -215,25 +215,25 @@ namespace Faml.Parser {
             var imports = new List<ImportSyntax>();
             var useLibraries = new List<UseSyntax>();
 
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            if (_token.Type == TokenType.Identifier && _token.StringValue == "App")
-                projectDefinition = ParseFunctionInvocation(null);
+            if (this._token.Type == TokenType.Identifier && this._token.StringValue == "App")
+                projectDefinition = this.ParseFunctionInvocation(null);
 
-            while (_token.Type == TokenType.Use) {
-                UseSyntax use = ParseUse();
+            while (this._token.Type == TokenType.Use) {
+                UseSyntax use = this.ParseUse();
                 useLibraries.Add(use);
             }
 
-            while (_token.Type == TokenType.Import) {
-                ImportSyntax import = ParseImport();
+            while (this._token.Type == TokenType.Import) {
+                ImportSyntax import = this.ParseImport();
                 imports.Add(import);
             }
 
-            SyntaxNode[] moduleItems = ParseModuleItems(synchronizingTokens);
-            var moduleSyntax = new ModuleSyntax(_module, TextSpanFrom(startPosition), projectDefinition, useLibraries.ToArray(), imports.ToArray(), moduleItems);
+            SyntaxNode[] moduleItems = this.ParseModuleItems(synchronizingTokens);
+            var moduleSyntax = new ModuleSyntax(this._module, this.TextSpanFrom(startPosition), projectDefinition, useLibraries.ToArray(), imports.ToArray(), moduleItems);
 
-            _module.ModuleSyntax = moduleSyntax;
+            this._module.ModuleSyntax = moduleSyntax;
         }
 
         private SyntaxNode[] ParseModuleItems(Tokens synchronizingTokens) {
@@ -244,37 +244,37 @@ namespace Faml.Parser {
 
             // TODO: Check for duplicate names
             while (true) {
-                if (_token.Type == TokenType.Identifier) {
-                    if (_token.StringValue == "example" || _token.StringValue == "examples") {
-                        ExampleDefinitionSyntax exampleDefinition = ParseExampleDefinition(
+                if (this._token.Type == TokenType.Identifier) {
+                    if (this._token.StringValue == "example" || this._token.StringValue == "examples") {
+                        ExampleDefinitionSyntax exampleDefinition = this.ParseExampleDefinition(
                             parseDefinitionSynchronizingTokens);
                         moduleItems.Add(exampleDefinition);
                     }
                     else {
                         FunctionDefinitionSyntax functionDefinition =
-                            ParseFunctionDefinition(parseDefinitionSynchronizingTokens);
+                            this.ParseFunctionDefinition(parseDefinitionSynchronizingTokens);
                         moduleItems.Add(functionDefinition);
                     }
                 }
-                else if (_token.Type == TokenType.PropertyIdentifier) {
+                else if (this._token.Type == TokenType.PropertyIdentifier) {
                     FunctionDefinitionSyntax functionDefinition =
-                        ParseFunctionDefinition(parseDefinitionSynchronizingTokens);
+                        this.ParseFunctionDefinition(parseDefinitionSynchronizingTokens);
                     moduleItems.Add(functionDefinition);
                 }
-                else if (_token.Type == TokenType.Type) {
+                else if (this._token.Type == TokenType.Type) {
                     RecordTypeDefinitionSyntax recordTypeDefinition =
-                        ParseRecordTypeDefinition(parseDefinitionSynchronizingTokens);
+                        this.ParseRecordTypeDefinition(parseDefinitionSynchronizingTokens);
                     moduleItems.Add(recordTypeDefinition);
                 }
-                else if (_token.Type == TokenType.Eof) {
+                else if (this._token.Type == TokenType.Eof) {
                     break;
                 }
                 else {
-                    UnexpectedToken("function definition, data, or example");
+                    this.UnexpectedToken("function definition, data, or example");
 
                     // If we found something unexpected, try to sync. If after the sync we're still in error mode, give up
-                    Sync(definitionStartTokens, synchronizingTokens);
-                    if (_token.InErrorMode)
+                    this.Sync(definitionStartTokens, synchronizingTokens);
+                    if (this._token.InErrorMode)
                         break;
                 }
             }
@@ -283,230 +283,230 @@ namespace Faml.Parser {
         }
 
         private ExampleDefinitionSyntax ParseExampleDefinition(Tokens synchronizingTokens) {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
             // Advance past example/examples keywords
-            Advance();
+            this.Advance();
 
-            ExpressionSyntax expression = ParseSingleExpression(synchronizingTokens);
-            return new ExampleDefinitionSyntax(TextSpanFrom(startPosition), expression);
+            ExpressionSyntax expression = this.ParseSingleExpression(synchronizingTokens);
+            return new ExampleDefinitionSyntax(this.TextSpanFrom(startPosition), expression);
         }
 
         private FunctionDefinitionSyntax ParseFunctionDefinition(Tokens synchronizingTokens) {
-            if (_token.Type == TokenType.PropertyIdentifier)
-                _token.RescanPropertyIdentifierAsIdentifier();
+            if (this._token.Type == TokenType.PropertyIdentifier)
+                this._token.RescanPropertyIdentifierAsIdentifier();
 
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            Check(TokenType.Identifier, "function name");
-            NameSyntax functionNameSyntax = ParseName();
+            this.Check(TokenType.Identifier, "function name");
+            NameSyntax functionNameSyntax = this.ParseName();
 
             List<PropertyNameTypePairSyntax> parameters;
-            if (_token.Type == TokenType.LeftBrace) {
-                Advance();
-                parameters = ParsePropertyNameTypePairs(synchronizingTokens.Add(TokenType.RightBrace));
-                CheckOrSyncAndAdvance(TokenType.RightBrace, synchronizingTokens.Add(TokenType.Assign));
+            if (this._token.Type == TokenType.LeftBrace) {
+                this.Advance();
+                parameters = this.ParsePropertyNameTypePairs(synchronizingTokens.Add(TokenType.RightBrace));
+                this.CheckOrSyncAndAdvance(TokenType.RightBrace, synchronizingTokens.Add(TokenType.Assign));
             }
             else parameters = new List<PropertyNameTypePairSyntax>();
 
             TypeReferenceSyntax? returnType = null;
-            if (_token.Type == TokenType.Colon) {
-                Advance();
-                returnType = ParseTypeReference();
+            if (this._token.Type == TokenType.Colon) {
+                this.Advance();
+                returnType = this.ParseTypeReference();
             }
 
-            CheckOrSyncAndAdvance(TokenType.Assign, synchronizingTokens);
+            this.CheckOrSyncAndAdvance(TokenType.Assign, synchronizingTokens);
 
-            ExpressionSyntax expression = ParseExpressionAllowTextualLiteral(synchronizingTokens, TextualLiteralContext.FunctionDefinition);
+            ExpressionSyntax expression = this.ParseExpressionAllowTextualLiteral(synchronizingTokens, TextualLiteralContext.FunctionDefinition);
 
-            return new FunctionDefinitionSyntax(TextSpanFrom(startPosition), functionNameSyntax, parameters.ToArray(),
+            return new FunctionDefinitionSyntax(this.TextSpanFrom(startPosition), functionNameSyntax, parameters.ToArray(),
                 returnType, expression, new DefinitionSyntax[0]);
         }
 
         private List<PropertyNameTypePairSyntax> ParsePropertyNameTypePairs(Tokens synchronizingTokens) {
             var parameters = new List<PropertyNameTypePairSyntax>();
 
-            while (_token.Type == TokenType.PropertyIdentifier) {
-                int parameterStartPosition = _token.TokenStartPosition;
+            while (this._token.Type == TokenType.PropertyIdentifier) {
+                int parameterStartPosition = this._token.TokenStartPosition;
 
-                string tokenString = _token.StringValue;
+                string tokenString = this._token.StringValue;
                 if (tokenString.IndexOf('.') != -1)
-                    AddError(_token.TokenSpan, $"Function parameter names can't contain a period: {tokenString}");
+                    this.AddError(this._token.TokenSpan, $"Function parameter names can't contain a period: {tokenString}");
 
-                var propertyNameIdentifier = new NameSyntax(_token.TokenSourceSpanExceptForLastCharacter, new Name(tokenString));
+                var propertyNameIdentifier = new NameSyntax(this._token.TokenSourceSpanExceptForLastCharacter, new Name(tokenString));
 
-                Advance();
+                this.Advance();
 
-                TypeReferenceSyntax typeReferenceSyntax = ParseTypeReference();
+                TypeReferenceSyntax typeReferenceSyntax = this.ParseTypeReference();
 
                 ExpressionSyntax? defaultValue = null;
-                if (_token.Type == TokenType.Assign) {
-                    CheckAndAdvance(TokenType.Assign);
-                    defaultValue = ParseExpression(synchronizingTokens);
+                if (this._token.Type == TokenType.Assign) {
+                    this.CheckAndAdvance(TokenType.Assign);
+                    defaultValue = this.ParseExpression(synchronizingTokens);
                 }
 
                 parameters.Add(
-                    new PropertyNameTypePairSyntax(TextSpanFrom(parameterStartPosition), propertyNameIdentifier, typeReferenceSyntax, defaultValue));
+                    new PropertyNameTypePairSyntax(this.TextSpanFrom(parameterStartPosition), propertyNameIdentifier, typeReferenceSyntax, defaultValue));
 
-                if (_token.Type != TokenType.RightBrace && !_token.IsAtStartOfLine)
-                    CheckAndAdvance(TokenType.Semicolon);
+                if (this._token.Type != TokenType.RightBrace && !this._token.IsAtStartOfLine)
+                    this.CheckAndAdvance(TokenType.Semicolon);
             }
 
             return parameters;
         }
 
         private NameSyntax ParseName() {
-            Check(TokenType.Identifier);
+            this.Check(TokenType.Identifier);
 
             // TODO: Handle errors here, returning an error node
 
-            var nameIdentifier = new NameSyntax(_token.TokenSpan, new Name(_token.StringValue));
-            Advance();
+            var nameIdentifier = new NameSyntax(this._token.TokenSpan, new Name(this._token.StringValue));
+            this.Advance();
             return nameIdentifier;
         }
 
         private SymbolReferenceSyntax ParseSymbolReference() {
-            var nameIdentifier = ParseName();
-            return new SymbolReferenceSyntax(_token.TokenSpan, nameIdentifier);
+            var nameIdentifier = this.ParseName();
+            return new SymbolReferenceSyntax(this._token.TokenSpan, nameIdentifier);
         }
 
         private ExpressionSyntax ParseQualifiableSymbolReference() {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            NameSyntax initialSymbol = ParseName();
+            NameSyntax initialSymbol = this.ParseName();
 
             // If not qualified, return a SymbolReference
-            if (_token.Type != TokenType.Period)
+            if (this._token.Type != TokenType.Period)
                 return new SymbolReferenceSyntax(initialSymbol.Span, initialSymbol);
 
             QualifiedSymbolReferenceSyntax qualifiedSymbolReference = new QualifiedSymbolReferenceSyntax(
-                TextSpanFrom(startPosition), null, initialSymbol);
+                this.TextSpanFrom(startPosition), null, initialSymbol);
 
             do {
-                Advance();     // Advance past the period
+                this.Advance();     // Advance past the period
 
-                NameSyntax symbol = ParseName();
+                NameSyntax symbol = this.ParseName();
                 qualifiedSymbolReference = new QualifiedSymbolReferenceSyntax(
-                    TextSpanFrom(startPosition), qualifiedSymbolReference, symbol);
+                    this.TextSpanFrom(startPosition), qualifiedSymbolReference, symbol);
             }
-            while (_token.Type == TokenType.Period);
+            while (this._token.Type == TokenType.Period);
 
             return qualifiedSymbolReference;
         }
 
         private void CheckAndAdvanceIdentifierKeyword(string keywordText) {
-            if (_token.Type != TokenType.Identifier || _token.StringValue != keywordText)
-                UnexpectedToken($"'{keywordText}'");
-            else Advance();
+            if (this._token.Type != TokenType.Identifier || this._token.StringValue != keywordText)
+                this.UnexpectedToken($"'{keywordText}'");
+            else this.Advance();
         }
 
         private ImportSyntax ParseImport() {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            CheckAndAdvance(TokenType.Import);
+            this.CheckAndAdvance(TokenType.Import);
 
-            if (_token.Type == TokenType.LeftBrace) {
-                Advance();
+            if (this._token.Type == TokenType.LeftBrace) {
+                this.Advance();
 
                 var importReferences = new List<ImportTypeReferenceSyntax>();
-                while (_token.Type == TokenType.Identifier) {
-                    NameSyntax nameSyntax = ParseName();
+                while (this._token.Type == TokenType.Identifier) {
+                    NameSyntax nameSyntax = this.ParseName();
                     importReferences.Add(new ImportTypeReferenceSyntax(nameSyntax.Span, nameSyntax));
                 }
 
-                CheckAndAdvance(TokenType.RightBrace);
+                this.CheckAndAdvance(TokenType.RightBrace);
 
-                CheckAndAdvanceIdentifierKeyword("from");
+                this.CheckAndAdvanceIdentifierKeyword("from");
 
-                QualifiableNameSyntax qualifier = ParseQualifiableName();
-                return new ImportSyntax(TextSpanFrom(startPosition), importReferences.ToImmutableArray(), qualifier);
+                QualifiableNameSyntax qualifier = this.ParseQualifiableName();
+                return new ImportSyntax(this.TextSpanFrom(startPosition), importReferences.ToImmutableArray(), qualifier);
             }
             else {
                 // This is the import all case
-                QualifiableNameSyntax qualifier = ParseQualifiableName();
-                return new ImportSyntax(TextSpanFrom(startPosition), qualifier);
+                QualifiableNameSyntax qualifier = this.ParseQualifiableName();
+                return new ImportSyntax(this.TextSpanFrom(startPosition), qualifier);
             }
         }
 
         private UseSyntax ParseUse() {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            CheckAndAdvance(TokenType.Use);
+            this.CheckAndAdvance(TokenType.Use);
 
-            FunctionInvocationSyntax libraryInfo = ParseFunctionInvocation(null);
+            FunctionInvocationSyntax libraryInfo = this.ParseFunctionInvocation(null);
 
-            return new UseSyntax(TextSpanFrom(startPosition), libraryInfo);
+            return new UseSyntax(this.TextSpanFrom(startPosition), libraryInfo);
         }
 
         private FunctionInvocationSyntax ParseFunctionInvocation(ExpressionSyntax functionReference) {
             int startPosition = functionReference.Span.Start;
 
-            CheckAndAdvance(TokenType.LeftBrace);
+            this.CheckAndAdvance(TokenType.LeftBrace);
 
             // Parse named arguments first
             var namedArguments = new List<ArgumentNameValuePairSyntax>();
-            while (_token.Type == TokenType.PropertyIdentifier) {
-                int argumentStartPosition = _token.TokenStartPosition;
+            while (this._token.Type == TokenType.PropertyIdentifier) {
+                int argumentStartPosition = this._token.TokenStartPosition;
 
-                var propertyName = new QualifiableNameSyntax(_token.TokenSourceSpanExceptForLastCharacter,
-                    new QualifiableName(_token.StringValue));
-                var propertySpecifier = new PropertySpecifierSyntax(_token.TokenSpan, propertyName);
-                Advance();
+                var propertyName = new QualifiableNameSyntax(this._token.TokenSourceSpanExceptForLastCharacter,
+                    new QualifiableName(this._token.StringValue));
+                var propertySpecifier = new PropertySpecifierSyntax(this._token.TokenSpan, propertyName);
+                this.Advance();
 
-                ExpressionSyntax value = ParseExpressionAllowTextualLiteral(new Tokens(TokenType.Eof),
+                ExpressionSyntax value = this.ParseExpressionAllowTextualLiteral(new Tokens(TokenType.Eof),
                     TextualLiteralContext.PropertyValue);
 
-                namedArguments.Add(new ArgumentNameValuePairSyntax(TextSpanFrom(argumentStartPosition), propertySpecifier, value));
+                namedArguments.Add(new ArgumentNameValuePairSyntax(this.TextSpanFrom(argumentStartPosition), propertySpecifier, value));
 
-                if (_token.Type != TokenType.RightBrace && !_token.IsAtStartOfLine)
-                    CheckAndAdvance(TokenType.Semicolon);
+                if (this._token.Type != TokenType.RightBrace && !this._token.IsAtStartOfLine)
+                    this.CheckAndAdvance(TokenType.Semicolon);
             }
 
             // Parse the content property, if there is content
             ContentArgumentSyntax? contentArgument = null;
-            if (_token.Type != TokenType.RightBrace) {
-                ExpressionSyntax contentValue = ParseExpressionAllowTextualLiteral(new Tokens(TokenType.Eof),
+            if (this._token.Type != TokenType.RightBrace) {
+                ExpressionSyntax contentValue = this.ParseExpressionAllowTextualLiteral(new Tokens(TokenType.Eof),
                     TextualLiteralContext.ContentPropertyValue);
                 contentArgument = new ContentArgumentSyntax(contentValue.Span, contentValue);
             }
 
-            CheckAndAdvance(TokenType.RightBrace);
+            this.CheckAndAdvance(TokenType.RightBrace);
 
-            return new FunctionInvocationSyntax(TextSpanFrom(startPosition), InvocationStyle.Delimiter, functionReference, namedArguments.ToArray(), contentArgument);
+            return new FunctionInvocationSyntax(this.TextSpanFrom(startPosition), InvocationStyle.Delimiter, functionReference, namedArguments.ToArray(), contentArgument);
         }
 
         private QualifiableNameSyntax ParseQualifiableName() {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
             StringBuilder buffer = new StringBuilder();
             while (true) {
-                Check(TokenType.Identifier);
-                buffer.Append(_token.StringValue);
-                Advance();
+                this.Check(TokenType.Identifier);
+                buffer.Append(this._token.StringValue);
+                this.Advance();
 
-                if (_token.Type != TokenType.Period)
+                if (this._token.Type != TokenType.Period)
                     break;
                 buffer.Append('.');
-                _token.Advance();
+                this._token.Advance();
             }
 
-            return new QualifiableNameSyntax(TextSpanFrom(startPosition), new QualifiableName(buffer.ToString()));
+            return new QualifiableNameSyntax(this.TextSpanFrom(startPosition), new QualifiableName(buffer.ToString()));
         }
 
         private RecordTypeDefinitionSyntax ParseRecordTypeDefinition(Tokens synchronizingTokens) {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            CheckAndAdvance(TokenType.Type, "type definition");
+            this.CheckAndAdvance(TokenType.Type, "type definition");
 
-            NameSyntax typeNameSyntax = ParseName();
+            NameSyntax typeNameSyntax = this.ParseName();
 
-            CheckAndAdvance(TokenType.Assign);
+            this.CheckAndAdvance(TokenType.Assign);
 
-            CheckAndAdvance(TokenType.LeftBrace);
-            List<PropertyNameTypePairSyntax> propertyNameTypePairs = ParsePropertyNameTypePairs(synchronizingTokens.Add(TokenType.RightBrace));
-            CheckOrSyncAndAdvance(TokenType.RightBrace, synchronizingTokens);
+            this.CheckAndAdvance(TokenType.LeftBrace);
+            List<PropertyNameTypePairSyntax> propertyNameTypePairs = this.ParsePropertyNameTypePairs(synchronizingTokens.Add(TokenType.RightBrace));
+            this.CheckOrSyncAndAdvance(TokenType.RightBrace, synchronizingTokens);
 
-            return new RecordTypeDefinitionSyntax(TextSpanFrom(startPosition), typeNameSyntax, propertyNameTypePairs.ToArray());
+            return new RecordTypeDefinitionSyntax(this.TextSpanFrom(startPosition), typeNameSyntax, propertyNameTypePairs.ToArray());
         }
 
         /*
@@ -531,10 +531,10 @@ namespace Faml.Parser {
         */
 
         private TypeReferenceSyntax ParseTypeReference() {
-            if (_token.Type == TokenType.Identifier) {
-                int startPosition = _token.TokenStartPosition;
+            if (this._token.Type == TokenType.Identifier) {
+                int startPosition = this._token.TokenStartPosition;
 
-                QualifiableNameSyntax typeNameSyntax = ParseQualifiableName();
+                QualifiableNameSyntax typeNameSyntax = this.ParseQualifiableName();
                 TextSpan sourceSpan = typeNameSyntax.Span;
                 string typeNameString = typeNameSyntax.Name.ToString();
 
@@ -546,125 +546,125 @@ namespace Faml.Parser {
                 else
                     typeReferenceSyntax = new ObjectTypeReferenceSyntax (sourceSpan, typeNameSyntax);
 
-                if (_token.Type == TokenType.Ellipsis) {
-                    Advance();
-                    return new SequenceTypeReferenceSyntax(TextSpanFrom(startPosition), typeReferenceSyntax);
+                if (this._token.Type == TokenType.Ellipsis) {
+                    this.Advance();
+                    return new SequenceTypeReferenceSyntax(this.TextSpanFrom(startPosition), typeReferenceSyntax);
                 }
                 else return typeReferenceSyntax;
             }
             else {
-                UnexpectedToken("type name");
+                this.UnexpectedToken("type name");
                 return new InvalidTypeReferenceSyntax();
             }
         }
 
         private ExpressionSyntax ParseBooleanLiteral() {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            if (_token.Type == TokenType.True) {
-                Advance();
-                return new BooleanLiteralSyntax(TextSpanFrom(startPosition), true);
+            if (this._token.Type == TokenType.True) {
+                this.Advance();
+                return new BooleanLiteralSyntax(this.TextSpanFrom(startPosition), true);
             }
-            else if (_token.Type == TokenType.False) {
-                Advance();
-                return new BooleanLiteralSyntax(TextSpanFrom(startPosition), false);
+            else if (this._token.Type == TokenType.False) {
+                this.Advance();
+                return new BooleanLiteralSyntax(this.TextSpanFrom(startPosition), false);
             }
             else {
-                UnexpectedToken("boolean literal (true or false)");
+                this.UnexpectedToken("boolean literal (true or false)");
                 return new InvalidExpressionSyntax();
             }
         }
 
         private ExpressionSyntax ParseIntLiteral() {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            if (_token.Type == TokenType.Int32) {
-                int tokenIntValue = _token.IntValue;
-                Advance();
-                return new IntLiteralSyntax(TextSpanFrom(startPosition), tokenIntValue);
+            if (this._token.Type == TokenType.Int32) {
+                int tokenIntValue = this._token.IntValue;
+                this.Advance();
+                return new IntLiteralSyntax(this.TextSpanFrom(startPosition), tokenIntValue);
             }
             else {
-                Advance();
-                UnexpectedToken("int literal");
+                this.Advance();
+                this.UnexpectedToken("int literal");
                 return new InvalidExpressionSyntax();
             }
         }
 
         private void Check(TokenType expectedType) {
-            Check(expectedType, expectedType.ToString());
+            this.Check(expectedType, expectedType.ToString());
         }
 
         private void Check(TokenType expectedType, string expected) {
-            if (_token.Type != expectedType)
-                UnexpectedToken(expected);
+            if (this._token.Type != expectedType)
+                this.UnexpectedToken(expected);
         }
 
         private void CheckAndAdvance(TokenType expectedType) {
-            Check(expectedType);
-            if (!_token.InErrorMode)
-                _token.Advance();
+            this.Check(expectedType);
+            if (!this._token.InErrorMode)
+                this._token.Advance();
         }
 
         private void CheckOrSync(TokenType expectedType, Tokens synchronizingTokens) {
-            Check(expectedType);
-            if (_token.InErrorMode)
-                Sync(new Tokens(expectedType), synchronizingTokens);
+            this.Check(expectedType);
+            if (this._token.InErrorMode)
+                this.Sync(new Tokens(expectedType), synchronizingTokens);
         }
 
         private void CheckOrSync(TokenType expectedType, string expected, Tokens synchronizingTokens) {
-            Check(expectedType, expected);
-            if (_token.InErrorMode)
-                Sync(new Tokens(expectedType), synchronizingTokens);
+            this.Check(expectedType, expected);
+            if (this._token.InErrorMode)
+                this.Sync(new Tokens(expectedType), synchronizingTokens);
         }
 
         private void CheckOrSyncAndAdvance(TokenType expectedType, Tokens synchronizingTokens) {
-            Check(expectedType);
-            if (_token.InErrorMode)
-                Sync(new Tokens(expectedType), synchronizingTokens);
-            if (!_token.InErrorMode)
-                _token.Advance();
+            this.Check(expectedType);
+            if (this._token.InErrorMode)
+                this.Sync(new Tokens(expectedType), synchronizingTokens);
+            if (!this._token.InErrorMode)
+                this._token.Advance();
         }
 
         private void AddError(TextSpan problemSourceSpan, string message) {
-            var diagnostic = new Diagnostic(_module, problemSourceSpan, DiagnosticSeverity.Error, message);
-            _module.AddDiagnostic(diagnostic);
+            var diagnostic = new Diagnostic(this._module, problemSourceSpan, DiagnosticSeverity.Error, message);
+            this._module.AddDiagnostic(diagnostic);
         }
 
         private void UnexpectedToken(string expected) {
-           if (!_token.InErrorMode) {
-                string message = $"Encountered {_token.ToString()} when expected {expected}";
-                AddError(_token.TokenSpan, message);
-                _token.InErrorMode = true;
+           if (!this._token.InErrorMode) {
+                string message = $"Encountered {this._token.ToString()} when expected {expected}";
+                this.AddError(this._token.TokenSpan, message);
+                this._token.InErrorMode = true;
             }
         }
 
         private void Sync(Tokens? allowedTokens, Tokens otherTokens) {
-            if (!_token.InErrorMode)
+            if (!this._token.InErrorMode)
                 return;
 
             while (true) {
-                TokenType currentTokenType = _token.TypeForErrorMode;
-                int column = _token.TokenStartColumn;
+                TokenType currentTokenType = this._token.TypeForErrorMode;
+                int column = this._token.TokenStartColumn;
 
                 if (allowedTokens != null && allowedTokens.Contains(currentTokenType, column)) {
-                    _token.InErrorMode = false;
+                    this._token.InErrorMode = false;
                     break;
                 }
 
                 if (otherTokens.Contains(currentTokenType, column))
                     break;
                 
-                _token.Advance();
+                this._token.Advance();
             }
         }
 
         private void CheckAndAdvance(TokenType expectedType, string expectedMessage) {
-            Check(expectedType, expectedMessage);
-            _token.Advance();
+            this.Check(expectedType, expectedMessage);
+            this._token.Advance();
         }
 
         private void Advance() {
-            _token.Advance();
+            this._token.Advance();
         }
 
         public enum TextualLiteralContext {
@@ -674,20 +674,20 @@ namespace Faml.Parser {
         }
 
         private ExpressionSyntax ParseExpressionAllowTextualLiteral(Tokens synchronizingTokens, TextualLiteralContext markupContext) {
-            if (_token.LooksLikeStartOfExpression()) {
+            if (this._token.LooksLikeStartOfExpression()) {
                 if (markupContext == TextualLiteralContext.FunctionDefinition)
-                    return ParseSingleExpression(synchronizingTokens);
-                else return ParseExpression(synchronizingTokens);
+                    return this.ParseSingleExpression(synchronizingTokens);
+                else return this.ParseExpression(synchronizingTokens);
             }
             else {
                 int startPosition = -1;
                 var items = new List<TextualLiteralItemSyntax>();
 
                 bool bracketed = false;
-                if (_token.Type == TokenType.LeftBracket) {
-                    startPosition = _token.TokenStartPosition;
+                if (this._token.Type == TokenType.LeftBracket) {
+                    startPosition = this._token.TokenStartPosition;
 
-                    CheckAndAdvance(TokenType.LeftBracket);
+                    this.CheckAndAdvance(TokenType.LeftBracket);
                     bracketed = true;
                 }
 
@@ -699,31 +699,31 @@ namespace Faml.Parser {
                 bool allowRightBracketToTerminate = bracketed;
 
                 while (true) {
-                    _token.ReinterpretAlloWTextualLiteral(
+                    this._token.ReinterpretAlloWTextualLiteral(
                         allowSemicolonToTerminate: allowSemicolonToTerminate,
                         allowNewlineToTerminate: allowNewlineToTerminate,
                         allowRightBraceToTerminate: allowRightBraceToTerminate,
                         allowRightBracketToTerminate: allowRightBracketToTerminate);
 
                     if (startPosition == -1)
-                        startPosition = _token.TokenStartPosition;
+                        startPosition = this._token.TokenStartPosition;
 
-                    if (_token.Type == TokenType.TextualLiteralText) {
-                        items.Add(new TextualLiteralTextItemSyntax(_token.TokenSpan, _token.StringValue));
+                    if (this._token.Type == TokenType.TextualLiteralText) {
+                        items.Add(new TextualLiteralTextItemSyntax(this._token.TokenSpan, this._token.StringValue));
 
-                        bool atEnd = allowNewlineToTerminate && _token.LookaheadIsNewline();
+                        bool atEnd = allowNewlineToTerminate && this._token.LookaheadIsNewline();
 
-                        Advance();
+                        this.Advance();
                         if (atEnd)
                             break;
                     }
-                    else if (_token.Type == TokenType.LeftBrace) {
-                        ExpressionSyntax expression = ParseExpression(synchronizingTokens);
+                    else if (this._token.Type == TokenType.LeftBrace) {
+                        ExpressionSyntax expression = this.ParseExpression(synchronizingTokens);
                         items.Add(new TextualLiteralExpressionItemSyntax(expression));
                     }
-                    else if (_token.Type == TokenType.Identifier) {
-                        ExpressionSyntax qualifiableSymbolReference = ParseQualifiableSymbolReference();
-                        FunctionInvocationSyntax functionInvocation = ParseFunctionInvocation(qualifiableSymbolReference);
+                    else if (this._token.Type == TokenType.Identifier) {
+                        ExpressionSyntax qualifiableSymbolReference = this.ParseQualifiableSymbolReference();
+                        FunctionInvocationSyntax functionInvocation = this.ParseFunctionInvocation(qualifiableSymbolReference);
 
                         items.Add(new TextualLiteralExpressionItemSyntax(functionInvocation));
                     }
@@ -731,37 +731,37 @@ namespace Faml.Parser {
                 }
 
                 if (bracketed)
-                    CheckAndAdvance(TokenType.RightBracket);
+                    this.CheckAndAdvance(TokenType.RightBracket);
 
-                return new TextualLiteralSyntax(TextSpanFrom(startPosition), items.ToImmutableArray());
+                return new TextualLiteralSyntax(this.TextSpanFrom(startPosition), items.ToImmutableArray());
             }
         }
 
         private ExpressionSyntax ParseExpression(Tokens synchronizingTokens) {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
             var expressions = new List<ExpressionSyntax>();
 
             while (true) {
-                TokenType lookahead = _token.Type;
+                TokenType lookahead = this._token.Type;
                 if (lookahead == TokenType.Eof || lookahead == TokenType.ErrorMode || lookahead == TokenType.Semicolon ||
                         lookahead == TokenType.RightBrace || lookahead == TokenType.PropertyIdentifier )
                     break;
 
-                ExpressionSyntax expression = ParseSingleExpression(synchronizingTokens);
+                ExpressionSyntax expression = this.ParseSingleExpression(synchronizingTokens);
                 expressions.Add(expression);
             }
 
             ExpressionSyntax overallExpression;
             if (expressions.Count == 1)
                 overallExpression = expressions[0];
-            else overallExpression = new SequenceLiteralExpressionSyntax(TextSpanFrom(startPosition), expressions.ToArray());
+            else overallExpression = new SequenceLiteralExpressionSyntax(this.TextSpanFrom(startPosition), expressions.ToArray());
 
             return overallExpression;
         }
 
         private ExpressionSyntax ParseSingleExpression(Tokens synchronizingTokens) {
-            return ParseExpressionComponent(0, synchronizingTokens);
+            return this.ParseExpressionComponent(0, synchronizingTokens);
         }
 
         /// <summary>
@@ -772,36 +772,36 @@ namespace Faml.Parser {
         /// <param name="synchronizingTokens">error recovery synchronizing tokens</param>
         /// <remarks> AST subtree for the expression</remarks>
         private ExpressionSyntax ParseExpressionComponent(int precedence, Tokens synchronizingTokens) {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
             // Parse the prefix which can be a terminal, a parenthesized subexpression, or unary operator followed by an
             // operand. If there's a binary operator after the prefix, then the prefix acts as a left operand for that
             // operator
-            ExpressionSyntax leftOperand = ParseExpressionPrefix(synchronizingTokens);
+            ExpressionSyntax leftOperand = this.ParseExpressionPrefix(synchronizingTokens);
 
             // Now parse zero or more sets of binary operators followed by right operands, where the binary operator
             // precedence is <= precedence
             while (true) {
-                InfixOperator infixOperator = Operator.GetInfixOperator(_token.Type);
+                InfixOperator infixOperator = Operator.GetInfixOperator(this._token.Type);
                 if (infixOperator == null || infixOperator.GetPrecedence() < precedence)
                     break;
-                Advance();
+                this.Advance();
 
                 if (infixOperator == Operator.Dot) {
-                    if (_token.LookaheadIsLeftBrace())
-                        leftOperand = ParseFunctionInvocation(leftOperand);
+                    if (this._token.LookaheadIsLeftBrace())
+                        leftOperand = this.ParseFunctionInvocation(leftOperand);
                     else {
-                        NameSyntax nameSyntax = ParseName();
-                        leftOperand = new PropertyAccessSyntax(TextSpanFrom(startPosition), leftOperand, nameSyntax);
+                        NameSyntax nameSyntax = this.ParseName();
+                        leftOperand = new PropertyAccessSyntax(this.TextSpanFrom(startPosition), leftOperand, nameSyntax);
                     }
                 }
                 else if (infixOperator == Operator.For)
-                    return ParseForExpression(leftOperand, synchronizingTokens);
+                    return this.ParseForExpression(leftOperand, synchronizingTokens);
                 else {
                     ExpressionSyntax rightOperand =
-                        ParseExpressionComponent(infixOperator.GetPrecedence() + 1, synchronizingTokens);
+                        this.ParseExpressionComponent(infixOperator.GetPrecedence() + 1, synchronizingTokens);
 
-                    leftOperand = new InfixExpressionSyntax(TextSpanFrom(startPosition), leftOperand, infixOperator,
+                    leftOperand = new InfixExpressionSyntax(this.TextSpanFrom(startPosition), leftOperand, infixOperator,
                         rightOperand);
                 }
             }
@@ -815,55 +815,55 @@ namespace Faml.Parser {
         /// </summary>
         /// <remarks> parsed expression</remarks>
         private ExpressionSyntax ParseExpressionPrefix(Tokens synchronizingTokens) {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            PrefixOperator prefixOperator = Operator.GetPrefixOperator(_token.Type);
+            PrefixOperator prefixOperator = Operator.GetPrefixOperator(this._token.Type);
 
             if (prefixOperator != null) {
-                _token.Advance();
-                ExpressionSyntax operand = ParseExpressionComponent(prefixOperator.GetPrecedence(), synchronizingTokens);
-                return new PrefixExpressionSyntax(TextSpanFrom(startPosition), prefixOperator, operand);
+                this._token.Advance();
+                ExpressionSyntax operand = this.ParseExpressionComponent(prefixOperator.GetPrecedence(), synchronizingTokens);
+                return new PrefixExpressionSyntax(this.TextSpanFrom(startPosition), prefixOperator, operand);
             }
             else {
-                switch (_token.Type) {
+                switch (this._token.Type) {
                     case TokenType.LeftParen:
-                        _token.Advance();
-                        ExpressionSyntax expression = ParseExpressionComponent(0, synchronizingTokens);
-                        CheckAndAdvance(TokenType.RightParen);
-                        return new ParenthesizedExpressionSyntax(TextSpanFrom(startPosition), expression);
+                        this._token.Advance();
+                        ExpressionSyntax expression = this.ParseExpressionComponent(0, synchronizingTokens);
+                        this.CheckAndAdvance(TokenType.RightParen);
+                        return new ParenthesizedExpressionSyntax(this.TextSpanFrom(startPosition), expression);
 
                     case TokenType.True:
                     case TokenType.False:
-                        return ParseBooleanLiteral();
+                        return this.ParseBooleanLiteral();
 
                     case TokenType.Int32:
-                        return ParseIntLiteral();
+                        return this.ParseIntLiteral();
 
                     case TokenType.If:
-                        return ParseIfExpression(synchronizingTokens);
+                        return this.ParseIfExpression(synchronizingTokens);
 
                     case TokenType.Null:
-                        Advance();
-                        return new NullLiteralSyntax(TextSpanFrom(startPosition));
+                        this.Advance();
+                        return new NullLiteralSyntax(this.TextSpanFrom(startPosition));
 
                     case TokenType.Identifier:
-                        ExpressionSyntax qualifiableSymbolReference = ParseQualifiableSymbolReference();
+                        ExpressionSyntax qualifiableSymbolReference = this.ParseQualifiableSymbolReference();
 
-                        if (_token.Type == TokenType.LeftBrace)
-                            return ParseFunctionInvocation(qualifiableSymbolReference);
+                        if (this._token.Type == TokenType.LeftBrace)
+                            return this.ParseFunctionInvocation(qualifiableSymbolReference);
                         else return qualifiableSymbolReference;
 
                     // TODO: FIX THIS, SEEING WHERE IT'S USED;  StringValue isn't set for ContextSensitiveText, for one thing
                     case TokenType.TextBlock:
-                        string tokenStringValue = _token.StringValue;
-                        _token.Advance();
-                        return new StringLiteralSyntax(TextSpanFrom(startPosition), tokenStringValue);
+                        string tokenStringValue = this._token.StringValue;
+                        this._token.Advance();
+                        return new StringLiteralSyntax(this.TextSpanFrom(startPosition), tokenStringValue);
 
                     case TokenType.LeftBrace:
-                        Advance();
+                        this.Advance();
 
-                        if (_token.Type == TokenType.PropertyIdentifier) {
-                            UnexpectedToken("function invocation without specifying the function name which isn't currently supported");
+                        if (this._token.Type == TokenType.PropertyIdentifier) {
+                            this.UnexpectedToken("function invocation without specifying the function name which isn't currently supported");
                             return new InvalidExpressionSyntax();
 
                             /*
@@ -876,9 +876,9 @@ namespace Faml.Parser {
                             */
                         }
                         else {
-                            ExpressionSyntax innerExpression = ParseExpression(synchronizingTokens);
-                            CheckAndAdvance(TokenType.RightBrace);
-                            return new BracedExpressionSyntax(TextSpanFrom(startPosition), innerExpression);
+                            ExpressionSyntax innerExpression = this.ParseExpression(synchronizingTokens);
+                            this.CheckAndAdvance(TokenType.RightBrace);
+                            return new BracedExpressionSyntax(this.TextSpanFrom(startPosition), innerExpression);
                         }
 
                     /*
@@ -887,19 +887,19 @@ namespace Faml.Parser {
                     */
 
                     default:
-                        UnexpectedToken("start of expression");
+                        this.UnexpectedToken("start of expression");
                         return new InvalidExpressionSyntax();
                 }
             }
         }
 
         private ExpressionSyntax ParseIfExpression(Tokens synchronizingTokens) {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            bool haveIfToken = _token.Type == TokenType.If;
+            bool haveIfToken = this._token.Type == TokenType.If;
 
             if (haveIfToken) {
-                Advance();
+                this.Advance();
 
                 // TODO: Handle if ... is ... syntax
             }
@@ -908,61 +908,61 @@ namespace Faml.Parser {
             TextSpan? elseTextBlock = null;
 
             while (true) {
-                int ifItemStartPosition = _token.TokenStartPosition;
+                int ifItemStartPosition = this._token.TokenStartPosition;
 
-                CheckOrSyncAndAdvance(TokenType.Pipe, synchronizingTokens.Add(TokenType.Colon));
+                this.CheckOrSyncAndAdvance(TokenType.Pipe, synchronizingTokens.Add(TokenType.Colon));
 
                 // "|:" indicates the else part of the if
-                if (_token.Type == TokenType.Colon) {
-                    Advance();
-                    _token.RescanAsTextBlock(ifItemStartPosition, allowIfConditionPipeToTerminate: true);
-                    elseTextBlock = _token.TokenSpan;
-                    Advance();
+                if (this._token.Type == TokenType.Colon) {
+                    this.Advance();
+                    this._token.RescanAsTextBlock(ifItemStartPosition, allowIfConditionPipeToTerminate: true);
+                    elseTextBlock = this._token.TokenSpan;
+                    this.Advance();
 
                     break;  // "else" must be the last item in the if
                 }
 
-                ExpressionSyntax conditionExpression = ParseExpression(synchronizingTokens.Add(TokenType.Pipe).Add(TokenType.Colon));
-                CheckOrSyncAndAdvance(TokenType.Colon, synchronizingTokens);
+                ExpressionSyntax conditionExpression = this.ParseExpression(synchronizingTokens.Add(TokenType.Pipe).Add(TokenType.Colon));
+                this.CheckOrSyncAndAdvance(TokenType.Colon, synchronizingTokens);
 
                 // TODO: Allow braces here
                 //ExpressionSyntax valueExpression = ParseExpressionAllowSequence(synchronizingTokens.Add(TokenType.Pipe));
 
-                _token.RescanAsTextBlock(ifItemStartPosition, allowIfConditionPipeToTerminate: true);
-                TextSpan valueTextBlock = _token.TokenSpan;
-                Advance();
+                this._token.RescanAsTextBlock(ifItemStartPosition, allowIfConditionPipeToTerminate: true);
+                TextSpan valueTextBlock = this._token.TokenSpan;
+                this.Advance();
 
                 //ExpressionSyntax valueExpression = ParseExpressionAllowSequence(synchronizingTokens.Add(TokenType.Pipe));
 
-                var conditionValuePair = new ConditionValuePairSyntax(TextSpanFrom(ifItemStartPosition), conditionExpression, valueTextBlock);
+                var conditionValuePair = new ConditionValuePairSyntax(this.TextSpanFrom(ifItemStartPosition), conditionExpression, valueTextBlock);
                 conditionValuePairs.Add(conditionValuePair);
 
-                if (_token.Type != TokenType.Pipe)
+                if (this._token.Type != TokenType.Pipe)
                     break;
             }
 
-            return new IfExpressionSyntax(TextSpanFrom(startPosition), conditionValuePairs.ToArray(), elseTextBlock);
+            return new IfExpressionSyntax(this.TextSpanFrom(startPosition), conditionValuePairs.ToArray(), elseTextBlock);
         }
 
         private ExpressionSyntax ParseIfIsExpression(Tokens synchronizingTokens) {
-            AddError(_token.TokenSpan, $"if ... is ... syntax is not yet supported");
+            this.AddError(this._token.TokenSpan, $"if ... is ... syntax is not yet supported");
             return new InvalidExpressionSyntax();
         }
 
         private ExpressionSyntax ParseForExpression(ExpressionSyntax expression, Tokens synchronizingTokens) {
-            int startPosition = _token.TokenStartPosition;
+            int startPosition = this._token.TokenStartPosition;
 
-            NameSyntax nameSyntax = ParseName();
-            CheckAndAdvance(TokenType.In);
-            ExpressionSyntax inExpression = ParseSingleExpression(synchronizingTokens);
+            NameSyntax nameSyntax = this.ParseName();
+            this.CheckAndAdvance(TokenType.In);
+            ExpressionSyntax inExpression = this.ParseSingleExpression(synchronizingTokens);
 
-            var forVariableDefinition = new ForVariableDefinitionSyntax(TextSpanFrom(startPosition), nameSyntax, inExpression);
+            var forVariableDefinition = new ForVariableDefinitionSyntax(this.TextSpanFrom(startPosition), nameSyntax, inExpression);
 
-            return new ForExpressionSyntax(TextSpanFrom(expression.Span.Start), expression, forVariableDefinition);
+            return new ForExpressionSyntax(this.TextSpanFrom(expression.Span.Start), expression, forVariableDefinition);
         }
 
         private TextSpan TextSpanFrom(int startPosition) {
-            int endPosition = _token.PrevTokenEndPosition;
+            int endPosition = this._token.PrevTokenEndPosition;
 
             // In error scenarios, when the token is in eror mode, it may not have advanced at all when parsing.
             // In that case, the source span can be of 0 length but shouldn't be negative

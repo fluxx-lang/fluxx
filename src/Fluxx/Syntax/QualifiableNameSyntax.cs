@@ -12,15 +12,15 @@ namespace Faml.Syntax {
         private readonly QualifiableName _name;
 
         public QualifiableNameSyntax(TextSpan span, QualifiableName name) : base(span) {
-            _name = name;
+            this._name = name;
         }
 
-        public QualifiableName Name => _name;
+        public QualifiableName Name => this._name;
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.QualifiableName;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_name);
+            sourceWriter.Write(this._name);
         }
     }
 }

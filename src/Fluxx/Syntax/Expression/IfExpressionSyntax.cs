@@ -12,34 +12,34 @@ namespace Faml.Syntax.Expression {
         private TypeBinding? _typeBinding;
 
         public IfExpressionSyntax(TextSpan span, ConditionValuePairSyntax[] conditionValuePairs, TextSpan? elseSpan) : base(span) {
-            _conditionValuePairs = conditionValuePairs;
+            this._conditionValuePairs = conditionValuePairs;
             foreach (ConditionValuePairSyntax conditionValuePair in conditionValuePairs)
                 conditionValuePair.SetParent(this);
 
-            _elseSpan = elseSpan;
+            this._elseSpan = elseSpan;
         }
 
-        public ConditionValuePairSyntax[] ConditionValuePairs => _conditionValuePairs;
+        public ConditionValuePairSyntax[] ConditionValuePairs => this._conditionValuePairs;
 
-        public ExpressionSyntax? ElseValue => _elseValue;
+        public ExpressionSyntax? ElseValue => this._elseValue;
 
         public override bool IsTerminalNode() {
             return false;
         }
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            foreach (ConditionValuePairSyntax conditionValuePair in _conditionValuePairs) {
+            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs) {
                 visitor(conditionValuePair);
             }
 
-            if (_elseValue != null)
-                visitor(_elseValue);
+            if (this._elseValue != null)
+                visitor(this._elseValue);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
             TypeBinding? typeBinding = null;
 
-            foreach (ConditionValuePairSyntax conditionValuePair in _conditionValuePairs) {
+            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs) {
                 conditionValuePair.ParseValueSource(bindingResolver);
 
                 TypeBinding currentTypeBinding = conditionValuePair.Value.GetTypeBinding();
@@ -48,38 +48,38 @@ namespace Faml.Syntax.Expression {
                     typeBinding = currentTypeBinding;
                 else {
                     if (!currentTypeBinding.IsSameAs(typeBinding)) {
-                        AddError($"Different conditions of 'if' don't all evaluate to the same type");
+                        this.AddError($"Different conditions of 'if' don't all evaluate to the same type");
                         return;
                     }
                 }
             }
 
-            if (_elseSpan.HasValue) {
-                if (_elseValue == null) {
-                    _elseValue = SourceParser.ParseTextBlockExpression(GetModule(), _elseSpan.Value);
-                    _elseValue.SetParent(this);
+            if (this._elseSpan.HasValue) {
+                if (this._elseValue == null) {
+                    this._elseValue = SourceParser.ParseTextBlockExpression(this.GetModule(), this._elseSpan.Value);
+                    this._elseValue.SetParent(this);
 
                     // Now resolve the bindings on what we just parsed
-                    _elseValue.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
+                    this._elseValue.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
                 }
 
-                TypeBinding currentTypeBinding = _elseValue.GetTypeBinding();
+                TypeBinding currentTypeBinding = this._elseValue.GetTypeBinding();
 
                 if (typeBinding == null)
                     typeBinding = currentTypeBinding;
                 else {
                     if (!currentTypeBinding.IsSameAs(typeBinding)) {
-                        AddError($"Different conditions of 'if' don't all evaluate to the same type");
+                        this.AddError($"Different conditions of 'if' don't all evaluate to the same type");
                         return;
                     }
                 }
             }
 
-            _typeBinding = typeBinding;
+            this._typeBinding = typeBinding;
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.IfExpression;
@@ -87,12 +87,12 @@ namespace Faml.Syntax.Expression {
         public override void WriteSource(SourceWriter sourceWriter) {
             sourceWriter.Writeln("if");
 
-            foreach (ConditionValuePairSyntax conditionValuePair in _conditionValuePairs)
+            foreach (ConditionValuePairSyntax conditionValuePair in this._conditionValuePairs)
                 sourceWriter.Writeln(conditionValuePair);
 
-            if (_elseValue != null) {
+            if (this._elseValue != null) {
                 sourceWriter.Write("|: ");
-                sourceWriter.Writeln(_elseValue);
+                sourceWriter.Writeln(this._elseValue);
             }
         }
     }

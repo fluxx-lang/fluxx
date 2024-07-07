@@ -17,19 +17,19 @@ namespace Faml.Binding.Internal {
         private readonly TypeBinding _propertyTypeBinding;
 
         public RecordPropertyBinding(RecordTypeDefinitionSyntax recordTypeDefinition, Name propertyName) {
-            _recordTypeDefinition = recordTypeDefinition;
-            _propertyName = propertyName;
+            this._recordTypeDefinition = recordTypeDefinition;
+            this._propertyName = propertyName;
 
-            _propertyTypeBinding = _recordTypeDefinition.GetPropertyTypeBinding(propertyName);
+            this._propertyTypeBinding = this._recordTypeDefinition.GetPropertyTypeBinding(propertyName);
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _propertyTypeBinding;
+            return this._propertyTypeBinding;
         }
 
-        public override Name PropertyName => _propertyName;
+        public override Name PropertyName => this._propertyName;
 
-        public override TypeBinding ObjectTypeBinding => _recordTypeDefinition.TypeBinding;
+        public override TypeBinding ObjectTypeBinding => this._recordTypeDefinition.TypeBinding;
 
         public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken) =>
             Task.FromResult((ClassifiedTextMarkup?) null);

@@ -17,39 +17,39 @@ namespace Faml.Syntax {
         // AST structure properties
         public PropertyNameTypePairSyntax(TextSpan span, NameSyntax propertyNameSyntax, TypeReferenceSyntax typeReferenceSyntax, ExpressionSyntax? defaultValue) :
             base(span) {
-            _propertyNameSyntax = propertyNameSyntax;
-            _propertyNameSyntax.SetParent(this);
+            this._propertyNameSyntax = propertyNameSyntax;
+            this._propertyNameSyntax.SetParent(this);
 
-            _typeReferenceSyntax = typeReferenceSyntax;
-            _typeReferenceSyntax.SetParent(this);
+            this._typeReferenceSyntax = typeReferenceSyntax;
+            this._typeReferenceSyntax.SetParent(this);
 
-            _defaultValue = defaultValue;
-            _defaultValue?.SetParent(this);
+            this._defaultValue = defaultValue;
+            this._defaultValue?.SetParent(this);
         }
 
-        public NameSyntax PropertyNameSyntax => _propertyNameSyntax;
+        public NameSyntax PropertyNameSyntax => this._propertyNameSyntax;
 
-        public Name PropertyName => _propertyNameSyntax.Name;
+        public Name PropertyName => this._propertyNameSyntax.Name;
 
-        public TypeReferenceSyntax TypeReferenceSyntax => _typeReferenceSyntax;
+        public TypeReferenceSyntax TypeReferenceSyntax => this._typeReferenceSyntax;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_propertyNameSyntax);
-            visitor(_typeReferenceSyntax);
-            if (_defaultValue != null)
-                visitor(_defaultValue);
+            visitor(this._propertyNameSyntax);
+            visitor(this._typeReferenceSyntax);
+            if (this._defaultValue != null)
+                visitor(this._defaultValue);
         }
 
         public override bool IsTerminalNode() { return false; }
         public override SyntaxNodeType NodeType => SyntaxNodeType.PropertyNameTypePair;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_propertyNameSyntax);
+            sourceWriter.Write(this._propertyNameSyntax);
             sourceWriter.Write(":");
-            sourceWriter.Write(_typeReferenceSyntax);
-            if (_defaultValue != null) {
+            sourceWriter.Write(this._typeReferenceSyntax);
+            if (this._defaultValue != null) {
                 sourceWriter.Write(" = ");
-                sourceWriter.Write(_defaultValue);
+                sourceWriter.Write(this._defaultValue);
             }
         }
     }

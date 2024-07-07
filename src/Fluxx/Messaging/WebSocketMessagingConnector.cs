@@ -13,33 +13,33 @@ namespace Faml.Messaging {
 
 
         public WebSocketMessagingConnector() {
-            _stopCts = new CancellationTokenSource();
-            _sendCts = new CancellationTokenSource();
-            _receiveCts = new CancellationTokenSource();
+            this._stopCts = new CancellationTokenSource();
+            this._sendCts = new CancellationTokenSource();
+            this._receiveCts = new CancellationTokenSource();
         }
 
         public virtual void Stop() {
-            _stopCts.Cancel();
+            this._stopCts.Cancel();
         }
 
-        public CancellationTokenSource StopCts => _stopCts;
+        public CancellationTokenSource StopCts => this._stopCts;
 
         protected override void SendMessage(Message message) {
-            _sendMessageQueue.Enqueue(message);
+            this._sendMessageQueue.Enqueue(message);
         }
 
         protected async Task ProcessMessages(WebSocket webSocket) {
             // While the socket stays open we receive everything we can & send everything we can, until someone
             // cancels or disconnects the socket. The WebSockets API allows at most 1 receive and 1 send operation
             // to be going on at the same time, which we observe
-            Task whenAll = Task.WhenAll(ReceiveMessagesAsync(webSocket), SendMessagesAsync(webSocket));
+            Task whenAll = Task.WhenAll(this.ReceiveMessagesAsync(webSocket), this.SendMessagesAsync(webSocket));
             await whenAll;
         }
 
         private async Task ReceiveMessagesAsync(WebSocket webSocket)
         {
             try {
-                var receiveAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(_receiveCts.Token, _stopCts.Token);
+                var receiveAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(this._receiveCts.Token, this._stopCts.Token);
 
                 var buffer = new ArraySegment<byte>(new byte[4096]);
                 using var memoryStream = new MemoryStream();
@@ -78,24 +78,24 @@ namespace Faml.Messaging {
                     }
 
                     if (message.IsResponse)
-                        HandleResponse(message);
-                    else await HandleMessage(message);
+                        this.HandleResponse(message);
+                    else await this.HandleMessage(message);
                 }
             }
             catch (Exception e) {
                 // If the receive fails, then also cancel the send
                 if (!(e is OperationCanceledException))
-                    _sendCts.Cancel();
+                    this._sendCts.Cancel();
                 throw;
             }
         }
 
         private async Task SendMessagesAsync(WebSocket webSocket) {
             try {
-                var sendAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(_sendCts.Token, _stopCts.Token);
+                var sendAndOverallCts = CancellationTokenSource.CreateLinkedTokenSource(this._sendCts.Token, this._stopCts.Token);
 
                 while (webSocket.State == WebSocketState.Open) {
-                    Message message = await _sendMessageQueue.DequeueAsync(sendAndOverallCts.Token);
+                    Message message = await this._sendMessageQueue.DequeueAsync(sendAndOverallCts.Token);
 
                     using var memoryStream = new MemoryStream();
                     message.Write(memoryStream);
@@ -109,7 +109,7 @@ namespace Faml.Messaging {
             catch (Exception e) {
                 // If the send fails then also cancel the receive
                 if (! (e is OperationCanceledException))
-                    _receiveCts.Cancel();
+                    this._receiveCts.Cancel();
                 throw;
             }
         }

@@ -14,26 +14,26 @@ namespace Faml.Syntax {
 
 
         public ExternalTypeCustomLiteralSytax(TextSpan span, ExternalObjectTypeBinding propertyTypeBinding, TypeToolingType externalType, string literalSource, CustomLiteral customLiteral) : base(span) {
-            _propertyTypeBinding = propertyTypeBinding;
-            _externalType = externalType;
-            _literalSource = literalSource;
-            _customLiteral = customLiteral;
+            this._propertyTypeBinding = propertyTypeBinding;
+            this._externalType = externalType;
+            this._literalSource = literalSource;
+            this._customLiteral = customLiteral;
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _propertyTypeBinding;
+            return this._propertyTypeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.ExternalTypeLiteral;
 
-        public TypeToolingType ExternalType => _externalType;
+        public TypeToolingType ExternalType => this._externalType;
 
-        public string LiteralSource => _literalSource;
+        public string LiteralSource => this._literalSource;
 
-        public CustomLiteral CustomLiteral => _customLiteral;
+        public CustomLiteral CustomLiteral => this._customLiteral;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_literalSource);
+            sourceWriter.Write(this._literalSource);
         }
     }
 }

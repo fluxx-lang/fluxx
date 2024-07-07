@@ -15,24 +15,24 @@ namespace Faml.Binding.External {
         // TODO: This name is fully qualified.   Do we want that?
         public ExternalEnumTypeBinding(FamlProject project, EnumType typeToolingType) :
             base(new QualifiableName(typeToolingType.FullName)) {
-            _project = project;
-            _typeToolingType = typeToolingType;
+            this._project = project;
+            this._typeToolingType = typeToolingType;
 
             var values = ImmutableArray.CreateBuilder<EnumValueBinding>();
-            foreach (EnumValue enumValue in _typeToolingType.Values)
+            foreach (EnumValue enumValue in this._typeToolingType.Values)
                 values.Add(new ExternalEnumValueBinding(this, enumValue));
-            _values = values.ToImmutable();
+            this._values = values.ToImmutable();
         }
 
-        public FamlProject Project => _project;
+        public FamlProject Project => this._project;
 
-        public EnumType TypeToolingType => _typeToolingType;
+        public EnumType TypeToolingType => this._typeToolingType;
 
         public override ExpressionSyntax ParseEnumValue(FamlModule module, TextSpan sourceSpan) {
             SourceText sourceText = module.SourceText;
             string valueSource = sourceText.ToString(sourceSpan);
 
-            foreach (EnumValue enumValue in _typeToolingType.Values) {
+            foreach (EnumValue enumValue in this._typeToolingType.Values) {
                 if (enumValue.Name == valueSource) {
                     ExternalEnumValueBinding enumValueBinding = new ExternalEnumValueBinding(this, enumValue);
                     NameSyntax enumNameSyntax = new NameSyntax(sourceSpan, new Name(valueSource));
@@ -40,24 +40,24 @@ namespace Faml.Binding.External {
                 }
             }
 
-            module.AddError(sourceSpan, $"'{valueSource}' isn't a valid value for enum {_typeToolingType.FullName}");
+            module.AddError(sourceSpan, $"'{valueSource}' isn't a valid value for enum {this._typeToolingType.FullName}");
             return new InvalidExpressionSyntax(sourceSpan, valueSource, this);
         }
 
-        public override ImmutableArray<EnumValueBinding> GetValues() => _values;
+        public override ImmutableArray<EnumValueBinding> GetValues() => this._values;
 
         protected bool Equals(ExternalEnumTypeBinding other) {
-            return _typeToolingType.Equals(other._typeToolingType);
+            return this._typeToolingType.Equals(other._typeToolingType);
         }
 
         public override bool Equals(object obj) {
             if (!(obj is ExternalEnumTypeBinding))
                 return false;
-            return Equals((ExternalEnumTypeBinding) obj);
+            return this.Equals((ExternalEnumTypeBinding) obj);
         }
 
         public override int GetHashCode() {
-            return _typeToolingType.GetHashCode();
+            return this._typeToolingType.GetHashCode();
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Faml.Binding {
             private readonly TypeBinding _typeBinding;
 
             public Success(TypeBinding typeBinding) {
-                _typeBinding = typeBinding;
+                this._typeBinding = typeBinding;
             }
 
-            public TypeBinding TypeBinding => _typeBinding;
+            public TypeBinding TypeBinding => this._typeBinding;
         }
 
         public sealed class NotFound : TypeBindingResult {
@@ -34,10 +34,10 @@ namespace Faml.Binding {
             private readonly string _message;
 
             public Error(string message) {
-                _message = message;
+                this._message = message;
             }
 
-            public string Message => _message;
+            public string Message => this._message;
         }
     }
 }

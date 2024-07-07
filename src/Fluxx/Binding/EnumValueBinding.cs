@@ -3,10 +3,10 @@
         private readonly EnumTypeBinding _enumTypeBinding;
 
         protected EnumValueBinding(EnumTypeBinding enumTypeBinding) {
-            _enumTypeBinding = enumTypeBinding;
+            this._enumTypeBinding = enumTypeBinding;
         }
 
-        public EnumTypeBinding EnumTypeBinding => _enumTypeBinding;
+        public EnumTypeBinding EnumTypeBinding => this._enumTypeBinding;
 
         public abstract string Name { get; }
     }

@@ -27,20 +27,20 @@ namespace Faml.Syntax.Expression {
         public override SyntaxNodeType NodeType => SyntaxNodeType.ParenthesizedExpression;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_expression);
+            visitor(this._expression);
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _expression.GetTypeBinding();
+            return this._expression.GetTypeBinding();
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
             sourceWriter.Write("(");
-            _expression.WriteSource(sourceWriter);
+            this._expression.WriteSource(sourceWriter);
             sourceWriter.Write(")");
         }
 
-        public ExpressionSyntax Expression => _expression;
+        public ExpressionSyntax Expression => this._expression;
     }
 
 }

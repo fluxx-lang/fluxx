@@ -12,12 +12,12 @@ namespace Faml.IntelliSense {
 
         public ValueIntelliSense(FamlModule module, int position, TypeBinding typeBinding)
             : base(module, position, null) {
-            _typeBinding = typeBinding;
+            this._typeBinding = typeBinding;
         }
 
         public override Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken) {
 
-            if (_typeBinding is EnumTypeBinding enumTypeBinding) {
+            if (this._typeBinding is EnumTypeBinding enumTypeBinding) {
                 List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>();
                 foreach (EnumValueBinding enumValueBinding in enumTypeBinding.GetValues()) {
                     IntelliSenseCompletion completion = new IntelliSenseCompletion(
@@ -29,7 +29,7 @@ namespace Faml.IntelliSense {
 
                 return Task.FromResult(new IntelliSenseCompletions(completions));
             }
-            else if (_typeBinding == BuiltInTypeBinding.Bool) {
+            else if (this._typeBinding == BuiltInTypeBinding.Bool) {
                 List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion> {
                     new IntelliSenseCompletion(type: CompletionType.Value, displayText: "false"),
                     new IntelliSenseCompletion(type: CompletionType.Value, displayText: "true")

@@ -8,11 +8,11 @@ namespace Faml.Interpreter.External {
         private readonly object _obj;
 
         public ObjectConstantEval(object obj) {
-            _obj = obj;
+            this._obj = obj;
         }
 
         public override object Eval() {
-            return _obj;
+            return this._obj;
         }
     }
 }

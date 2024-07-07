@@ -11,23 +11,23 @@ namespace Faml.DotNet {
         }
 
         public LoadedAssembly(Assembly assembly, string? assemblyQualifier) {
-            _assembly = assembly;
-            _assemblyQualifier = assemblyQualifier;
+            this._assembly = assembly;
+            this._assemblyQualifier = assemblyQualifier;
         }
 
-        public Assembly Assembly => _assembly;
+        public Assembly Assembly => this._assembly;
 
         public override string ToString() {
-            if (_assemblyQualifier != null)
-                return _assemblyQualifier;
-            else return _assembly.FullName;
+            if (this._assemblyQualifier != null)
+                return this._assemblyQualifier;
+            else return this._assembly.FullName;
         }
 
         public Type? GetType(string typeName) {
-            if (_assemblyQualifier != null)
-                return Type.GetType(typeName + ", " + _assemblyQualifier);
+            if (this._assemblyQualifier != null)
+                return Type.GetType(typeName + ", " + this._assemblyQualifier);
 
-            return _assembly.GetType(typeName);
+            return this._assembly.GetType(typeName);
         }
     }
 }

@@ -10,11 +10,11 @@ namespace Faml.DotNet {
         private readonly List<Assembly> _assemblies;
 
         public AssemblySourceProvider(Assembly assembly) {
-            _assemblies = new List<Assembly> {assembly};
+            this._assemblies = new List<Assembly> {assembly};
         }
 
         public override string? GetTextResource(string path) {
-            foreach (Assembly assembly in _assemblies) {
+            foreach (Assembly assembly in this._assemblies) {
                 string[] resourceNames = assembly.GetManifestResourceNames();
 
                 string pathWithLeadingPeriod = "." + path;
@@ -45,6 +45,6 @@ namespace Faml.DotNet {
             throw new NotImplementedException();
         }
 
-        public override string RootPath => _assemblies.Count == 1 ? _assemblies[0].FullName : "assemblies";
+        public override string RootPath => this._assemblies.Count == 1 ? this._assemblies[0].FullName : "assemblies";
     }
 }

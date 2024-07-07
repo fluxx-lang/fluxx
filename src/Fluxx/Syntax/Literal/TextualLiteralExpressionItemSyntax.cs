@@ -6,7 +6,7 @@ namespace Faml.Syntax.Literal {
         private readonly ExpressionSyntax _expression;
 
         public TextualLiteralExpressionItemSyntax(ExpressionSyntax expression) : base(expression.Span) {
-            _expression = expression;
+            this._expression = expression;
         }
 
         public override bool IsTerminalNode() => false;
@@ -14,11 +14,11 @@ namespace Faml.Syntax.Literal {
         public override SyntaxNodeType NodeType => SyntaxNodeType.TextualLiteralExpressionItem;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_expression);
+            visitor(this._expression);
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_expression);
+            sourceWriter.Write(this._expression);
         }
     }
 }

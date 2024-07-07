@@ -10,23 +10,23 @@ namespace Faml.Interpreter {
         private readonly ObjectEval[] _items;
 
         public SequenceLiteralEval(ObjectEval[] items) {
-            _items = items;
+            this._items = items;
         }
 
         public override object Eval() {
             // TODO: Make this more efficient; maybe just go back to GenerateSequence
             List<object> list = new List<object>();
-            int listItemsLength = _items.Length;
+            int listItemsLength = this._items.Length;
             for (int i = 0; i < listItemsLength; i++)
-                list.Add( _items[i].Eval() );
+                list.Add( this._items[i].Eval() );
 
             return list;
         }
 
         public IEnumerable<object> GenerateSequence() {
-            int listItemsLength = _items.Length;
+            int listItemsLength = this._items.Length;
             for (int i = 0; i < listItemsLength; i++)
-                yield return _items[i].Eval();
+                yield return this._items[i].Eval();
         }
     }
 }

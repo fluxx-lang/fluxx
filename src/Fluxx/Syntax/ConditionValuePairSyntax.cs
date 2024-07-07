@@ -17,32 +17,32 @@ namespace Faml.Syntax {
         private ExpressionSyntax _value;
 
         public ConditionValuePairSyntax(TextSpan span, Expression.ExpressionSyntax condition, TextSpan valueSpan) : base(span) {
-            _condition = condition;
-            _condition.SetParent(this);
+            this._condition = condition;
+            this._condition.SetParent(this);
 
-            _valueSpan = valueSpan;
+            this._valueSpan = valueSpan;
         }
 
-        public ExpressionSyntax Condition => _condition;
+        public ExpressionSyntax Condition => this._condition;
 
-        public ExpressionSyntax Value => _value;
+        public ExpressionSyntax Value => this._value;
 
         public void ParseValueSource(BindingResolver bindingResolver) {
-            if (_value != null)
+            if (this._value != null)
                 return;
 
-            _value = SourceParser.ParseTextBlockExpression(GetModule(), _valueSpan);
-            _value.SetParent(this);
+            this._value = SourceParser.ParseTextBlockExpression(this.GetModule(), this._valueSpan);
+            this._value.SetParent(this);
 
             // Now resolve the bindings on what we just parsed, since the parse was in turn triggered by resolving bindings
-            _value.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
+            this._value.VisitNodeAndDescendentsPostorder((astNode) => { astNode.ResolveBindings(bindingResolver); });
         }
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_condition);
+            visitor(this._condition);
 
-            if (_value != null)
-                visitor(_value);
+            if (this._value != null)
+                visitor(this._value);
         }
 
         public override bool IsTerminalNode() => false;
@@ -51,10 +51,10 @@ namespace Faml.Syntax {
 
         public override void WriteSource(SourceWriter sourceWriter) {
             sourceWriter.Write("|");
-            sourceWriter.Write(Condition);
+            sourceWriter.Write(this.Condition);
             sourceWriter.Write(": ");
 
-            sourceWriter.Write(Value);
+            sourceWriter.Write(this.Value);
         }
     }
 }

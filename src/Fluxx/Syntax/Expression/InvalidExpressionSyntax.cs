@@ -12,23 +12,23 @@ namespace Faml.Syntax.Expression {
         private readonly string _expressionSource;
 
         public InvalidExpressionSyntax(TextSpan span, string expressionSource, TypeBinding typeBinding) : base(span) {
-            _typeBinding = typeBinding;
-            _expressionSource = expressionSource;
+            this._typeBinding = typeBinding;
+            this._expressionSource = expressionSource;
         }
 
         public InvalidExpressionSyntax() : base(TextSpanExtensions.NullTextSpan) {
-            _typeBinding = InvalidTypeBinding.Instance;
-            _expressionSource = "<invalid-expression>";
+            this._typeBinding = InvalidTypeBinding.Instance;
+            this._expressionSource = "<invalid-expression>";
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.InvalidExpression;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_expressionSource);
+            sourceWriter.Write(this._expressionSource);
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
     }
 }

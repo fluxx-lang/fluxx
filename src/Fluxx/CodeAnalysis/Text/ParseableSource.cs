@@ -20,29 +20,29 @@ namespace Faml.CodeAnalysis.Text {
         public static bool IsDigit(char character) => character >= '0' && character <= '9';
 
         public ParseableSource(SourceText sourceText, int startPosition, int endPosition) {
-            _sourceText = sourceText;
-            _startPosition = startPosition;
-            _endPosition = endPosition;
+            this._sourceText = sourceText;
+            this._startPosition = startPosition;
+            this._endPosition = endPosition;
         }
 
         public ParseableSource(SourceText sourceText) : this(sourceText, 0, sourceText.Length) { }
 
         public ParseableSource(SourceText sourceText, TextSpan span) : this(sourceText, span.Start, span.End) { }
 
-        public SourceText SourceText => _sourceText;
+        public SourceText SourceText => this._sourceText;
 
-        public int StartPosition => _startPosition;
+        public int StartPosition => this._startPosition;
 
-        public int EndPosition => _endPosition;
+        public int EndPosition => this._endPosition;
 
         public int GetPrevNonSpace(int position) {
             int testPosition = position;
             while (true) {
                 --testPosition;
-                if (testPosition < _startPosition)
+                if (testPosition < this._startPosition)
                     return testPosition;
 
-                char currChar = _sourceText[testPosition];
+                char currChar = this._sourceText[testPosition];
                 if (!IsSpace(currChar))
                     return testPosition;
             }
@@ -52,32 +52,32 @@ namespace Faml.CodeAnalysis.Text {
             int testPosition = position;
             while (true) {
                 ++testPosition;
-                if (testPosition >= _endPosition)
+                if (testPosition >= this._endPosition)
                     return testPosition;
 
-                char currChar = _sourceText[testPosition];
+                char currChar = this._sourceText[testPosition];
                 if (!IsSpace(currChar))
                     return testPosition;
             }
         }
 
-        public char GetCharAt(int position) => position < _startPosition || position >= _endPosition ? '\0' : _sourceText[position];
+        public char GetCharAt(int position) => position < this._startPosition || position >= this._endPosition ? '\0' : this._sourceText[position];
 
         public string Substring(int position, int length) {
-            if (position < _startPosition)
+            if (position < this._startPosition)
                 throw new ArgumentException("Substring position is before start of ParseableSource");
-            if (position + length > _endPosition)
+            if (position + length > this._endPosition)
                 throw new ArgumentException("Substring length is extends past end of ParseableSource");
 
-            return _sourceText.ToString(new TextSpan(position, length));
+            return this._sourceText.ToString(new TextSpan(position, length));
         }
 
         public bool IsSpanSoleItemOnLine(TextSpan span) {
-            if (!IsAtStartOfLine(span.Start))
+            if (!this.IsAtStartOfLine(span.Start))
                 return false;
 
-            int nextPosition = GetNextNonSpace(span.End - 1);
-            char nextChar = GetCharAt(nextPosition);
+            int nextPosition = this.GetNextNonSpace(span.End - 1);
+            char nextChar = this.GetCharAt(nextPosition);
             if (nextChar != '\n' && nextChar != '\0')
                 return false;
 
@@ -90,8 +90,8 @@ namespace Faml.CodeAnalysis.Text {
         /// <param name="position">position in question</param>
         /// <returns>true if the position only has whitespace before it on the line</returns>
         public bool IsAtStartOfLine(int position) {
-            int prevPosition = GetPrevNonSpace(position);
-            char prevChar = GetCharAt(prevPosition);
+            int prevPosition = this.GetPrevNonSpace(position);
+            char prevChar = this.GetCharAt(prevPosition);
 
             return prevChar == '\n' || prevChar == '\0';
         }
@@ -107,17 +107,17 @@ namespace Faml.CodeAnalysis.Text {
                 return false;
 
             // Ensure the position is on a subsequent line
-            int baseEndOfLine = GetEndOfLine(basePosition);
+            int baseEndOfLine = this.GetEndOfLine(basePosition);
             if (position <= baseEndOfLine)
                 return false;
 
             // Ensure that position is the first non-whitespace thing on the line
-            if (!IsAtStartOfLine(position))
+            if (!this.IsAtStartOfLine(position))
                 return false;
 
             // Ensure that indent exceeds the base indent
-            int column = GetColumn(position);
-            int baseColumn = GetColumn(basePosition);
+            int column = this.GetColumn(position);
+            int baseColumn = this.GetColumn(basePosition);
             return column > baseColumn;
         }
 
@@ -128,18 +128,18 @@ namespace Faml.CodeAnalysis.Text {
         /// <returns>position of the end of the line</returns>
         public int GetEndOfLine(int position) {
             for (int currPosition = position; true; ++currPosition) {
-                char currChar = GetCharAt(currPosition);
+                char currChar = this.GetCharAt(currPosition);
                 if (currChar == '\n' || currChar == '\0')
                     return currPosition;
             }
         }
 
-        public bool IsSpaceAt(int position) => IsSpace(GetCharAt(position));
+        public bool IsSpaceAt(int position) => IsSpace(this.GetCharAt(position));
 
-        public bool IsNewlineAt(int position) => IsNewline(GetCharAt(position));
+        public bool IsNewlineAt(int position) => IsNewline(this.GetCharAt(position));
 
-        public bool IsSpaceOrNewlineAt(int position) => IsSpaceOrNewline(GetCharAt(position));
+        public bool IsSpaceOrNewlineAt(int position) => IsSpaceOrNewline(this.GetCharAt(position));
 
-        public int GetColumn(int position) => _sourceText.Lines.GetLinePosition(position).Character;
+        public int GetColumn(int position) => this._sourceText.Lines.GetLinePosition(position).Character;
     }
 }

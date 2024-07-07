@@ -7,21 +7,21 @@ namespace Faml.Parser {
         private readonly Tokens? _restTokens;
 
         public Tokens(TokenType tokenType, int maxColumn = -1) {
-            _tokenType = tokenType;
-            _maxColumn = maxColumn;
-            _restTokens = null;
+            this._tokenType = tokenType;
+            this._maxColumn = maxColumn;
+            this._restTokens = null;
         }
 
         public Tokens(TokenType tokenType, Tokens restTokens) {
-            _tokenType = tokenType;
-            _maxColumn = -1;
-            _restTokens = restTokens;
+            this._tokenType = tokenType;
+            this._maxColumn = -1;
+            this._restTokens = restTokens;
         }
 
         public Tokens(TokenType tokenType, int maxColumn, Tokens restTokens) {
-            _tokenType = tokenType;
-            _maxColumn = maxColumn;
-            _restTokens = restTokens;
+            this._tokenType = tokenType;
+            this._maxColumn = maxColumn;
+            this._restTokens = restTokens;
         }
 
         public Tokens Add(TokenType tokenType, int maxColumn = -1) {

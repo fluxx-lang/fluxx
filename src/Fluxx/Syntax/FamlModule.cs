@@ -22,10 +22,10 @@ namespace Faml.Syntax {
         public ModuleDelegates ModuleDelegates { get; }
 
         public FamlModule(FamlProject project, QualifiableName moduleName, SourceText sourceText) {
-            Project = project;
-            ModuleName = moduleName;
-            SourceText = sourceText;
-            ModuleDelegates = new ModuleDelegates(project.TypeToolingEnvironment);
+            this.Project = project;
+            this.ModuleName = moduleName;
+            this.SourceText = sourceText;
+            this.ModuleDelegates = new ModuleDelegates(project.TypeToolingEnvironment);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Faml.Syntax {
         /// If this syntax tree is not associated with a file, this value can be empty.
         /// The path shall not be null.
         /// </remarks>
-        public string FilePath => Project.GetModuleFilePath(ModuleName);
+        public string FilePath => this.Project.GetModuleFilePath(this.ModuleName);
 
         /// <summary>
         /// Gets the location in terms of path, line and column for a given span.
@@ -47,56 +47,56 @@ namespace Faml.Syntax {
         /// </returns>
         /// <remarks>The values are not affected by line mapping directives (<c>#line</c>).</remarks>
         public FileLinePositionSpan GetLineSpan(TextSpan span, CancellationToken cancellationToken = default(CancellationToken)) {
-            return new FileLinePositionSpan(this.FilePath, GetLinePosition(span.Start), GetLinePosition(span.End));
+            return new FileLinePositionSpan(this.FilePath, this.GetLinePosition(span.Start), this.GetLinePosition(span.End));
         }
 
         private LinePosition GetLinePosition(int position) {
-            return SourceText.Lines.GetLinePosition(position);
+            return this.SourceText.Lines.GetLinePosition(position);
         }
 
         public void AddDiagnostic(Diagnostic diagnostic) {
-            Project.AddModuleDiagnostic(ModuleName, diagnostic);
+            this.Project.AddModuleDiagnostic(this.ModuleName, diagnostic);
         }
 
         public void AddTypeToolingDiagnostic(TextSpan sourceSpan, TypeTooling.Diagnostic typeToolingDiagnostic) {
             Diagnostic diagnostic = Diagnostic.FromTypeToolingDiagnostic(this, sourceSpan, typeToolingDiagnostic);
-            AddDiagnostic(diagnostic);
+            this.AddDiagnostic(diagnostic);
         }
 
         public void AddError(TextSpan span, string message) {
-            AddDiagnostic(new Diagnostic(this, span, DiagnosticSeverity.Error, message));
+            this.AddDiagnostic(new Diagnostic(this, span, DiagnosticSeverity.Error, message));
         }
 
         public void AddError(SyntaxNode syntaxNode, string message) {
-            AddDiagnostic(new Diagnostic(syntaxNode, DiagnosticSeverity.Error, message));
+            this.AddDiagnostic(new Diagnostic(syntaxNode, DiagnosticSeverity.Error, message));
         }
 
         public SyntaxHighlightTag[] GetSyntaxHighlightTags(TextSpan[] textSpans) {
             var tags = new List<SyntaxHighlightTag>();
-            new GetSyntaxHighlightTags(ModuleSyntax).GetTags(textSpans, tags);
+            new GetSyntaxHighlightTags(this.ModuleSyntax).GetTags(textSpans, tags);
             return tags.ToArray();
         }
 
         public SyntaxHighlightTag[] GetSyntaxHighlightTags(TextSpan textSpan) {
             var tags = new List<SyntaxHighlightTag>();
-            new GetSyntaxHighlightTags(ModuleSyntax).GetTags(textSpan, tags);
+            new GetSyntaxHighlightTags(this.ModuleSyntax).GetTags(textSpan, tags);
             return tags.ToArray();
         }
 
         public IconTag[] GetIconTags(TextSpan[] textSpans) {
             var sourceTags = new List<IconTag>();
-            new GetIconTags(ModuleSyntax).GetTags(textSpans, sourceTags);
+            new GetIconTags(this.ModuleSyntax).GetTags(textSpans, sourceTags);
             return sourceTags.ToArray();
         }
 
         public IconTag[] GetIconTags(TextSpan textSpan) {
             var sourceTags = new List<IconTag>();
-            new GetIconTags(ModuleSyntax).GetTags(textSpan, sourceTags);
+            new GetIconTags(this.ModuleSyntax).GetTags(textSpan, sourceTags);
             return sourceTags.ToArray();
         }
 
         public Api.QuickInfo.QuickInfo? GetQuickInfo(int position) {
-            SyntaxNode? terminalNode = ModuleSyntax.GetNextTerminalNodeFromPosition(position);
+            SyntaxNode? terminalNode = this.ModuleSyntax.GetNextTerminalNodeFromPosition(position);
             if (terminalNode == null || !terminalNode.Span.Contains(position))
                 return null;
 

@@ -8,11 +8,11 @@ namespace Faml.Interpreter.Ast {
         public AstRecord() {}
 
         public void SetProperty(string name, object value) {
-            _propertyValues[name] = value;
+            this._propertyValues[name] = value;
         }
 
         public object GetProperty(string name) {
-            if (!_propertyValues.TryGetValue(name, out object value))
+            if (!this._propertyValues.TryGetValue(name, out object value))
                 throw new Exception($"Property '{name}' not set on data record");
 
             return value;

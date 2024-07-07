@@ -14,10 +14,10 @@ namespace Faml.Binding {
 
 
         public SequenceTypeBinding(TypeBinding elementType) : base(new QualifiableName("List<" + elementType.TypeName+ ">")) {
-            _elementType = elementType;
+            this._elementType = elementType;
         }
 
-        public TypeBinding ElementType => _elementType;
+        public TypeBinding ElementType => this._elementType;
 
         public override bool SupportsCreateLiteral() => false;
 

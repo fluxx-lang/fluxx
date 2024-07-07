@@ -12,12 +12,12 @@ namespace Faml.Syntax {
         private readonly FunctionInvocationSyntax _functionInvocation;
 
         public UseSyntax(TextSpan span, FunctionInvocationSyntax functionInvocation) : base(span) {
-            _functionInvocation = functionInvocation;
-            _functionInvocation.SetParent(this);
+            this._functionInvocation = functionInvocation;
+            this._functionInvocation.SetParent(this);
         }
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            _functionInvocation.VisitChildren(visitor);
+            this._functionInvocation.VisitChildren(visitor);
         }
 
         public override bool IsTerminalNode() {
@@ -28,7 +28,7 @@ namespace Faml.Syntax {
 
         public override void WriteSource(SourceWriter sourceWriter) {
             sourceWriter.Write("use ");
-            sourceWriter.Write(_functionInvocation);
+            sourceWriter.Write(this._functionInvocation);
         }
 
         public void ResolveImportLibrary() {

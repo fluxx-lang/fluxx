@@ -8,11 +8,11 @@ namespace Faml.Interpreter.Ast {
         private readonly BooleanEval _booleanEval;
 
         public AstRecordPropertyBooleanSetter(string propertyName, BooleanEval booleanEval) : base(propertyName) {
-            _booleanEval = booleanEval;
+            this._booleanEval = booleanEval;
         }
 
         public override void Invoke(AstRecord astRecord) {
-            astRecord.SetProperty(PropertyName, _booleanEval.Eval());
+            astRecord.SetProperty(this.PropertyName, this._booleanEval.Eval());
         }
     }
 }

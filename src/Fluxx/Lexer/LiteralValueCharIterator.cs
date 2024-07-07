@@ -14,38 +14,38 @@ namespace Faml.Lexer {
         private int _position;
 
         public LiteralValueCharIterator(SourceText sourceText, TextSpan sourceSpan) {
-            _sourceText = sourceText;
+            this._sourceText = sourceText;
 
-            _position = sourceSpan.Start;
-            _sourceEnd = sourceSpan.End;
+            this._position = sourceSpan.Start;
+            this._sourceEnd = sourceSpan.End;
         }
 
-        public char GetLookahead() => _position < _sourceEnd ? _sourceText[_position] : '\0';
+        public char GetLookahead() => this._position < this._sourceEnd ? this._sourceText[this._position] : '\0';
 
         public char GetLookaheadPlusOne() {
-            int positionPlusOne = _position + 1;
-            return positionPlusOne < _sourceEnd ? _sourceText[positionPlusOne] : '\0';
+            int positionPlusOne = this._position + 1;
+            return positionPlusOne < this._sourceEnd ? this._sourceText[positionPlusOne] : '\0';
         }
 
         public char GetLookaheadAt(int index) {
-            int lookaheadPosition = _position + index;
-            return lookaheadPosition < _sourceEnd ? _sourceText[lookaheadPosition] : '\0';
+            int lookaheadPosition = this._position + index;
+            return lookaheadPosition < this._sourceEnd ? this._sourceText[lookaheadPosition] : '\0';
         }
 
         public int Position {
-            get => _position;
-            set => _position = value;
+            get => this._position;
+            set => this._position = value;
         }
         
         public char ReadChar() {
-            return _position >= _sourceEnd ? '\0' : _sourceText[_position++];
+            return this._position >= this._sourceEnd ? '\0' : this._sourceText[this._position++];
         }
 
         public int GetMatchingRightBrace() {
             int nestedBraces = 0;
-            int position = _position;
-            while (position < _sourceEnd) {
-                char currChar = _sourceText[position];
+            int position = this._position;
+            while (position < this._sourceEnd) {
+                char currChar = this._sourceText[position];
 
                 if (currChar == '\\') {
                     position += 2;

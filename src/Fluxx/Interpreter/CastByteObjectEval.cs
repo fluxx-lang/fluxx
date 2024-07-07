@@ -3,11 +3,11 @@ namespace Faml.Interpreter {
         private readonly IntEval _intEval;
 
         public CastByteObjectEval(IntEval intEval) {
-            _intEval = intEval;
+            this._intEval = intEval;
         }
 
         public override object Eval() {
-            return (byte) _intEval.Eval();
+            return (byte) this._intEval.Eval();
         }
     }
 }

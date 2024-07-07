@@ -24,76 +24,76 @@ namespace Faml.Binding.External {
 
         // TODO: This name is fully qualified.   Do we want that?
         public ExternalObjectTypeBinding(FamlProject project, DotNetRawType rawType) : base(new QualifiableName(rawType.FullName)) {
-            _project = project;
-            _rawType = rawType;
+            this._project = project;
+            this._rawType = rawType;
 
-            _typeToolingType = (ObjectType) _project.GetTypeToolingType(_rawType);
-            _attachedType = _project.GetTypeToolingAttachedType(_rawType);
+            this._typeToolingType = (ObjectType) this._project.GetTypeToolingType(this._rawType);
+            this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
         }
 
         public ExternalObjectTypeBinding(FamlProject project, ObjectType typeToolingType) : base(new QualifiableName(typeToolingType.FullName)) {
-            _project = project;
-            _typeToolingType = typeToolingType;
+            this._project = project;
+            this._typeToolingType = typeToolingType;
 
-            _rawType = (DotNetRawType) typeToolingType.UnderlyingType;
+            this._rawType = (DotNetRawType) typeToolingType.UnderlyingType;
         }
 
-        public FamlProject Project => _project;
+        public FamlProject Project => this._project;
 
-        public ObjectType TypeToolingType => _typeToolingType;
+        public ObjectType TypeToolingType => this._typeToolingType;
 
         public AttachedType? AttachedType {
             get {
                 // Only lookup the attached type if someone actually needs it
-                if (!_gotAttachedType) {
-                    _attachedType = _project.GetTypeToolingAttachedType(_rawType);
-                    _gotAttachedType = true;
+                if (!this._gotAttachedType) {
+                    this._attachedType = this._project.GetTypeToolingAttachedType(this._rawType);
+                    this._gotAttachedType = true;
                 }
-                return _attachedType;
+                return this._attachedType;
             }
         }
 
         public Dictionary<string, ObjectProperty> ObjectProperties {
             get {
-                GetPropertiesIfNeeded();
-                return _objectProperties;
+                this.GetPropertiesIfNeeded();
+                return this._objectProperties;
             }
         }
 
-        public ObjectProperty GetObjectProperty(QualifiableName name) => _objectProperties[name.ToString()];
+        public ObjectProperty GetObjectProperty(QualifiableName name) => this._objectProperties[name.ToString()];
 
         public Name? ContentProperty {
             get {
-                GetPropertiesIfNeeded();
-                return _contentProperty;
+                this.GetPropertiesIfNeeded();
+                return this._contentProperty;
             }
         }
 
         public void GetPropertiesIfNeeded() {
-            if (_gotProperties)
+            if (this._gotProperties)
                 return;
 
-            _objectProperties = new Dictionary<string, ObjectProperty>();
+            this._objectProperties = new Dictionary<string, ObjectProperty>();
 
             // Add all properties - for the type itself and its ancestors
-            foreach (ObjectType type in GetTypeAndAncestors(_typeToolingType)) {
+            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType)) {
                 foreach (ObjectProperty property in type.Properties) {
-                    if (! _objectProperties.ContainsKey(property.Name))
-                        _objectProperties.Add(property.Name, property);
+                    if (! this._objectProperties.ContainsKey(property.Name))
+                        this._objectProperties.Add(property.Name, property);
                 }
             }
 
             // Looks first in the type itself to see if it has a content property, then search its ancestors
-            _contentProperty = null;
-            foreach (ObjectType type in GetTypeAndAncestors(_typeToolingType)) {
+            this._contentProperty = null;
+            foreach (ObjectType type in GetTypeAndAncestors(this._typeToolingType)) {
                 ObjectProperty? contentProperty = type.ContentProperty;
                 if (contentProperty != null) {
-                    _contentProperty = new Name(contentProperty.Name);
+                    this._contentProperty = new Name(contentProperty.Name);
                     break;
                 }
             }
 
-            _gotProperties = true;
+            this._gotProperties = true;
         }
 
         public static IEnumerable<ObjectType> GetTypeAndAncestors(ObjectType objectType) {
@@ -105,22 +105,22 @@ namespace Faml.Binding.External {
         }
 
         protected bool Equals(ExternalObjectTypeBinding other) {
-            return _rawType.Equals(other._rawType);
+            return this._rawType.Equals(other._rawType);
         }
 
         public override bool Equals(object obj) {
             if (!(obj is ExternalObjectTypeBinding))
                 return false;
-            return Equals((ExternalObjectTypeBinding) obj);
+            return this.Equals((ExternalObjectTypeBinding) obj);
         }
 
         public override int GetHashCode() {
-            return _rawType.GetHashCode();
+            return this._rawType.GetHashCode();
         }
 
         public override bool IsAssignableFrom(TypeBinding other) {
             if (other is ExternalObjectTypeBinding otherDotNetObjectTypeBinding)
-                return _rawType.IsAssignableFrom(otherDotNetObjectTypeBinding._rawType);
+                return this._rawType.IsAssignableFrom(otherDotNetObjectTypeBinding._rawType);
             else return base.IsAssignableFrom(other);
         }
 
@@ -137,14 +137,14 @@ namespace Faml.Binding.External {
         }
 
         public override PropertyBinding? GetPropertyBinding(Name propertyName) {
-            if (! ObjectProperties.TryGetValue(propertyName.ToString(), out ObjectProperty property))
+            if (! this.ObjectProperties.TryGetValue(propertyName.ToString(), out ObjectProperty property))
                 return null;
 
             return new ExternalPropertyBinding(this, property);
         }
 
         public override bool SupportsCreateLiteral() {
-            return _typeToolingType?.GetCustomLiteralParser() != null;
+            return this._typeToolingType?.GetCustomLiteralParser() != null;
         }
 
         public override ExpressionSyntax ParseLiteralValueSource(FamlModule module, TextSpan span) {
@@ -152,7 +152,7 @@ namespace Faml.Binding.External {
             string literalSource = sourceText.ToString(span);
 
             // Now see if there's a custom literal manager for the type
-            CustomLiteralParser customLiteralParser = _typeToolingType?.GetCustomLiteralParser();
+            CustomLiteralParser customLiteralParser = this._typeToolingType?.GetCustomLiteralParser();
             if (customLiteralParser != null) {
                 try {
                     CustomLiteral customLiteral = customLiteralParser.Parse(literalSource);
@@ -169,7 +169,7 @@ namespace Faml.Binding.External {
                             return new InvalidExpressionSyntax(span, literalSource, this);
                     }
 
-                    return new ExternalTypeCustomLiteralSytax(span, this, _typeToolingType, literalSource, customLiteral);
+                    return new ExternalTypeCustomLiteralSytax(span, this, this._typeToolingType, literalSource, customLiteral);
                 }
                 catch (Exception e) {
                     module.AddError(span, e.Message);
@@ -178,7 +178,7 @@ namespace Faml.Binding.External {
             }
 
             module.AddError(span,
-                $"'{_rawType.Name}' can't be expressed as textual literal--it's not an enum nor does it have a custom literal manager");
+                $"'{this._rawType.Name}' can't be expressed as textual literal--it's not an enum nor does it have a custom literal manager");
             return new InvalidExpressionSyntax(span, literalSource, this);
         }
 

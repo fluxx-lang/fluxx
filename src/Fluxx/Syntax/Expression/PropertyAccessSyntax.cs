@@ -17,22 +17,22 @@ namespace Faml.Syntax.Expression {
         private TypeBinding _typeBinding = null;
 
         public PropertyAccessSyntax(TextSpan span, ExpressionSyntax expression, NameSyntax propertyNameSyntax) : base(span) {
-            _expression = expression;
+            this._expression = expression;
             expression.SetParent(this);
 
-            _propertyNameSyntax = propertyNameSyntax;
+            this._propertyNameSyntax = propertyNameSyntax;
             propertyNameSyntax.SetParent(this);
         }
 
-        public ExpressionSyntax Expression => _expression;
+        public ExpressionSyntax Expression => this._expression;
 
-        public NameSyntax PropertyNameSyntax => _propertyNameSyntax;
+        public NameSyntax PropertyNameSyntax => this._propertyNameSyntax;
 
-        public Name PropertyName => _propertyNameSyntax.Name;
+        public Name PropertyName => this._propertyNameSyntax.Name;
 
-        public string PropertyNameString => _propertyNameSyntax.Name.ToString();
+        public string PropertyNameString => this._propertyNameSyntax.Name.ToString();
 
-        public PropertyBinding PropertyBinding => _propertyBinding;
+        public PropertyBinding PropertyBinding => this._propertyBinding;
 
         public override bool IsTerminalNode() {
             return false;
@@ -41,23 +41,23 @@ namespace Faml.Syntax.Expression {
         public override SyntaxNodeType NodeType => SyntaxNodeType.PropertyAccess;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_expression);
-            visitor(_propertyNameSyntax);
+            visitor(this._expression);
+            visitor(this._propertyNameSyntax);
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_expression);
+            sourceWriter.Write(this._expression);
             sourceWriter.Write(".");
-            sourceWriter.Write(_propertyNameSyntax);
+            sourceWriter.Write(this._propertyNameSyntax);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            _propertyBinding = bindingResolver.ResolvePropertyBinding(_expression.GetTypeBinding(), _propertyNameSyntax);
-            _typeBinding = _propertyBinding.GetTypeBinding();
+            this._propertyBinding = bindingResolver.ResolvePropertyBinding(this._expression.GetTypeBinding(), this._propertyNameSyntax);
+            this._typeBinding = this._propertyBinding.GetTypeBinding();
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
     }
 }

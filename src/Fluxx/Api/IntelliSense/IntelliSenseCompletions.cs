@@ -11,7 +11,7 @@ namespace Faml.Api.IntelliSense {
         public ImmutableArray<IntelliSenseCompletion> Completions { get; }
 
         public IntelliSenseCompletions(IEnumerable<IntelliSenseCompletion> completions) {
-            Completions = completions.ToImmutableArray();
+            this.Completions = completions.ToImmutableArray();
         }
     }
 }

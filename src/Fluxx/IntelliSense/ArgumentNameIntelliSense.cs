@@ -14,35 +14,35 @@ namespace Faml.IntelliSense {
 
         public ArgumentNameIntelliSense(FamlModule module, int position, FunctionBinding functionBinding)
             : base(module, position, null) {
-            _functionBinding = functionBinding;
-            _argumentName = null;
+            this._functionBinding = functionBinding;
+            this._argumentName = null;
         }
 
         public ArgumentNameIntelliSense(FamlModule module, int position, FunctionBinding functionBinding, QualifiableNameSyntax argumentName)
             : base(module, position, argumentName) {
-            _functionBinding = functionBinding;
-            _argumentName = argumentName;
+            this._functionBinding = functionBinding;
+            this._argumentName = argumentName;
         }
 
         public override Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken) {
             string prefix = "";
             string suffix = "";
-            if (_argumentName == null) {
+            if (this._argumentName == null) {
                 int spacesBefore = 0;
-                if (ParseableSource.IsSpaceAt(Position - 1)) {
+                if (this.ParseableSource.IsSpaceAt(this.Position - 1)) {
                     ++spacesBefore;
-                    if (ParseableSource.IsSpaceAt(Position - 2))
+                    if (this.ParseableSource.IsSpaceAt(this.Position - 2))
                         ++spacesBefore;
                 }
 
-                prefix = GetSpaces(2 - spacesBefore);
+                prefix = this.GetSpaces(2 - spacesBefore);
 
-                if (ParseableSource.IsSpaceOrNewlineAt(Position))
+                if (this.ParseableSource.IsSpaceOrNewlineAt(this.Position))
                     suffix = ":";
                 else suffix = ": ";
             }
 
-            Name[] properties = _functionBinding.GetParameters();
+            Name[] properties = this._functionBinding.GetParameters();
 
             List<IntelliSenseCompletion> completions = new List<IntelliSenseCompletion>();
             foreach (Name propertyName in properties) {
@@ -54,7 +54,7 @@ namespace Faml.IntelliSense {
 
                 IntelliSenseProvider.GetDescriptionAsyncDelegate getDescriptionDelegate =
                     async (preferredCulture, delegateCancellationToken) =>
-                        await _functionBinding.GetParameterDescriptionAsync(propertyName, delegateCancellationToken);
+                        await this._functionBinding.GetParameterDescriptionAsync(propertyName, delegateCancellationToken);
 
                 var completion = new IntelliSenseCompletion(
                     type: CompletionType.Property,

@@ -10,7 +10,7 @@ namespace Faml.Interpreter {
         private ObjectEval _objectEval;
 
         public ObjectAdder(ObjectEval objectEval) {
-            _objectEval = objectEval;
+            this._objectEval = objectEval;
         }
 
         public abstract void Add(object @object);

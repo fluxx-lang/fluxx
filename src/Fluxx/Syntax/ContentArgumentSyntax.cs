@@ -12,28 +12,28 @@ namespace Faml.Syntax {
 
 
         public ContentArgumentSyntax(TextSpan span, ExpressionSyntax value) : base(span) {
-            _value = value;
+            this._value = value;
             value.SetParent(this);
         }
 
         public void ResolveValueBindings(TypeBinding parameterTypeBinding, BindingResolver bindingResolver) {
             // If we've already resolved, do nothing
-            if (_parameterTypeBinding != null)
+            if (this._parameterTypeBinding != null)
                 return;
             
-            _parameterTypeBinding = parameterTypeBinding;
+            this._parameterTypeBinding = parameterTypeBinding;
 
-            if (_value is TextualLiteralSyntax markupValue)
-                _value = markupValue.ResolveMarkup(parameterTypeBinding, bindingResolver);
+            if (this._value is TextualLiteralSyntax markupValue)
+                this._value = markupValue.ResolveMarkup(parameterTypeBinding, bindingResolver);
         }
 
-        public ExpressionSyntax Value => _value;
+        public ExpressionSyntax Value => this._value;
 
-        public TypeBinding ParameterTypeBinding => _parameterTypeBinding;
+        public TypeBinding ParameterTypeBinding => this._parameterTypeBinding;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            if (_value != null)
-                visitor(_value);
+            if (this._value != null)
+                visitor(this._value);
         }
 
         public override bool IsTerminalNode() => false;
@@ -41,7 +41,7 @@ namespace Faml.Syntax {
         public override SyntaxNodeType NodeType => SyntaxNodeType.ArgumentNameValuePair;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_value);
+            sourceWriter.Write(this._value);
         }
     }
 }

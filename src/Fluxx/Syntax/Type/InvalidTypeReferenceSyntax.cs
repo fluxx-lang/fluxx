@@ -14,7 +14,7 @@ namespace Faml.Syntax.Type {
         public InvalidTypeReferenceSyntax() : base(TextSpanExtensions.NullTextSpan) {}
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.InvalidTypeReference;

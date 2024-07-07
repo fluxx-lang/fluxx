@@ -10,12 +10,12 @@ namespace Faml.Interpreter {
         private readonly BooleanEval _rightOperand;
 
         public NotEqualsBooleanEval(BooleanEval leftOperand, BooleanEval rightOperand) {
-            _leftOperand = leftOperand;
-            _rightOperand = rightOperand;
+            this._leftOperand = leftOperand;
+            this._rightOperand = rightOperand;
         }
 
         public override bool Eval() {
-            return _leftOperand.Eval() != _rightOperand.Eval();
+            return this._leftOperand.Eval() != this._rightOperand.Eval();
         }
     }
 

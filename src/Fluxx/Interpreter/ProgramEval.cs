@@ -12,7 +12,7 @@ namespace Faml.Interpreter {
         private readonly SourceProvider _sourceProvider;
 
         public ProgramEval(SourceProvider sourceProvider) {
-            _sourceProvider = sourceProvider;
+            this._sourceProvider = sourceProvider;
         }
     }
 }

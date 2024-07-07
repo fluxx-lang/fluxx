@@ -8,12 +8,12 @@ namespace Faml.Api {
         private readonly SyntaxHighlightTagType _syntaxHighlightTagType;
 
         public SyntaxHighlightTag(TextSpan sourceSpan, SyntaxHighlightTagType syntaxHighlightTagType) {
-            _sourceSpan = sourceSpan;
-            _syntaxHighlightTagType = syntaxHighlightTagType;
+            this._sourceSpan = sourceSpan;
+            this._syntaxHighlightTagType = syntaxHighlightTagType;
         }
 
-        public TextSpan SourceSpan => _sourceSpan;
+        public TextSpan SourceSpan => this._sourceSpan;
 
-        public SyntaxHighlightTagType SyntaxHighlightTagType => _syntaxHighlightTagType;
+        public SyntaxHighlightTagType SyntaxHighlightTagType => this._syntaxHighlightTagType;
     }
 }

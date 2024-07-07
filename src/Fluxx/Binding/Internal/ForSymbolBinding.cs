@@ -12,17 +12,17 @@ namespace Faml.Binding.Internal {
         private readonly TypeBinding _typeBinding;
 
         public ForSymbolBinding(ForExpressionSyntax forExpression, int variableIndex) {
-            _forExpression = forExpression;
-            _variableIndex = variableIndex;
-            _typeBinding = forExpression.ForVariableDefinition.GetVariableTypeBinding();
+            this._forExpression = forExpression;
+            this._variableIndex = variableIndex;
+            this._typeBinding = forExpression.ForVariableDefinition.GetVariableTypeBinding();
         }
 
-        public ForExpressionSyntax ForExpression => _forExpression;
+        public ForExpressionSyntax ForExpression => this._forExpression;
 
-        public int VariableIndex => _variableIndex;
+        public int VariableIndex => this._variableIndex;
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
     }
 }

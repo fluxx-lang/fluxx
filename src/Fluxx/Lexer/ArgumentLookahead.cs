@@ -11,20 +11,20 @@
         private readonly int _indent;
 
         public ArgumentLookahead(ArgumentLookaheadType type) {
-             _type = type;
-            _indent = -1;
+             this._type = type;
+            this._indent = -1;
         }
 
         public ArgumentLookahead(int indent) {
-            _type = ArgumentLookaheadType.IndentedContent;
-            _indent = indent;
+            this._type = ArgumentLookaheadType.IndentedContent;
+            this._indent = indent;
         }
 
-        public ArgumentLookaheadType Type => _type;
+        public ArgumentLookaheadType Type => this._type;
 
         /// <summary>
         /// Get the indent amount (zero based), which is only valid for type INDENTED_CONTENT.
         /// </summary>
-        public int Indent => _indent;
+        public int Indent => this._indent;
     }
 }

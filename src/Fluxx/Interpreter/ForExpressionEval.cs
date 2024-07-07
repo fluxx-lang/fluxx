@@ -15,13 +15,13 @@ namespace Faml.Interpreter {
         private readonly TypeBinding _variableTypeBinding;
 
         public ForExpressionEval(ObjectEval expressionEval, TypeBinding variableTypeBinding, ObjectEval inExpressionEval) {
-            _expressionEval = expressionEval;
-            _variableTypeBinding = variableTypeBinding;
-            _inExpressionEval = inExpressionEval;
+            this._expressionEval = expressionEval;
+            this._variableTypeBinding = variableTypeBinding;
+            this._inExpressionEval = inExpressionEval;
         }
 
         public override object Eval() {
-            object sequence = _inExpressionEval.Eval();
+            object sequence = this._inExpressionEval.Eval();
 
             if (! (sequence is IEnumerable enumerable))
                 throw new UserViewableException($"For-in expression sequence is unexpectedly type {sequence.GetType()}, not an IEnumerable");
@@ -30,17 +30,17 @@ namespace Faml.Interpreter {
 
             int variableStackOffset = Context.StackIndex++;
             foreach (object variableValue in enumerable) {
-                if (_variableTypeBinding == BuiltInTypeBinding.Int)
+                if (this._variableTypeBinding == BuiltInTypeBinding.Int)
                     Context.IntStack[variableStackOffset] = (int) variableValue;
-                else if (_variableTypeBinding == BuiltInTypeBinding.Double)
+                else if (this._variableTypeBinding == BuiltInTypeBinding.Double)
                     Context.DoubleStack[variableStackOffset] = (double)variableValue;
-                else if (_variableTypeBinding is ObjectTypeBinding)
+                else if (this._variableTypeBinding is ObjectTypeBinding)
                     Context.ObjectStack[variableStackOffset] = variableValue;
                 else
                     throw new System.Exception(
-                        $"Variable type {_variableTypeBinding} currently not supported for 'for' expressions");
+                        $"Variable type {this._variableTypeBinding} currently not supported for 'for' expressions");
 
-                object expressionValue = _expressionEval.Eval();
+                object expressionValue = this._expressionEval.Eval();
                 list.Add(expressionValue);
             }
             Context.StackIndex--;

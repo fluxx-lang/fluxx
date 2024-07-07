@@ -15,7 +15,7 @@ namespace Faml.Interpreter {
         }
 
         public override bool Eval() {
-            return LeftOperand.Eval() <= RightOperand.Eval();
+            return this.LeftOperand.Eval() <= this.RightOperand.Eval();
         }
     }
 

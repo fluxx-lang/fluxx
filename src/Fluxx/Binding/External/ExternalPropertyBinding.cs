@@ -18,25 +18,25 @@ namespace Faml.Binding.External {
 
 
         public ExternalPropertyBinding(ExternalObjectTypeBinding objectTypeBinding, ObjectProperty objectProperty) {
-            _objectTypeBinding = objectTypeBinding;
-            _objectProperty = objectProperty;
+            this._objectTypeBinding = objectTypeBinding;
+            this._objectProperty = objectProperty;
 
-            _propertyTypeBinding = ExternalBindingUtil.TypeToolingTypeToTypeBinding(objectTypeBinding.Project, objectProperty.Type);
+            this._propertyTypeBinding = ExternalBindingUtil.TypeToolingTypeToTypeBinding(objectTypeBinding.Project, objectProperty.Type);
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _propertyTypeBinding;
+            return this._propertyTypeBinding;
         }
 
-        public override Name PropertyName => new Name(_objectProperty.Name);
+        public override Name PropertyName => new Name(this._objectProperty.Name);
 
-        public override TypeBinding ObjectTypeBinding => _objectTypeBinding;
+        public override TypeBinding ObjectTypeBinding => this._objectTypeBinding;
 
         public override Task<ClassifiedTextMarkup?> GetDescriptionAsync(CancellationToken cancellationToken) =>
-            _objectProperty.GetDescriptionAsync(cancellationToken);
+            this._objectProperty.GetDescriptionAsync(cancellationToken);
 
-        public ObjectType ObjectType => _objectTypeBinding.TypeToolingType;
+        public ObjectType ObjectType => this._objectTypeBinding.TypeToolingType;
 
-        public ObjectProperty ObjectProperty => _objectProperty;
+        public ObjectProperty ObjectProperty => this._objectProperty;
     }
 }

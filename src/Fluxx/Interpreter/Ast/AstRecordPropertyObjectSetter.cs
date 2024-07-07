@@ -8,11 +8,11 @@ namespace Faml.Interpreter.Ast {
         private readonly ObjectEval _objectEval;
 
         public AstRecordPropertyObjectSetter(string propertyName, ObjectEval objectEval) : base(propertyName) {
-            _objectEval = objectEval;
+            this._objectEval = objectEval;
         }
 
         public override void Invoke(AstRecord astRecord) {
-            astRecord.SetProperty(PropertyName, _objectEval.Eval());
+            astRecord.SetProperty(this.PropertyName, this._objectEval.Eval());
         }
     }
 }

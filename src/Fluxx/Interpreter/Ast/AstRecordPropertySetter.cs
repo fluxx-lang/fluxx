@@ -8,7 +8,7 @@ namespace Faml.Interpreter.Ast {
         protected internal readonly string PropertyName;
 
         protected AstRecordPropertySetter(string propertyName) {
-            PropertyName = propertyName;
+            this.PropertyName = propertyName;
         }
 
         public abstract void Invoke(AstRecord astRecord);

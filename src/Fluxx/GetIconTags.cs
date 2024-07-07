@@ -9,19 +9,19 @@ namespace Faml {
         private readonly ModuleSyntax _module;
         
         public GetIconTags(ModuleSyntax module) {
-            _module = module;
+            this._module = module;
         }
 
         // TODO: Implement this propertly
         public void GetTags(TextSpan[] textSpans, List<IconTag> tags) {
             if (textSpans.Length == 1)
-                GetTags(textSpans[0], tags);
+                this.GetTags(textSpans[0], tags);
             else throw new NotImplementedException();
         }
 
         public void GetTags(TextSpan span, List<IconTag> tags) {
             // Now get everything else
-            GetSyntaxNodeTags(span, _module, tags);
+            this.GetSyntaxNodeTags(span, this._module, tags);
         }
 
         private void GetSyntaxNodeTags(TextSpan span, SyntaxNode syntaxNode, List<IconTag> tags) {
@@ -35,7 +35,7 @@ namespace Faml {
 
                 syntaxNode.VisitChildren((child) => {
                     if (child.OverlapsWith(span))
-                        GetSyntaxNodeTags(span, child, tags);
+                        this.GetSyntaxNodeTags(span, child, tags);
                 });
             }
         }

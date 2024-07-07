@@ -12,7 +12,7 @@ namespace Faml.Syntax.Literal {
         private readonly bool _value;
 
         public  BooleanLiteralSyntax(TextSpan span, bool value) : base(span) {
-            _value = value;
+            this._value = value;
         }
 
         public override TypeBinding GetTypeBinding() {
@@ -22,9 +22,9 @@ namespace Faml.Syntax.Literal {
         public override SyntaxNodeType NodeType => SyntaxNodeType.BooleanLiteral;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_value ? "true" : "false");
+            sourceWriter.Write(this._value ? "true" : "false");
         }
 
-        public virtual bool Value => _value;
+        public virtual bool Value => this._value;
     }
 }

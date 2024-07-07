@@ -6,15 +6,15 @@ namespace Faml.Syntax.Literal {
         private readonly string _text;
 
         public TextualLiteralTextItemSyntax(TextSpan span, string text) : base(span) {
-            _text = text;
+            this._text = text;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.TextualLiteralTextItem;
 
-        public string Text => _text;
+        public string Text => this._text;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_text);
+            sourceWriter.Write(this._text);
         }
     }
 }

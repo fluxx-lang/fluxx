@@ -7,7 +7,7 @@ namespace Faml
         public Type SdkType { get; }
 
         public FamlSdkAttribute(Type sdkType) {
-            SdkType = sdkType;
+            this.SdkType = sdkType;
         }
     }
 }

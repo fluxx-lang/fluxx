@@ -9,14 +9,14 @@ namespace Faml.Binding {
         private readonly Name _propertyName;
 
         public InvalidPropertyBinding(Name propertyName) {
-            _propertyName = propertyName;
+            this._propertyName = propertyName;
         }
 
         public override TypeBinding GetTypeBinding() {
             return InvalidTypeBinding.Instance;
         }
 
-        public override Name PropertyName => _propertyName;
+        public override Name PropertyName => this._propertyName;
 
         public override TypeBinding ObjectTypeBinding => InvalidTypeBinding.Instance;
 

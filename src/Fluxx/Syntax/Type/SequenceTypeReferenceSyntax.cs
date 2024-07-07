@@ -14,8 +14,8 @@ namespace Faml.Syntax.Type {
         private TypeBinding _typeBinding;
 
         public SequenceTypeReferenceSyntax(TextSpan span, TypeReferenceSyntax elementTypeReferenceSyntax) : base(span) {
-            _elementTypeReferenceSyntax = elementTypeReferenceSyntax;
-            _elementTypeReferenceSyntax.SetParent(this);
+            this._elementTypeReferenceSyntax = elementTypeReferenceSyntax;
+            this._elementTypeReferenceSyntax.SetParent(this);
         }
 
         public override bool IsTerminalNode() {
@@ -25,19 +25,19 @@ namespace Faml.Syntax.Type {
         public override SyntaxNodeType NodeType => SyntaxNodeType.SequenceTypeReference;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            visitor(_elementTypeReferenceSyntax);
+            visitor(this._elementTypeReferenceSyntax);
         }
 
         protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver) {
-            _typeBinding = new SequenceTypeBinding(_elementTypeReferenceSyntax.GetTypeBinding());
+            this._typeBinding = new SequenceTypeBinding(this._elementTypeReferenceSyntax.GetTypeBinding());
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
                                      
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_elementTypeReferenceSyntax);
+            sourceWriter.Write(this._elementTypeReferenceSyntax);
             sourceWriter.Write("...");
         }
     }

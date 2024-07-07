@@ -9,12 +9,12 @@ namespace Faml.SourceProviders {
 
 
         public FileSourceProvider(string rootDirectory) {
-            _rootDirectory = rootDirectory;
+            this._rootDirectory = rootDirectory;
         }
 
         public override string? GetTextResource(string path) {
             try {
-                return File.ReadAllText(Path.Combine(_rootDirectory, path));
+                return File.ReadAllText(Path.Combine(this._rootDirectory, path));
             }
             catch (FileNotFoundException e) {
                 return null;
@@ -23,7 +23,7 @@ namespace Faml.SourceProviders {
 
         public override ImmutableArray<byte>? GetBinaryResource(string path) {
             try {
-                byte[] bytes = File.ReadAllBytes(Path.Combine(_rootDirectory, path));
+                byte[] bytes = File.ReadAllBytes(Path.Combine(this._rootDirectory, path));
                 return bytes.ToImmutableArray();
             }
             catch (FileNotFoundException) {
@@ -32,13 +32,13 @@ namespace Faml.SourceProviders {
         }
 
         public override IEnumerable<string> GetResources() {
-            int rootDirectoryLength = _rootDirectory.Length;
+            int rootDirectoryLength = this._rootDirectory.Length;
 
             var resources = new List<string>();
-            foreach (string filePath in Directory.EnumerateFiles(_rootDirectory, "*.*", SearchOption.AllDirectories)) {
-                if (!filePath.StartsWith(_rootDirectory))
+            foreach (string filePath in Directory.EnumerateFiles(this._rootDirectory, "*.*", SearchOption.AllDirectories)) {
+                if (!filePath.StartsWith(this._rootDirectory))
                     throw new Exception(
-                        $"Path {filePath} unexpectedly doesn't start with root directory {_rootDirectory}");
+                        $"Path {filePath} unexpectedly doesn't start with root directory {this._rootDirectory}");
 
                 string relativePath = filePath.Substring(rootDirectoryLength);
                 resources.Add(relativePath);
@@ -47,6 +47,6 @@ namespace Faml.SourceProviders {
             return resources;
         }
 
-        public override string RootPath => _rootDirectory;
+        public override string RootPath => this._rootDirectory;
     }
 }

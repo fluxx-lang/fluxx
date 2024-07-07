@@ -11,7 +11,7 @@ namespace Faml.Binding
         public QualifiableName NamespaceName { get; }
 
         public NamespaceBinding(QualifiableName namespaceName) {
-            NamespaceName = namespaceName;
+            this.NamespaceName = namespaceName;
         }
     }
 }

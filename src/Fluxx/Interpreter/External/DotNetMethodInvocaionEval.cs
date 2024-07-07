@@ -14,20 +14,20 @@ namespace Faml.Interpreter.External {
         private readonly DotNetRawMethod _method;
 
         public DotNetMethodInvocaionEval(ObjectEval thisArgumentEval, ObjectEval[] argumentEvals, DotNetRawMethod method) {
-            _thisArgumentEval = thisArgumentEval;
-            _argumentEvals = argumentEvals;
-            _method = method;
+            this._thisArgumentEval = thisArgumentEval;
+            this._argumentEvals = argumentEvals;
+            this._method = method;
         }
 
         public override object Eval() {
-            object thisArgument = _thisArgumentEval.Eval();
+            object thisArgument = this._thisArgumentEval.Eval();
 
-            int argumentsLength = _argumentEvals.Length;
+            int argumentsLength = this._argumentEvals.Length;
             object[] arguments = new object[argumentsLength];
             for (int i = 0; i < argumentsLength; i++)
-                arguments[i] = _argumentEvals[i].Eval();
+                arguments[i] = this._argumentEvals[i].Eval();
 
-            MethodInfo methodInfo = ((ReflectionDotNetRawMethod) _method).MethodInfo;
+            MethodInfo methodInfo = ((ReflectionDotNetRawMethod) this._method).MethodInfo;
             return methodInfo.Invoke(thisArgument, arguments);
         }
     }

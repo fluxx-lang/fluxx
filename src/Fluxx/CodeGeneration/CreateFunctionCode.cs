@@ -48,21 +48,21 @@ namespace Faml.CodeGeneration {
 #endif
 
         public CreateFunctionCode(FunctionDefinitionSyntax function) {
-            _famlProject = function.GetProject();
+            this._famlProject = function.GetProject();
 
             ImmutableArray<ParameterExpressionCode> parametersCode = function.Parameters.Select(
                 propertyNameTypePairSyntax =>
                     new ParameterExpressionCode(
                         propertyNameTypePairSyntax.PropertyName.ToString(),
-                        GetRawType(propertyNameTypePairSyntax.TypeReferenceSyntax.GetTypeBinding()))
+                        this.GetRawType(propertyNameTypePairSyntax.TypeReferenceSyntax.GetTypeBinding()))
             ).ToImmutableArray();
 
-            _parametersCodeDictionary =
+            this._parametersCodeDictionary =
                 parametersCode.ToDictionary(parameterExpressionCode => parameterExpressionCode.Name.ToString());
 
-            ExpressionCode body = CreateExpressionCode(function.Expression);
+            ExpressionCode body = this.CreateExpressionCode(function.Expression);
             
-            Result = Code.Lambda(function.FunctionName.ToString(), parametersCode, body);
+            this.Result = Code.Lambda(function.FunctionName.ToString(), parametersCode, body);
 
             //CompleteDelayedResolves();
         }
@@ -110,12 +110,12 @@ namespace Faml.CodeGeneration {
 
             if (symbolBinding is ParameterBinding parameterBinding) {
                 string parameterName = symbolReference.VariableName.ToString();
-                return _parametersCodeDictionary[parameterName];
+                return this._parametersCodeDictionary[parameterName];
             }
             else if (symbolBinding is FunctionSymbolBinding functionSymbolBinding) {
                 FunctionBinding functionBinding = functionSymbolBinding.FunctionBinding;
                 if (functionBinding is InternalFunctionBinding internalFunctionBinding)
-                    return CreateInternalFunctionInvocationCode(internalFunctionBinding, ImmutableArray<ExpressionCode>.Empty);
+                    return this.CreateInternalFunctionInvocationCode(internalFunctionBinding, ImmutableArray<ExpressionCode>.Empty);
                 else
                     throw new InvalidOperationException(
                         $"Unexpected function symbol binding type {functionBinding.GetType().FullName} for symbol reference '{symbolReference.Name}'");
@@ -142,7 +142,7 @@ namespace Faml.CodeGeneration {
             PropertyBinding propertyBinding = propertyAccess.PropertyBinding;
 
             ExpressionSyntax expression = propertyAccess.Expression;
-            ExpressionCode expressionCode = CreateExpressionCode(expression);
+            ExpressionCode expressionCode = this.CreateExpressionCode(expression);
 
 #if false
             if (propertyBinding is RecordPropertyBinding) {
@@ -171,13 +171,13 @@ namespace Faml.CodeGeneration {
             ImmutableArray<ExpressionCode>.Builder itemsBuilder = ImmutableArray.CreateBuilder<ExpressionCode>();
 
             foreach (ExpressionSyntax expression in sequenceLiteral.Expressions) {
-                ExpressionCode expressionCode = CreateExpressionCode(expression);
+                ExpressionCode expressionCode = this.CreateExpressionCode(expression);
                 itemsBuilder.Add(expressionCode);
             }
 
             SequenceTypeBinding sequenceTypeBinding = (SequenceTypeBinding) sequenceLiteral.GetTypeBinding();
             TypeBinding elementType = sequenceTypeBinding.ElementType;
-            RawType elementRawType = GetRawType(elementType);
+            RawType elementRawType = this.GetRawType(elementType);
 
             NewSequenceCode sequenceLiterCode = Code.NewSequence(elementRawType, itemsBuilder.ToImmutable());
             return sequenceLiterCode;
@@ -253,14 +253,14 @@ namespace Faml.CodeGeneration {
 
         private ExpressionCode CreateFunctionInvocationCode(FunctionInvocationSyntax functionInvocation) {
             if (functionInvocation.LiteralConstructorValue != null)
-                return CreateExpressionCode(functionInvocation.LiteralConstructorValue);
+                return this.CreateExpressionCode(functionInvocation.LiteralConstructorValue);
 
             FunctionBinding functionBinding = functionInvocation.FunctionBinding;
             Name? contentParameter = functionBinding.GetContentProperty();
 
             if (functionBinding is InternalFunctionBinding internalFunctionBinding) {
-                ImmutableArray<ExpressionCode> argumentsCode = CreateArgumentsCode(functionInvocation, functionBinding.GetParameters());
-                return CreateInternalFunctionInvocationCode(internalFunctionBinding, argumentsCode);
+                ImmutableArray<ExpressionCode> argumentsCode = this.CreateArgumentsCode(functionInvocation, functionBinding.GetParameters());
+                return this.CreateInternalFunctionInvocationCode(internalFunctionBinding, argumentsCode);
             }
 #if false
             else if (functionBinding is NewRecordFunctionBinding) {
@@ -272,7 +272,7 @@ namespace Faml.CodeGeneration {
             }
 #endif
             if (functionBinding is NewExternalObjectFunctionBinding newExternalObjectFunctionBinding) {
-                return CreateNewExternalObjectCode(functionInvocation, newExternalObjectFunctionBinding);
+                return this.CreateNewExternalObjectCode(functionInvocation, newExternalObjectFunctionBinding);
             }
 #if false
             else if (functionBinding is DotNetMethodFunctionBinding) {
@@ -297,7 +297,7 @@ namespace Faml.CodeGeneration {
                 if (argumentNameValuePair.ArgumentName.IsQualified())
                     continue;
 
-                var propertyValue = new PropertyValue<string, ExpressionCode>(argumentName.ToString(), CreateExpressionCode(argumentNameValuePair.Value));
+                var propertyValue = new PropertyValue<string, ExpressionCode>(argumentName.ToString(), this.CreateExpressionCode(argumentNameValuePair.Value));
                 propertyValues.Add(propertyValue);
             }
 
@@ -305,7 +305,7 @@ namespace Faml.CodeGeneration {
             if (contentArgument != null) {
                 Name? contentProperty = functionBinding.GetContentProperty();
 
-                var propertyValue = new PropertyValue<string, ExpressionCode>(contentProperty.ToString(), CreateExpressionCode(contentArgument.Value));
+                var propertyValue = new PropertyValue<string, ExpressionCode>(contentProperty.ToString(), this.CreateExpressionCode(contentArgument.Value));
                 propertyValues.Add(propertyValue);
             }
 
@@ -321,7 +321,7 @@ namespace Faml.CodeGeneration {
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName.ToQualifiableName());
                 if (argumentValue == null)
                     throw new Exception($"Argument '{parameterName}' isn't specified for function '{functionInvocation.FunctionBinding.FunctionName}'");
-                argumentsCodeBuilder.Add(CreateExpressionCode(argumentValue));
+                argumentsCodeBuilder.Add(this.CreateExpressionCode(argumentValue));
             }
 
             return argumentsCodeBuilder.ToImmutable();
@@ -338,7 +338,7 @@ namespace Faml.CodeGeneration {
                 ExpressionSyntax argumentValue = argumentsDictionary.GetValueOrNull(parameterName);
                 if (argumentValue == null)
                     throw new Exception($"Required parameter '{parameterName}' doesn't exist for function '{functionInvocation.FunctionBinding.FunctionName}'");
-                argumentsCodeBuilder.Add(CreateExpressionCode(argumentValue));
+                argumentsCodeBuilder.Add(this.CreateExpressionCode(argumentValue));
             }
 
             return argumentsCodeBuilder.ToImmutable();
@@ -417,9 +417,9 @@ namespace Faml.CodeGeneration {
 
         public ExpressionCode CreateExpressionCode(ExpressionSyntax expression) {
             if (expression is InfixExpressionSyntax infixExpressionSyntax)
-                return CreateInfixExpressionCode(infixExpressionSyntax);
+                return this.CreateInfixExpressionCode(infixExpressionSyntax);
             else if (expression is PrefixExpressionSyntax prefixExpressionSyntax)
-                return CreatePrefixExpressionCode(prefixExpressionSyntax);
+                return this.CreatePrefixExpressionCode(prefixExpressionSyntax);
 #if false
             else if (expression is IfExpressionSyntax ifExpressionSyntax)
                 return CreateIfExpressionEval(ifExpressionSyntax);
@@ -427,11 +427,11 @@ namespace Faml.CodeGeneration {
                 return CreateForExpressionEval(forExpressionSyntax);
 #endif
             else if (expression is ParenthesizedExpressionSyntax parenthesizedExpressionSyntax)
-                return CreateExpressionCode(parenthesizedExpressionSyntax.Expression);
+                return this.CreateExpressionCode(parenthesizedExpressionSyntax.Expression);
             else if (expression is BracedExpressionSyntax bracedExpression)
-                return CreateExpressionCode(bracedExpression.Expression);
+                return this.CreateExpressionCode(bracedExpression.Expression);
             else if (expression is SequenceLiteralExpressionSyntax sequenceLiteral)
-                return CreateSequenceLiteralCode(sequenceLiteral);
+                return this.CreateSequenceLiteralCode(sequenceLiteral);
             else if (expression is BooleanLiteralSyntax booleanLiteral)
                 return Code.BooleanLiteral(booleanLiteral.Value);
             else if (expression is IntLiteralSyntax intLiteral)
@@ -444,16 +444,16 @@ namespace Faml.CodeGeneration {
                     return CreateZeroArgumentFunctionInvocationEval(zeroArgumentFunctionBinding);
                 else
 #endif
-                return CreateSymbolReferenceCode(variableReferenceSyntax);
+                return this.CreateSymbolReferenceCode(variableReferenceSyntax);
             }
             else if (expression is PropertyAccessSyntax propertyAccessSyntax)
-                return CreatePropertyAccessCode(propertyAccessSyntax);
+                return this.CreatePropertyAccessCode(propertyAccessSyntax);
             /*
                         else if (expression is ParamFunctionInvocation)
                             return createParamFunctionInvocationEval((ParamFunctionInvocation) expression);
             */
             else if (expression is FunctionInvocationSyntax functionInvocationSyntax)
-                return CreateFunctionInvocationCode(functionInvocationSyntax);
+                return this.CreateFunctionInvocationCode(functionInvocationSyntax);
 #if false
             else if (expression is InterpolatedStringExpressionSyntax interpolatedStringExpressionSyntax)
                 return CreateInterpolatedStringEval(interpolatedStringExpressionSyntax);
@@ -495,8 +495,8 @@ namespace Faml.CodeGeneration {
             else
                 throw new Exception("Unknown infix operator: " + infixOperator.GetSourceRepresentation());
 
-            ExpressionCode leftOperandCode = CreateExpressionCode(expression.LeftOperand);
-            ExpressionCode rightOperandCode = CreateExpressionCode(expression.RightOperand);
+            ExpressionCode leftOperandCode = this.CreateExpressionCode(expression.LeftOperand);
+            ExpressionCode rightOperandCode = this.CreateExpressionCode(expression.RightOperand);
 
             return Code.BinaryExpression(codeOperator, leftOperandCode, rightOperandCode);
         }
@@ -509,7 +509,7 @@ namespace Faml.CodeGeneration {
                 codeOperator = UnaryOperator.Not;
             else throw new Exception("Unknown prefix operator: " + prefixOperator.GetSourceRepresentation());
 
-            ExpressionCode operandCode = CreateExpressionCode(expression.Operand);
+            ExpressionCode operandCode = this.CreateExpressionCode(expression.Operand);
 
             return Code.UnaryExpression(codeOperator, operandCode);
         }

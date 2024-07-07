@@ -27,7 +27,7 @@ namespace Faml.Binding {
         public static readonly BuiltInTypeBinding Event = new BuiltInTypeBinding("Event", null);
 
         public BuiltInTypeBinding(string typeName, TypeToolingType typeToolingType) : base(new QualifiableName(typeName), TypeFlags.None) {
-            TypeToolingType = typeToolingType;
+            this.TypeToolingType = typeToolingType;
 
             _bindings.Add(typeName, this);
         }

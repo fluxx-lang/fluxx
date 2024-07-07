@@ -12,17 +12,17 @@ namespace Faml.Binding.External {
 
 
         public ExternalAttachedTypeBinding(FamlProject project, AttachedType attachedType) : base(new QualifiableName(attachedType.FullName)) {
-            _project = project;
-            _attachedType = attachedType;
+            this._project = project;
+            this._attachedType = attachedType;
         }
 
-        public FamlProject Project => _project;
+        public FamlProject Project => this._project;
 
-        public AttachedType AttachedType => _attachedType;
+        public AttachedType AttachedType => this._attachedType;
 
         public AttachedProperty GetAttachedProperty(Name propertyName)
         {
-            foreach (AttachedProperty attachedProperty in _attachedType.AttachedProperties)
+            foreach (AttachedProperty attachedProperty in this._attachedType.AttachedProperties)
                 if (attachedProperty.Name == propertyName.ToString())
                     return attachedProperty;
 

@@ -14,7 +14,7 @@ namespace Faml.Interpreter {
         }
 
         public override void Push() {
-            Context.ObjectStack[Context.StackIndex++] = Eval();
+            Context.ObjectStack[Context.StackIndex++] = this.Eval();
         }
     }
 }

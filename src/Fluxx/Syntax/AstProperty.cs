@@ -3,9 +3,9 @@
         private readonly string _name;
 
         public AstProperty(string name) {
-            _name = name;
+            this._name = name;
         }
 
-        public string Name => _name;
+        public string Name => this._name;
     }
 }

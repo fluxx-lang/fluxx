@@ -11,30 +11,30 @@ namespace Faml.Syntax {
 
 
         public MarkupOrExpression(TextSpan customLiteralTextSpan) {
-            _customLiteralTextSpan = customLiteralTextSpan;
+            this._customLiteralTextSpan = customLiteralTextSpan;
         }
 
         public MarkupOrExpression(ExpressionSyntax expression) {
-            _expression = expression;
+            this._expression = expression;
         }
 
         public ExpressionSyntax ResolveExpression(SyntaxNode parentNode, TypeBinding typeBinding, BindingResolver bindingResolver) {
-            if (_expression != null)
-                return _expression;
+            if (this._expression != null)
+                return this._expression;
 
-            if (_customLiteralTextSpan.IsEmpty)
+            if (this._customLiteralTextSpan.IsEmpty)
                 throw new InvalidOperationException("Both _expression and _customLiteralTextSpan are unset, which shouldn't happen");
 
             FamlModule? module = parentNode.GetModule();
 
             ExpressionSyntax expression;
             if (typeBinding is ObjectTypeBinding objectTypeBinding && objectTypeBinding.SupportsCreateLiteral()) {
-                expression = objectTypeBinding.ParseLiteralValueSource(parentNode.GetModule(), _customLiteralTextSpan);
+                expression = objectTypeBinding.ParseLiteralValueSource(parentNode.GetModule(), this._customLiteralTextSpan);
                 expression.SetParent(parentNode);
             }
             else {
-                string customLiteralString = module.ModuleSyntax.SourceText.ToString(_customLiteralTextSpan);
-                expression = new InvalidExpressionSyntax(_customLiteralTextSpan, customLiteralString, typeBinding);
+                string customLiteralString = module.ModuleSyntax.SourceText.ToString(this._customLiteralTextSpan);
+                expression = new InvalidExpressionSyntax(this._customLiteralTextSpan, customLiteralString, typeBinding);
             }
 
             // Now resolve the bindings on what we just parsed, since the parse was in turn triggered by resolving bindings

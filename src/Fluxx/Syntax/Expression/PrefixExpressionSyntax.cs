@@ -15,15 +15,15 @@ namespace Faml.Syntax.Expression {
 
         // AST structure properties
         public PrefixExpressionSyntax(TextSpan span, PrefixOperator prefixOperator, ExpressionSyntax operand) : base(span) {
-            _prefixOperator = prefixOperator;
+            this._prefixOperator = prefixOperator;
 
-            _operand = operand;
+            this._operand = operand;
             operand.SetParent(this);
         }
 
-        public PrefixOperator Operator => _prefixOperator;
+        public PrefixOperator Operator => this._prefixOperator;
 
-        public ExpressionSyntax Operand => _operand;
+        public ExpressionSyntax Operand => this._operand;
 
         public override bool IsTerminalNode() {
             return false;
@@ -32,16 +32,16 @@ namespace Faml.Syntax.Expression {
         public override SyntaxNodeType NodeType => SyntaxNodeType.PrefixExpression;
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
-            visitor(_operand);
+            visitor(this._operand);
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _operand.GetTypeBinding();
+            return this._operand.GetTypeBinding();
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_prefixOperator.GetSourceRepresentation());
-            _operand.WriteSource(sourceWriter);
+            sourceWriter.Write(this._prefixOperator.GetSourceRepresentation());
+            this._operand.WriteSource(sourceWriter);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Faml.Interpreter {
         }
 
         public override object Eval() {
-            return _value;
+            return this._value;
         }
     }
 

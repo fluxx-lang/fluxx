@@ -13,17 +13,17 @@ namespace Faml.Syntax.Type {
 
         public PredefinedTypeReferenceSyntax(TextSpan span, BuiltInTypeBinding predefinedTypeBinding) :
             base(span) {
-            _predefinedTypeBinding = predefinedTypeBinding;
+            this._predefinedTypeBinding = predefinedTypeBinding;
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _predefinedTypeBinding;
+            return this._predefinedTypeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.PredefinedTypeReference;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_predefinedTypeBinding.TypeName);
+            sourceWriter.Write(this._predefinedTypeBinding.TypeName);
         }
     }
 }

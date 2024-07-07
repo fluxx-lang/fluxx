@@ -10,20 +10,20 @@ namespace Faml.Syntax.Expression {
 
 
         public EnumValueLiteralSyntax(TextSpan span, NameSyntax enumValueSyntax, EnumValueBinding enumValueBinding) : base(span) {
-            _enumValueSyntax = enumValueSyntax;
-            _enumValueSyntax.SetParent(this);
+            this._enumValueSyntax = enumValueSyntax;
+            this._enumValueSyntax.SetParent(this);
 
-            _enumValueBinding = enumValueBinding;
+            this._enumValueBinding = enumValueBinding;
         }
 
-        public NameSyntax EnumValueSyntax => _enumValueSyntax;
+        public NameSyntax EnumValueSyntax => this._enumValueSyntax;
 
-        public Name EnumValueName => _enumValueSyntax.Name;
+        public Name EnumValueName => this._enumValueSyntax.Name;
 
-        public EnumValueBinding EnumValueBinding => _enumValueBinding;
+        public EnumValueBinding EnumValueBinding => this._enumValueBinding;
 
         public override TypeBinding GetTypeBinding() {
-            return _enumValueBinding.EnumTypeBinding;
+            return this._enumValueBinding.EnumTypeBinding;
         }
 
         public override bool IsTerminalNode() {
@@ -33,12 +33,12 @@ namespace Faml.Syntax.Expression {
         public override SyntaxNodeType NodeType => SyntaxNodeType.EnumValueLiteral;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            if (_enumValueSyntax != null)
-                visitor(_enumValueSyntax);
+            if (this._enumValueSyntax != null)
+                visitor(this._enumValueSyntax);
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_enumValueSyntax.ToString());
+            sourceWriter.Write(this._enumValueSyntax.ToString());
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Faml.Api.QuickInfo {
         private readonly TextSpan _textSpan;
 
         protected QuickInfo(TextSpan textSpan) {
-            _textSpan = textSpan;
+            this._textSpan = textSpan;
         }
 
-        public TextSpan Span => _textSpan;
+        public TextSpan Span => this._textSpan;
     }
 }

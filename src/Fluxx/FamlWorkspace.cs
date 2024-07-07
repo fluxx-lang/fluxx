@@ -12,17 +12,17 @@ namespace Faml {
 
         public FamlProject CreateProject(SourceProvider sourceProvider) {
             var project = new FamlProject(this, sourceProvider);
-            _projects.Add(project);
+            this._projects.Add(project);
 
             return project;
         }
 
         public FamlProject CreateProject() {
-            return CreateProject(new NullSourceProvider());
+            return this.CreateProject(new NullSourceProvider());
         }
 
         public FamlProject CreateProject(string projectDirectory) {
-            return CreateProject(new FileSourceProvider(projectDirectory));
+            return this.CreateProject(new FileSourceProvider(projectDirectory));
         }
 
         public CultureInfo UICulture { get; set; } = CultureInfo.CurrentUICulture;

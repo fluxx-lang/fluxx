@@ -9,20 +9,20 @@ namespace Faml.Interpreter {
         private readonly ObjectEval _elseEval;
 
         public IfObjectEval(BooleanEval[] conditionEvals, ObjectEval[] valueEvals, ObjectEval elseEval) {
-            _conditionEvals = conditionEvals;
-            _valueEvals = valueEvals;
-            _elseEval = elseEval;
+            this._conditionEvals = conditionEvals;
+            this._valueEvals = valueEvals;
+            this._elseEval = elseEval;
         }
 
         public override object Eval() {
-            int length = _conditionEvals.Length;
+            int length = this._conditionEvals.Length;
 
             for (int i = 0; i < length; i++) {
-                if (_conditionEvals[i].Eval())
-                    return _valueEvals[i].Eval();
+                if (this._conditionEvals[i].Eval())
+                    return this._valueEvals[i].Eval();
             }
 
-            return _elseEval.Eval();
+            return this._elseEval.Eval();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Faml.Syntax.Literal {
         private readonly int _value;
 
         public DoubleLiteralSyntax(TextSpan span, int value) : base(span) {
-            _value = value;
+            this._value = value;
         }
 
         public override TypeBinding GetTypeBinding() {
@@ -20,9 +20,9 @@ namespace Faml.Syntax.Literal {
         public override SyntaxNodeType NodeType => SyntaxNodeType.DoubleLiteral;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_value.ToString());
+            sourceWriter.Write(this._value.ToString());
         }
 
-        public double Value => _value;
+        public double Value => this._value;
     }
 }

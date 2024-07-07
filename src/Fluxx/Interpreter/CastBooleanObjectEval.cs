@@ -3,11 +3,11 @@ namespace Faml.Interpreter {
         private readonly BooleanEval _booleanEval;
 
         public CastBooleanObjectEval(BooleanEval booleanEval) {
-            _booleanEval = booleanEval;
+            this._booleanEval = booleanEval;
         }
 
         public override object Eval() {
-            return _booleanEval.Eval();
+            return this._booleanEval.Eval();
         }
     }
 }

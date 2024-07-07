@@ -7,12 +7,12 @@ namespace Faml.Api {
         private readonly IconTagType _iconTagType;
 
         public IconTag(TextSpan sourceSpan, IconTagType iconTagType) {
-            _sourceSpan = sourceSpan;
-            _iconTagType = iconTagType;
+            this._sourceSpan = sourceSpan;
+            this._iconTagType = iconTagType;
         }
 
-        public TextSpan SourceSpan => _sourceSpan;
+        public TextSpan SourceSpan => this._sourceSpan;
 
-        public IconTagType IconTagType => _iconTagType;
+        public IconTagType IconTagType => this._iconTagType;
     }
 }

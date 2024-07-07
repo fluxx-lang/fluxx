@@ -18,20 +18,20 @@ namespace Faml.Binding.Internal {
         public FamlModule Module { get; }
 
         public InternalFunctionBinding(FunctionDefinitionSyntax functionDefinition) {
-            Module = functionDefinition.GetModule();
-            FunctionDefinition = functionDefinition;
+            this.Module = functionDefinition.GetModule();
+            this.FunctionDefinition = functionDefinition;
         }
 
-        public override QualifiableName FunctionName => FunctionDefinition.FunctionName.ToQualifiableName();
+        public override QualifiableName FunctionName => this.FunctionDefinition.FunctionName.ToQualifiableName();
 
-        public override TypeBinding ReturnTypeBinding => FunctionDefinition.ReturnTypeBinding;
+        public override TypeBinding ReturnTypeBinding => this.FunctionDefinition.ReturnTypeBinding;
 
         public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
-            int parameterIndex = FunctionDefinition.GetParameterIndex(parameterName);
+            int parameterIndex = this.FunctionDefinition.GetParameterIndex(parameterName);
             if (parameterIndex == -1)
                 return null;
 
-            return FunctionDefinition.GetParameterTypeBinding(parameterIndex);
+            return this.FunctionDefinition.GetParameterTypeBinding(parameterIndex);
         }
 
         public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
@@ -44,30 +44,30 @@ namespace Faml.Binding.Internal {
 
             Name unqualifiableArgumentName = argumentName.ToUnqualifiableName();
 
-            int parameterIndex = FunctionDefinition.GetParameterIndex(unqualifiableArgumentName);
+            int parameterIndex = this.FunctionDefinition.GetParameterIndex(unqualifiableArgumentName);
             if (parameterIndex == -1) {
                 argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
-                    $"No '{argumentName}' parameter exists for function '{FunctionDefinition.FunctionNameSyntax}'");
+                    $"No '{argumentName}' parameter exists for function '{this.FunctionDefinition.FunctionNameSyntax}'");
                 return InvalidTypeBinding.Instance;
             }
 
             // TODO: Handle ordering issues; function parameter type bindings might not be initialized, if inferred, before caller tries to resolve for FunctionInvocation
-            return FunctionDefinition.GetParameterTypeBinding(parameterIndex);
+            return this.FunctionDefinition.GetParameterTypeBinding(parameterIndex);
         }
 
         public override TypeBinding ResolveContentArgumentTypeBinding(ContentArgumentSyntax contentArgument, BindingResolver bindingResolver) {
-            Name? contentProperty = GetContentProperty();
+            Name? contentProperty = this.GetContentProperty();
             if (contentProperty == null) {
-                contentArgument.AddError($"No content parameter exists for FAML function '{FunctionName}'");
+                contentArgument.AddError($"No content parameter exists for FAML function '{this.FunctionName}'");
                 return InvalidTypeBinding.Instance;
             }
 
-            int parameterIndex = FunctionDefinition.GetParameterIndex(contentProperty.Value);
+            int parameterIndex = this.FunctionDefinition.GetParameterIndex(contentProperty.Value);
             if (parameterIndex == -1)
-                throw new InvalidOperationException($"Content parameter '{contentProperty}' for FAML function '{FunctionName}'");
+                throw new InvalidOperationException($"Content parameter '{contentProperty}' for FAML function '{this.FunctionName}'");
 
             // TODO: Handle ordering issues; function parameter type bindings might not be initialized, if inferred, before caller tries to resolve for FunctionInvocation
-            return FunctionDefinition.GetParameterTypeBinding(parameterIndex);
+            return this.FunctionDefinition.GetParameterTypeBinding(parameterIndex);
         }
 
         public override Task<ClassifiedTextMarkup?> GetParameterDescriptionAsync(Name parameterName,
@@ -76,7 +76,7 @@ namespace Faml.Binding.Internal {
         }
 
         public override string GetNoContentPropertyExistsError() {
-            return $"Use of unnamed parameter not allowed. No content parameter exists for function '{FunctionDefinition.FunctionNameSyntax}'";
+            return $"Use of unnamed parameter not allowed. No content parameter exists for function '{this.FunctionDefinition.FunctionNameSyntax}'";
         }
 
         public override Name? GetThisParameter() {
@@ -86,7 +86,7 @@ namespace Faml.Binding.Internal {
 
         public override Name? GetContentProperty() {
             // If there's just a single property, it's the content/default parameter
-            PropertyNameTypePairSyntax[] propertyNameTypePairs = FunctionDefinition.Parameters;
+            PropertyNameTypePairSyntax[] propertyNameTypePairs = this.FunctionDefinition.Parameters;
             if (propertyNameTypePairs.Length == 1)
                 return propertyNameTypePairs[0].PropertyName;
 
@@ -105,7 +105,7 @@ namespace Faml.Binding.Internal {
         /// </summary>
         /// <returns>parameter names</returns>
         public override Name[] GetParameters() {
-            PropertyNameTypePairSyntax[] propertyNameTypePairs = FunctionDefinition.Parameters;
+            PropertyNameTypePairSyntax[] propertyNameTypePairs = this.FunctionDefinition.Parameters;
 
             Name[] parameters = new Name[propertyNameTypePairs.Length];
             for (int i = 0; i < propertyNameTypePairs.Length; i++)

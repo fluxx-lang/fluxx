@@ -7,7 +7,7 @@ namespace Faml.Syntax.Literal {
         private readonly int _value;
 
         public IntLiteralSyntax(TextSpan span, int value) : base(span) {
-            _value = value;
+            this._value = value;
         }
 
         public override TypeBinding GetTypeBinding() {
@@ -17,9 +17,9 @@ namespace Faml.Syntax.Literal {
         public override SyntaxNodeType NodeType => SyntaxNodeType.IntLiteral;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_value.ToString());
+            sourceWriter.Write(this._value.ToString());
         }
 
-        public int Value => _value;
+        public int Value => this._value;
     }
 }

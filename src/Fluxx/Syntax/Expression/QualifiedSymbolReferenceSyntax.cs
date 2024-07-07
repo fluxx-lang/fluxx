@@ -15,34 +15,34 @@ namespace Faml.Syntax.Expression {
 
 
         public QualifiedSymbolReferenceSyntax(TextSpan span, QualifiedSymbolReferenceSyntax? qualifier, NameSyntax symbol) : base(span) {
-            _qualifier = qualifier;
-            _qualifier?.SetParent(this);
+            this._qualifier = qualifier;
+            this._qualifier?.SetParent(this);
 
-            _symbol = symbol;
-            _symbol.SetParent(this);
+            this._symbol = symbol;
+            this._symbol.SetParent(this);
 
             Name symbolName = symbol.Name;
-            _qualifiableName = qualifier == null ? symbolName.ToQualifiableName() : new QualifiableName(qualifier.QualifiableName, symbolName);
+            this._qualifiableName = qualifier == null ? symbolName.ToQualifiableName() : new QualifiableName(qualifier.QualifiableName, symbolName);
         }
 
-        public QualifiableName QualifiableName => _qualifiableName;
+        public QualifiableName QualifiableName => this._qualifiableName;
 
-        public bool IsType => _typeBinding != null;
+        public bool IsType => this._typeBinding != null;
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            if (_qualifier != null && _qualifier.IsType) {
-                TypeBinding typeBinding = _qualifier.GetTypeBinding();
-                _propertyBinding = bindingResolver.ResolvePropertyBinding(typeBinding, _symbol);
+            if (this._qualifier != null && this._qualifier.IsType) {
+                TypeBinding typeBinding = this._qualifier.GetTypeBinding();
+                this._propertyBinding = bindingResolver.ResolvePropertyBinding(typeBinding, this._symbol);
             }
             else {
-                QualifiableName qualifiableName = QualifiableName;
+                QualifiableName qualifiableName = this.QualifiableName;
                 TypeBindingResult typeBindingResult = bindingResolver.FindTypeBindingForType(qualifiableName);
 
                 if (typeBindingResult is TypeBindingResult.Success successResult)
-                    _typeBinding = successResult.TypeBinding;
+                    this._typeBinding = successResult.TypeBinding;
                 else if (typeBindingResult is TypeBindingResult.Error errorResult) {
                     this.AddError(errorResult.Message);
-                    _typeBinding = new InvalidTypeBinding(qualifiableName);
+                    this._typeBinding = new InvalidTypeBinding(qualifiableName);
                 }
                 else {
                     // If the type wasn't found, then don't set any binding
@@ -51,10 +51,10 @@ namespace Faml.Syntax.Expression {
         }
 
         public override TypeBinding GetTypeBinding() {
-            if (IsType)
-                return _typeBinding;
-            if (_propertyBinding != null)
-                return _propertyBinding.GetTypeBinding();
+            if (this.IsType)
+                return this._typeBinding;
+            if (this._propertyBinding != null)
+                return this._propertyBinding.GetTypeBinding();
             throw new Exception(
                 $"Can't call GetTypeBinding on symbol reference that isn't a type; check IsType first");
         }
@@ -64,17 +64,17 @@ namespace Faml.Syntax.Expression {
         public override SyntaxNodeType NodeType => SyntaxNodeType.SymbolReference;
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
-            if (_qualifier != null)
-                visitor(_qualifier);
-            visitor(_symbol);
+            if (this._qualifier != null)
+                visitor(this._qualifier);
+            visitor(this._symbol);
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            if (_qualifier != null) {
-                _qualifier.WriteSource(sourceWriter);
+            if (this._qualifier != null) {
+                this._qualifier.WriteSource(sourceWriter);
                 sourceWriter.Write(".");
             }
-            sourceWriter.Write(_symbol);
+            sourceWriter.Write(this._symbol);
         }
     }
 }

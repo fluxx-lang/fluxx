@@ -15,22 +15,22 @@ namespace Faml.DotNet {
         private readonly FieldInfo _value;
 
         public DotNetEnumValue(ExternalObjectTypeBinding typeBinding, TextSpan span, FieldInfo value) : base(span) {
-            _typeBinding = typeBinding;
-            _value = value;
+            this._typeBinding = typeBinding;
+            this._value = value;
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.DotNetEnumValue;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_value.ToString());
+            sourceWriter.Write(this._value.ToString());
         }
 
         public FieldInfo GetValue() {
-            return _value;
+            return this._value;
         }
     }
 }

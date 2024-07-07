@@ -8,16 +8,16 @@ namespace Faml.Messaging {
 
 
         public WebSocketClientMessagingConnector(string developmentMachine) {
-            _developmentMachine = developmentMachine;
+            this._developmentMachine = developmentMachine;
         }
 
         public async Task Start() {
 
             try {
                 var clientWebSocket = new ClientWebSocket();
-                await clientWebSocket.ConnectAsync(new Uri("ws://" + _developmentMachine), StopCts.Token);
+                await clientWebSocket.ConnectAsync(new Uri("ws://" + this._developmentMachine), this.StopCts.Token);
 
-                await ProcessMessages(clientWebSocket);
+                await this.ProcessMessages(clientWebSocket);
             }
             catch (Exception e) {
                 Console.WriteLine(e);

@@ -23,9 +23,9 @@ namespace Faml.Syntax.Literal {
         public override SyntaxNodeType NodeType => SyntaxNodeType.StringLiteral;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_value);
+            sourceWriter.Write(this._value);
         }
 
-        public virtual string Value => _value;
+        public virtual string Value => this._value;
     }
 }

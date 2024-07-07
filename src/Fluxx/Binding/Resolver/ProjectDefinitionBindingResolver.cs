@@ -14,7 +14,7 @@ namespace Faml.Binding.Resolver {
         private readonly FamlProject _project;
 
         public ProjectDefinitionBindingResolver(FamlProject project) {
-            _project = project;
+            this._project = project;
         }
 
         public override TypeBindingResult FindTypeBindingForType(QualifiableName typeName) {
@@ -50,7 +50,7 @@ namespace Faml.Binding.Resolver {
             // imports
             string potentialTypeName = unqualifiableName.GetPascalCase();
             var className = new QualifiableName("Faml.ProjectTypes." + potentialTypeName);
-            TypeBindingResult typeBindingResult = _project.ResolveTypeBinding(className);
+            TypeBindingResult typeBindingResult = this._project.ResolveTypeBinding(className);
 
             if (typeBindingResult is TypeBindingResult.Success success) {
                 if (success.TypeBinding is ExternalObjectTypeBinding externalObjectTypeBinding)

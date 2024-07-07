@@ -11,21 +11,21 @@ namespace Faml.Interpreter {
         internal IntEval Expression;
 
         public FunctionInvocationIntEval(Eval[] arguments, CreateEvals createEvals, FunctionDefinitionSyntax functionDefinition) {
-            Arguments = arguments;
+            this.Arguments = arguments;
 
             createEvals.DelayResolveFunctionEval(functionDefinition,
-                (functionEval) => Expression = (IntEval)functionEval);
+                (functionEval) => this.Expression = (IntEval)functionEval);
         }
 
         public override int Eval() {
-            int argumentsLength = Arguments.Length;
+            int argumentsLength = this.Arguments.Length;
             for (int i = 0; i < argumentsLength; i++)
-                Arguments[i].Push();
+                this.Arguments[i].Push();
 
             int savedBaseIndex = Context.BaseIndex;
             Context.BaseIndex = Context.StackIndex;
 
-            int returnValue = Expression.Eval();
+            int returnValue = this.Expression.Eval();
 
             Context.BaseIndex = savedBaseIndex;
             Context.StackIndex -= argumentsLength;

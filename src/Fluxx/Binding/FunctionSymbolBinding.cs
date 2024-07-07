@@ -10,12 +10,12 @@ namespace Faml.Binding
         private readonly FunctionBindingFunctionTypeBinding _typeBinding;
 
         public FunctionSymbolBinding(FunctionBinding functionBinding) {
-            _functionBinding = functionBinding;
-            _typeBinding = new FunctionBindingFunctionTypeBinding(functionBinding);
+            this._functionBinding = functionBinding;
+            this._typeBinding = new FunctionBindingFunctionTypeBinding(functionBinding);
         }
 
-        public FunctionBinding FunctionBinding => _functionBinding;
+        public FunctionBinding FunctionBinding => this._functionBinding;
 
-        public override TypeBinding GetTypeBinding() => _typeBinding;
+        public override TypeBinding GetTypeBinding() => this._typeBinding;
     }
 }

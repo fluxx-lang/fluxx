@@ -13,17 +13,17 @@ namespace Faml.Binding.Internal {
         private readonly TypeBinding _typeBinding;
 
         public ParameterBinding(FunctionDefinitionSyntax functionDefinition, int parameterIndex) {
-            _functionDefinition = functionDefinition;
-            _parameterIndex = parameterIndex;
-            _typeBinding = functionDefinition.Parameters[parameterIndex].TypeReferenceSyntax.GetTypeBinding();
+            this._functionDefinition = functionDefinition;
+            this._parameterIndex = parameterIndex;
+            this._typeBinding = functionDefinition.Parameters[parameterIndex].TypeReferenceSyntax.GetTypeBinding();
         }
 
-        public FunctionDefinitionSyntax FunctionDefinition => _functionDefinition;
+        public FunctionDefinitionSyntax FunctionDefinition => this._functionDefinition;
 
-        public int ParameterIndex => _parameterIndex;
+        public int ParameterIndex => this._parameterIndex;
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
     }
 }

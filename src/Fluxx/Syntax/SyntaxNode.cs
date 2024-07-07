@@ -14,23 +14,23 @@ namespace Faml.Syntax {
 
 
         protected SyntaxNode(TextSpan span) {
-            _span = span;
+            this._span = span;
         }
 
-        public virtual SyntaxNode Parent => _parent;
+        public virtual SyntaxNode Parent => this._parent;
 
         /// <summary>
         /// The absolute span of this node in characters, including its leading and trailing trivia.
         /// </summary>
-        public TextSpan FullSpan => _span;
+        public TextSpan FullSpan => this._span;
 
         /// <summary>
         /// The absolute span of this node in characters, not including its leading and trailing trivia.
         /// </summary>
-        public TextSpan Span => FullSpan;
+        public TextSpan Span => this.FullSpan;
 
         public bool OverlapsWith(TextSpan span) {
-            return FullSpan.OverlapsWith(span);
+            return this.FullSpan.OverlapsWith(span);
         }
 
         /// <summary>
@@ -39,11 +39,11 @@ namespace Faml.Syntax {
         /// </summary>
         /// <param name="message">diagnostic message, for the user</param>
         public void AddError(string message) {
-            GetModule().AddError(this, message);
+            this.GetModule().AddError(this, message);
         }
 
         public virtual void SetParent(SyntaxNode parent) {
-            _parent = parent;
+            this._parent = parent;
         }
 
         public virtual object GetPropertyValue(AstProperty property) {
@@ -52,7 +52,7 @@ namespace Faml.Syntax {
 
         public override string ToString() {
             var sourceWriter = new SourceWriter();
-            WriteSource(sourceWriter);
+            this.WriteSource(sourceWriter);
             return sourceWriter.ToString();
         }
 
@@ -84,10 +84,10 @@ namespace Faml.Syntax {
             throw new Exception("No enclosing module");
         }
 
-        public FamlModule GetModule() => GetModuleSyntax().Module;
+        public FamlModule GetModule() => this.GetModuleSyntax().Module;
 
         public FamlProject GetProject() {
-            return GetModuleSyntax().Project;
+            return this.GetModuleSyntax().Project;
         }
 
         public FunctionDefinitionSyntax GetEnclosingFunctionDefinition() {
@@ -132,25 +132,25 @@ namespace Faml.Syntax {
 
         public SyntaxNode[] GetChildren() {
             int childCount= 0;
-            VisitChildren((child) => ++childCount);
+            this.VisitChildren((child) => ++childCount);
 
             SyntaxNode[] children = new SyntaxNode[childCount];
             int index = 0;
-            VisitChildren((child) => {
+            this.VisitChildren((child) => {
                 children[index++] = child;
             });
             return children;
         }
 
         public SyntaxNode? GetNextTerminalNodeFromPosition(int position) {
-            if (position >= Span.End)
+            if (position >= this.Span.End)
                 throw new ArgumentOutOfRangeException(nameof(position), position, "position is past the end of the node");
 
-            if (IsTerminalNode())
+            if (this.IsTerminalNode())
                 return this;
             else {
                 SyntaxNode? terminalNodeAtPosition = null;
-                VisitChildren((child) => {
+                this.VisitChildren((child) => {
                     if (terminalNodeAtPosition == null && position < child.Span.End)
                         terminalNodeAtPosition = child.GetNextTerminalNodeFromPosition(position);
                 });
@@ -161,15 +161,15 @@ namespace Faml.Syntax {
         public SyntaxNode? GetPreviousTerminalNodeFromPosition(int position) {
             // The invariant here is that the position is always contained by the span or after it
 
-            if (position < Span.Start)
+            if (position < this.Span.Start)
                 throw new ArgumentOutOfRangeException(nameof(position), position, "position is before the start the node");
 
-            if (IsTerminalNode())
+            if (this.IsTerminalNode())
                 return this;
             else {
                 SyntaxNode? terminalNodeAtPosition = null;
                 SyntaxNode? previousChildToCheck = null;
-                VisitChildren((child) => {
+                this.VisitChildren((child) => {
                     if (terminalNodeAtPosition == null && position >= child.Span.Start) {
                         if (child.Span.Contains(position))
                             terminalNodeAtPosition = child.GetPreviousTerminalNodeFromPosition(position);
@@ -197,15 +197,15 @@ namespace Faml.Syntax {
         /// <param name="position">position in question</param>
         /// <returns>most specific descendent SyntaxNode containing the position</returns>
         public SyntaxNode GetNodeAtPosition(int position) {
-            if (! Span.ContainsInclusiveEnd(position))
+            if (! this.Span.ContainsInclusiveEnd(position))
                 throw new ArgumentOutOfRangeException(nameof(position), position,
-                    $"position {position} is outside the node's range of {Span.Start} - {Span.End}");
+                    $"position {position} is outside the node's range of {this.Span.Start} - {this.Span.End}");
 
-            if (IsTerminalNode())
+            if (this.IsTerminalNode())
                 return this;
             else {
                 SyntaxNode? descendentNodeAtPosition = null;
-                VisitChildren((child) => {
+                this.VisitChildren((child) => {
                     if (descendentNodeAtPosition == null && child.Span.ContainsInclusiveEnd(position))
                         descendentNodeAtPosition = child.GetNodeAtPosition(position);
                 });
@@ -216,11 +216,11 @@ namespace Faml.Syntax {
 
         public void VisitNodeAndDescendentsPreorder(SyntaxVisitor visitor) {
             visitor(this);
-            VisitChildren((childNode) => childNode.VisitNodeAndDescendentsPreorder(visitor));
+            this.VisitChildren((childNode) => childNode.VisitNodeAndDescendentsPreorder(visitor));
         }
 
         public void VisitNodeAndDescendentsPostorder(SyntaxVisitor visitor) {
-            VisitChildren((childNode) => childNode.VisitNodeAndDescendentsPostorder(visitor));
+            this.VisitChildren((childNode) => childNode.VisitNodeAndDescendentsPostorder(visitor));
             visitor(this);
         }
 

@@ -15,13 +15,13 @@ namespace Faml.Syntax.Type {
         private TypeBinding _typeBinding;
 
         public ObjectTypeReferenceSyntax(TextSpan span, QualifiableNameSyntax typeNameSyntax) : base(span) {
-            _typeNameSyntax = typeNameSyntax;
-            _typeNameSyntax.SetParent(this);
+            this._typeNameSyntax = typeNameSyntax;
+            this._typeNameSyntax.SetParent(this);
         }
 
-        public QualifiableNameSyntax TypeNameSyntax => _typeNameSyntax;
+        public QualifiableNameSyntax TypeNameSyntax => this._typeNameSyntax;
 
-        public QualifiableName TypeName => _typeNameSyntax.Name;
+        public QualifiableName TypeName => this._typeNameSyntax.Name;
 
         public override bool IsTerminalNode() {
             return false;
@@ -30,19 +30,19 @@ namespace Faml.Syntax.Type {
         public override SyntaxNodeType NodeType => SyntaxNodeType.ObjectTypeReference;
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
-            visitor(_typeNameSyntax);
+            visitor(this._typeNameSyntax);
         }
 
         protected internal override void ResolveExplicitTypeBindings(BindingResolver bindingResolver) {
-            _typeBinding = bindingResolver.ResolveObjectTypeBinding(this);
+            this._typeBinding = bindingResolver.ResolveObjectTypeBinding(this);
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            sourceWriter.Write(_typeNameSyntax);
+            sourceWriter.Write(this._typeNameSyntax);
         }
     }
 }

@@ -8,35 +8,35 @@ namespace Faml {
         private readonly FamlProject _project;
 
         public FamlTypeToolingEnvironment(FamlProject project) {
-            _project = project;
+            this._project = project;
         }
 
         public override TypeToolingType? GetType(RawType rawType) {
-            return _project.GetTypeToolingType(rawType);
+            return this._project.GetTypeToolingType(rawType);
         }
 
         public override TypeToolingType GetRequiredType(RawType rawType) {
-            TypeToolingType typeToolingType = GetType(rawType);
+            TypeToolingType typeToolingType = this.GetType(rawType);
             if (typeToolingType == null)
                 throw new UserViewableException($"Could not find TypeToolingType for {rawType}");
             return typeToolingType;
         }
 
         public override RawType? GetRawType(string rawTypeName) {
-            return _project.GetTypeToolingRawType(rawTypeName);
+            return this._project.GetTypeToolingRawType(rawTypeName);
         }
 
         public override RawType GetRequiredRawType(string rawTypeName) {
-            RawType rawType = GetRawType(rawTypeName);
+            RawType rawType = this.GetRawType(rawTypeName);
             if (rawType == null)
                 throw new UserViewableException($"Could not find type {rawTypeName}");
             return rawType;
         }
 
         public override object Instantiate(RawType rawType, params object[] args) {
-            return _project.Instantiate(rawType, args);
+            return this._project.Instantiate(rawType, args);
         }
 
-        public override CultureInfo UICulture => _project.Workspace.UICulture;
+        public override CultureInfo UICulture => this._project.Workspace.UICulture;
     }
 }

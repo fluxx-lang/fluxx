@@ -22,33 +22,33 @@ namespace Faml.Api {
         }
 
         public QualifiableName(string name) {
-            _name = name;
+            this._name = name;
         }
 
         public QualifiableName(QualifiableName qualifier, Name lastComponent) {
-            _name = qualifier + "." + lastComponent;
+            this._name = qualifier + "." + lastComponent;
         }
 
-        public bool IsQualified() => _name.IndexOf('.') != -1;
+        public bool IsQualified() => this._name.IndexOf('.') != -1;
 
-        public bool IsEmpty() => _name.Length == 0;
+        public bool IsEmpty() => this._name.Length == 0;
 
         public Name ToUnqualifiableName() {
-            if (IsQualified())
+            if (this.IsQualified())
                 throw new Exception($"Can't convert qualified name '{this}' to unqualified name");
 
-            return new Name(_name);
+            return new Name(this._name);
         }
 
         public string ToRelativePath() {
-            return _name.Replace('.', Path.PathSeparator) + ".faml";
+            return this._name.Replace('.', Path.PathSeparator) + ".faml";
         }
 
         public Name GetLastComponent() {
-            int lastPeriod = _name.LastIndexOf('.');
+            int lastPeriod = this._name.LastIndexOf('.');
             if (lastPeriod == -1)
-                return new Name(_name);
-            else return new Name(_name.Substring(lastPeriod + 1));
+                return new Name(this._name);
+            else return new Name(this._name.Substring(lastPeriod + 1));
         }
 
         /// <summary>
@@ -58,31 +58,31 @@ namespace Faml.Api {
         /// <param name="unqualifiedName">unqualified name to match against</param>
         /// <returns>true if unqualifiedName is the last component of this name or the same as this name</returns>
         public bool LastComponentMatches(string unqualifiedName) {
-            int lastComponentIndex = _name.Length - unqualifiedName.Length;
-            return _name.EndsWith(unqualifiedName) && lastComponentIndex == 0 || (lastComponentIndex > 0 && _name[lastComponentIndex - 1] == '.');
+            int lastComponentIndex = this._name.Length - unqualifiedName.Length;
+            return this._name.EndsWith(unqualifiedName) && lastComponentIndex == 0 || (lastComponentIndex > 0 && this._name[lastComponentIndex - 1] == '.');
         }
 
         public bool LastComponentMatches(Name unqualifiedName) {
-            return LastComponentMatches(unqualifiedName.ToString());
+            return this.LastComponentMatches(unqualifiedName.ToString());
         }
 
         public QualifiableName GetQualifier() {
-            int lastPeriodIndex = _name.LastIndexOf('.');
+            int lastPeriodIndex = this._name.LastIndexOf('.');
             if (lastPeriodIndex == -1)
-                throw new Exception($"Can't call GetQualifier on unqualified name: {_name}");
-            return new QualifiableName(_name.Substring(0, lastPeriodIndex));
+                throw new Exception($"Can't call GetQualifier on unqualified name: {this._name}");
+            return new QualifiableName(this._name.Substring(0, lastPeriodIndex));
         }
 
         public override string ToString() {
-            return _name;
+            return this._name;
         }
 
         public bool Equals(QualifiableName other) {
-            return string.Equals(_name, other._name);
+            return string.Equals(this._name, other._name);
         }
 
         public override bool Equals(object obj) {
-            return obj is Name && Equals((Name) obj);
+            return obj is Name && this.Equals((Name) obj);
         }
 
         public static bool operator ==(QualifiableName val1, QualifiableName val2) {
@@ -94,7 +94,7 @@ namespace Faml.Api {
         }
 
         public override int GetHashCode() {
-            return _name.GetHashCode();
+            return this._name.GetHashCode();
         }
     }
 }

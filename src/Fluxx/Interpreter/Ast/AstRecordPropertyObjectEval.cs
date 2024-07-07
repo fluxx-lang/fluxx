@@ -9,13 +9,13 @@ namespace Faml.Interpreter.Ast {
         private readonly ObjectEval _astRecordObjectEval;
 
         public AstRecordPropertyObjectEval(string propertyName, ObjectEval astRecordObjectEval) {
-            _propertyName = propertyName;
-            _astRecordObjectEval = astRecordObjectEval;
+            this._propertyName = propertyName;
+            this._astRecordObjectEval = astRecordObjectEval;
         }
 
         public override object Eval() {
-            var astRecord = (AstRecord) _astRecordObjectEval.Eval();
-            return astRecord.GetProperty(_propertyName);
+            var astRecord = (AstRecord) this._astRecordObjectEval.Eval();
+            return astRecord.GetProperty(this._propertyName);
         }
     }
 }

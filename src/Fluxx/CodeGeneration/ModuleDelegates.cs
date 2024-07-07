@@ -14,7 +14,7 @@ namespace Faml.CodeGeneration {
         
 
         public ModuleDelegates(TypeToolingEnvironment typeToolingEnvironment) {
-            _typeToolingEnvironment = typeToolingEnvironment;
+            this._typeToolingEnvironment = typeToolingEnvironment;
         }
 
         /// <summary>
@@ -26,17 +26,17 @@ namespace Faml.CodeGeneration {
         /// <returns>delegate holder</returns>
         public FunctionDelegateHolder GetOrCreateFunctionDelegate(FunctionDefinitionSyntax functionDefinition) {
             Name functionName = functionDefinition.FunctionName;
-            if (_functionDelegateHolders.TryGetValue(functionName, out FunctionDelegateHolder existingDelegateHolder))
+            if (this._functionDelegateHolders.TryGetValue(functionName, out FunctionDelegateHolder existingDelegateHolder))
                 return existingDelegateHolder;
 
             // First add the delegate holder, so anything that recursively calls back to this function won't try to
             // recreate its delegate. The rule is that if the delegate holder exists, then the delegate exists or is
             // already in the process of getting created.
             var delegateHolder = new FunctionDelegateHolder();
-            _functionDelegateHolders.Add(functionName, delegateHolder);
+            this._functionDelegateHolders.Add(functionName, delegateHolder);
 
             var createFunctionCode = new CreateFunctionCode(functionDefinition);
-            LambdaExpression lambdaExpression = new ConvertToExpressionTree(_typeToolingEnvironment, createFunctionCode.Result).Result;
+            LambdaExpression lambdaExpression = new ConvertToExpressionTree(this._typeToolingEnvironment, createFunctionCode.Result).Result;
             Delegate functionDelegate = lambdaExpression.Compile();
 
             delegateHolder.FunctionDelegate = functionDelegate;
@@ -45,11 +45,11 @@ namespace Faml.CodeGeneration {
         }
 
         public void AddExampleDelegate(ExampleDefinitionSyntax exampleDefinition, Delegate expressionDelegate) {
-            _exampleDelegates.Add(exampleDefinition, expressionDelegate);
+            this._exampleDelegates.Add(exampleDefinition, expressionDelegate);
         }
 
         public Delegate? GetExampleDelegate(ExampleDefinitionSyntax exampleDefinition) {
-            if (!_exampleDelegates.TryGetValue(exampleDefinition, out Delegate exampleDelegate))
+            if (!this._exampleDelegates.TryGetValue(exampleDefinition, out Delegate exampleDelegate))
                 return null;
             return exampleDelegate;
         }

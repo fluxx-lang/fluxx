@@ -22,22 +22,22 @@ namespace Faml.Lexer {
         public Token(SourceText sourceText) : this(new ParseableSource(sourceText, 0, sourceText.Length)) {}
 
         public Token(ParseableSource source, bool noInitialAdvance = false) {
-            _source = source;
-            _sourceEnd = source.EndPosition;
+            this._source = source;
+            this._sourceEnd = source.EndPosition;
 
-            SetPosition(source.StartPosition);
+            this.SetPosition(source.StartPosition);
 
-            _prevTokenEndPosition = -1;
+            this._prevTokenEndPosition = -1;
 
             if (! noInitialAdvance)
-                Advance();
+                this.Advance();
         }
 
-        public ParseableSource Source => _source;
+        public ParseableSource Source => this._source;
 
         public bool InErrorMode {
-            get => _inErrorMode;
-            set => _inErrorMode = value;
+            get => this._inErrorMode;
+            set => this._inErrorMode = value;
         }
 
         /// <summary>
@@ -45,117 +45,117 @@ namespace Faml.Lexer {
         /// the special token ERROR_MODE is returned. Normally the parsing code treats that token as
         /// special, not matching anything valid, and instead generating a stub item in the AST.
         /// </summary>
-        public TokenType Type => _inErrorMode ? TokenType.ErrorMode : _type;
+        public TokenType Type => this._inErrorMode ? TokenType.ErrorMode : this._type;
 
         /// <summary>
         /// Return the current token type, even in error mode. This is normally just used by the sync
         /// code, trying to to match on a valid synchronizing token, for panic mode error recovery,
         /// to then exit error mode.
         /// </summary>
-        public TokenType TypeForErrorMode => _type;
+        public TokenType TypeForErrorMode => this._type;
 
         public TokenType TypeAllowPropertyIdentifier {
             get {
                 //TransformIntoPropertyIdentifierIfCan();
-                return Type;
+                return this.Type;
             }
         }
 
         public override string ToString() {
-            string typeString = _type.ToString();
-            if (_type == TokenType.Identifier || _type == TokenType.PropertyIdentifier /* || type == TokenType.FUNCTION_NAME */)
-                return typeString + "(" + StringValue + ")";
+            string typeString = this._type.ToString();
+            if (this._type == TokenType.Identifier || this._type == TokenType.PropertyIdentifier /* || type == TokenType.FUNCTION_NAME */)
+                return typeString + "(" + this.StringValue + ")";
             else return typeString;
         }
 
-        public int TokenStartPosition => _tokenStartPosition;
+        public int TokenStartPosition => this._tokenStartPosition;
 
-        public int TokenStartColumn => _source.GetColumn(_tokenStartPosition);
+        public int TokenStartColumn => this._source.GetColumn(this._tokenStartPosition);
 
-        public int TokenEndPosition => _position;
+        public int TokenEndPosition => this._position;
 
-        public TextSpan TokenSpan => TextSpan.FromBounds(_tokenStartPosition, _position);
+        public TextSpan TokenSpan => TextSpan.FromBounds(this._tokenStartPosition, this._position);
 
-        public TextSpan TokenSourceSpanExceptForLastCharacter => TextSpan.FromBounds(_tokenStartPosition, _position - 1);
+        public TextSpan TokenSourceSpanExceptForLastCharacter => TextSpan.FromBounds(this._tokenStartPosition, this._position - 1);
 
-        public int TokenLength => _position - _tokenStartPosition;
+        public int TokenLength => this._position - this._tokenStartPosition;
 
-        public int PrevTokenEndPosition => _prevTokenEndPosition;
+        public int PrevTokenEndPosition => this._prevTokenEndPosition;
 
         public void RescanAsTextBlock(int introducingPosition, bool allowSemicolonToTerminate = false, bool allowRightBraceToTerminate = false, bool allowIfConditionPipeToTerminate = false) {
-            StartRescanAsTextBlock();
+            this.StartRescanAsTextBlock();
 
             // Multi line context sensitive text must always be the complete contents of 1 or more lines. So it must always start on a new line.
             // Single line text must always be preceded by something else on the same line and can't span multiple lines.
-            if (GetCurrChar() == '\n' && introducingPosition != -1) {
-                AdvanceChar();
-                ScanMultiLineTextBlock(introducingPosition);
+            if (this.GetCurrChar() == '\n' && introducingPosition != -1) {
+                this.AdvanceChar();
+                this.ScanMultiLineTextBlock(introducingPosition);
             }
             else
-                ScanSingleLineTextBlock(allowSemicolonToTerminate: allowSemicolonToTerminate, allowRightBraceToTerminate: allowRightBraceToTerminate, allowIfConditionPipeToTerminate: allowIfConditionPipeToTerminate);
+                this.ScanSingleLineTextBlock(allowSemicolonToTerminate: allowSemicolonToTerminate, allowRightBraceToTerminate: allowRightBraceToTerminate, allowIfConditionPipeToTerminate: allowIfConditionPipeToTerminate);
 
-            FinishRescanAsTextBlock();
+            this.FinishRescanAsTextBlock();
         }
 
-        public bool IsAtStartOfLine => _source.IsAtStartOfLine(_tokenStartPosition);
+        public bool IsAtStartOfLine => this._source.IsAtStartOfLine(this._tokenStartPosition);
 
         public bool IsIndentedOnSubsequentLineFrom(int basePosition) {
-            return _source.IsIndentedOnSubsequentLine(basePosition, _tokenStartPosition);
+            return this._source.IsIndentedOnSubsequentLine(basePosition, this._tokenStartPosition);
         }
 
         public void RescanAsMultiLineTextBlock(int introducingPosition) {
-            StartRescanAsTextBlock();
+            this.StartRescanAsTextBlock();
 
             // Multi line context sensitive text must always be the complete contents of 1 or more lines. So it must always start on a new line.
             // Single line text must always be preceded by something else on the same line and can't span multiple lines.
-            if (GetCurrChar() == '\n') {
-                AdvanceChar();
-                ScanMultiLineTextBlock(introducingPosition);
+            if (this.GetCurrChar() == '\n') {
+                this.AdvanceChar();
+                this.ScanMultiLineTextBlock(introducingPosition);
             }
             else
                 throw new InvalidOperationException("RescanAsMultiLineTextBlock called when token isn't a multiline text block");
 
-            FinishRescanAsTextBlock();
+            this.FinishRescanAsTextBlock();
         }
 
         private void StartRescanAsTextBlock() {
-            _position = PrevTokenEndPosition;
+            this._position = this.PrevTokenEndPosition;
 
             // Skip leading whitespace, until the first content or end of line
-            SkipSpaces();
+            this.SkipSpaces();
         }
 
         private void FinishRescanAsTextBlock() {
             // Trim trailing whitespace
-            while (_position > _tokenStartPosition) {
-                if (_source.IsSpaceOrNewlineAt(_position - 1))
-                    --_position;
+            while (this._position > this._tokenStartPosition) {
+                if (this._source.IsSpaceOrNewlineAt(this._position - 1))
+                    --this._position;
                 else break;
             }
 
             // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
-            StringValue = "";
-            _type = TokenType.TextBlock;
+            this.StringValue = "";
+            this._type = TokenType.TextBlock;
         }
 
         public void AdvanceForBracketedTextBlock() {
-            _prevTokenEndPosition = _position;
-            _tokenStartPosition = _position;
+            this._prevTokenEndPosition = this._position;
+            this._tokenStartPosition = this._position;
 
             int nestedBrackets = 0;
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
 
                 // For a backslash, always skip the character following including both in the text block. It's then
                 // up to the custom literal value parser code to later treat the backslash and following character how
                 // it wants. However, a newline still terminates the text, even if there's a backslash before it
                 if (currChar == '\\') {
-                    AdvanceChar();
-                    if (GetCurrChar() != '\n')
-                        AdvanceChar();
+                    this.AdvanceChar();
+                    if (this.GetCurrChar() != '\n')
+                        this.AdvanceChar();
                 }
                 else if (currChar == '[') {
-                    AdvanceChar();
+                    this.AdvanceChar();
                     ++nestedBrackets;
                 }
                 else if (currChar == ']') {
@@ -163,17 +163,17 @@ namespace Faml.Lexer {
                         break;
                     else {
                         --nestedBrackets;
-                        AdvanceChar();
+                        this.AdvanceChar();
                     }
                 }
                 else if (currChar == '\0')
                     break;
                 else
-                    AdvanceChar();
+                    this.AdvanceChar();
             }
 
-            StringValue = "";  // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
-            _type = TokenType.TextBlock;
+            this.StringValue = "";  // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
+            this._type = TokenType.TextBlock;
         }
 
         /*
@@ -212,62 +212,62 @@ namespace Faml.Lexer {
          */
 
         private void ScanSingleLineTextBlock(bool allowSemicolonToTerminate = false, bool allowRightBraceToTerminate = false, bool allowIfConditionPipeToTerminate = false) {
-            _tokenStartPosition = _position;
+            this._tokenStartPosition = this._position;
 
             DelimiterStack delimiterStack = new DelimiterStack();
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
 
                 // For a backslash, always skip the character following including both in the property value. It's then
                 // up to the property literal value parser code to later treat the backslash and following character how
                 // it wants. However, a newline still terminates the text, even if there's a backslash before it
                 if (currChar == '\\') {
-                    AdvanceChar();
-                    if (GetCurrChar() != '\n')
-                        AdvanceChar();
+                    this.AdvanceChar();
+                    if (this.GetCurrChar() != '\n')
+                        this.AdvanceChar();
                 }
                 else if (currChar == ';' && allowSemicolonToTerminate && delimiterStack.IsEmpty)
                     return;
                 else if (currChar == '{') {
-                    AdvanceChar();
+                    this.AdvanceChar();
                     delimiterStack.Push(currChar);
                 }
                 else if (currChar == '}') {
                     if (allowRightBraceToTerminate && delimiterStack.IsEmpty)
                         return;
                     delimiterStack.PopUntil('{');
-                    AdvanceChar();
+                    this.AdvanceChar();
                 }
                 else if (currChar == '[') {
-                    AdvanceChar();
+                    this.AdvanceChar();
                     delimiterStack.Push(currChar);
                 }
                 else if (currChar == ']') {
                     delimiterStack.PopUntil(']');
-                    AdvanceChar();
+                    this.AdvanceChar();
                 }
                 else if (currChar == '\n' || currChar == '\0')
                     return;
                 else
-                    AdvanceChar();
+                    this.AdvanceChar();
             }
         }
 
         private void ScanMultiLineTextBlock(int introducingPosition) {
             // Skip any leading whitespace and blank lines
-            SkipSpacesAndNewlines();
+            this.SkipSpacesAndNewlines();
 
-            _tokenStartPosition = _position;
+            this._tokenStartPosition = this._position;
 
-            int introducingColumn = _source.GetColumn(introducingPosition);
+            int introducingColumn = this._source.GetColumn(introducingPosition);
             while (true) {
-                SkipSpaces();
+                this.SkipSpaces();
 
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
 
                 // If a line is completely blank, move on to the next, no matter how much it's indented
                 if (currChar == '\n') {
-                    AdvanceChar();
+                    this.AdvanceChar();
                     continue;
                 }
 
@@ -276,37 +276,37 @@ namespace Faml.Lexer {
                     break;
 
                 // If the current indent isn't more than the introducing line, we're done
-                if (_source.GetColumn(_position) <= introducingColumn)
+                if (this._source.GetColumn(this._position) <= introducingColumn)
                     break;
 
                 // Read the rest of the line
                 while (currChar != '\n' && currChar != '\0') {
-                    AdvanceChar();
-                    currChar = GetCurrChar();
+                    this.AdvanceChar();
+                    currChar = this.GetCurrChar();
                 }
                 if (currChar == '\n')
-                    AdvanceChar();
+                    this.AdvanceChar();
             }
         }
 
         private int AdvanceForIndentWhitespace() {
             int indentAmount = 0;
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
 
                 if (currChar == ' ') {
                     ++indentAmount;
-                    AdvanceChar();
+                    this.AdvanceChar();
                 }
                 else if (currChar == '\t') {
                     // Tabs are strongly discouraged but, when present, are assumed to be 4 spaces
                     int additionalIndent = 4 - indentAmount % 4;
 
                     indentAmount += additionalIndent;
-                    AdvanceChar();
+                    this.AdvanceChar();
                 }
                 else if (currChar == '\r') {
-                    AdvanceChar();   // Ignore carriage returns
+                    this.AdvanceChar();   // Ignore carriage returns
                 }
                 else break;
             }
@@ -318,21 +318,21 @@ namespace Faml.Lexer {
         /// </summary>
         /// <returns>true iff the next token will be a PROPERTY</returns>
         public bool LookaheadIsPropertyIdentifier() {
-            int peekPosition = _position;
+            int peekPosition = this._position;
 
             // Skip whitespace
-            while (_source.IsSpaceOrNewlineAt(peekPosition))
+            while (this._source.IsSpaceOrNewlineAt(peekPosition))
                 ++peekPosition;
 
             // See if there's a property name, ending with a colon
-            char initialChar = _source.GetCharAt(peekPosition++);
+            char initialChar = this._source.GetCharAt(peekPosition++);
             if (!IsPropertyIdentifierInitialCharacter(initialChar))
                 return false;
 
-            while (IsPropertyIdentifierCharacter(_source.GetCharAt(peekPosition)))
+            while (IsPropertyIdentifierCharacter(this._source.GetCharAt(peekPosition)))
                 ++peekPosition;
 
-            return _source.GetCharAt(peekPosition) == ':';
+            return this._source.GetCharAt(peekPosition) == ':';
         }
 
         /// <summary>
@@ -340,13 +340,13 @@ namespace Faml.Lexer {
         /// </summary>
         /// <returns>true iff the next token will be a PROPERTY</returns>
         public bool LookaheadIsLeftBracket() {
-            int peekPosition = _position;
+            int peekPosition = this._position;
 
             // Skip whitespace
-            while (_source.IsSpaceOrNewlineAt(peekPosition))
+            while (this._source.IsSpaceOrNewlineAt(peekPosition))
                 ++peekPosition;
 
-            return _source.GetCharAt(peekPosition++) == '[';
+            return this._source.GetCharAt(peekPosition++) == '[';
         }
 
         /// <summary>
@@ -354,62 +354,62 @@ namespace Faml.Lexer {
         /// </summary>
         /// <returns>true iff the next token will be a PROPERTY</returns>
         public bool LookaheadIsRightBrace() {
-            int peekPosition = _position;
+            int peekPosition = this._position;
 
             // Skip whitespace
-            while (_source.IsSpaceOrNewlineAt(peekPosition))
+            while (this._source.IsSpaceOrNewlineAt(peekPosition))
                 ++peekPosition;
 
-            return _source.GetCharAt(peekPosition++) == '}';
+            return this._source.GetCharAt(peekPosition++) == '}';
         }
 
         public bool LookaheadIsNewline() {
-            int peekPosition = _position;
+            int peekPosition = this._position;
 
             // Skip whitespace
-            while (_source.IsSpaceAt(peekPosition))
+            while (this._source.IsSpaceAt(peekPosition))
                 ++peekPosition;
 
-            return _source.IsNewlineAt(peekPosition);
+            return this._source.IsNewlineAt(peekPosition);
         }
 
         public bool IsQualifiedIdentifier() {
-            if (_type != TokenType.Identifier)
+            if (this._type != TokenType.Identifier)
                 return false;
 
-            return GetLookaheadAt(0) == '.' && IsIdentifierInitialCharacter(GetLookaheadAt(1));
+            return this.GetLookaheadAt(0) == '.' && IsIdentifierInitialCharacter(this.GetLookaheadAt(1));
         }
 
         public ArgumentLookahead GetArgumentLookahead() {
-            int savedPosition = _position;
+            int savedPosition = this._position;
 
             try {
                 // Skip any whitespace on the same line
-                SkipSpaces();
+                this.SkipSpaces();
 
                 int indentAmount = -1;    // Set to indent for indented content and -1 if content not at beginning of line
 
                 // If at beginning of a line, skip any initial blank lines until we get a line with content, remembering its indent
-                if (GetCurrChar() == '\n') {
-                    AdvanceChar();
+                if (this.GetCurrChar() == '\n') {
+                    this.AdvanceChar();
 
                     while (true) {
-                        indentAmount = AdvanceForIndentWhitespace();
-                        if (GetCurrChar() != '\n')
+                        indentAmount = this.AdvanceForIndentWhitespace();
+                        if (this.GetCurrChar() != '\n')
                             break;
-                        AdvanceChar();
+                        this.AdvanceChar();
                     }
                 }
 
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
 
-                if (currChar == ':' && GetCurrCharPlusOne() == ':')
+                if (currChar == ':' && this.GetCurrCharPlusOne() == ':')
                     return new ArgumentLookahead(ArgumentLookaheadType.DoubleColon);
                 else if (IsPropertyIdentifierInitialCharacter(currChar)) {
-                    AdvanceChar();
-                    while (IsPropertyIdentifierCharacter(GetCurrChar()))
-                        AdvanceChar();
-                    if (GetCurrChar() == ':')
+                    this.AdvanceChar();
+                    while (IsPropertyIdentifierCharacter(this.GetCurrChar()))
+                        this.AdvanceChar();
+                    if (this.GetCurrChar() == ':')
                         return new ArgumentLookahead(ArgumentLookaheadType.PropertyIdentifier);
                 }
                 else if (currChar == '\0')
@@ -420,27 +420,27 @@ namespace Faml.Lexer {
                 else return new ArgumentLookahead(ArgumentLookaheadType.None);
             }
             finally {
-                _position = savedPosition;
+                this._position = savedPosition;
             }
         }
 
         public bool LookaheadIsLeftBrace() {
-            int peekPosition = _position;
+            int peekPosition = this._position;
 
-            while (_source.IsSpaceOrNewlineAt(peekPosition))
+            while (this._source.IsSpaceOrNewlineAt(peekPosition))
                 ++peekPosition;
 
-            return _source.GetCharAt(peekPosition) == '{';
+            return this._source.GetCharAt(peekPosition) == '{';
         }
 
         public bool LooksLikeStartOfExpression() {
-            if (Type == TokenType.LeftBrace || Type == TokenType.If)
+            if (this.Type == TokenType.LeftBrace || this.Type == TokenType.If)
                 return true;
 
             // If the value starts with an identifier, see if it looks like a function invocation
-            if (Type == TokenType.Identifier) {
+            if (this.Type == TokenType.Identifier) {
                 var remainingSourceTextSubsequence =
-                    new ParseableSource(_source.SourceText, _position, _source.EndPosition);
+                    new ParseableSource(this._source.SourceText, this._position, this._source.EndPosition);
                 var lookaheadToken = new Token(remainingSourceTextSubsequence);
 
                 if (lookaheadToken.Type == TokenType.LeftBrace)
@@ -477,7 +477,7 @@ namespace Faml.Lexer {
 
         public bool ArgumentValueLookaheadIsExpression() {
             var remainingSourceTextSubsequence =
-                new ParseableSource(_source.SourceText, _position, _source.EndPosition);
+                new ParseableSource(this._source.SourceText, this._position, this._source.EndPosition);
             var lookaheadToken = new Token(remainingSourceTextSubsequence);
 
             // If the value starts with a left brace, we treat that as an expression
@@ -538,201 +538,201 @@ namespace Faml.Lexer {
         }
 
         public void Advance() {
-            _prevTokenEndPosition = _position;
+            this._prevTokenEndPosition = this._position;
 
-            SkipWhitespaceAndComments();
+            this.SkipWhitespaceAndComments();
 
-            _tokenStartPosition = _position;
-            char currChar = GetCurrChar();
+            this._tokenStartPosition = this._position;
+            char currChar = this.GetCurrChar();
             switch (currChar) {
                 case '{':
-                    AdvanceChar();
-                    _type = TokenType.LeftBrace;
+                    this.AdvanceChar();
+                    this._type = TokenType.LeftBrace;
                     break;
 
                 case '}':
-                    AdvanceChar();
-                    _type = TokenType.RightBrace;
+                    this.AdvanceChar();
+                    this._type = TokenType.RightBrace;
                     break;
 
                 case '[':
-                    AdvanceChar();
-                    _type = TokenType.LeftBracket;
+                    this.AdvanceChar();
+                    this._type = TokenType.LeftBracket;
                     break;
 
                 case ']':
-                    AdvanceChar();
-                    _type = TokenType.RightBracket;
+                    this.AdvanceChar();
+                    this._type = TokenType.RightBracket;
                     break;
 
                 case '(':
-                    AdvanceChar();
-                    _type = TokenType.LeftParen;
+                    this.AdvanceChar();
+                    this._type = TokenType.LeftParen;
                     break;
 
                 case ')':
-                    AdvanceChar();
-                    _type = TokenType.RightParen;
+                    this.AdvanceChar();
+                    this._type = TokenType.RightParen;
                     break;
 
                 case ',':
-                    AdvanceChar();
-                    _type = TokenType.Comma;
+                    this.AdvanceChar();
+                    this._type = TokenType.Comma;
                     break;
 
                 case ':':
-                    AdvanceChar();
-                    _type = TokenType.Colon;
+                    this.AdvanceChar();
+                    this._type = TokenType.Colon;
                     break;
 
                 case ';':
-                    AdvanceChar();
-                    _type = TokenType.Semicolon;
+                    this.AdvanceChar();
+                    this._type = TokenType.Semicolon;
                     break;
 
                 case '.':
-                    if (GetCurrCharPlus(1) == '.' && GetCurrCharPlus(2) == '.') {
-                        AdvanceChar();
-                        AdvanceChar();
-                        AdvanceChar();
-                        _type = TokenType.Ellipsis;
+                    if (this.GetCurrCharPlus(1) == '.' && this.GetCurrCharPlus(2) == '.') {
+                        this.AdvanceChar();
+                        this.AdvanceChar();
+                        this.AdvanceChar();
+                        this._type = TokenType.Ellipsis;
                     }
                     else {
-                        AdvanceChar();
-                        _type = TokenType.Period;
+                        this.AdvanceChar();
+                        this._type = TokenType.Period;
                     }
                     break;
 
                 case '-':
-                    AdvanceChar();
-                    _type = TokenType.Minus;
+                    this.AdvanceChar();
+                    this._type = TokenType.Minus;
                     break;
 
                 case '!':
-                    AdvanceChar();
-                    if (GetCurrChar() == '=') {
-                        AdvanceChar();
-                        _type = TokenType.NotEquals;
+                    this.AdvanceChar();
+                    if (this.GetCurrChar() == '=') {
+                        this.AdvanceChar();
+                        this._type = TokenType.NotEquals;
                     }
                     else {
-                        _type = TokenType.Not;
+                        this._type = TokenType.Not;
                     }
                     break;
 
                 case '*':
-                    AdvanceChar();
-                    _type = TokenType.Times;
+                    this.AdvanceChar();
+                    this._type = TokenType.Times;
                     break;
 
                 case '/':
-                    AdvanceChar();
-                    _type = TokenType.Divide;
+                    this.AdvanceChar();
+                    this._type = TokenType.Divide;
                     break;
 
                 case '%':
-                    AdvanceChar();
-                    _type = TokenType.Remainder;
+                    this.AdvanceChar();
+                    this._type = TokenType.Remainder;
                     break;
 
                 case '+':
-                    AdvanceChar();
-                    _type = TokenType.Plus;
+                    this.AdvanceChar();
+                    this._type = TokenType.Plus;
                     break;
 
                 case '<':
-                    AdvanceChar();
-                    if (GetCurrChar() == '=') {
-                        AdvanceChar();
-                        _type = TokenType.LessEquals;
+                    this.AdvanceChar();
+                    if (this.GetCurrChar() == '=') {
+                        this.AdvanceChar();
+                        this._type = TokenType.LessEquals;
                     }
                     else {
-                        _type = TokenType.Less;
+                        this._type = TokenType.Less;
                     }
                     break;
 
                 case '>':
-                    AdvanceChar();
-                    if (GetCurrChar() == '=') {
-                        AdvanceChar();
-                        _type = TokenType.GreaterEquals;
+                    this.AdvanceChar();
+                    if (this.GetCurrChar() == '=') {
+                        this.AdvanceChar();
+                        this._type = TokenType.GreaterEquals;
                     }
                     else {
-                        _type = TokenType.Greater;
+                        this._type = TokenType.Greater;
                     }
                     break;
 
                 case '=':
-                    AdvanceChar();
+                    this.AdvanceChar();
 
-                    if (GetCurrChar() == '=') {
-                        AdvanceChar();
-                        _type = TokenType.Equals;
+                    if (this.GetCurrChar() == '=') {
+                        this.AdvanceChar();
+                        this._type = TokenType.Equals;
                     }
                     else {
-                        _type = TokenType.Assign;
+                        this._type = TokenType.Assign;
                     }
                     break;
 
                 case '&':
-                    AdvanceChar();
+                    this.AdvanceChar();
 
-                    if (GetCurrChar() != '&')
-                        _type = TokenType.Invalid;
+                    if (this.GetCurrChar() != '&')
+                        this._type = TokenType.Invalid;
                     else {
-                        AdvanceChar();
-                        _type = TokenType.And;
+                        this.AdvanceChar();
+                        this._type = TokenType.And;
                     }
                     break;
 
                 case '|':
-                    AdvanceChar();
+                    this.AdvanceChar();
 
-                    if (GetCurrChar() != '|')
-                        _type = TokenType.Pipe;
+                    if (this.GetCurrChar() != '|')
+                        this._type = TokenType.Pipe;
                     else {
-                        AdvanceChar();
-                        _type = TokenType.Or;
+                        this.AdvanceChar();
+                        this._type = TokenType.Or;
                     }
                     break;
 
                 case '\0':
-                    _type = TokenType.Eof;
+                    this._type = TokenType.Eof;
                     break;
 
                 default:
                     if (ParseableSource.IsLetter(currChar))
-                        ReadAlphanumericToken();
+                        this.ReadAlphanumericToken();
                     else if (ParseableSource.IsDigit(currChar))
-                        ReadNumericToken();
+                        this.ReadNumericToken();
                     else {
-                        AdvanceChar();
-                        _type = TokenType.Invalid;
+                        this.AdvanceChar();
+                        this._type = TokenType.Invalid;
                     }
                     break;
             }
         }
 
         public void ReinterpretAlloWTextualLiteral(bool allowSemicolonToTerminate, bool allowNewlineToTerminate, bool allowRightBraceToTerminate, bool allowRightBracketToTerminate) {
-            _position = _tokenStartPosition;
+            this._position = this._tokenStartPosition;
 
             StringBuilder buffer = new StringBuilder();
 
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
 
                 // For a backslash, always skip the character following including both in the property value. It's then
                 // up to the property literal value parser code to later treat the backslash and following character how
                 // it wants. However, a newline still terminates the text, even if there's a backslash before it
                 if (currChar == '\\') {
-                    AdvanceChar();
-                    char escapedChar = GetCurrChar();
+                    this.AdvanceChar();
+                    char escapedChar = this.GetCurrChar();
                     if (escapedChar == '\n') {
                         buffer.Append('\n');
                     }
                     else {
                         buffer.Append('\\');
                         buffer.Append(escapedChar);
-                        AdvanceChar();
+                        this.AdvanceChar();
                     }
                 }
                 else if (currChar == ';' && allowSemicolonToTerminate)
@@ -749,52 +749,52 @@ namespace Faml.Lexer {
                     break;
                 else {
                     buffer.Append(currChar);
-                    AdvanceChar();
+                    this.AdvanceChar();
                 }
             }
 
             if (buffer.Length == 0) {
-                _position = _prevTokenEndPosition;
-                Advance();
+                this._position = this._prevTokenEndPosition;
+                this.Advance();
             }
             else {
-                StringValue = buffer.ToString();
-                _type = TokenType.TextualLiteralText;
+                this.StringValue = buffer.ToString();
+                this._type = TokenType.TextualLiteralText;
             }
         }
 
         public void RescanPropertyIdentifierAsIdentifier() {
-            if (_type != TokenType.PropertyIdentifier)
+            if (this._type != TokenType.PropertyIdentifier)
                 throw new InvalidOperationException("Called RescanPropertyIdentifierAsIdentifier when current token isn't a PropertyIdentifier");
 
-            _position = _tokenStartPosition;
-            int startPosition = _position;
+            this._position = this._tokenStartPosition;
+            int startPosition = this._position;
 
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
                 if (!IsIdentifierCharacter(currChar))
                     break;
-                AdvanceChar();
+                this.AdvanceChar();
             }
 
-            StringValue = _source.Substring(startPosition, _position - startPosition);
-            _type = TokenType.Identifier;
+            this.StringValue = this._source.Substring(startPosition, this._position - startPosition);
+            this._type = TokenType.Identifier;
         }
 
         private void SkipWhitespaceAndComments() {
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
                 if (ParseableSource.IsSpaceOrNewline(currChar))
-                    AdvanceChar();
-                else if (currChar == '/' && GetCurrCharPlusOne() == '/') {
-                    AdvanceChar();
-                    AdvanceChar();
+                    this.AdvanceChar();
+                else if (currChar == '/' && this.GetCurrCharPlusOne() == '/') {
+                    this.AdvanceChar();
+                    this.AdvanceChar();
 
                     // Skip the rest of the line
                     char c;
                     do {
-                        c = GetCurrChar();
-                        AdvanceChar();
+                        c = this.GetCurrChar();
+                        this.AdvanceChar();
                     } while (c != '\n' && c != '\0');
                 }
                 else break;
@@ -802,68 +802,68 @@ namespace Faml.Lexer {
         }
 
         private void SkipSpaces() {
-            while (_source.IsSpaceAt(_position))
-                AdvanceChar();
+            while (this._source.IsSpaceAt(this._position))
+                this.AdvanceChar();
         }
 
         private void SkipSpacesAndNewlines() {
-            while (_source.IsSpaceOrNewlineAt(_position))
-                AdvanceChar();
+            while (this._source.IsSpaceOrNewlineAt(this._position))
+                this.AdvanceChar();
         }
 
-        private char GetCurrChar() => _source.GetCharAt(_position);
+        private char GetCurrChar() => this._source.GetCharAt(this._position);
 
         private char GetCurrCharPlusOne() {
-            return _source.GetCharAt(_position + 1);
+            return this._source.GetCharAt(this._position + 1);
         }
 
         private char GetCurrCharPlus(int offset) {
-            return _source.GetCharAt(_position + offset);
+            return this._source.GetCharAt(this._position + offset);
         }
 
         private char GetLookaheadAt(int offset) {
-            return _source.GetCharAt(_position + offset);
+            return this._source.GetCharAt(this._position + offset);
         }
 
         /// <summary>
         /// Advance to the next character, skipping over any \r characters and stopping at the end of the source
         /// </summary>
         private void AdvanceChar() {
-            if (_position < _sourceEnd)
-                ++_position;
+            if (this._position < this._sourceEnd)
+                ++this._position;
         }
 
         private void SetPosition(int position) {
-            _position = position;
+            this._position = position;
         }
 
         private void ReadAlphanumericToken() {
-            int startPosition = _position;
+            int startPosition = this._position;
 
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
                 if (!IsIdentifierCharacter(currChar))
                     break;
-                AdvanceChar();
+                this.AdvanceChar();
             }
 
-            string tokenText = _source.Substring(startPosition, _position - startPosition);
+            string tokenText = this._source.Substring(startPosition, this._position - startPosition);
 
             switch (tokenText) {
                 case "true":
-                    _type = TokenType.True;
+                    this._type = TokenType.True;
                     break;
                 case "false":
-                    _type = TokenType.False;
+                    this._type = TokenType.False;
                     break;
                 case "null":
-                    _type = TokenType.Null;
+                    this._type = TokenType.Null;
                     break;
                 case "type":
-                    _type = TokenType.Type;
+                    this._type = TokenType.Type;
                     break;
                 case "import":
-                    _type = TokenType.Import;
+                    this._type = TokenType.Import;
                     break;
                 /*
                 case "use":
@@ -871,36 +871,36 @@ namespace Faml.Lexer {
                     break;
                 */
                 case "if":
-                    _type = TokenType.If;
+                    this._type = TokenType.If;
                     break;
                 case "is":
-                    _type = TokenType.Is;
+                    this._type = TokenType.Is;
                     break;
                 case "else":
-                    _type = TokenType.Else;
+                    this._type = TokenType.Else;
                     break;
                 case "for":
-                    _type = TokenType.For;
+                    this._type = TokenType.For;
                     break;
                 case "in":
-                    _type = TokenType.In;
+                    this._type = TokenType.In;
                     break;
                 default:
-                    StringValue = tokenText;
-                    _type = TokenType.Identifier;
+                    this.StringValue = tokenText;
+                    this._type = TokenType.Identifier;
 
                     // Peek ahead to see if the identifier is actually a property name. Property names can contain
                     // all the characters in normal identifiers (letters, digits, underscore) and also can include
                     // '.' and '-'.  So we peek ahead to see of a valid string of those characters is followed by colon.
                     // If so, it's a property.  So "abc.def" is two identifier tokens with a period between them
                     // while "abc.def:" is a single property identifier token.
-                    for (int peekPosition = _position; peekPosition < _sourceEnd; ++peekPosition) {
-                        char peekCharacter = _source.GetCharAt(peekPosition);
+                    for (int peekPosition = this._position; peekPosition < this._sourceEnd; ++peekPosition) {
+                        char peekCharacter = this._source.GetCharAt(peekPosition);
 
                         if (peekCharacter == ':') {
-                            StringValue = _source.Substring(startPosition, peekPosition - startPosition);
-                            _type = TokenType.PropertyIdentifier;
-                            SetPosition(peekPosition + 1);
+                            this.StringValue = this._source.Substring(startPosition, peekPosition - startPosition);
+                            this._type = TokenType.PropertyIdentifier;
+                            this.SetPosition(peekPosition + 1);
                             break;
                         }
                         if (!IsPropertyIdentifierCharacter(peekCharacter))
@@ -942,22 +942,22 @@ namespace Faml.Lexer {
             var token = new StringBuilder();
 
             while (true) {
-                char currChar = GetCurrChar();
+                char currChar = this.GetCurrChar();
 
                 if (!ParseableSource.IsDigit(currChar)) {
                     break;
                 }
 
                 token.Append(currChar);
-                AdvanceChar();
+                this.AdvanceChar();
             }
 
             string tokenString = token.ToString();
 
             long value = long.Parse(tokenString);
 
-            IntValue = (int) value;
-            _type = TokenType.Int32;
+            this.IntValue = (int) value;
+            this._type = TokenType.Int32;
         }
     }
 }

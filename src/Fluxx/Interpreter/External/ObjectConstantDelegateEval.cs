@@ -10,11 +10,11 @@ namespace Faml.Interpreter.External {
         private readonly Delegate _dlgate;
 
         public ObjectConstantDelegateEval(Delegate dlgate) {
-            _dlgate = dlgate;
+            this._dlgate = dlgate;
         }
 
         public override object Eval() {
-            return _dlgate.DynamicInvoke(null);
+            return this._dlgate.DynamicInvoke(null);
         }
     }
 }

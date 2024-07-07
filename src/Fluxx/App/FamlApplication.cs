@@ -18,10 +18,10 @@ namespace Faml.App {
             project.DotNetProjectInfo.RawTypeProvider = new AppDotNetRawTypeProvider(assembly);
 
             var program = new Program(project) {
-                DataEventHandler = new DotNetDataEventHandler(dataEventHandler)
+                DataEventHandler = new DotNetDataEventHandler(this.dataEventHandler)
             };
 
-            AddTypeToolingProviders(program, project);
+            this.AddTypeToolingProviders(program, project);
 
             project.FullyInitialize();
 
@@ -33,23 +33,23 @@ namespace Faml.App {
 
             project.UpdateSource(resourceFileName, mainSource);
 
-            _program = new ReactiveVar<Program>(program);
-            _appToDevEnvConnection = new AppToDevEnvConnection(_program);
+            this._program = new ReactiveVar<Program>(program);
+            this._appToDevEnvConnection = new AppToDevEnvConnection(this._program);
         }
 
         public AppToDevEnvConnection AppToDevEnvConnection {
             get {
-                if (_appToDevEnvConnection == null)
+                if (this._appToDevEnvConnection == null)
                     throw new InvalidOperationException("AppToDevEnvConnection never got initialized");
-                return _appToDevEnvConnection;
+                return this._appToDevEnvConnection;
             }
         }
 
         public ReactiveVar<Program> Program {
             get {
-                if (_program == null)
+                if (this._program == null)
                     throw new InvalidOperationException("Program never got initialized");
-                return _program;
+                return this._program;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Faml.App {
         }
 
         public ReactiveVar<Program> GetProgram() {
-            return _program;
+            return this._program;
         }
 
 

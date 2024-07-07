@@ -48,13 +48,13 @@ namespace Faml.Syntax.Operator {
         }
 
         public Operator(string sourceRepresentation, int precedence) {
-            _sourceRepresentation = sourceRepresentation;
-            _precedence = precedence;
+            this._sourceRepresentation = sourceRepresentation;
+            this._precedence = precedence;
         }
 
-        public virtual int GetPrecedence() => _precedence;
+        public virtual int GetPrecedence() => this._precedence;
 
-        public virtual string GetSourceRepresentation() => _sourceRepresentation;
+        public virtual string GetSourceRepresentation() => this._sourceRepresentation;
     }
 
 }

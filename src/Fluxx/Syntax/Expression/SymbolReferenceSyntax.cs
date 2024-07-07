@@ -11,38 +11,38 @@ namespace Faml.Syntax.Expression {
         private SymbolBinding _symbolBinding;
 
         public SymbolReferenceSyntax(TextSpan span, NameSyntax name) : base(span) {
-            _name = name;
+            this._name = name;
             name.SetParent(this);
         }
 
-        public NameSyntax Name => _name;
+        public NameSyntax Name => this._name;
 
-        public Name VariableName => _name.Name;
+        public Name VariableName => this._name.Name;
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
             SyntaxNode ancestor = this.Parent;
 
             while (ancestor != null) {
                 if (ancestor is FunctionDefinitionSyntax functionDefinition) {
-                    int parameterIndex = functionDefinition.GetParameterIndex(_name.Name);
+                    int parameterIndex = functionDefinition.GetParameterIndex(this._name.Name);
 
                     if (parameterIndex != -1) {
-                        _symbolBinding = new ParameterBinding(functionDefinition, parameterIndex);
+                        this._symbolBinding = new ParameterBinding(functionDefinition, parameterIndex);
                         return;
                     }
                 }
                 else if (ancestor is ForExpressionSyntax forExpressionSyntax) {
-                    if (_name.Name == forExpressionSyntax.ForVariableDefinition.VariableNameSyntax.Name) {
+                    if (this._name.Name == forExpressionSyntax.ForVariableDefinition.VariableNameSyntax.Name) {
                         // TODO: Fix hack that assumes there's just a single 'for' variable in a function
-                        _symbolBinding = new ForSymbolBinding(forExpressionSyntax, 0);
+                        this._symbolBinding = new ForSymbolBinding(forExpressionSyntax, 0);
                         return;
                     }
                 }
                 else if (ancestor is ModuleSyntax) {
                     // TODO: Call lower level API to resolve binding, which returns null if not found
-                    FunctionBinding functionBinding = bindingResolver.ResolveFunctionBinding(null, _name.Name.ToQualifiableName(), _name);
+                    FunctionBinding functionBinding = bindingResolver.ResolveFunctionBinding(null, this._name.Name.ToQualifiableName(), this._name);
                     if (functionBinding != null) {
-                        _symbolBinding = new FunctionSymbolBinding(functionBinding);
+                        this._symbolBinding = new FunctionSymbolBinding(functionBinding);
                         return;
                     }
                 }
@@ -51,26 +51,26 @@ namespace Faml.Syntax.Expression {
             }
 
             // Not found
-            this.AddError($"Symbol '{_name}' not found");
-            _symbolBinding = InvalidSymbolBinding.Instance;
+            this.AddError($"Symbol '{this._name}' not found");
+            this._symbolBinding = InvalidSymbolBinding.Instance;
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _symbolBinding.GetTypeBinding();
+            return this._symbolBinding.GetTypeBinding();
         }
 
-        public SymbolBinding GetVariableBinding() { return _symbolBinding; }
+        public SymbolBinding GetVariableBinding() { return this._symbolBinding; }
      
         public override bool IsTerminalNode() { return false; }
 
         public override SyntaxNodeType NodeType => SyntaxNodeType.SymbolReference;
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
-            visitor(_name);
+            visitor(this._name);
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            _name.WriteSource(sourceWriter);
+            this._name.WriteSource(sourceWriter);
         }
     }
 }

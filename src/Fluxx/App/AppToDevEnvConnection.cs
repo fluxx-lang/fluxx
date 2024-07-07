@@ -14,26 +14,26 @@ namespace Faml.App {
 
 
         public AppToDevEnvConnection(ReactiveVar<Program> program) {
-            _program = program;
+            this._program = program;
         }
 
         public void Start() {
-            AppProjectInfo? appProjectInfo = _program.Value.RootProject.AppProjectInfo;
+            AppProjectInfo? appProjectInfo = this._program.Value.RootProject.AppProjectInfo;
             string? developmentMachine = appProjectInfo?.DevelopmentMachine;
             if (developmentMachine == null)
                 // developmentMachine = "10.0.2.2:5311";   // Use the Android emulator host IP for now
                 developmentMachine = "localhost:5311";
 
             WebSocketClientMessagingConnector webSocketConnector = new WebSocketClientMessagingConnector(developmentMachine);
-            webSocketConnector.AddMessageHandler("updateSource", UpdateSourceHandler);
-            webSocketConnector.AddMessageHandler("visualizeExample", VisualizeExampleHandler);
+            webSocketConnector.AddMessageHandler("updateSource", this.UpdateSourceHandler);
+            webSocketConnector.AddMessageHandler("visualizeExample", this.VisualizeExampleHandler);
 
-            _connector = webSocketConnector;
+            this._connector = webSocketConnector;
             webSocketConnector.Start().ConfigureAwait(false);
         }
 
         public void SetVisualizer(IVisualizer visualizer) {
-            _visualizer = visualizer;
+            this._visualizer = visualizer;
         }
 
         private Task<MessageObject?> UpdateSourceHandler(MessageObject request) {
@@ -41,10 +41,10 @@ namespace Faml.App {
             string source = request.GetProperty<string>("source");
 
             // Lock to avoid multiple updates happening at the same time
-            lock (_program) {
+            lock (this._program) {
                 Transaction.Start();
-                _program.Value.RootProject.UpdateSource(sourcePath, source);
-                _program.NotifyChanged();
+                this._program.Value.RootProject.UpdateSource(sourcePath, source);
+                this._program.NotifyChanged();
                 Transaction.End();
             }
 
@@ -55,10 +55,10 @@ namespace Faml.App {
             string moduleNameString = request.GetProperty<string>("moduleName");
             int exampleIndex = request.GetProperty<int>("exampleIndex");
 
-            if (_visualizer == null)
+            if (this._visualizer == null)
                 throw new UserViewableException("No Visualizer is set on the app");
 
-            ExampleResult[] visualizedExamples = await _visualizer?.VisualizeExample(new QualifiableName(moduleNameString), exampleIndex);
+            ExampleResult[] visualizedExamples = await this._visualizer?.VisualizeExample(new QualifiableName(moduleNameString), exampleIndex);
             throw new NotImplementedException("TODO: Finish visual example");
         }
     }

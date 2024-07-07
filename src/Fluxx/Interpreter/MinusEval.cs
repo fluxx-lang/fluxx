@@ -10,12 +10,12 @@ namespace Faml.Interpreter {
         private readonly IntEval _rightOperand;
 
         public MinusEval(IntEval leftOperand, IntEval rightOperand) {
-            _leftOperand = leftOperand;
-            _rightOperand = rightOperand;
+            this._leftOperand = leftOperand;
+            this._rightOperand = rightOperand;
         }
 
         public override int Eval() {
-            return _leftOperand.Eval() - _rightOperand.Eval();
+            return this._leftOperand.Eval() - this._rightOperand.Eval();
         }
     }
 

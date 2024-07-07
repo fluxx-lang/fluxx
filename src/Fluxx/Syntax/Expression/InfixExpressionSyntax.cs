@@ -18,12 +18,12 @@ namespace Faml.Syntax.Expression {
 
         public InfixExpressionSyntax(TextSpan span, ExpressionSyntax leftOperand, InfixOperator infixOperator,
             ExpressionSyntax rightOperand) : base(span) {
-            _leftOperand = leftOperand;
+            this._leftOperand = leftOperand;
             leftOperand.SetParent(this);
 
-            _infixOperator = infixOperator;
+            this._infixOperator = infixOperator;
 
-            _rightOperand = rightOperand;
+            this._rightOperand = rightOperand;
             rightOperand.SetParent(this);
         }
 
@@ -34,40 +34,40 @@ namespace Faml.Syntax.Expression {
         public override SyntaxNodeType NodeType => SyntaxNodeType.InfixExpression;
 
         public override void VisitChildren(SyntaxNode.SyntaxVisitor visitor) {
-            visitor(_leftOperand);
-            visitor(_rightOperand);
+            visitor(this._leftOperand);
+            visitor(this._rightOperand);
         }
 
         protected internal override void ResolveBindings(BindingResolver bindingResolver) {
-            TypeBinding leftOperandTypeBinding = _leftOperand.GetTypeBinding();
-            TypeBinding rightOperandTypeBinding = _rightOperand.GetTypeBinding();
+            TypeBinding leftOperandTypeBinding = this._leftOperand.GetTypeBinding();
+            TypeBinding rightOperandTypeBinding = this._rightOperand.GetTypeBinding();
 
             if (!leftOperandTypeBinding.IsValid() || !rightOperandTypeBinding.IsValid())
-                _typeBinding = InvalidTypeBinding.Instance;
+                this._typeBinding = InvalidTypeBinding.Instance;
             else if (!leftOperandTypeBinding.Equals(rightOperandTypeBinding)) {
-                AddError(
+                this.AddError(
                     $"Operand types not the same: {leftOperandTypeBinding.TypeName} and {rightOperandTypeBinding.TypeName}");
-                _typeBinding = InvalidTypeBinding.Instance;
+                this._typeBinding = InvalidTypeBinding.Instance;
             }
-            else _typeBinding = leftOperandTypeBinding;
+            else this._typeBinding = leftOperandTypeBinding;
         }
 
         public override TypeBinding GetTypeBinding() {
-            return _typeBinding;
+            return this._typeBinding;
         }
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            _leftOperand.WriteSource(sourceWriter);
+            this._leftOperand.WriteSource(sourceWriter);
             sourceWriter.Write(" ");
-            sourceWriter.Write(_infixOperator.GetSourceRepresentation());
+            sourceWriter.Write(this._infixOperator.GetSourceRepresentation());
             sourceWriter.Write(" ");
-            _rightOperand.WriteSource(sourceWriter);
+            this._rightOperand.WriteSource(sourceWriter);
         }
 
-        public ExpressionSyntax LeftOperand => _leftOperand;
+        public ExpressionSyntax LeftOperand => this._leftOperand;
 
-        public InfixOperator Operator => _infixOperator;
+        public InfixOperator Operator => this._infixOperator;
 
-        public ExpressionSyntax RightOperand => _rightOperand;
+        public ExpressionSyntax RightOperand => this._rightOperand;
     }
 }

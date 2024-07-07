@@ -5,17 +5,17 @@ namespace Faml.Lexer {
         private Stack<char> _stack = new Stack<char>();
 
         public void Push(char delimiter) {
-            _stack.Push(delimiter);
+            this._stack.Push(delimiter);
         }
 
         public void PopUntil(char delimiter) {
-            while (_stack.Count > 0) {
-                char popped = _stack.Pop();
+            while (this._stack.Count > 0) {
+                char popped = this._stack.Pop();
                 if (popped == delimiter)
                     return;
             }
         }
 
-        public bool IsEmpty => _stack.Count == 0;
+        public bool IsEmpty => this._stack.Count == 0;
     }
 }

@@ -15,35 +15,35 @@ namespace Faml.Syntax {
 
 
         public ImportSyntax(TextSpan span, ImmutableArray<ImportTypeReferenceSyntax>? importTypeReferences, QualifiableNameSyntax qualifierSyntax) : base(span) {
-            _importTypeReferences = importTypeReferences;
+            this._importTypeReferences = importTypeReferences;
             if (importTypeReferences != null) {
-                foreach (ImportTypeReferenceSyntax importReference in _importTypeReferences)
+                foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
                     importReference.SetParent(this);
             }
 
-            _qualifierSyntax = qualifierSyntax;
-            _qualifierSyntax.SetParent(this);
+            this._qualifierSyntax = qualifierSyntax;
+            this._qualifierSyntax.SetParent(this);
         }
 
         public ImportSyntax(TextSpan span, QualifiableNameSyntax qualifierSyntax) : base(span) {
-            _importTypeReferences = null;
+            this._importTypeReferences = null;
 
-            _qualifierSyntax = qualifierSyntax;
-            _qualifierSyntax.SetParent(this);
+            this._qualifierSyntax = qualifierSyntax;
+            this._qualifierSyntax.SetParent(this);
         }
 
-        public ImmutableArray<ImportTypeReferenceSyntax>? ImportTypeReferences => _importTypeReferences;
+        public ImmutableArray<ImportTypeReferenceSyntax>? ImportTypeReferences => this._importTypeReferences;
 
-        public QualifiableNameSyntax QualifierSyntax => _qualifierSyntax;
+        public QualifiableNameSyntax QualifierSyntax => this._qualifierSyntax;
 
-        public QualifiableName Qualifier => _qualifierSyntax.Name;
+        public QualifiableName Qualifier => this._qualifierSyntax.Name;
 
         public override void VisitChildren(SyntaxVisitor visitor) {
-            if (_importTypeReferences != null)
-                foreach (ImportTypeReferenceSyntax importReference in _importTypeReferences)
+            if (this._importTypeReferences != null)
+                foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences)
                     visitor(importReference);
 
-            visitor(_qualifierSyntax);
+            visitor(this._qualifierSyntax);
         }
 
         public override bool IsTerminalNode() {
@@ -53,11 +53,11 @@ namespace Faml.Syntax {
         public override SyntaxNodeType NodeType => SyntaxNodeType.Import;
 
         public override void WriteSource(SourceWriter sourceWriter) {
-            if (_importTypeReferences != null) {
+            if (this._importTypeReferences != null) {
                 sourceWriter.Write("import {");
 
                 bool first = true;
-                foreach (ImportTypeReferenceSyntax importReference in _importTypeReferences) {
+                foreach (ImportTypeReferenceSyntax importReference in this._importTypeReferences) {
                     if (!first)
                         sourceWriter.Write("  ");
                     sourceWriter.Write(importReference);
@@ -65,11 +65,11 @@ namespace Faml.Syntax {
                 }
 
                 sourceWriter.Write("} from ");
-                sourceWriter.Write(_qualifierSyntax);
+                sourceWriter.Write(this._qualifierSyntax);
             }
             else {
                 sourceWriter.Write("import ");
-                sourceWriter.Write(_qualifierSyntax);
+                sourceWriter.Write(this._qualifierSyntax);
             }
         }
     }

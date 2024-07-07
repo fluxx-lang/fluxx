@@ -16,17 +16,17 @@ namespace Faml.Binding.Internal {
         private readonly RecordTypeDefinitionSyntax _recordTypeDefinition;
 
         public NewRecordFunctionBinding(RecordTypeDefinitionSyntax recordTypeDefinition) {
-            _recordTypeDefinition = recordTypeDefinition;
+            this._recordTypeDefinition = recordTypeDefinition;
         }
 
-        public override QualifiableName FunctionName => _recordTypeDefinition.TypeName.ToQualifiableName();
+        public override QualifiableName FunctionName => this._recordTypeDefinition.TypeName.ToQualifiableName();
 
-        public RecordTypeDefinitionSyntax RecordTypeDefinition => _recordTypeDefinition;
+        public RecordTypeDefinitionSyntax RecordTypeDefinition => this._recordTypeDefinition;
 
-        public override TypeBinding ReturnTypeBinding => _recordTypeDefinition.TypeBinding;
+        public override TypeBinding ReturnTypeBinding => this._recordTypeDefinition.TypeBinding;
 
         public override TypeBinding? GetParameterTypeBinding(Name parameterName) {
-            return _recordTypeDefinition.GetPropertyTypeBinding(parameterName);
+            return this._recordTypeDefinition.GetPropertyTypeBinding(parameterName);
         }
 
         public override TypeBinding ResolveArgumentTypeBinding(QualifiableName argumentName, ArgumentNameValuePairSyntax argumentNameValuePair,
@@ -39,10 +39,10 @@ namespace Faml.Binding.Internal {
 
             Name unqualifiableArgumentName = argumentName.ToUnqualifiableName();
 
-            TypeBinding typeBinding = _recordTypeDefinition.GetPropertyTypeBinding(unqualifiableArgumentName);
+            TypeBinding typeBinding = this._recordTypeDefinition.GetPropertyTypeBinding(unqualifiableArgumentName);
             if (typeBinding == null) {
                 argumentNameValuePair.GetModule().AddError(argumentNameValuePair.PropertySpecifier,
-                    $"No '{argumentName}' property exists for '{_recordTypeDefinition.TypeName}'");
+                    $"No '{argumentName}' property exists for '{this._recordTypeDefinition.TypeName}'");
                 return InvalidTypeBinding.Instance;
             }
 
@@ -76,7 +76,7 @@ namespace Faml.Binding.Internal {
         /// </summary>
         /// <returns>parameter names</returns>
         public override Name[] GetParameters() {
-            return _recordTypeDefinition.GetProperties();
+            return this._recordTypeDefinition.GetProperties();
         }
     }
 }

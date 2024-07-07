@@ -17,22 +17,22 @@ namespace Faml.Binding {
 
 
         protected TypeBinding(QualifiableName typeName, TypeFlags typeFlags) {
-            _typeName = typeName;
-            _typeFlags = typeFlags;
+            this._typeName = typeName;
+            this._typeFlags = typeFlags;
         }
 
-        public QualifiableName TypeName => _typeName;
+        public QualifiableName TypeName => this._typeName;
 
-        public bool IsReactive => (_typeFlags & TypeFlags.IsReactive) != 0;
+        public bool IsReactive => (this._typeFlags & TypeFlags.IsReactive) != 0;
 
         public bool IsSameAs(TypeBinding other) {
             // Two types are considered the same if they have the same name. FAML uses nominal, not structural, typing.
-            return _typeName.Equals(other._typeName);
+            return this._typeName.Equals(other._typeName);
         }
 
         public virtual bool IsAssignableFrom(TypeBinding other) {
             // By default, types are only assignable if they are the same, but subclasses can broaden this
-            return IsSameAs(other);
+            return this.IsSameAs(other);
         }
 
         // TODO: Make use of this
@@ -57,7 +57,7 @@ namespace Faml.Binding {
         }
 
         public override string ToString() {
-            return $"{this.GetType().Name}: {TypeName.ToString()}";
+            return $"{this.GetType().Name}: {this.TypeName.ToString()}";
         }
     }
 }

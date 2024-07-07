@@ -13,7 +13,7 @@ namespace Faml.Interpreter {
         }
 
         public override object Eval() {
-            return Context.ObjectStack[Context.BaseIndex + _stackOffset];
+            return Context.ObjectStack[Context.BaseIndex + this._stackOffset];
         }
     }
 }

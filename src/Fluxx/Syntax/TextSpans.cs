@@ -6,11 +6,11 @@ namespace Faml.Syntax {
         
 
         public TextSpans(TextSpan[] textSpans) {
-            _textSpans = textSpans;
+            this._textSpans = textSpans;
         }
 
         public bool OverlapsWith(TextSpan other) {
-            foreach (TextSpan textSpan in _textSpans) {
+            foreach (TextSpan textSpan in this._textSpans) {
                 if (textSpan.OverlapsWith(other))
                     return true;
             }
@@ -18,6 +18,6 @@ namespace Faml.Syntax {
             return false;
         }
 
-        public TextSpan[] Spans => _textSpans;
+        public TextSpan[] Spans => this._textSpans;
     }
 }
