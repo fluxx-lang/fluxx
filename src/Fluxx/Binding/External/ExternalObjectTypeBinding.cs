@@ -23,7 +23,6 @@ namespace Faml.Binding.External
         private Dictionary<string, ObjectProperty>? objectProperties;
         private Name? contentProperty;
 
-
         // TODO: This name is fully qualified.   Do we want that?
         public ExternalObjectTypeBinding(FamlProject project, DotNetRawType rawType) : base(new QualifiableName(rawType.FullName))
         {

@@ -2,7 +2,6 @@
  * @author Bret Johnson
  * @since 6/29/2014 2:15 AM
  */
-
 using Faml.Api;
 using Faml.Binding;
 using Faml.Binding.Resolver;

@@ -2,7 +2,6 @@
  * @author Bret Johnson
  * @since 6/29/2014 5:02 PM
  */
-
 using System.Text;
 using Faml.Api;
 using Faml.Syntax;

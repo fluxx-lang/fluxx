@@ -10,7 +10,6 @@ namespace Faml.Syntax.Expression
         private readonly NameSyntax enumValueSyntax;
         private readonly EnumValueBinding enumValueBinding;
 
-
         public EnumValueLiteralSyntax(TextSpan span, NameSyntax enumValueSyntax, EnumValueBinding enumValueBinding) : base(span)
         {
             this.enumValueSyntax = enumValueSyntax;

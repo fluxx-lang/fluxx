@@ -2,7 +2,6 @@
  * @author Bret Johnson
  * @since 4/15/2015
  */
-
 namespace Faml.Binding
 {
     public class FunctionSymbolBinding : SymbolBinding

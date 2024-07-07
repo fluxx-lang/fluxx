@@ -14,7 +14,6 @@ namespace Faml.Syntax
         private readonly string literalSource;
         private readonly CustomLiteral customLiteral;
 
-
         public ExternalTypeCustomLiteralSytax(TextSpan span, ExternalObjectTypeBinding propertyTypeBinding, TypeToolingType externalType, string literalSource, CustomLiteral customLiteral) : base(span)
         {
             this.propertyTypeBinding = propertyTypeBinding;

@@ -9,7 +9,6 @@ using Microsoft.CodeAnalysis.Text;
  * @author Bret Johnson
  * @since 6/6/2015
  */
-
 namespace Faml.Syntax
 {
     public sealed class ImportTypeReferenceSyntax : SyntaxNode
@@ -17,7 +16,6 @@ namespace Faml.Syntax
         private readonly NameSyntax nameSyntax;
         private TypeBinding? typeBinding;
         private AttachedTypeBinding? attachedTypeBinding;
-
 
         public ImportTypeReferenceSyntax(TextSpan span, NameSyntax nameSyntax) : base(span)
         {

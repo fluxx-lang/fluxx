@@ -13,7 +13,6 @@ namespace Faml.Binding.External
         private readonly EnumType typeToolingType;
         private readonly ImmutableArray<EnumValueBinding> values;
 
-
         // TODO: This name is fully qualified.   Do we want that?
         public ExternalEnumTypeBinding(FamlProject project, EnumType typeToolingType) : base(new QualifiableName(typeToolingType.FullName))
             {

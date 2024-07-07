@@ -12,7 +12,6 @@ namespace Faml.Binding.External
         private readonly DotNetRawMethod rawMethod;
         private readonly TypeBinding returnTypeBinding;
 
-
         public DotNetMethodFunctionBinding(ExternalObjectTypeBinding objectTypeBinding, DotNetRawMethod rawMethod)
         {
             this.objectTypeBinding = objectTypeBinding;

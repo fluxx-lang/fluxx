@@ -18,7 +18,6 @@ namespace Faml.Syntax
             this.propertyName.SetParent(this);
         }
 
-
         public QualifiableNameSyntax PropertyNameSyntax => this.propertyName;
 
         public QualifiableName PropertyName => this.propertyName.Name;

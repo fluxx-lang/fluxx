@@ -9,7 +9,6 @@ namespace Faml.Binding
     {
         private readonly TypeBinding elementType;
 
-
         public SequenceTypeBinding(TypeBinding elementType) : base(new QualifiableName("List<" + elementType.TypeName + ">"))
         {
             this.elementType = elementType;

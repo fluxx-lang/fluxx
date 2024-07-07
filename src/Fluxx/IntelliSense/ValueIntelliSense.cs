@@ -11,7 +11,6 @@ namespace Faml.IntelliSense
     {
         private readonly TypeBinding typeBinding;
 
-
         public ValueIntelliSense(FamlModule module, int position, TypeBinding typeBinding)
             : base(module, position, null)
             {

@@ -18,7 +18,6 @@ namespace Faml.Syntax.Expression
         private FunctionBinding functionBinding;
         private ExpressionSyntax literalConstructorValue;
 
-
         public FunctionInvocationSyntax(TextSpan span, InvocationStyle invocationStyle, ExpressionSyntax functionReference, ArgumentNameValuePairSyntax[] namedArguments, ContentArgumentSyntax? contentArgument) : base(span)
         {
             this.invocationStyle = invocationStyle;

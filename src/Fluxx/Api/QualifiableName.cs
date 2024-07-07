@@ -5,7 +5,6 @@ using System.IO;
  * @author Bret Johnson
  * @since 6/6/2015
  */
-
 namespace Faml.Api
 {
     [Serializable]

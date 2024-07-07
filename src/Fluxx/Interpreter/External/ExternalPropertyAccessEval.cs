@@ -7,7 +7,6 @@ namespace Faml.Interpreter.External
         private readonly ObjectEval objectEval;
         private readonly ObjectPropertyReader objectPropertyReader;
 
-
         public ExternalPropertyAccessEval(ObjectEval objectEval, ObjectType objectType, ObjectProperty objectProperty)
         {
             this.objectEval = objectEval;

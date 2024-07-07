@@ -21,7 +21,6 @@ namespace Faml.Parser
         private readonly ParseableSource source;
         private readonly FamlModule module;
 
-
         public static FamlModule ParseModule(FamlProject project, QualifiableName moduleName, SourceText sourceText)
         {
             var module = new FamlModule(project, moduleName, sourceText);

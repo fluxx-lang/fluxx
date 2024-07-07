@@ -11,7 +11,6 @@ using TypeTooling.ClassifiedText;
  * @author Bret Johnson
  * @since 4/15/2015
  */
-
 namespace Faml.Binding.Internal
 {
     public class InternalFunctionBinding : FunctionBinding

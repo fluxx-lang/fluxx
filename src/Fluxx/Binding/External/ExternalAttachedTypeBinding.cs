@@ -12,7 +12,6 @@ namespace Faml.Binding.External
         private readonly FamlProject project;
         private readonly AttachedType attachedType;
 
-
         public ExternalAttachedTypeBinding(FamlProject project, AttachedType attachedType) : base(new QualifiableName(attachedType.FullName))
         {
             this.project = project;

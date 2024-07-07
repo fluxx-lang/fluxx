@@ -16,7 +16,6 @@ namespace Faml.CodeAnalysis
         private readonly DiagnosticSeverity severity;
         private readonly string message;
 
-
         public static Diagnostic FromTypeToolingDiagnostic(FamlModule module, TextSpan sourceSpan,
             TypeTooling.Diagnostic typeToolingDiagnostic)
             {

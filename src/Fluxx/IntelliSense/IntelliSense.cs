@@ -15,7 +15,6 @@ namespace Faml.IntelliSense
         public SyntaxNode? TerminalNode { get; }
         private ParseableSource? parseableSource;
 
-
         protected IntelliSense(FamlModule module, int position, SyntaxNode? terminalNode)
         {
             this.Module = module;

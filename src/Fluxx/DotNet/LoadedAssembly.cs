@@ -8,7 +8,6 @@ namespace Faml.DotNet
         private readonly Assembly assembly;
         private readonly string? assemblyQualifier;
 
-
         public LoadedAssembly(Assembly assembly) : this(assembly, null)
         {
         }

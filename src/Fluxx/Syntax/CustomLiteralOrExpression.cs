@@ -11,7 +11,6 @@ namespace Faml.Syntax
         private readonly TextSpan customLiteralTextSpan;
         private ExpressionSyntax? expression;
 
-
         public MarkupOrExpression(TextSpan customLiteralTextSpan)
         {
             this.customLiteralTextSpan = customLiteralTextSpan;

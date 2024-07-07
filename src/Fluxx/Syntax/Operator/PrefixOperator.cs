@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 
-
 /**
  * @author Bret Johnson
  * @since 6/28/2014 11:25 PM
  */
-
 namespace Faml.Syntax.Operator
 {
     public class PrefixOperator : Operator

@@ -1,6 +1,5 @@
 using TypeTooling.Types;
 
-
 namespace Faml.Binding.External
 {
     public class ExternalEnumValueBinding : EnumValueBinding

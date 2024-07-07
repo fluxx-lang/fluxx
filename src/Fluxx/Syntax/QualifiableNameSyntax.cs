@@ -6,7 +6,6 @@ using Microsoft.CodeAnalysis.Text;
  * @author Bret Johnson
  * @since 6/6/2015
  */
-
 namespace Faml.Syntax
 {
     public class QualifiableNameSyntax : SyntaxNode

@@ -20,12 +20,10 @@ using TypeTooling.CodeGeneration;
 using TypeTooling.DotNet.CodeGeneration;
 using TypeTooling.Types;
 
-
 /**
  * @author Bret Johnson
  * @since 4/4/2015
  */
-
 namespace Faml.Interpreter
 {
     public class CreateEvals

@@ -2,7 +2,6 @@
  * @author Bret Johnson
  * @since 6/29/2014 2:16 AM
  */
-
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;
 using Faml.Syntax.Operator;

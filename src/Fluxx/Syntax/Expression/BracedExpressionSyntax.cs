@@ -3,7 +3,6 @@
  * @author Bret Johnson
  * @since 6/29/2014 5:18 PM
  */
-
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;

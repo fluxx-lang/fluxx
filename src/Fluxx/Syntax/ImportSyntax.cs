@@ -7,14 +7,12 @@ using Microsoft.CodeAnalysis.Text;
  * @author Bret Johnson
  * @since 6/6/2015
  */
-
 namespace Faml.Syntax
 {
     public sealed class ImportSyntax : SyntaxNode
     {
         private readonly ImmutableArray<ImportTypeReferenceSyntax>? importTypeReferences;         // If null, import all types
         private readonly QualifiableNameSyntax qualifierSyntax;
-
 
         public ImportSyntax(TextSpan span, ImmutableArray<ImportTypeReferenceSyntax>? importTypeReferences, QualifiableNameSyntax qualifierSyntax) : base(span)
         {

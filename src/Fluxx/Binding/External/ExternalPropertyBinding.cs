@@ -13,7 +13,6 @@ namespace Faml.Binding.External
         private readonly ObjectProperty objectProperty;
         private readonly TypeBinding propertyTypeBinding;
 
-
         public ExternalPropertyBinding(ExternalObjectTypeBinding objectTypeBinding, ObjectProperty objectProperty)
         {
             this.objectTypeBinding = objectTypeBinding;

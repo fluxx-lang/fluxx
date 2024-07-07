@@ -2,7 +2,6 @@
  * @author Bret Johnson
  * @since 4/5/2015
  */
-
 using Faml.Api;
 using Faml.Binding;
 using Faml.CodeAnalysis.Text;

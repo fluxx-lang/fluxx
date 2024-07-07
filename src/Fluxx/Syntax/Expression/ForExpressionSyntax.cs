@@ -2,7 +2,6 @@
  * @author Bret Johnson
  * @since 6/29/2014 2:15 AM
  */
-
 using Faml.Binding;
 using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
@@ -15,7 +14,6 @@ namespace Faml.Syntax.Expression
         private TypeBinding typeBinding = null;
         private readonly ExpressionSyntax expression;
         private readonly ForVariableDefinitionSyntax forVariableDefinition;
-
 
         public ForExpressionSyntax(TextSpan span, ExpressionSyntax expression, ForVariableDefinitionSyntax forVariableDefinition) : base(span)
         {

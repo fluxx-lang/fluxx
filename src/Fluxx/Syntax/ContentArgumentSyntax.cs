@@ -12,7 +12,6 @@ namespace Faml.Syntax
         private ExpressionSyntax value;
         private TypeBinding? parameterTypeBinding;
 
-
         public ContentArgumentSyntax(TextSpan span, ExpressionSyntax value) : base(span)
         {
             this.value = value;

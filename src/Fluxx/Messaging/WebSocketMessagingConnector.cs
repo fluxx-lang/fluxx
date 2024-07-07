@@ -13,7 +13,6 @@ namespace Faml.Messaging
         private readonly CancellationTokenSource sendCts;
         private readonly CancellationTokenSource receiveCts;
 
-
         public WebSocketMessagingConnector()
         {
             this.stopCts = new CancellationTokenSource();

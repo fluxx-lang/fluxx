@@ -9,7 +9,6 @@ namespace Faml.Binding.External
         private readonly SequenceType typeToolingType;
         public readonly DotNetRawType dotNetType;
 
-
         public ExternalSequenceTypeBinding(FamlProject project, SequenceType typeToolingType, TypeBinding elementTypeBinding) : base(elementTypeBinding)
         {
             this.project = project;

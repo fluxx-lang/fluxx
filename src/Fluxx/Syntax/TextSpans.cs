@@ -5,7 +5,6 @@ namespace Faml.Syntax
     public struct TextSpans
     {
         private readonly TextSpan[] textSpans;
-        
 
         public TextSpans(TextSpan[] textSpans)
         {

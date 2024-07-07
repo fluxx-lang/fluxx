@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TokenType = Faml.Lexer.TokenType;
 
-
 /**
  * @author Bret Johnson
  * @since 6/28/2014 11:21 PM

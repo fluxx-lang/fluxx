@@ -12,7 +12,6 @@ namespace Faml.Binding
         private readonly QualifiableName typeName;
         private readonly TypeFlags typeFlags;
 
-
         protected TypeBinding(QualifiableName typeName, TypeFlags typeFlags)
         {
             this.typeName = typeName;

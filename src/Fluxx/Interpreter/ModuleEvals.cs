@@ -8,7 +8,6 @@ namespace Faml.Interpreter
         private readonly Dictionary<FunctionDefinitionSyntax, Eval> functionDefinitionEvals = new Dictionary<FunctionDefinitionSyntax, Eval>();
         private readonly Dictionary<ExampleDefinitionSyntax, ObjectEval> exampleEvals = new Dictionary<ExampleDefinitionSyntax, ObjectEval>();
 
-
         public Dictionary<FunctionDefinitionSyntax, Eval> FunctionDefinitionEvals => this.functionDefinitionEvals;
 
         public void AddFunctionDefinitionEval(FunctionDefinitionSyntax functionDefinition, Eval eval)

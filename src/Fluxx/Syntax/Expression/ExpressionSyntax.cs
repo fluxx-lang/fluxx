@@ -1,6 +1,5 @@
 using Microsoft.CodeAnalysis.Text;
 
-
 namespace Faml.Syntax.Expression
 {
     public abstract class ExpressionSyntax : SyntaxNode

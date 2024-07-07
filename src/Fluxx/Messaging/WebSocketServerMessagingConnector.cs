@@ -9,7 +9,6 @@ namespace Faml.Messaging
     {
         private readonly HttpListener httpListener;
 
-
         public WebSocketServerMessagingConnector(int port)
         {
             this.httpListener = new HttpListener();

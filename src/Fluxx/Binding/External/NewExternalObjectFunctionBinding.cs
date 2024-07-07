@@ -148,7 +148,6 @@ namespace Faml.Binding.External
                 $"Type {attachedTypeName} doesn't provide an attached property {unqualifiedPropertyName} that can be used here");
             return InvalidTypeBinding.Instance;
 
-
 #if false
             Faml.Syntax.ModuleSyntax module = argumentNameValuePair.GetModule();
 

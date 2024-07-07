@@ -13,7 +13,6 @@ namespace Faml.DotNet
         private readonly FamlProject project;
         private readonly Assembly assembly;
 
-
         public DotNetExternalLibrary(FamlProject project, Assembly assembly)
         {
             this.project = project;

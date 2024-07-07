@@ -15,7 +15,6 @@ namespace Faml.Syntax.Expression
         private TypeBinding? typeBinding;
         private PropertyBinding? propertyBinding;
 
-
         public QualifiedSymbolReferenceSyntax(TextSpan span, QualifiedSymbolReferenceSyntax? qualifier, NameSyntax symbol) : base(span)
         {
             this.qualifier = qualifier;

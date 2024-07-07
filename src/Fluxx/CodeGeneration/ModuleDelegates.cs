@@ -13,7 +13,6 @@ namespace Faml.CodeGeneration
         private readonly TypeToolingEnvironment typeToolingEnvironment;
         private readonly Dictionary<Name, FunctionDelegateHolder> functionDelegateHolders = new Dictionary<Name, FunctionDelegateHolder>();
         private readonly Dictionary<ExampleDefinitionSyntax, Delegate> exampleDelegates = new Dictionary<ExampleDefinitionSyntax, Delegate>();
-        
 
         public ModuleDelegates(TypeToolingEnvironment typeToolingEnvironment)
         {

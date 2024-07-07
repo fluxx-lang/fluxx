@@ -9,7 +9,6 @@ namespace Faml.SourceProviders
     {
         private readonly string rootDirectory;
 
-
         public FileSourceProvider(string rootDirectory)
         {
             this.rootDirectory = rootDirectory;

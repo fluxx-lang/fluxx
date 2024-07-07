@@ -8,7 +8,6 @@ namespace Faml.Messaging
     {
         private readonly string developmentMachine;
 
-
         public WebSocketClientMessagingConnector(string developmentMachine)
         {
             this.developmentMachine = developmentMachine;

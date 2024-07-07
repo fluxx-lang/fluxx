@@ -9,7 +9,6 @@ namespace Faml.CodeAnalysis.Text
         private readonly int startPosition;
         private readonly int endPosition;
 
-
         public static bool IsLetter(char character)
             => (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z');
 

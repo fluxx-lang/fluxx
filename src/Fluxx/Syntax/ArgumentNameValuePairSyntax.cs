@@ -14,7 +14,6 @@ namespace Faml.Syntax
         private ExpressionSyntax value;
         private TypeBinding? parameterTypeBinding;
 
-
         public ArgumentNameValuePairSyntax(TextSpan span, PropertySpecifierSyntax propertySpecifier, ExpressionSyntax value) : base(span)
         {
             this.propertySpecifier = propertySpecifier;

@@ -14,7 +14,6 @@ namespace Faml.App
         private readonly ReactiveVar<Program> program;
         private IVisualizer? visualizer;
 
-
         public AppToDevEnvConnection(ReactiveVar<Program> program)
         {
             this.program = program;

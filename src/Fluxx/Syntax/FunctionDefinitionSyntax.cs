@@ -21,7 +21,6 @@ namespace Faml.Syntax
         private ExpressionSyntax _expression;           // Expression, forming the function body
         private readonly DefinitionSyntax[] whereDefinitions;
 
-
         public FunctionDefinitionSyntax(TextSpan span, NameSyntax functionNameSyntax, PropertyNameTypePairSyntax[] parameters,
                                         TypeReferenceSyntax? returnType, ExpressionSyntax expression, DefinitionSyntax[] whereDefinitions) : base(span)
                                         {

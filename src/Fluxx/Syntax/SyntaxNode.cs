@@ -6,14 +6,12 @@ using Faml.Binding.Resolver;
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
-
 namespace Faml.Syntax
 {
     public abstract class SyntaxNode
     {
         private SyntaxNode parent;
         private readonly TextSpan span;
-
 
         protected SyntaxNode(TextSpan span)
         {

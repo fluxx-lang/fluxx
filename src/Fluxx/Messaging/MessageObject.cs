@@ -11,7 +11,6 @@ namespace Faml.Messaging
         // Auto properties
         public string Type { get; }
 
-
         private enum PropertyType
         {
             Int32 = 1,

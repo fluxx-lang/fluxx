@@ -24,7 +24,6 @@ namespace Faml.Syntax
         private readonly Dictionary<Name, RecordTypeDefinitionSyntax> recordTypeDefinitions = new Dictionary<Name, RecordTypeDefinitionSyntax>();
         private readonly ExampleDefinitionSyntax[] exampleDefinitions;
 
-
         public ModuleSyntax(FamlModule module, TextSpan span, FunctionInvocationSyntax? projectDefinition, UseSyntax[] uses, ImportSyntax[] imports, SyntaxNode[] moduleItems) : base(span)
         {
             this.module = module;

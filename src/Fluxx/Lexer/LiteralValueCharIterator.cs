@@ -2,7 +2,6 @@
  * @author Bret Johnson
  * @since 4/7/2014 6:17 PM
  */
-
 using Faml.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
 
