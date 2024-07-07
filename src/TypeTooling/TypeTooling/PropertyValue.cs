@@ -1,4 +1,4 @@
-namespace TypeTooling
+﻿namespace TypeTooling
 {
     public class PropertyValue<TProperty, TValue>(TProperty property, TValue value)
     {

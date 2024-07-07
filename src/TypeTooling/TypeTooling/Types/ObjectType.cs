@@ -24,7 +24,7 @@ namespace TypeTooling.Types
 
         public abstract InterpretedObjectCreator? GetInterpretedObjectCreator(
             ObjectProperty[] properties, AttachedProperty[] attachedProperties);
-    
+
         public abstract ObjectPropertyReader GetPropertyReader(ObjectProperty property);
 
         public abstract IReadOnlyCollection<ObjectType> GetBaseTypes();

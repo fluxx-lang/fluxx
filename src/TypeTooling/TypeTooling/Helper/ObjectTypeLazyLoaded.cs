@@ -52,7 +52,7 @@ namespace TypeTooling.Helper
         public ObjectTypeData(string fullName, IReadOnlyCollection<ObjectProperty> properties,
             ObjectProperty? contentProperty, CustomLiteralParser? customLiteralParser,
             IReadOnlyCollection<ObjectType> baseTypes)
-            {
+        {
             this.FullName = fullName;
             this.Properties = properties;
             this.ContentProperty = contentProperty;

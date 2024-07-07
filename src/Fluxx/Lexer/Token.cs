@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using System.Text;
 using Fluxx.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Text;
@@ -16,12 +14,10 @@ namespace Fluxx.Lexer
         private TokenType type;
         private bool inErrorMode;
 
-        public string StringValue { get; private set; }
-        public int IntValue { get; private set; }
-        public long LongValue { get; }
-        public double DoubleValue { get; }
-
-        public Token(SourceText sourceText) : this(new ParseableSource(sourceText, 0, sourceText.Length)) {}
+        public Token(SourceText sourceText)
+            : this(new ParseableSource(sourceText, 0, sourceText.Length))
+        {
+        }
 
         public Token(ParseableSource source, bool noInitialAdvance = false)
         {
@@ -38,7 +34,17 @@ namespace Fluxx.Lexer
             }
         }
 
+        public string StringValue { get; private set; }
+
+        public int IntValue { get; private set; }
+
+        public long LongValue { get; }
+
+        public double DoubleValue { get; }
+
         public ParseableSource Source => this.source;
+
+        /* End auto properties */
 
         public bool InErrorMode
         {
@@ -47,14 +53,14 @@ namespace Fluxx.Lexer
         }
 
         /// <summary>
-        /// Return the current token type. When in error mode, for panic mode error recovery,
+        /// Gets the current token type. When in error mode, for panic mode error recovery,
         /// the special token ERROR_MODE is returned. Normally the parsing code treats that token as
         /// special, not matching anything valid, and instead generating a stub item in the AST.
         /// </summary>
         public TokenType Type => this.inErrorMode ? TokenType.ErrorMode : this.type;
 
         /// <summary>
-        /// Return the current token type, even in error mode. This is normally just used by the sync
+        /// Gets the current token type, even in error mode. This is normally just used by the sync
         /// code, trying to to match on a valid synchronizing token, for panic mode error recovery,
         /// to then exit error mode.
         /// </summary>
@@ -66,19 +72,6 @@ namespace Fluxx.Lexer
             {
                 //TransformIntoPropertyIdentifierIfCan();
                 return this.Type;
-            }
-        }
-
-        public override string ToString()
-        {
-            string typeString = this.type.ToString();
-            if (this.type == TokenType.Identifier || this.type == TokenType.PropertyIdentifier /* || type == TokenType.FUNCTION_NAME */)
-            {
-                return typeString + "(" + this.StringValue + ")";
-            }
-            else
-            {
-                return typeString;
             }
         }
 
@@ -95,6 +88,19 @@ namespace Fluxx.Lexer
         public int TokenLength => this.position - this.tokenStartPosition;
 
         public int PrevTokenEndPosition => this.prevTokenEndPosition;
+
+        public override string ToString()
+        {
+            string typeString = this.type.ToString();
+            if (this.type == TokenType.Identifier || this.type == TokenType.PropertyIdentifier /* || type == TokenType.FUNCTION_NAME */)
+            {
+                return typeString + "(" + this.StringValue + ")";
+            }
+            else
+            {
+                return typeString;
+            }
+        }
 
         public void RescanAsTextBlock(int introducingPosition, bool allowSemicolonToTerminate = false, bool allowRightBraceToTerminate = false, bool allowIfConditionPipeToTerminate = false)
         {

@@ -1,23 +1,15 @@
-﻿using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using TypeTooling.ClassifiedText;
+﻿using TypeTooling.ClassifiedText;
 using TypeTooling.DotNet.RawTypes;
 using TypeTooling.Types;
 
 namespace TypeTooling.DotNet.Types
 {
-    public class DotNetObjectProperty : ObjectProperty
+    public class DotNetObjectProperty(ObjectType objectType, DotNetRawProperty rawProperty, TypeToolingType type) : ObjectProperty(objectType)
     {
         // Automatic properties
-        public DotNetRawProperty RawProperty { get; }
-        public override TypeToolingType Type { get; }
+        public DotNetRawProperty RawProperty { get; } = rawProperty;
 
-        public DotNetObjectProperty(ObjectType objectType, DotNetRawProperty rawProperty, TypeToolingType type) : base(objectType)
-        {
-            this.RawProperty = rawProperty;
-            this.Type = type;
-        }
+        public override TypeToolingType Type { get; } = type;
 
         public override string Name => this.RawProperty.Name;
 
