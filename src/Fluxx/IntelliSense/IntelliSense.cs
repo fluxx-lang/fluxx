@@ -53,7 +53,7 @@ namespace Faml.IntelliSense
         {
             switch (count)
             {
-                case 0: return "";
+                case 0: return string.Empty;
                 case 1: return " ";
                 case 2: return "  ";
                 default: throw new ArgumentException("Only space counts <= 2 are currently supported");

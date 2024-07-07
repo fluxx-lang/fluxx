@@ -29,8 +29,8 @@ namespace Faml.IntelliSense
 
         public override Task<IntelliSenseCompletions> GetCompletionsAsync(CancellationToken cancellationToken)
         {
-            string prefix = "";
-            string suffix = "";
+            string prefix = string.Empty;
+            string suffix = string.Empty;
             if (this.argumentName == null)
             {
                 int spacesBefore = 0;

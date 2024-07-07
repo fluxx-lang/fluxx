@@ -165,7 +165,7 @@ namespace Faml.Lexer
             }
 
             // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
-            this.StringValue = "";
+            this.StringValue = string.Empty;
             this.type = TokenType.TextBlock;
         }
 
@@ -217,7 +217,7 @@ namespace Faml.Lexer
                 }
             }
 
-            this.StringValue = "";  // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
+            this.StringValue = string.Empty;  // For TextBlock tokens, there's nothing stored in the token value & need to get the source span to get the text
             this.type = TokenType.TextBlock;
         }
 

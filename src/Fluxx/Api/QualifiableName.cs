@@ -12,7 +12,7 @@ namespace Faml.Api
     {
         private readonly string name;
 
-        public static readonly QualifiableName EmptyName = new QualifiableName("");
+        public static readonly QualifiableName EmptyName = new QualifiableName(string.Empty);
 
         public static QualifiableName ModuleNameFromRelativePath(string path)
         {

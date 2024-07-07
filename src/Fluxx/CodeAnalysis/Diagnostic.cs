@@ -64,7 +64,7 @@ namespace Faml.CodeAnalysis
         public Diagnostic(SyntaxNode syntaxNode, DiagnosticSeverity severity, string message)
             : this(syntaxNode.GetModule(), syntaxNode.Span, severity, message) { }
 
-        public QualifiableName ModuleName => this.module?.ModuleName ?? new QualifiableName("");
+        public QualifiableName ModuleName => this.module?.ModuleName ?? new QualifiableName(string.Empty);
 
         public LinePosition? StartLinePosition => this.startLinePosition;
 

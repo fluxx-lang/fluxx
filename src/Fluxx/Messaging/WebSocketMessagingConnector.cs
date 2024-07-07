@@ -56,7 +56,7 @@ namespace Faml.Messaging
 
                     if (result.MessageType == WebSocketMessageType.Close)
                     {
-                        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", receiveAndOverallCts.Token);
+                        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, receiveAndOverallCts.Token);
                         return;
                     }
 
