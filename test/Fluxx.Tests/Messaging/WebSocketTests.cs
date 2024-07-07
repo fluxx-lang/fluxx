@@ -8,6 +8,7 @@ using ReactiveData;
 
 namespace Faml.Tests.Messaging
 {
+    [TestClass]
     public sealed class WebSocketTests : TestBase
     {
         [TestMethod]

@@ -153,7 +153,7 @@ namespace Faml.Tests.Tagger
                 .Select(tag => tag.SyntaxHighlightTagType)
                 .ToList();
 
-            Assert.AreEqual(expectedTagTypes, actualTagTypes);
+            Assert.AreEqual<IEnumerable<SyntaxHighlightTagType>>(expectedTagTypes, actualTagTypes);
         }
     }
 }

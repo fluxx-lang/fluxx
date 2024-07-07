@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Faml.Tests.CodeGeneration
 {
+    [TestClass]
     public class ExpressionTests : TestBase
     {
         [TestMethod]

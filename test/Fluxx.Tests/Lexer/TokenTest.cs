@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Faml.Tests.Lexer
 {
+    [TestClass]
     public sealed class TokenTest
     {
         [TestMethod]

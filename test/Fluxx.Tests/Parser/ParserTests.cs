@@ -7,8 +7,11 @@ using Faml.Syntax.Expression;
 using Faml.Tests.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#pragma warning disable SA1118 // Parameter should not span multiple lines
+
 namespace Faml.Tests.Parser
 {
+    [TestClass]
     public sealed class ParserTests : TestBase
     {
         [TestMethod]
@@ -52,56 +55,70 @@ namespace Faml.Tests.Parser
         [TestMethod]
         public void TestParseFunctionInvocationMultiLines()
         {
-            this.AssertModuleParsingMatches("foo =\n" +
-                                       "  TestObject {\n" +
-                                       "    IntProp:3\n" +
-                                       "    TextProp:abc\n" +
-                                       "  }",
-                                       "foo = TestObject{IntProp:3; TextProp:abc}");
+            this.AssertModuleParsingMatches(
+                """
+                foo =
+                  TestObject {
+                    IntProp:3
+                    TextProp:abc
+                  }
+                """,
+                "foo = TestObject{IntProp:3; TextProp:abc}");
         }
 
         [TestMethod]
         public void TestParseContainer()
         {
-            this.AssertModuleParsingMatches("foo =\n" +
-                                       "  TestContainer {\n" +
-                                       "    Children:\n" +
-                                       "      TestObject{IntProp:3}\n" +
-                                       "      TestObject{IntProp:3}\n" +
-                                       "  }");
+            this.AssertModuleParsingMatches(
+                """
+                foo =
+                  TestContainer {
+                    Children:
+                      TestObject{IntProp:3}
+                      TestObject{IntProp:3}
+                  }
+                """);
         }
 
         [TestMethod]
         public void Parse_RecordDefinition()
         {
-            this.AssertModuleParsingMatches("type Foo = {\n" +
-                                       "    foo:int\n" +
-                                       "    bar:int\n" +
-                                       "    baz:string\n" +
-                                       "}");
+            this.AssertModuleParsingMatches(
+                """
+                type Foo = {
+                    foo:int
+                    bar:int
+                    baz:string
+                }
+                """);
         }
 
         [TestMethod]
         public void Parse_RecordDefinitionSameLine()
         {
             this.AssertModuleParsingMatches(
-                                       "type Foo = {\n" +
-                                       "    foo:int; bar:int; baz:string\n" +
-                                       "}",
-                                       "type Foo = {\n" +
-                                       "    foo:int" +
-                                       "    bar:int\n" +
-                                       "    baz:string" +
-                                       "}");
+                """
+                type Foo = {
+                    foo:int; bar:int; baz:string
+                }
+                """,
+                """
+                type Foo = {
+                    foo:int
+                    bar:int
+                    baz:string
+                }
+                """);
         }
 
         [TestMethod]
         public void Parse_RecordDefinitionDefaltValue()
         {
-            this.AssertModuleParsingMatches("type Foo = {\n" +
-                                       "    foo:int = 3\n" +
-                                       "    bar:int = 7\n" +
-                                       "}");
+            this.AssertModuleParsingMatches(
+                "type Foo = {\n" +
+                "    foo:int = 3\n" +
+                "    bar:int = 7\n" +
+                "}");
         }
 
         [TestMethod]

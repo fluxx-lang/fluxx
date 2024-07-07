@@ -18,6 +18,7 @@ using TypeTooling.DotNet.CodeGeneration;
 
 namespace Faml.Tests.Shared
 {
+    [TestClass]
     public class TestBase
     {
         public void AssertMainFunctionValueIs(string moduleSource, object expectedValue)

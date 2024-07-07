@@ -209,3 +209,6 @@ dotnet_diagnostic.CS1591.severity = silent
 
 # SA1130: The file header is missing or not located at the top of the file.
 dotnet_diagnostic.SA1633.severity = silent
+
+# SA1117: The parameters should all be placed on the same line or each parameter should be placed on its own line
+dotnet_diagnostic.SA1117.severity = silent
