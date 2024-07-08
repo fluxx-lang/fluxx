@@ -1,0 +1,25 @@
+{
+  "name": "fluxx",
+  "displayName": "fluxx",
+  "description": "Fluxx functional markup language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "fluxx",
+      "aliases": ["Fluxx", "fluxx"],
+      "extensions": [".fluxx",".fx"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "fluxx",
+      "scopeName": "source.fluxx",
+      "path": "./syntaxes/fluxx.tmLanguage.json"
+    }]
+  }
+}
