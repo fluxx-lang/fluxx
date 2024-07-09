@@ -18,24 +18,30 @@ let myValue2:float = 43
 
 Values are immutable. As Fluxx is a pure functional language, it doesn't have mutable variables.
 
-Values can be of any type, not just primitive types:
-
-```fluxx
-let logoImg =
-    <img src=logo.jpg; alt=<uitext Acme company logo/> />
-```
-
-Expressions
+Functions
 ------
 
+Functions are also defined with `let`. Functions allow for abstraction and reuse. Here's a WPF
+based example, abstracting icon images:
 
-```fluxx
-let myValue1 = 42
-<element prop=@myValue />
+```Fluxx
+let <IconImage Icon:FileName /> =
+    <Image Width=32 Height=32
+        Source=
+            <BitmapImage UriSource=@IconFile />
+    /Image>
 ```
 
+The function definition lists the function's properties (parameters), using the `<name>:<type>`
+syntax, with the return value after the `=`.
+
+Here's another function, making use of (calling) the function above:
 
 ```fluxx
-let myValue2 = @(myValue1 * 2)
-<element prop=@myValue />
+let <MyPageHeader Label:uitext> = 
+    <StackLayout Orientation=Horizontal;
+        <IconImage Icon=pageIcon.png />
+        <TextBlock Text=@Label />
+    /StackLayout>
 ```
+
