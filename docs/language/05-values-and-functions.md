@@ -24,7 +24,7 @@ Functions
 Functions are also defined with `let`. Functions allow for abstraction and reuse. Here's a WPF
 based example, abstracting icon images:
 
-```Fluxx
+```fluxx
 let <IconImage Icon:FileName /> =
     <Image Width=32 Height=32
         Source=
